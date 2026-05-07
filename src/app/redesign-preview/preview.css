@@ -1,0 +1,157 @@
+/* ============================================================
+   redesign-preview · scoped Tailwind + fresh palette
+   This file is loaded ONLY for /redesign-preview.
+   It does NOT import VICTA globals.css and does NOT touch
+   any LOCKED design tokens (`--accent`, `--font-inter-tight`,
+   `--radius-*`). All overrides are scoped to `.preview-root`.
+   ============================================================ */
+@import "tailwindcss";
+
+@theme {
+  --font-display: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono-pv);
+}
+
+.preview-root {
+  /* Fresh neutral base — Zinc-leaning, off-black, no pure #000 */
+  --pv-bg: #0b0b0d;
+  --pv-surface: #131316;
+  --pv-surface-2: #1b1b20;
+  --pv-border: #27272d;
+  --pv-border-soft: #1f1f24;
+
+  --pv-ink: #f4f4f5;
+  --pv-secondary: #a1a1aa;
+  --pv-tertiary: #71717a;
+
+  /* Single accent — desaturated electric blue, taste-skill rule 2 (sat < 80%) */
+  --pv-accent: #5b8cff;
+  --pv-accent-soft: rgba(91, 140, 255, 0.14);
+  --pv-accent-tint: rgba(91, 140, 255, 0.06);
+
+  background-color: var(--pv-bg);
+  color: var(--pv-ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.011em;
+
+  /* Mesh-gradient atmosphere · pointer-events:none, fixed grain layer */
+  background-image:
+    radial-gradient(
+      ellipse 60% 40% at 80% 0%,
+      rgba(91, 140, 255, 0.10),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 50% 35% at 10% 80%,
+      rgba(91, 140, 255, 0.05),
+      transparent 70%
+    );
+  background-attachment: fixed;
+}
+
+.preview-root .pv-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  opacity: 0.18;
+  background-image:
+    repeating-radial-gradient(
+      circle at 30% 20%,
+      rgba(255, 255, 255, 0.04) 0,
+      transparent 1px,
+      transparent 2px
+    );
+}
+
+/* Hairline dividers — 1px borders, not card boxes (rule 4) */
+.preview-root .pv-hairline {
+  border-color: var(--pv-border);
+}
+
+/* Display headline — uses Geist with extreme tracking, not "tracking-tighter leading-none" cliche */
+.preview-root .pv-display {
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  line-height: 0.96;
+}
+
+/* Numeric metrics use mono — taste-skill density rule */
+.preview-root .pv-mono {
+  font-family: var(--font-geist-mono-pv), ui-monospace, monospace;
+  font-feature-settings: "tnum", "ss01";
+  letter-spacing: 0;
+}
+
+/* Tactile button feedback — rule 5 */
+.preview-root .pv-tactile {
+  transition:
+    transform 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 200ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.preview-root .pv-tactile:active {
+  transform: translateY(1px) scale(0.985);
+}
+
+/* Spotlight border — gradient ring that follows pointer (set via CSS vars from JS) */
+.preview-root .pv-spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.preview-root .pv-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: radial-gradient(
+    320px circle at var(--pv-mx, 50%) var(--pv-my, 50%),
+    rgba(91, 140, 255, 0.45),
+    rgba(91, 140, 255, 0.08) 35%,
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 220ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.preview-root .pv-spotlight:hover::before {
+  opacity: 1;
+}
+
+/* Marquee — endless scrolling band (rule 4 typography arsenal) */
+@keyframes pv-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.preview-root .pv-marquee-track {
+  animation: pv-marquee 38s linear infinite;
+  will-change: transform;
+}
+
+/* Pulse dot — perpetual breathing for "live status" */
+@keyframes pv-pulse {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.18); }
+}
+.preview-root .pv-pulse {
+  animation: pv-pulse 2.4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Reduced motion respect */
+@media (prefers-reduced-motion: reduce) {
+  .preview-root .pv-marquee-track,
+  .preview-root .pv-pulse {
+    animation: none !important;
+  }
+}
