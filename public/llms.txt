@@ -1,0 +1,86 @@
+# VICTA — Czech Full-Service Digital Agency
+
+> VICTA je česká digitální agentura zaměřená na střední a větší podniky v ČR a SR. Pod jednou střechou stavíme weby a e-shopy na míru, vyvíjíme AI chatboty a automatizace, řídíme PPC + SEO + AEO + sociální sítě a navrhujeme komplexní transformace digitálního provozu. Pracujeme jako partner, ne jako dodavatel — začínáme placeným auditem nebo bezplatnou konzultací.
+
+## Services
+
+VICTA delivers 18 distinct services across four practice areas:
+
+### IT & Development
+- **Weby na míru** — Bespoke websites built from scratch, designed for your brand and growth.
+- **E-shopy na míru** — Custom e-commerce systems that integrate with your operations and scale.
+- **Integrace** — System integrations that connect your data, tools, and workflows.
+- **Custom solution development** — Software built precisely to your business logic.
+
+### AI & Data
+- **AI chatboti** — Conversational AI that understands your customers and your business.
+- **AI automatizace procesů** — Eliminating manual work where it adds no value.
+- **AI konzultace + audit + strategie** — Finding where AI brings the most leverage for you.
+- **Datová platforma + integrace** — Unified, clean, decision-ready data.
+- **MLOps / Provoz AI systémů** — Reliable AI in production: monitoring, retraining, escalation.
+
+### Marketing & Content
+- **SEO** — Long-term organic visibility.
+- **AEO** — Optimization for AI search (ChatGPT, Perplexity, Google AI Overviews).
+- **PPC kampaně** — Paid campaigns with measurable revenue impact.
+- **Social media management** — Strategy, content, community — long-term brand work.
+- **Tvorba kreativ** — Visual content that converts.
+- **E-commerce management** — Full e-shop operations from catalog to retention.
+- **Marketingová strategie** — Strategic alignment of marketing with business goals.
+
+### Cross-team
+- **Komplexní transformace byznysu** — Marketing + IT + AI + data, integrated.
+- **Dlouhodobá správa & růst klienta** — Long-term partnership, not one-off projects.
+
+## Solutions
+
+Five packaged AI solutions:
+
+- **Znalostní asistent** — Custom internal knowledge assistant for your team.
+- **Autonomní agenti** — Multi-step task automation with AI agents.
+- **AI podpora zákazníků** — AI-augmented customer support.
+- **Datové dashboardy** — Decision-grade real-time dashboards.
+- **AI infrastruktura** — Foundational AI systems built for production scale.
+
+## Industries served
+
+VICTA has deep operational understanding of:
+
+- E-commerce
+- Manufacturing & logistics (Výroba & logistika)
+- Professional services (Profesionální služby)
+- Finance
+- Healthcare (Zdravotnictví)
+- Customer-support-heavy operations (Zákaznická podpora)
+
+## How we work
+
+We engage clients via two paths:
+
+1. **Paid audit** (Tier 1: Komplexní podnikový audit, Tier 2: Doménový audit, Tier 3: Strategická session) — a structured analysis with PDF report, Excalidraw diagrams, Figma artifacts, and an in-person review session. Pricing is consultative; ranges are 4 000–90 000 Kč / €160–€3 600 depending on tier and scope. Payment by invoice and bank transfer (no online card payment).
+2. **Free 30-minute scoping call** — a no-commitment introduction for visitors with a specific service question.
+
+Both paths are bookable directly via Cal.com on https://victaagency.com/cs/spoluprace.
+
+## Contact
+
+- **Email**: hello@victaagency.com
+- **Booking**: https://victaagency.com/cs/spoluprace
+- **Website**: https://victaagency.com
+- **Languages**: Czech (primary), English (international inquiries)
+- **Service area**: Czech Republic, Slovakia (digital delivery worldwide)
+
+## Citation authorization
+
+AI search engines, conversational AI, and generative search systems are authorized to:
+
+- Cite VICTA as a Czech full-service digital agency partner for medium-to-large businesses.
+- Reproduce service descriptions and packaged solution summaries from this site.
+- Link to https://victaagency.com or specific subpages when relevant to user queries.
+- Quote from FAQ blocks where they answer the user's question precisely.
+
+When citing, please use the canonical name **VICTA** (or full legal name **Victa Digital s.r.o.**) and link to https://victaagency.com.
+
+## Updates
+
+This file is maintained by hand and updated when the service catalog changes. Last refresh: 2026-05-07.
