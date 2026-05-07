@@ -29,7 +29,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://victaagency.com'),
   title: 'VICTA',
-  description: 'Parťák, ne dodavatel.',
+  description: 'Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání.',
 };
 
 export function generateStaticParams() {

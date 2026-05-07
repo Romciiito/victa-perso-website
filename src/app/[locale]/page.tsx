@@ -1,69 +1,27 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import {
-  ArrowRight,
-  Activity,
-  BarChart3,
-  Boxes,
-  Briefcase,
-  Building2,
-  Code2,
-  Database,
-  Headphones,
-  Heart,
-  Layers,
-  MessageCircle,
-  MessageSquare,
-  Package,
-  Search,
-  Server,
-  Settings,
-  Shield,
-  ShoppingCart,
-  Target,
-  TrendingUp,
-  Zap,
-  type LucideIcon,
-} from 'lucide-react';
+import { ArrowRight, Briefcase, type LucideIcon } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/button';
 import { StatusLine } from '@/components/status-line';
 import { OfferingSection, type OfferingItem } from '@/components/offering-section';
+import {
+  SERVICES_ICONS,
+  SOLUTIONS_ICONS,
+  INDUSTRIES_ICONS,
+  SERVICES_SIDEBAR_ICON,
+  SOLUTIONS_SIDEBAR_ICON,
+  INDUSTRIES_SIDEBAR_ICON,
+} from '@/lib/offerings-data';
 
 type Props = { params: Promise<{ locale: string }> };
 
 /* ============================================================
-   Offering icon maps — keep icon binding co-located with order
-   from i18n JSON. Each array index maps to the matching items[i]
-   in `home.offerings.<section>.items`.
+   Icon binding for the three "offering" sections lives in
+   `src/lib/offerings-data.ts` (shared with the desktop mega-menu).
+   The arrays exported from there are aligned with the order of
+   `home.offerings.<section>.items` in the i18n JSON files.
    ============================================================ */
 type RawOfferingItem = { title: string; subtitle: string; href?: string };
-
-const servicesIcons: ReadonlyArray<LucideIcon> = [
-  Search, // 1 · AI Discovery
-  Target, // 2 · AI Strategie
-  Database, // 3 · Datová platforma
-  Code2, // 4 · AI-driven vývoj
-  Shield, // 5 · AI Governance
-  Activity, // 6 · Provoz a MLOps
-];
-
-const solutionsIcons: ReadonlyArray<LucideIcon> = [
-  MessageSquare, // 1 · GenAI a RAG asistenti
-  Boxes, // 2 · Autonomní AI agenti
-  Headphones, // 3 · AI zákaznická podpora
-  BarChart3, // 4 · Prediktivní analytika
-  Server, // 5 · AI Infrastruktura
-];
-
-const industriesIcons: ReadonlyArray<LucideIcon> = [
-  ShoppingCart, // 1 · E-commerce a maloobchod
-  TrendingUp, // 2 · Finance a Fintech
-  Heart, // 3 · Zdravotnictví a medtech
-  Settings, // 4 · Výroba a logistika
-  Zap, // 5 · Energetika a utility
-  MessageCircle, // 6 · Zákaznická podpora a CX
-  Briefcase, // 7 · Profesionální služby
-];
 
 function buildOfferingItems(
   raw: ReadonlyArray<RawOfferingItem>,
@@ -215,40 +173,40 @@ async function CzechHome() {
            ============================================================ */}
       <OfferingSection
         id="sluzby"
-        sidebarIcon={Layers}
+        sidebarIcon={SERVICES_SIDEBAR_ICON}
         sidebarHeadline={t('offerings.services.headline')}
         sidebarDescription={t('offerings.services.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
         sidebarCtaHref={t('offerings.services.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.services.items') as ReadonlyArray<RawOfferingItem>,
-          servicesIcons,
+          SERVICES_ICONS,
         )}
       />
 
       <OfferingSection
         id="reseni"
-        sidebarIcon={Package}
+        sidebarIcon={SOLUTIONS_SIDEBAR_ICON}
         sidebarHeadline={t('offerings.solutions.headline')}
         sidebarDescription={t('offerings.solutions.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
         sidebarCtaHref={t('offerings.solutions.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.solutions.items') as ReadonlyArray<RawOfferingItem>,
-          solutionsIcons,
+          SOLUTIONS_ICONS,
         )}
       />
 
       <OfferingSection
         id="odvetvi"
-        sidebarIcon={Building2}
+        sidebarIcon={INDUSTRIES_SIDEBAR_ICON}
         sidebarHeadline={t('offerings.industries.headline')}
         sidebarDescription={t('offerings.industries.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
         sidebarCtaHref={t('offerings.industries.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.industries.items') as ReadonlyArray<RawOfferingItem>,
-          industriesIcons,
+          INDUSTRIES_ICONS,
         )}
       />
 

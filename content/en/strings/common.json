@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "VICTA — digital agency",
-    "description": "Partner, not vendor. We build a system with you that grows for years."
+    "description": "Listening first. Before we propose anything, we want to understand your business."
   },
   "common": {
     "learnMore": "Learn more →",
@@ -24,7 +24,7 @@
     "skipToContent": "Skip to content"
   },
   "footer": {
-    "tagline": "Partner, not vendor. We build a system with you that grows for years.",
+    "tagline": "Listening first. Before we propose anything, we want to understand your business.",
     "status": "STATUS · v 0.1.0 · region eu-central-1",
     "servicesHeading": "Services",
     "companyHeading": "Company",

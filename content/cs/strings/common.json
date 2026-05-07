@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "VICTA — digitální agentura",
-    "description": "Parťák, ne dodavatel. Postavíme s vámi systém, který poroste roky."
+    "description": "Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání."
   },
   "common": {
     "learnMore": "Zjistit víc →",
@@ -24,7 +24,7 @@
     "skipToContent": "Přeskočit na obsah"
   },
   "footer": {
-    "tagline": "Parťák, ne dodavatel. Postavíme s vámi systém, který poroste roky — ne jen web, který za rok zastará.",
+    "tagline": "Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání.",
     "status": "STATUS · v 0.1.0 · region eu-central-1",
     "servicesHeading": "Služby",
     "companyHeading": "Společnost",
