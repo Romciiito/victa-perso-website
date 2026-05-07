@@ -7,6 +7,8 @@ import { routing } from '@/i18n/routing';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Nav } from '@/components/nav';
 import { Footer } from '@/components/footer';
+import { CookiebotScript } from '@/components/consent/cookiebot-script';
+import { Ga4Loader } from '@/components/consent/ga4-loader';
 import { antiFlashScript } from '@/lib/anti-flash';
 import '@/styles/globals.css';
 
@@ -52,6 +54,7 @@ export default async function LocaleLayout({
     <html lang={locale} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: antiFlashScript }} />
+        <CookiebotScript />
       </head>
       <body className={`${interTight.variable} ${geistMono.variable} bg-grid antialiased`}>
         <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem storageKey="victa-theme">
@@ -63,6 +66,7 @@ export default async function LocaleLayout({
             <Footer />
           </NextIntlClientProvider>
         </ThemeProvider>
+        <Ga4Loader />
       </body>
     </html>
   );
