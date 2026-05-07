@@ -20,9 +20,10 @@ type Props = {
   sub?: string;
   ctas?: ReadonlyArray<Cta>;
   anchors?: ReadonlyArray<AnchorLink>;
+  anchorNavLabel?: string;
 };
 
-export function PageHero({ status, eyebrow, headline, sub, ctas, anchors }: Props) {
+export function PageHero({ status, eyebrow, headline, sub, ctas, anchors, anchorNavLabel = 'Sekce stránky' }: Props) {
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -102,6 +103,7 @@ export function PageHero({ status, eyebrow, headline, sub, ctas, anchors }: Prop
 
           {anchors && anchors.length > 0 && (
             <motion.nav
+              aria-label={anchorNavLabel}
               initial="hidden"
               animate="visible"
               transition={{ ...SPRING, delay: 0.5 }}

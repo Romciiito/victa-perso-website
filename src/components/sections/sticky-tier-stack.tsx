@@ -9,10 +9,10 @@ export type TierData = {
   tier: string;
   flag?: string;
   name: string;
-  price: string;
-  priceEur: string;
+  price?: string;
+  priceEur?: string;
   body: string;
-  deliverables: string[];
+  deliverables: ReadonlyArray<string>;
   cta: string;
   ctaHref: string;
   primary?: boolean;
@@ -92,14 +92,18 @@ function StickyTier({ tier, index }: { tier: TierData; index: number }) {
         </div>
 
         <div className="flex flex-col items-stretch justify-between gap-8 md:items-end">
-          <div className="text-left md:text-right">
-            <div className="font-mono text-[26px] font-medium leading-tight text-ink md:text-[32px]">
-              {tier.price}
+          {tier.price && (
+            <div className="text-left md:text-right">
+              <div className="font-mono text-[26px] font-medium leading-tight text-ink md:text-[32px]">
+                {tier.price}
+              </div>
+              {tier.priceEur && (
+                <div className="mt-1 font-mono text-[13px] text-tertiary">
+                  {tier.priceEur}
+                </div>
+              )}
             </div>
-            <div className="mt-1 font-mono text-[13px] text-tertiary">
-              {tier.priceEur}
-            </div>
-          </div>
+          )}
           <MagneticCta primary={tier.primary} compact href={tier.ctaHref}>
             {tier.cta}
           </MagneticCta>

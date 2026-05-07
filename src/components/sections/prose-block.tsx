@@ -1,5 +1,6 @@
 'use client';
 
+import type React from 'react';
 import { motion, type Variants } from 'framer-motion';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
@@ -11,7 +12,7 @@ const REVEAL: Variants = {
 export type ProseSection = {
   heading: string;
   subheading?: string;
-  body: string;
+  body: React.ReactNode;
   bullets?: string[];
 };
 
