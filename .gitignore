@@ -46,3 +46,4 @@ dns-backup/*.txt
 # ── Workforce runtime files (intent.md is the contract and IS committed) ──────
 .workforce/dispatch.md
 .workforce/integration.md
+.vercel

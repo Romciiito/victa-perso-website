@@ -3,10 +3,700 @@
     "title": "VICTA — digitální agentura",
     "description": "Parťák, ne dodavatel. Postavíme s vámi systém, který poroste roky."
   },
+  "common": {
+    "learnMore": "Zjistit víc →",
+    "backHome": "Zpět na hlavní stránku",
+    "version": "v 0.1.0",
+    "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1"
+  },
+  "nav": {
+    "tag": "/ digital agency",
+    "services": "Služby",
+    "solutions": "Řešení",
+    "industries": "Odvětví",
+    "collaboration": "Spolupráce",
+    "about": "O nás",
+    "contact": "Kontakt",
+    "open": "Otevřít menu",
+    "close": "Zavřít menu",
+    "themeLight": "Přepnout na světlý režim",
+    "themeDark": "Přepnout na tmavý režim",
+    "skipToContent": "Přeskočit na obsah"
+  },
+  "footer": {
+    "tagline": "Parťák, ne dodavatel. Postavíme s vámi systém, který poroste roky — ne jen web, který za rok zastará.",
+    "status": "STATUS · v 0.1.0 · region eu-central-1",
+    "servicesHeading": "Služby",
+    "companyHeading": "Společnost",
+    "legalHeading": "Právní",
+    "links": {
+      "webDevelopment": "Weby a e-shopy na míru",
+      "aiChatbots": "AI chatboti",
+      "aiAutomation": "AI automatizace",
+      "seoAeo": "SEO a AEO",
+      "ppc": "PPC kampaně",
+      "audit": "Komplexní audit",
+      "collaboration": "Spolupráce",
+      "about": "O nás",
+      "contact": "Kontakt",
+      "blog": "Blog",
+      "privacy": "Zásady ochrany osobních údajů",
+      "cookies": "Zásady cookies"
+    },
+    "bottom": {
+      "copyright": "© 2026 Victa Digital s.r.o.",
+      "ico": "IČO [doplnit]",
+      "city": "Praha",
+      "country": "Česká republika"
+    }
+  },
   "home": {
-    "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1",
-    "headline": "Parťák, ne dodavatel.",
-    "subhead": "Postavíme s vámi systém, který poroste roky — ne jen web, který za rok zastará.",
-    "wip": "Stránka se připravuje. Ozvěte se nám: hello@victaagency.com"
+    "hero": {
+      "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1",
+      "headline": "Parťák, ne dodavatel.",
+      "subhead": "Postavíme s vámi systém, který poroste roky — ne jen web, který za rok zastará.",
+      "ctaPrimary": "Komplexní audit od 20 000 Kč",
+      "ctaGhost": "Domluvte si nezávazné představení"
+    },
+    "pillars": {
+      "heading": "Tři důvody, proč nám věřit ještě před první schůzkou.",
+      "items": {
+        "methodology": {
+          "label": "METODOLOGIE & MYŠLENÍ",
+          "headline": "Ukazujeme svůj proces i své myšlení.",
+          "body": "Podívejte se, jak přemýšlíme — než si nás najmete. Žádné černé skříňky, žádný marketingový teatr.",
+          "cta": "Jak spolupracujeme →"
+        },
+        "industry": {
+          "label": "ODVĚTVOVÁ EXPERTIZA",
+          "headline": "Nestavíme generické weby.",
+          "body": "Rozumíme e-commerce, výrobě, financím a 3 dalším oborům do hloubky. Mluvíme řečí vašeho byznysu.",
+          "cta": "Naše odvětví →"
+        },
+        "design": {
+          "label": "DESIGN & PROVEDENÍ",
+          "headline": "Web, který vidíte teď, je naše vizitka.",
+          "body": "Stejnou kvalitu dostane váš projekt. Tohle není šablona koupená v marketplace — tohle je naše práce.",
+          "cta": "Naše služby →"
+        }
+      }
+    },
+    "categories": {
+      "heading": "Tři kompetence pod jednou střechou.",
+      "subhead": "Kód, AI a marketing v jednom týmu — bez předávání mezi vendory.",
+      "items": {
+        "itDev": {
+          "label": "IT & VÝVOJ",
+          "headline": "Weby, e-shopy, integrace.",
+          "body": "Weby na míru, e-shopy, integrace do skladu a účetnictví, custom AI nástroje. Stavíme rychlé a SEO-ready stacky."
+        },
+        "aiData": {
+          "label": "AI & DATA",
+          "headline": "AI, která dává smysl.",
+          "body": "AI chatboti, automatizace procesů, datová platforma, MLOps. Bez buzzwordu — jen tam, kde to přináší úsporu."
+        },
+        "marketing": {
+          "label": "MARKETING & OBSAH",
+          "headline": "Růst, který je měřitelný.",
+          "body": "SEO, AEO, PPC, social media, kreativy, e-commerce management. Tracking a reporting bez šumu."
+        }
+      },
+      "ctaLabel": "Detail služeb →"
+    },
+    "audit": {
+      "heading": "Audit",
+      "subhead": "Než vám něco prodáme, chceme vidět, kde skutečně jste. Tři úrovně hloubky — vyberte podle rozsahu, který má smysl.",
+      "tier1": {
+        "tier": "Tier 1",
+        "badge": "Nejvíce volené",
+        "name": "Komplexní podnikový audit",
+        "price": "20 000 – 90 000 Kč",
+        "priceEur": "€800 – €3 600",
+        "duration": "1–3 týdny · 3–4 sezení",
+        "deliverables": "PDF + Figma + Excalidraw + osobní prezentace",
+        "cta": "Rezervovat audit →"
+      },
+      "tier2": {
+        "tier": "Tier 2",
+        "name": "Doménový audit",
+        "price": "10 000 – 55 000 Kč",
+        "priceEur": "€400 – €2 200",
+        "duration": "pár dní – 2 týdny · 2 sezení",
+        "deliverables": "Stejné výstupy jako Tier 1, lehčí rozsah",
+        "cta": "Rezervovat audit →"
+      },
+      "tier3": {
+        "tier": "Tier 3",
+        "name": "Strategická session",
+        "price": "4 000 – 25 000 Kč",
+        "priceEur": "€160 – €1 000",
+        "duration": "pár dní – 2 týdny · 1 sezení",
+        "deliverables": "Krátký plán bez dlouhého reportu",
+        "cta": "Rezervovat audit →"
+      },
+      "scoping": "Nebo si domluvte bezplatnou 30 min konzultaci pro modulární zakázky →"
+    },
+    "why": {
+      "heading": "Proč VICTA?",
+      "items": {
+        "tempo": {
+          "label": "TEMPO",
+          "body": "Co u jiných trvá 3 měsíce, u nás 3 týdny."
+        },
+        "price": {
+          "label": "CENA",
+          "body": "Bez režie 30+ hlav, kterou si platí klient."
+        },
+        "ai": {
+          "label": "AI-NATIVE",
+          "body": "AI drží detaily, lidé drží myšlení. Žádné AI-sandbagging."
+        },
+        "partnership": {
+          "label": "PARTNERSTVÍ",
+          "body": "Nestavíme web a nezmizíme. Spravujeme, inovujeme, rosteme s vámi."
+        }
+      }
+    },
+    "finalCta": {
+      "headline": "Pojďme se poznat.",
+      "subhead": "30 minut konzultace. Bez závazku. Probereme váš byznys a poradíme, jestli vám VICTA umí pomoct.",
+      "cta": "Domluvit konzultaci →"
+    }
+  },
+  "spoluprace": {
+    "hero": {
+      "status": "STATUS · v 0.1.0 · /cs/spoluprace",
+      "headline": "Jak spolupracujeme.",
+      "subhead": "Dvě cesty: placený audit pro komplexní transformaci, nebo bezplatný 30min hovor pro konkrétní zakázku."
+    },
+    "paths": {
+      "heading": "Dvě cesty, jedno pravidlo: vždy začínáme posloucháním.",
+      "subhead": "Vyberte si podle toho, co potřebujete vyřešit.",
+      "audit": {
+        "label": "CESTA 1 · PLACENÝ AUDIT",
+        "headline": "Komplexní transformace byznysu",
+        "body": "Když chcete přepracovat celý digitální stack — web, marketing, integrace, AI. Audit je placený proto, že jde o reálnou strategickou práci, ne sales call. Po auditu se rozhodnete, jestli pokračujeme.",
+        "fit": "Hodí se pro: e-commerce s rostoucí komplexitou, firmy s rozbitým marketing-tech stackem, zakázky nad 200 000 Kč.",
+        "cta": "Vybrat tier →"
+      },
+      "scoping": {
+        "label": "CESTA 2 · BEZPLATNÁ KONZULTACE",
+        "headline": "Konkrétní jednorázová zakázka",
+        "body": "Když máte konkrétní zadání — chatbot, jedna integrace, audit jedné kampaně. Žádný audit potřeba. 30 minut hovoru, zjistíme, jestli se hodíme, a pošleme nabídku.",
+        "fit": "Hodí se pro: jednorázové vývojářské zakázky, AI chatboty, integrace, samostatné kampaně.",
+        "cta": "Domluvit hovor →"
+      }
+    },
+    "tiers": {
+      "heading": "Audit — tři úrovně hloubky",
+      "subhead": "Všechny tiery zahrnují stejné výstupy: PDF zpráva, Excalidraw schéma, Figma artefakty, osobní konzultace. Liší se rozsah a hloubka.",
+      "tier1": {
+        "tier": "Tier 1",
+        "badge": "Nejvíce volené",
+        "name": "Komplexní podnikový audit",
+        "ideal": "Pro firmy, které řeší celý digitální stack — web, e-shop, marketing, integrace, AI. Hloubková analýza všeho.",
+        "duration": "1–3 týdny",
+        "sessions": "3–4 sezení",
+        "price": "20 000 – 90 000 Kč",
+        "priceEur": "€800 – €3 600",
+        "deliverables": [
+          "Hloubkový technický audit",
+          "Audit obchodních procesů",
+          "Audit marketingu a obsahu",
+          "Návrh integrace AI",
+          "PDF zpráva + Figma + Excalidraw",
+          "90min osobní prezentace zjištění"
+        ],
+        "cta": "Rezervovat Tier 1 →"
+      },
+      "tier2": {
+        "tier": "Tier 2",
+        "name": "Doménový audit",
+        "ideal": "Pro firmy, které chtějí hloubkově pokrýt jednu doménu — kompletní marketingovou strategii, e-commerce strategii, AI strategii nebo technický stack.",
+        "duration": "pár dní – 2 týdny",
+        "sessions": "2 sezení",
+        "price": "10 000 – 55 000 Kč",
+        "priceEur": "€400 – €2 200",
+        "deliverables": [
+          "Jedna doména: tech, obchod, marketing nebo AI",
+          "Hloubková analýza vybrané domény",
+          "Konkrétní doporučení a roadmap",
+          "PDF zpráva + Figma + Excalidraw",
+          "60min osobní prezentace zjištění"
+        ],
+        "cta": "Rezervovat Tier 2 →"
+      },
+      "tier3": {
+        "tier": "Tier 3",
+        "name": "Strategická session",
+        "ideal": "Pro firmy s konkrétní jednorázovou otázkou nebo problémem. Žádný dlouhý report — jen strukturovaný výstup, který hned použijete.",
+        "duration": "pár dní – 2 týdny",
+        "sessions": "1 sezení (90 min)",
+        "price": "4 000 – 25 000 Kč",
+        "priceEur": "€160 – €1 000",
+        "deliverables": [
+          "1–3hodinová session",
+          "Specifický problém nebo otázka",
+          "Strukturovaný výstup (Excalidraw + zápis)",
+          "Bez dlouhého reportu",
+          "Bez osobní prezentace navíc"
+        ],
+        "cta": "Rezervovat Tier 3 →"
+      },
+      "note": "Přesná cena závisí na rozsahu projektu — rádi ji upřesníme na úvodním sezení."
+    },
+    "invoice": {
+      "heading": "Jak probíhá platba",
+      "subhead": "Žádné karty, žádný checkout. Standardní B2B fakturační flow.",
+      "steps": [
+        {
+          "num": "01",
+          "title": "Rezervujete slot",
+          "body": "V Cal.com si vyberete čas, který vám vyhovuje. Tier auditu zvolíte při rezervaci."
+        },
+        {
+          "num": "02",
+          "title": "Dostanete fakturu",
+          "body": "Do 1 pracovního dne dostanete fakturu emailem. Standardní česká faktura — IČO, DIČ, vše jak má být."
+        },
+        {
+          "num": "03",
+          "title": "Zaplatíte převodem",
+          "body": "Bankovní převod do 7 dnů. Jakmile platba dorazí, slot je potvrzený."
+        },
+        {
+          "num": "04",
+          "title": "Začneme společně",
+          "body": "V den slotu kickoff session. Žádné překvapení — víte, kdo jsme, co se bude dít a co dostanete."
+        }
+      ]
+    },
+    "scoping": {
+      "heading": "Bezplatná 30 min konzultace",
+      "body": "Pro klienty s konkrétní jednorázovou zakázkou — chatbot, AI integrace, jednorázový vývoj, samostatná kampaň. Žádný audit potřeba. Probereme, co řešíte, a do 2 dnů pošleme nabídku.",
+      "what": "Co se na hovoru stane",
+      "items": [
+        "Vy nám řeknete, co chcete vyřešit",
+        "My řekneme, jestli a jak to umíme",
+        "Domluvíme rozsah a orientační cenu",
+        "Pokud sedneme, do 2 dnů pošleme oficiální nabídku"
+      ],
+      "cta": "Domluvit hovor (30 min, zdarma)"
+    },
+    "faq": {
+      "heading": "Často kladené otázky",
+      "items": [
+        {
+          "q": "Co se přesně děje na prvním sezení?",
+          "a": "Posloucháme. Bez powerpointů, bez pitch decku. Zajímá nás, jak váš byznys funguje, kde to skřípe a co chcete změnit. Až potom navrhneme, jak postupovat dál."
+        },
+        {
+          "q": "Jsem zavázán k pokračování po auditu?",
+          "a": "Ne. Audit je samostatný produkt. Po auditu dostanete plán, který si můžete realizovat sami, s námi, nebo s kýmkoliv jiným. My ovšem doufáme, že se vám naše práce zalíbí natolik, že budete chtít pokračovat."
+        },
+        {
+          "q": "Jak dlouho trvá, než dostanu výsledky?",
+          "a": "Tier 1: 1–3 týdny. Tier 2: pár dní až 2 týdny. Tier 3: pár dní až 2 týdny. Záleží na komplexnosti a vaší dostupnosti pro sezení."
+        },
+        {
+          "q": "Mohu si vybrat jen jednu konkrétní službu bez auditu?",
+          "a": "Ano. Pokud máte jasné zadání — chatbot, integrace, samostatná kampaň — domluvte si bezplatnou 30 min konzultaci. Audit dělá smysl jen pro komplexní transformace."
+        },
+        {
+          "q": "Proč jsou ceny jako rozsah, ne jako fixní částka?",
+          "a": "Protože rozsah auditu závisí na velikosti firmy, počtu domén a hloubce analýzy. Přesnou cenu upřesníme na úvodním sezení podle toho, co skutečně potřebujete."
+        },
+        {
+          "q": "Jak probíhá platba?",
+          "a": "Faktura → bankovní převod → potvrzená rezervace. Standardní B2B flow. Žádné karty, žádný online checkout. Detailně to popisujeme výše v sekci „Jak probíhá platba“."
+        },
+        {
+          "q": "Co když po auditu nebudu mít budget na pokračování?",
+          "a": "Žádný problém. Audit dostanete celý — plán, schémata, doporučení. Pokud se k nám později vrátíte, máme z auditu kontext a navážeme tam, kde jsme skončili."
+        },
+        {
+          "q": "Děláte i pro malé firmy a startupy?",
+          "a": "Ano, ale s realistickými očekáváními. Pokud je projekt pod 50 000 Kč, většinou dává smysl jít cestou bezplatné konzultace, ne placeného auditu. Pomůžeme vám rozhodnout."
+        }
+      ]
+    }
+  },
+  "sluzby": {
+    "hero": {
+      "status": "STATUS · v 0.1.0 · /cs/sluzby",
+      "headline": "Služby",
+      "subhead": "Tři kompetence — kód, AI a marketing — pod jednou střechou. 16 služeb napříč celým digitálním stackem."
+    },
+    "categories": {
+      "itDev": {
+        "label": "IT & VÝVOJ",
+        "intro": "Stavíme rychlé, server-šetřící a SEO-ready stacky. Next.js, Shopify, headless CMS — podle toho, co skutečně potřebujete, ne podle módy.",
+        "items": [
+          {
+            "name": "Weby na míru",
+            "desc": "Marketingové weby, korporátní stránky, landing pages. Next.js / Astro stack, Vercel deployment, design system."
+          },
+          {
+            "name": "E-shopy na míru",
+            "desc": "Shopify Plus, Medusa.js, headless e-commerce. Integrace na sklady, ERP, platební brány a logistiku."
+          },
+          {
+            "name": "Integrace systémů",
+            "desc": "Sklad, účetnictví, ERP, CRM, payment gateways, doprava. API-first, monitorované, dokumentované."
+          },
+          {
+            "name": "Custom solution development",
+            "desc": "Webové aplikace, dashboardy, interní nástroje, integrace třetích stran. Tam, kde SaaS nestačí."
+          }
+        ]
+      },
+      "aiData": {
+        "label": "AI & DATA",
+        "intro": "AI tam, kde dává smysl. Bez buzzwordu, bez sandbagging. Měřitelná úspora času nebo nárůst tržeb.",
+        "items": [
+          {
+            "name": "AI chatboti",
+            "desc": "RAG, knowledge-aware asistenti, zákaznická podpora 24/7. Claude, GPT a další modely abstrahované přes Vercel AI Gateway."
+          },
+          {
+            "name": "AI automatizace procesů",
+            "desc": "E-mail handling, reporting pipelines, kreativy at scale, content workflow. Tam, kde se opakuje stejná lidská práce."
+          },
+          {
+            "name": "AI konzultace + audit + strategie",
+            "desc": "AI roadmap pro firmu, governance, výběr modelů, security review, return-on-investment analýza."
+          },
+          {
+            "name": "Datová platforma + integrace",
+            "desc": "BI dashboardy, ETL/ELT, datový sklad, dashboarding přes Metabase nebo Looker Studio."
+          },
+          {
+            "name": "MLOps / Provoz AI systémů",
+            "desc": "Monitoring, evals, prompt management, cost control, A/B testování modelů. AI v produkci, ne jen v experimentu."
+          }
+        ]
+      },
+      "marketing": {
+        "label": "MARKETING & OBSAH",
+        "intro": "Růst, který je měřitelný. SEO i AEO. Tracking a reporting bez šumu.",
+        "items": [
+          {
+            "name": "SEO",
+            "desc": "Technické SEO, content strategie, link building, lokální SEO. Měříme přes Search Console a vlastní dashboardy."
+          },
+          {
+            "name": "AEO (Answer Engine Optimization)",
+            "desc": "Optimalizace pro ChatGPT, Claude, Gemini, Perplexity. FAQ schema, evidence panely, citation hygiene."
+          },
+          {
+            "name": "PPC kampaně",
+            "desc": "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Plné tracking nastavení, ne „jen spustit kampaň“."
+          },
+          {
+            "name": "Social media management",
+            "desc": "Instagram, Facebook, LinkedIn, TikTok. Strategie, kreativy, plánování, community management."
+          },
+          {
+            "name": "Tvorba kreativ",
+            "desc": "Grafika, Reels, video, banners, animace. Vlastní studio, ne stock fotky."
+          },
+          {
+            "name": "E-commerce management",
+            "desc": "Heureka, Zboží.cz, Glami, e-mail marketing. Feed management, propojení s e-shopem, optimalizace."
+          },
+          {
+            "name": "Marketing strategy + plan",
+            "desc": "Pozicování, message-market fit, customer journey, content calendar, channel mix."
+          }
+        ]
+      }
+    },
+    "ctaLine": "Chcete služby provázat? Začneme auditem.",
+    "ctaButton": "Vybrat audit →"
+  },
+  "reseni": {
+    "hero": {
+      "status": "STATUS · v 0.1.0 · /cs/reseni",
+      "headline": "Řešení",
+      "subhead": "Pět připravených balíčků pro typické scénáře. Místo toho, abyste z 16 služeb skládali sami, vyberte si scénář, který sedí na váš problém."
+    },
+    "items": [
+      {
+        "key": "knowledge",
+        "label": "01 · ZNALOSTNÍ ASISTENT",
+        "name": "Znalostní asistent",
+        "body": "AI asistent natrénovaný na vaši dokumentaci, znalostní bázi a procesy. RAG, Claude/GPT, integrace do Slacku nebo intranetu. Pro firmy s velkou interní znalostní bází, kde lidé tráví čas hledáním v dokumentech.",
+        "audience": "Hodí se pro: výrobní firmy, profesionální služby, finance, zákaznickou podporu."
+      },
+      {
+        "key": "agents",
+        "label": "02 · AUTONOMNÍ AGENTI",
+        "name": "Autonomní agenti",
+        "body": "AI agenti, kteří samostatně vykonávají sekvence úkolů — třídí e-maily, generují reporty, rezervují schůzky, kontrolují data. S human-in-the-loop tam, kde je to potřeba.",
+        "audience": "Hodí se pro: e-commerce, profesionální služby, back-office operace."
+      },
+      {
+        "key": "support",
+        "label": "03 · AI PODPORA ZÁKAZNÍKŮ",
+        "name": "AI podpora zákazníků",
+        "body": "Chatbot 24/7 pro web nebo Messenger/WhatsApp, který odpovídá na 70 % dotazů sám. Eskalace na živého agenta tam, kde má smysl. Měřitelný dopad na response time a CSAT.",
+        "audience": "Hodí se pro: e-commerce, SaaS, zákaznickou podporu."
+      },
+      {
+        "key": "dashboards",
+        "label": "04 · DATOVÉ DASHBOARDY",
+        "name": "Datové dashboardy",
+        "body": "Jeden přehled, kde vidíte vše — prodeje, marketing, sklady, finance. Metabase nebo Looker Studio, ETL pipeline z vašich systémů, alerting na anomálie.",
+        "audience": "Hodí se pro: e-commerce, výrobu, profesionální služby s vícero datovými zdroji."
+      },
+      {
+        "key": "infra",
+        "label": "05 · AI INFRASTRUKTURA",
+        "name": "AI infrastruktura",
+        "body": "Pokud uvažujete o víc AI případů použití, postavíme vám platformu — model abstraction layer, prompt management, cost control, eval framework, governance. Aby každé další AI nebylo nový projekt od nuly.",
+        "audience": "Hodí se pro: firmy s 3+ AI use casey, technologické týmy, oddělení inovací."
+      }
+    ],
+    "ctaLine": "Není vidět scénář, který sedí? Domluvte si bezplatnou konzultaci, navrhneme řešení na míru.",
+    "ctaButton": "Domluvit konzultaci →"
+  },
+  "odvetvi": {
+    "hero": {
+      "status": "STATUS · v 0.1.0 · /cs/odvetvi",
+      "headline": "Odvětví",
+      "subhead": "Šest oborů, kterým rozumíme do hloubky. Mluvíme řečí vašeho byznysu — od první schůzky."
+    },
+    "intro": "Nestavíme generické weby a AI šablony. Než cokoli navrhneme, díváme se na to, jak váš obor reálně funguje — jaké jsou typické integrace, regulační omezení, sezónnost a unit economics. Tady je šest oborů, kde máme zkušenost.",
+    "items": [
+      {
+        "key": "ecommerce",
+        "icon": "ShoppingCart",
+        "name": "E-commerce",
+        "body": "Shopify Plus, Medusa, headless e-shopy. Heureka, Zboží.cz, Glami feedy. Integrace na sklady (Pohoda, Helios), platební brány, dopravce, Recharge a subscription modely."
+      },
+      {
+        "key": "manufacturing",
+        "icon": "Factory",
+        "name": "Výroba & logistika",
+        "body": "Integrace na ERP (SAP, Pohoda, Helios), výrobní MES, WMS, EDI. Datové dashboardy pro výrobní KPIs. AI pro predictive maintenance a supply chain."
+      },
+      {
+        "key": "professional",
+        "icon": "Briefcase",
+        "name": "Profesionální služby",
+        "body": "Advokátní kanceláře, poradenství, agentury. Lead capture, CRM integrace, automatizace propozicí. AI asistenti pro vyhledávání v interní znalostní bázi."
+      },
+      {
+        "key": "finance",
+        "icon": "Landmark",
+        "name": "Finance",
+        "body": "Banky, pojišťovny, fintech. Compliance-aware copy, GDPR-first, regulované AI use cases. Datové dashboardy s rolovým přístupem, audit logy."
+      },
+      {
+        "key": "healthcare",
+        "icon": "HeartPulse",
+        "name": "Zdravotnictví",
+        "body": "Kliniky, zdravotnická zařízení, healthtech. Rezervační systémy, ochrana zdravotních dat, integrace s lékařskými IS. AI s lidským dohledem (medical-grade přesnost)."
+      },
+      {
+        "key": "support",
+        "icon": "Headphones",
+        "name": "Zákaznická podpora",
+        "body": "Helpdesk operace s objemem 1 000+ ticketů měsíčně. AI chatboti, automatizace ticket routingu, knowledge base, eskalační workflow."
+      }
+    ]
+  },
+  "oNas": {
+    "hero": {
+      "status": "STATUS · v 0.1.0 · /cs/o-nas",
+      "headline": "O VICTA",
+      "subhead": "Malý AI-augmented tým s ambicí být partner, ne dodavatel. Tady je, jak přemýšlíme."
+    },
+    "sections": {
+      "story": {
+        "label": "NÁŠ PŘÍBĚH",
+        "headline": "Stavíme to, co jsme sami chtěli.",
+        "body": "VICTA vznikla z frustrace. Klienti, kteří přicházeli s rozbitým marketingem, drahým webem a nulovou strategií. Vendoři, kteří dodali a zmizeli. Agentury, které posílaly výstupy přes pět lidí, než dorazily. Rozhodli jsme se to dělat jinak — malý tým, AI-augmented, pod jednou střechou."
+      },
+      "values": {
+        "label": "NAŠE HODNOTY",
+        "headline": "Čtyři principy, které držíme.",
+        "items": [
+          {
+            "label": "TRANSPARENTNOST",
+            "body": "Ukazujeme proces, ceny, myšlení. Žádné černé skříňky."
+          },
+          {
+            "label": "PARTNERSTVÍ",
+            "body": "Nestavíme a nezmizíme. Rosteme s klientem dlouhodobě."
+          },
+          {
+            "label": "AI-NATIVE",
+            "body": "AI drží detaily, lidé drží myšlení. Tempo a kvalita zároveň."
+          },
+          {
+            "label": "ŘEMESLO",
+            "body": "Design, kód i obsah dotahujeme do detailu. Žádné šablony."
+          }
+        ]
+      },
+      "process": {
+        "label": "NÁŠ PROCES",
+        "headline": "Posloucháme. Navrhujeme. Stavíme. Provozujeme.",
+        "body": "Než cokoliv navrhneme, chceme rozumět vašemu byznysu. Audit → návrh → implementace → správa a růst. Každá fáze má jasné výstupy a check-pointy."
+      },
+      "team": {
+        "label": "NÁŠ TÝM",
+        "headline": "Tým se brzy představí.",
+        "body": "Pracujeme na představení každého člena. Konkrétní lidi a role zveřejníme po launch první klientské vlny. Mezitím vás zajímá hlavně, jestli umíme dodat — a na to je nejlepší odpovědí naše práce."
+      }
+    },
+    "cta": {
+      "headline": "Pojďme se poznat.",
+      "body": "Domluvte si bezplatnou konzultaci nebo placený audit.",
+      "button": "Spolupráce →"
+    }
+  },
+  "kontakt": {
+    "hero": {
+      "status": "STATUS · v 0.1.0 · /cs/kontakt",
+      "headline": "Kontakt",
+      "subhead": "Pro rychlou odpověď použijte rezervaci hovoru. Nebo nás napište přímo."
+    },
+    "primary": {
+      "label": "PREFEROVANÁ CESTA",
+      "headline": "Domluvit si hovor",
+      "body": "Pro nové poptávky je nejrychlejší cesta rezervovat si bezplatnou 30 min konzultaci, nebo si vybrat tier auditu. Vrátíme se vám do 2 pracovních dnů.",
+      "cta": "Domluvit konzultaci →"
+    },
+    "channels": {
+      "heading": "Přímé kanály",
+      "email": {
+        "label": "EMAIL",
+        "value": "hello@victaagency.com",
+        "note": "Odpovídáme do 1 pracovního dne."
+      },
+      "phone": {
+        "label": "TELEFON",
+        "value": "+420 [TBD]",
+        "note": "Pondělí–pátek, 9:00–18:00. Pro nové poptávky preferujeme email nebo rezervaci hovoru."
+      },
+      "address": {
+        "label": "ADRESA",
+        "value": "Praha [TBD]",
+        "note": "Sídlo Victa Digital s.r.o. — přesnou adresu doplníme po dokončení registrace."
+      },
+      "social": {
+        "label": "SOCIÁLNÍ SÍTĚ",
+        "value": "LinkedIn — připravujeme",
+        "note": "Profil na LinkedIn aktivujeme s první klientskou vlnou."
+      }
+    },
+    "privacy": {
+      "label": "OCHRANA OSOBNÍCH ÚDAJŮ",
+      "body": "Když nám napíšete, zpracováváme vaše údaje podle ",
+      "linkText": "zásad ochrany osobních údajů",
+      "after": "."
+    }
+  },
+  "blog": {
+    "hero": {
+      "status": "STATUS · v 0.1.0 · /cs/blog",
+      "headline": "Blog",
+      "subhead": "Píšeme o tom, jak v praxi propojit web, AI a marketing — bez buzzwordu a bez vendor pitchů."
+    },
+    "comingSoon": {
+      "label": "PŘIPRAVUJEME",
+      "headline": "První články brzy.",
+      "body": "Blog spouštíme s první klientskou vlnou. Najdete tu články o digitalizaci, AI v praxi, AEO/SEO, e-commerce a o tom, jak vlastně vést dlouhodobý vztah s digitální agenturou."
+    },
+    "newsletter": {
+      "label": "NEWSLETTER",
+      "headline": "Chcete být upozornění?",
+      "body": "Pošlete nám e-mail na hello@victaagency.com a zařadíme vás do seznamu, kterému dáme vědět, jakmile blog ožije. Žádný spam, žádné automatické sekvence — jen jeden e-mail, až tu něco stojí za přečtení.",
+      "cta": "Napsat na hello@victaagency.com"
+    }
+  },
+  "legal": {
+    "privacy": {
+      "title": "Zásady ochrany osobních údajů",
+      "version": "Verze 1.0 (draft) · účinné od 2026-05-07",
+      "noteTitle": "Poznámka",
+      "noteBody": "Tento dokument je draft připravený na základě technické architektury VICTA. Před finálním uvedením do provozu prochází ještě právním reviewem. Pro dotazy nás kontaktujte na privacy@victaagency.com.",
+      "intro": "V tomto dokumentu popisujeme, jak my, společnost Victa Digital s.r.o., nakládáme s osobními údaji návštěvníků našich webových stránek. Bereme ochranu osobních údajů vážně — proto jsme tyto zásady připravili tak, aby byly konkrétní, čitelné a v souladu s nařízením GDPR a se zákonem č. 110/2019 Sb., o zpracování osobních údajů.",
+      "sections": [
+        {
+          "heading": "1. Provozovatel webu a správce osobních údajů",
+          "body": "Správcem osobních údajů ve smyslu čl. 4 odst. 7 GDPR je Victa Digital s.r.o., se sídlem v Praze, IČO [doplnit]. Pro veškeré dotazy týkající se ochrany osobních údajů se prosím obracejte na adresu privacy@victaagency.com."
+        },
+        {
+          "heading": "2. Účel zpracování a právní základ",
+          "body": "Pro každou činnost, při které zpracováváme osobní údaje (kontaktní formulář, newsletter, rezervace konzultace, analytika, vedení leadů), uvádíme v plné verzi dokumentu konkrétní účel a právní základ podle čl. 6 odst. 1 GDPR. Vždy zpracováváme jen údaje, které jsou pro daný účel nezbytné."
+        },
+        {
+          "heading": "3. Kategorie zpracovávaných údajů",
+          "body": "Identifikační údaje (jméno, firma, email, telefon), komunikační údaje (obsah zprávy), technické údaje (hashovaná IP, user-agent, locale), behaviorální údaje (pouze s vaším souhlasem v Google Analytics) a účetní údaje v případě uzavřeného obchodního vztahu."
+        },
+        {
+          "heading": "4. Příjemci a zpracovatelé",
+          "body": "Pro provoz webu využíváme prověřené poskytovatele s uzavřenou smlouvou o zpracování osobních údajů (DPA) — Vercel, Supabase, Resend, Cal.com, Cookiebot, Upstash, Sentry, Cloudflare, Google a Namecheap. U přenosů mimo EU uplatňujeme Standardní smluvní doložky (SCCs) nebo EU‑US Data Privacy Framework. Operační data zpracováváme v EU regionu Frankfurt."
+        },
+        {
+          "heading": "5. Doba uchování",
+          "body": "Údaje uchováváme jen po dobu nezbytně nutnou: kontaktní formulář a rezervace 24 měsíců, newsletter do odhlášení, lead v interní DB max. 36 měsíců neaktivity, audit log min. 36 měsíců, GA4 14 měsíců."
+        },
+        {
+          "heading": "6. Vaše práva",
+          "body": "Máte právo na přístup, opravu, výmaz, omezení zpracování, přenositelnost, vznesení námitky a odvolání souhlasu (čl. 15–22 GDPR). Žádost můžete podat na privacy@victaagency.com — vyřízení do 30 dnů. Stížnost můžete podat u Úřadu pro ochranu osobních údajů (uoou.cz)."
+        },
+        {
+          "heading": "7. Zabezpečení",
+          "body": "Šifrování v tranzitu (TLS 1.2+) i v klidu (AES‑256), hashování IP, pseudonymizace, server-side proxy pro API klíče, Row-Level Security v databázi, 2FA na administrátorských účtech, rate limiting + bot defense, pravidelný bezpečnostní review."
+        },
+        {
+          "heading": "8. Cookies",
+          "body": "Naše stránky používají cookies pro funkčnost, statistiku (po souhlasu) a marketing (po souhlasu). Detail najdete v samostatném dokumentu Zásady používání cookies."
+        }
+      ],
+      "fullVersionNote": "Toto je shrnutá veřejná verze. Plné znění s detailními tabulkami zpracovatelů, dob uchování a kontaktů na dozorové úřady aktualizujeme po právním reviewu — pro plné znění nás kontaktujte na privacy@victaagency.com."
+    },
+    "cookies": {
+      "title": "Zásady používání cookies",
+      "version": "Verze 1.0 (draft) · účinné od 2026-05-07",
+      "noteTitle": "Poznámka",
+      "noteBody": "Tento dokument je draft a před spuštěním analytiky a CMP banneru projde právním reviewem. Aktuálně web ještě cookies třetích stran neukládá — viz upozornění níže.",
+      "intro": "V těchto zásadách vám my, společnost Victa Digital s.r.o., vysvětlujeme, jaké cookies a obdobné technologie používáme na našich webových stránkách, k čemu je používáme, jak dlouho je uchováváme a jak můžete spravovat svůj souhlas s jejich použitím.",
+      "sections": [
+        {
+          "heading": "1. Co jsou cookies",
+          "body": "Cookies jsou malé textové soubory, které navštívená webová stránka ukládá ve vašem prohlížeči. Při dalších návštěvách se odesílají zpět na server — díky čemuž si stránka může pamatovat třeba jazykové nastavení nebo přihlašovací stav. Vedle cookies používáme i obdobné technologie (např. localStorage pro uložení tématu světlý/tmavý)."
+        },
+        {
+          "heading": "2. Právní základ",
+          "body": "Nezbytné cookies používáme bez souhlasu, neboť bez nich by web nefungoval. Všechny ostatní cookies (statistické, marketingové, preferenční) používáme pouze po vašem výslovném souhlasu uděleném v consent banneru. Souhlas si vyžadujeme prostřednictvím Cookiebot CMP."
+        },
+        {
+          "heading": "3. Typy cookies, které používáme",
+          "body": "Nezbytné: bot defense (Cloudflare), CookieConsent (Cookiebot), cal.com session, vercel-flight-prefetch, victa-theme v localStorage. Statistické (po souhlasu): _ga, _gid od Google Analytics 4. Marketingové (po souhlasu): aktuálně nepoužíváme retargeting cookies."
+        },
+        {
+          "heading": "4. Aktuální stav (Phase 1)",
+          "body": "Web v Phase 1 ještě nemá aktivovaný Cookiebot ani Google Analytics — neukládáme tedy žádné statistické ani marketingové cookies. Aktivujeme je až s první klientskou vlnou (Phase 2/3) a odpovídajícím způsobem aktualizujeme tento dokument."
+        },
+        {
+          "heading": "5. Jak změnit nebo zrušit souhlas",
+          "body": "Po aktivaci Cookiebot bude v patičce odkaz „Změnit nastavení cookies“, který znovu otevře banner. Cookies můžete také mazat nebo blokovat v nastavení prohlížeče. Web respektuje signál Global Privacy Control (GPC)."
+        },
+        {
+          "heading": "6. Cookies třetích stran a předávání mimo EU",
+          "body": "Některé cookies budou nastavovat třetí strany (Google, Cloudflare, Cookiebot, Cal.com). Pro přenosy mimo EU uplatňujeme Standardní smluvní doložky (SCCs), u Google také EU‑US Data Privacy Framework. Serverová infrastruktura (Vercel, Supabase) běží v regionu Frankfurt."
+        },
+        {
+          "heading": "7. Kontakt",
+          "body": "V případě dotazů ohledně cookies se obraťte na privacy@victaagency.com. Více informací o zpracování osobních údajů obecně najdete v dokumentu Zásady ochrany osobních údajů."
+        }
+      ],
+      "fullVersionNote": "Toto je shrnutá veřejná verze. Plné znění s tabulkami konkrétních cookies, jejich doby platnosti a typu aktualizujeme po aktivaci Cookiebot — pro plné znění nás kontaktujte na privacy@victaagency.com."
+    }
   }
 }

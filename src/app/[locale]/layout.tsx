@@ -5,6 +5,8 @@ import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { ThemeProvider } from '@/components/theme-provider';
+import { Nav } from '@/components/nav';
+import { Footer } from '@/components/footer';
 import { antiFlashScript } from '@/lib/anti-flash';
 import '@/styles/globals.css';
 
@@ -54,7 +56,11 @@ export default async function LocaleLayout({
       <body className={`${interTight.variable} ${geistMono.variable} bg-grid antialiased`}>
         <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem storageKey="victa-theme">
           <NextIntlClientProvider messages={messages} locale={locale}>
-            {children}
+            <Nav />
+            <main id="main" className="relative">
+              {children}
+            </main>
+            <Footer />
           </NextIntlClientProvider>
         </ThemeProvider>
       </body>

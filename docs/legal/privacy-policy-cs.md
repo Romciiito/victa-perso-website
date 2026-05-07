@@ -3,7 +3,7 @@
 > **POZNÁMKA**: tento dokument je draft připravený Claude Code na základě technické architektury VICTA. Před publikací je nezbytný review českým právníkem specializovaným na ochranu osobních údajů.
 
 **Verze**: 1.0 (draft)
-**Datum účinnosti**: [ROMAN: doplnit datum publikace]
+**Datum účinnosti**: 2026-05-07
 **Platnost**: do vydání nové verze
 
 ---
@@ -20,13 +20,13 @@ Tento dokument se vztahuje výhradně na zpracování osobních údajů v souvi
 
 Správcem osobních údajů ve smyslu čl. 4 odst. 7 GDPR je:
 
-- **Obchodní firma**: [ROMAN: vyplnit obchodní firmu — pravděpodobně „Victa s.r.o.“ nebo jiný právní útvar]
+- **Obchodní firma**: Victa Digital s.r.o.
 - **IČO**: [ROMAN: vyplnit IČO]
 - **DIČ**: [ROMAN: vyplnit DIČ, pokud je správce plátcem DPH]
 - **Sídlo**: [ROMAN: vyplnit zapsané sídlo společnosti]
 - **Spisová značka**: [ROMAN: vyplnit spisovou značku obchodního rejstříku, pokud relevantní]
 - **Email pro žádosti subjektů údajů**: privacy@victaagency.com
-- **Email — obecný kontakt**: [ROMAN: vyplnit obecný kontaktní email, např. info@victaagency.com]
+- **Email — obecný kontakt**: l.trung03@gmail.com
 - **Telefon**: [ROMAN: vyplnit telefon, volitelné]
 
 ### Pověřenec pro ochranu osobních údajů (DPO)
@@ -328,11 +328,11 @@ Tyto zásady můžeme čas od času aktualizovat — například při zavedení 
 V případě jakýchkoli dotazů, žádostí nebo stížností týkajících se zpracování osobních údajů se na nás obraťte:
 
 - **Email pro ochranu osobních údajů**: privacy@victaagency.com
-- **Obecný kontakt**: [ROMAN: vyplnit obecný email]
+- **Obecný kontakt**: l.trung03@gmail.com
 - **Poštovní adresa**: [ROMAN: vyplnit poštovní adresu pro doručování — typicky shodnou se sídlem]
 
 Vyřízením vaší žádosti nebo dotazu se budeme zabývat osobně. Snažíme se odpovídat do dvou pracovních dnů; u žádostí podle čl. 15–22 GDPR je závazná lhůta 30 dní (s možností prodloužení o 60 dní v odůvodněných případech).
 
 ---
 
-*Tento dokument byl naposledy aktualizován [ROMAN: doplnit datum publikace].*
+*Tento dokument byl naposledy aktualizován 2026-05-07.*

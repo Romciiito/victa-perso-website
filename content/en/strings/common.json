@@ -3,10 +3,74 @@
     "title": "VICTA — digital agency",
     "description": "Partner, not vendor. We build a system with you that grows for years."
   },
+  "common": {
+    "learnMore": "Learn more →",
+    "backHome": "Back to homepage",
+    "version": "v 0.1.0",
+    "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1"
+  },
+  "nav": {
+    "tag": "/ digital agency",
+    "services": "Services",
+    "solutions": "Solutions",
+    "industries": "Industries",
+    "collaboration": "Collaboration",
+    "about": "About",
+    "contact": "Contact",
+    "open": "Open menu",
+    "close": "Close menu",
+    "themeLight": "Switch to light mode",
+    "themeDark": "Switch to dark mode",
+    "skipToContent": "Skip to content"
+  },
+  "footer": {
+    "tagline": "Partner, not vendor. We build a system with you that grows for years.",
+    "status": "STATUS · v 0.1.0 · region eu-central-1",
+    "servicesHeading": "Services",
+    "companyHeading": "Company",
+    "legalHeading": "Legal",
+    "links": {
+      "webDevelopment": "Custom web & e-commerce",
+      "aiChatbots": "AI chatbots",
+      "aiAutomation": "AI automation",
+      "seoAeo": "SEO & AEO",
+      "ppc": "PPC campaigns",
+      "audit": "Comprehensive audit",
+      "collaboration": "Collaboration",
+      "about": "About",
+      "contact": "Contact",
+      "blog": "Blog",
+      "privacy": "Privacy policy",
+      "cookies": "Cookie policy"
+    },
+    "bottom": {
+      "copyright": "© 2026 Victa Digital s.r.o.",
+      "ico": "VAT ID [TBD]",
+      "city": "Prague",
+      "country": "Czech Republic"
+    }
+  },
   "home": {
-    "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1",
-    "headline": "Partner, not vendor.",
-    "subhead": "We build a system with you that grows for years — not just a site that's outdated by next year.",
-    "wip": "Page under construction. Contact us: hello@victaagency.com"
+    "hero": {
+      "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1",
+      "headline": "Partner, not vendor.",
+      "subhead": "We build a system with you that grows for years — not just a site that's outdated by next year.",
+      "ctaPrimary": "Comprehensive audit from €800",
+      "ctaGhost": "Book a no-strings introduction"
+    },
+    "stub": {
+      "label": "ENGLISH STUB",
+      "headline": "We're a Czech/Slovak digital agency.",
+      "body": "VICTA is a small AI-augmented digital agency working primarily in the Czech and Slovak markets. The full English site will land with our international expansion. Until then, the team handles English-language clients case-by-case.",
+      "contactHeadline": "Get in touch — in English.",
+      "contactBody": "We're happy to discuss projects in English. Send us a note and we'll come back within 1 business day.",
+      "email": "hello@victaagency.com",
+      "fullCs": "View the full site in Czech →"
+    },
+    "finalCta": {
+      "headline": "Let's get to know each other.",
+      "subhead": "30 minutes, no commitment. We'll discuss your business and tell you straight whether VICTA can help.",
+      "cta": "Book consultation →"
+    }
   }
 }

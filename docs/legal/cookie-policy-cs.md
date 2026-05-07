@@ -3,14 +3,14 @@
 > **POZNÁMKA**: tento dokument je draft připravený Claude Code na základě technické architektury VICTA. Před publikací je nezbytný review českým právníkem specializovaným na ochranu osobních údajů.
 
 **Verze**: 1.0 (draft)
-**Datum účinnosti**: [ROMAN: doplnit datum publikace]
+**Datum účinnosti**: 2026-05-07
 **Platnost**: do vydání nové verze
 
 ---
 
 ## Úvod
 
-V těchto zásadách vám my, společnost VICTA (správce: [ROMAN: vyplnit obchodní firmu]), vysvětlujeme, jaké cookies a obdobné technologie používáme na našich webových stránkách, k čemu je používáme, jak dlouho je uchováváme a jak můžete spravovat svůj souhlas s jejich použitím.
+V těchto zásadách vám my, společnost VICTA (správce: Victa Digital s.r.o.), vysvětlujeme, jaké cookies a obdobné technologie používáme na našich webových stránkách, k čemu je používáme, jak dlouho je uchováváme a jak můžete spravovat svůj souhlas s jejich použitím.
 
 Tyto zásady jsou doplňkem našich [Zásad ochrany osobních údajů](/cs/zasady-ochrany-osobnich-udaju/) — pro úplný obraz o tom, jak zpracováváme osobní údaje, doporučujeme přečíst si oba dokumenty.
 
@@ -169,7 +169,7 @@ Aktuální technický scan cookies provádí nástroj **Cookiebot** automaticky 
 V případě dotazů ohledně používání cookies se na nás můžete obrátit:
 
 - **Email pro ochranu osobních údajů**: privacy@victaagency.com
-- **Obecný kontakt**: [ROMAN: vyplnit obecný email]
+- **Obecný kontakt**: l.trung03@gmail.com
 
 Více informací o tom, jak nakládáme s osobními údaji obecně, najdete v dokumentu [Zásady ochrany osobních údajů](/cs/zasady-ochrany-osobnich-udaju/).
 
@@ -187,4 +187,4 @@ Tyto zásady můžeme čas od času aktualizovat. Aktuální verze je vždy dost
 
 ---
 
-*Tento dokument byl naposledy aktualizován [ROMAN: doplnit datum publikace].*
+*Tento dokument byl naposledy aktualizován 2026-05-07.*
