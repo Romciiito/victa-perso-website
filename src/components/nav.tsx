@@ -2,11 +2,10 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { ChevronDown, Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { Link, usePathname } from '@/i18n/navigation';
-import { ThemeToggle } from './theme-toggle';
 import { LocaleSwitcher } from './locale-switcher';
-import { MegaMenu } from './mega-menu';
 import {
   OFFERING_MAP,
   type OfferingData,
@@ -14,24 +13,12 @@ import {
 } from '@/lib/offerings-data';
 
 /* ============================================================
-   Nav — top header with desktop mega-menu + mobile accordion drawer.
-
-   Desktop
-   ───────
-   - "Služby", "Řešení", "Odvětví" are dropdown triggers (button).
-     Hover-with-delay or click toggles the corresponding mega-menu.
-     Hover delay (180ms) prevents accidental opens; switching between
-     triggers swaps panels instantly (no flicker).
-   - "Spolupráce", "O nás", "Kontakt" remain plain links.
-   - Theme toggle + locale switcher stay rightmost.
-
-   Mobile
-   ──────
-   - Hamburger toggles a sheet. Inside the sheet, the same three
-     items become accordion rows that expand inline to show the 6/5/7
-     offering items as a list (icon + title + subtitle), with a
-     "Zobrazit vše" link at the bottom of each section.
-   - Plain link items stay simple links.
+   Nav · D-008 taste-skill aesthetic
+   - 3 dropdown triggers (Služby / Řešení / Odvětví) → mega-menu
+   - 3 plain links (Spolupráce / O nás / Kontakt)
+   - Hover-with-180ms-delay open, 120ms grace on leave, click toggle
+   - Mobile: hamburger → accordion drawer
+   - Mega-menu panel positioned absolute (does not push page content)
    ============================================================ */
 
 type DropdownItem = { kind: 'dropdown'; key: OfferingKey; href: string };
@@ -51,79 +38,84 @@ const NAV_ITEMS: ReadonlyArray<NavItem> = [
   { kind: 'link', key: 'contact', href: '/kontakt' },
 ];
 
+const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
 const HOVER_OPEN_DELAY_MS = 180;
+const HOVER_CLOSE_GRACE_MS = 120;
 
 export function Nav() {
   const t = useTranslations('nav');
   const pathname = usePathname();
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<OfferingKey | null>(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<OfferingKey | null>(null);
   const hoverTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const idPrefix = useId();
+  const panelId = `${idPrefix}-megamenu`;
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`) || pathname.startsWith(`${href}#`);
 
-  const closeDropdown = () => {
+  const cancelHover = () => {
     if (hoverTimer.current) {
       clearTimeout(hoverTimer.current);
       hoverTimer.current = null;
     }
+  };
+
+  const closeDropdown = () => {
+    cancelHover();
     setOpenDropdown(null);
   };
 
-  // Close any open dropdown when the route changes (auto-close on navigation).
-  useEffect(() => {
-    closeDropdown();
-    setMobileOpen(false);
-    setMobileExpanded(null);
-    // intentionally listening to pathname only
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [pathname]);
-
-  // Cleanup timer on unmount.
-  useEffect(() => {
-    return () => {
-      if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    };
-  }, []);
-
   const scheduleOpen = (key: OfferingKey) => {
-    if (hoverTimer.current) clearTimeout(hoverTimer.current);
-    // If another dropdown is already open, switch instantly.
+    cancelHover();
     if (openDropdown && openDropdown !== key) {
       setOpenDropdown(key);
       return;
     }
-    hoverTimer.current = setTimeout(() => {
-      setOpenDropdown(key);
-    }, HOVER_OPEN_DELAY_MS);
-  };
-
-  const cancelScheduledOpen = () => {
-    if (hoverTimer.current) {
-      clearTimeout(hoverTimer.current);
-      hoverTimer.current = null;
-    }
+    hoverTimer.current = setTimeout(() => setOpenDropdown(key), HOVER_OPEN_DELAY_MS);
   };
 
   const toggleDropdown = (key: OfferingKey) => {
-    if (hoverTimer.current) {
-      clearTimeout(hoverTimer.current);
-      hoverTimer.current = null;
-    }
+    cancelHover();
     setOpenDropdown((cur) => (cur === key ? null : key));
   };
 
-  const activeData: OfferingData | null = openDropdown ? OFFERING_MAP[openDropdown] : null;
-  const panelId = `${idPrefix}-megamenu`;
+  // Auto-close on navigation
+  useEffect(() => {
+    closeDropdown();
+    setMobileOpen(false);
+    setMobileExpanded(null);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
+  // Cleanup
+  useEffect(() => () => cancelHover(), []);
+
+  // Body scroll lock when mobile drawer open
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [mobileOpen]);
+
+  // Escape closes
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        setOpenDropdown(null);
+        setMobileOpen(false);
+      }
+    }
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, []);
 
   return (
-    <header
-      className="sticky top-0 z-50 border-b border-border-soft backdrop-blur-[12px]"
-      style={{ backgroundColor: 'color-mix(in oklab, var(--bg) 88%, transparent)' }}
-    >
+    <header className="sticky top-0 z-50">
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:left-3 focus:top-3 focus:rounded-md focus:border focus:border-border focus:bg-bg focus:px-3 focus:py-2 focus:text-sm focus:text-ink focus:shadow-sm"
@@ -131,138 +123,314 @@ export function Nav() {
         {t('skipToContent')}
       </a>
 
-      <div className="mx-auto flex w-full max-w-[1440px] items-center justify-between px-6 py-4 md:px-12">
-        {/* Logo + tag */}
-        <Link href="/" className="inline-flex items-center gap-3">
-          <span className="text-base font-semibold tracking-[-0.01em] text-ink">VICTA</span>
-          <span className="font-mono text-xs text-secondary">{t('tag')}</span>
-        </Link>
+      <div
+        className="relative border-b border-border bg-[color-mix(in_oklab,var(--bg)_85%,transparent)] backdrop-blur-xl"
+        onMouseLeave={() => {
+          cancelHover();
+          hoverTimer.current = setTimeout(() => setOpenDropdown(null), HOVER_CLOSE_GRACE_MS);
+        }}
+        onMouseEnter={cancelHover}
+      >
+        <div className="mx-auto flex w-full max-w-[1400px] items-center justify-between gap-6 px-6 py-4 md:px-10">
+          {/* Logo */}
+          <Link href="/" className="inline-flex items-baseline gap-3">
+            <span
+              className="display text-[20px] font-medium tracking-[-0.02em] text-ink"
+              style={{ lineHeight: 1 }}
+            >
+              VICTA
+            </span>
+            <span className="hidden font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary sm:inline">
+              {t('tag')}
+            </span>
+          </Link>
 
-        {/* Desktop nav */}
-        <nav
-          className="hidden items-center gap-1 md:flex"
-          onMouseLeave={() => {
-            cancelScheduledOpen();
-            // Mouse left the trigger row — close after a short grace window
-            // so users moving toward the panel below aren't punished.
-            hoverTimer.current = setTimeout(() => setOpenDropdown(null), 120);
-          }}
-          onMouseEnter={cancelScheduledOpen}
-        >
-          {NAV_ITEMS.map((item) => {
-            const active = isActive(item.href);
+          {/* Desktop nav */}
+          <nav className="hidden items-center gap-1 md:flex">
+            {NAV_ITEMS.filter((i) => i.kind === 'dropdown').map((item) => {
+              if (item.kind !== 'dropdown') return null;
+              const isOpen = openDropdown === item.key;
+              const active = isActive(item.href);
+              return (
+                <button
+                  key={item.key}
+                  type="button"
+                  aria-haspopup="true"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => toggleDropdown(item.key)}
+                  onMouseEnter={() => scheduleOpen(item.key)}
+                  onFocus={() => setOpenDropdown(item.key)}
+                  className={`tactile relative inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-[13.5px] ${
+                    isOpen || active ? 'bg-surface text-ink' : 'text-secondary hover:bg-surface hover:text-ink'
+                  }`}
+                >
+                  <span>{t(item.key)}</span>
+                  <motion.span
+                    animate={{ rotate: isOpen ? 180 : 0 }}
+                    transition={SPRING}
+                    aria-hidden
+                    className="inline-flex"
+                  >
+                    <ChevronDown size={13} strokeWidth={1.75} />
+                  </motion.span>
+                </button>
+              );
+            })}
 
-            if (item.kind === 'link') {
+            <span aria-hidden className="mx-2 h-4 w-px bg-border" />
+
+            {NAV_ITEMS.filter((i) => i.kind === 'link').map((item) => {
+              if (item.kind !== 'link') return null;
+              const active = isActive(item.href);
               return (
                 <Link
                   key={item.key}
                   href={item.href}
-                  className={`relative rounded-sm px-3 py-2 text-sm transition-colors duration-150 ${
-                    active ? 'text-ink' : 'text-secondary hover:bg-surface hover:text-ink'
+                  className={`tactile rounded-full px-4 py-2 text-[13.5px] ${
+                    active ? 'bg-surface text-ink' : 'text-secondary hover:bg-surface hover:text-ink'
                   }`}
                 >
                   {t(item.key)}
-                  {active ? (
-                    <span
-                      aria-hidden
-                      className="pointer-events-none absolute inset-x-3 -bottom-px h-px"
-                      style={{ backgroundColor: 'var(--accent)' }}
-                    />
-                  ) : null}
                 </Link>
               );
-            }
+            })}
+          </nav>
 
-            const isOpen = openDropdown === item.key;
-            return (
-              <button
-                key={item.key}
-                type="button"
-                aria-haspopup="true"
-                aria-expanded={isOpen}
-                aria-controls={panelId}
-                onClick={() => toggleDropdown(item.key)}
-                onMouseEnter={() => scheduleOpen(item.key)}
-                onFocus={() => setOpenDropdown(item.key)}
-                className={`relative inline-flex items-center gap-1 rounded-sm px-3 py-2 text-sm transition-colors duration-150 ${
-                  active || isOpen ? 'text-ink' : 'text-secondary hover:bg-surface hover:text-ink'
-                }`}
-              >
-                <span>{t(item.key)}</span>
-                <ChevronDown
-                  size={14}
-                  aria-hidden
-                  className="transition-transform duration-150"
-                  style={{ transform: isOpen ? 'rotate(180deg)' : undefined, opacity: 0.7 }}
-                />
-                {active ? (
-                  <span
-                    aria-hidden
-                    className="pointer-events-none absolute inset-x-3 -bottom-px h-px"
-                    style={{ backgroundColor: 'var(--accent)' }}
-                  />
-                ) : null}
-              </button>
-            );
-          })}
-          <span className="ml-2 inline-flex items-center gap-2">
-            <ThemeToggle />
+          {/* Right — locale + CTA + mobile hamburger */}
+          <div className="flex items-center gap-2 md:gap-3">
             <LocaleSwitcher />
-          </span>
-        </nav>
-
-        {/* Mobile controls */}
-        <div className="flex items-center gap-2 md:hidden">
-          <ThemeToggle />
-          <LocaleSwitcher />
-          <button
-            type="button"
-            aria-label={mobileOpen ? t('close') : t('open')}
-            aria-expanded={mobileOpen}
-            aria-controls="mobile-menu"
-            onClick={() => setMobileOpen((v) => !v)}
-            className="flex size-9 items-center justify-center rounded-md border border-border text-ink transition-colors duration-150 hover:bg-surface"
-          >
-            {mobileOpen ? <X size={16} aria-hidden /> : <Menu size={16} aria-hidden />}
-          </button>
+            <Link
+              href="/spoluprace#audit"
+              className="tactile hidden items-center gap-2 rounded-full border border-accent bg-accent px-5 py-2 text-[13px] font-medium text-bg md:inline-flex"
+            >
+              Spustit audit
+              <ArrowUpRight size={14} strokeWidth={1.75} />
+            </Link>
+            <button
+              type="button"
+              aria-label={mobileOpen ? t('close') : t('open')}
+              aria-expanded={mobileOpen}
+              aria-controls="mobile-menu"
+              onClick={() => setMobileOpen((v) => !v)}
+              className="tactile grid size-9 place-items-center rounded-full border border-border text-ink hover:border-ink md:hidden"
+            >
+              {mobileOpen ? <X size={16} aria-hidden /> : <Menu size={16} aria-hidden />}
+            </button>
+          </div>
         </div>
+
+        <MegaMenuPanel
+          openKey={openDropdown}
+          panelId={panelId}
+          onClose={closeDropdown}
+        />
       </div>
 
-      {/* Desktop mega-menu panel */}
-      {activeData ? (
-        <div
-          // Keep the panel "alive" on hover so it doesn't close before a click.
-          onMouseEnter={cancelScheduledOpen}
-        >
-          <MegaMenu
-            open={openDropdown !== null}
-            onClose={closeDropdown}
-            data={activeData}
-            panelId={panelId}
-          />
-        </div>
-      ) : null}
+      <MobileDrawer
+        id="mobile-menu"
+        open={mobileOpen}
+        expanded={mobileExpanded}
+        onToggle={(k) => setMobileExpanded((cur) => (cur === k ? null : k))}
+        onClose={() => {
+          setMobileOpen(false);
+          setMobileExpanded(null);
+        }}
+      />
+    </header>
+  );
+}
 
-      {/* Mobile drawer */}
-      {mobileOpen ? (
-        <nav
-          id="mobile-menu"
-          className="border-t border-border-soft md:hidden"
+/* ------------------------------------------------------------ */
+/*  Mega-menu panel · asymmetric, stagger reveal                 */
+/* ------------------------------------------------------------ */
+
+function MegaMenuPanel({
+  openKey,
+  panelId,
+  onClose,
+}: {
+  openKey: OfferingKey | null;
+  panelId: string;
+  onClose: () => void;
+}) {
+  const data: OfferingData | null = openKey ? OFFERING_MAP[openKey] : null;
+
+  return (
+    <AnimatePresence mode="wait">
+      {data && (
+        <motion.div
+          key={openKey}
+          id={panelId}
+          role="region"
+          initial={{ opacity: 0, y: -12, filter: 'blur(8px)' }}
+          animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          exit={{ opacity: 0, y: -8, filter: 'blur(6px)' }}
+          transition={SPRING}
+          className="absolute inset-x-0 top-full z-40 border-t border-b border-border-soft bg-[color-mix(in_oklab,var(--surface)_95%,transparent)] shadow-card backdrop-blur-xl"
+        >
+          <div className="mx-auto grid max-w-[1400px] grid-cols-12 gap-10 px-6 py-12 md:px-10 md:py-14">
+            <motion.div
+              initial={{ opacity: 0, x: -12 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ ...SPRING, delay: 0.04 }}
+              className="col-span-12 md:col-span-4"
+            >
+              <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-tertiary">
+                {data.sidebarHeadline.split(' ')[0]}
+              </span>
+              <h3 className="display mt-3 max-w-[14ch] text-[clamp(28px,2.6vw,40px)] text-ink">
+                {data.sidebarHeadline}
+              </h3>
+              <p className="mt-3 max-w-[40ch] text-[14.5px] leading-[1.55] text-secondary">
+                {data.sidebarDescription}
+              </p>
+              <Link
+                href={data.sidebarCtaHref}
+                onClick={onClose}
+                className="tactile mt-6 inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-[13px] text-ink hover:border-accent hover:text-accent"
+              >
+                {data.sidebarCtaLabel}
+                <ArrowUpRight size={14} strokeWidth={1.75} />
+              </Link>
+            </motion.div>
+
+            <ul className="col-span-12 grid grid-cols-1 gap-1 md:col-span-8 md:grid-cols-2">
+              {data.items.map((item, i) => (
+                <MegaItem
+                  key={item.title}
+                  href={item.href}
+                  icon={item.icon}
+                  title={item.title}
+                  subtitle={item.subtitle}
+                  index={i}
+                  onClick={onClose}
+                />
+              ))}
+            </ul>
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+function MegaItem({
+  icon: Icon,
+  title,
+  subtitle,
+  href,
+  index,
+  onClick,
+}: {
+  icon: OfferingData['items'][number]['icon'];
+  title: string;
+  subtitle: string;
+  href: string;
+  index: number;
+  onClick: () => void;
+}) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const [hover, setHover] = useState(false);
+
+  function onMove(e: React.MouseEvent<HTMLAnchorElement>) {
+    const r = ref.current?.getBoundingClientRect();
+    if (!r) return;
+    const x = ((e.clientX - r.left) / r.width) * 100;
+    const y = ((e.clientY - r.top) / r.height) * 100;
+    ref.current?.style.setProperty('--mx', `${x}%`);
+    ref.current?.style.setProperty('--my', `${y}%`);
+  }
+
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ ...SPRING, delay: 0.06 + index * 0.03 }}
+    >
+      <Link
+        ref={ref}
+        href={href}
+        onClick={onClick}
+        onMouseMove={onMove}
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className="spotlight tactile group relative grid grid-cols-[auto_1fr_auto] items-start gap-4 rounded-[12px] p-4 hover:bg-[color-mix(in_oklab,var(--bg)_60%,transparent)]"
+      >
+        <motion.div
+          animate={{
+            borderColor: hover ? 'var(--accent)' : 'var(--border)',
+            color: hover ? 'var(--accent)' : 'var(--ink)',
+          }}
+          transition={SPRING}
+          aria-hidden
+          className="grid size-9 place-items-center rounded-md border"
+        >
+          <Icon size={17} strokeWidth={1.5} />
+        </motion.div>
+
+        <div className="min-w-0">
+          <div className="display text-[15.5px] font-medium leading-tight text-ink">
+            {title}
+          </div>
+          <div className="mt-1 text-[13px] leading-[1.45] text-secondary">
+            {subtitle}
+          </div>
+        </div>
+
+        <motion.span
+          animate={{ x: hover ? 4 : 0, opacity: hover ? 1 : 0.35 }}
+          transition={SPRING}
+          aria-hidden
+          className="self-center text-tertiary group-hover:text-accent"
+        >
+          <ArrowUpRight size={16} strokeWidth={1.5} />
+        </motion.span>
+      </Link>
+    </motion.li>
+  );
+}
+
+/* ------------------------------------------------------------ */
+/*  Mobile drawer                                                */
+/* ------------------------------------------------------------ */
+
+function MobileDrawer({
+  id,
+  open,
+  expanded,
+  onToggle,
+  onClose,
+}: {
+  id: string;
+  open: boolean;
+  expanded: OfferingKey | null;
+  onToggle: (k: OfferingKey) => void;
+  onClose: () => void;
+}) {
+  const t = useTranslations('nav');
+
+  return (
+    <AnimatePresence>
+      {open && (
+        <motion.nav
+          id={id}
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          transition={SPRING}
+          className="border-t border-border bg-bg md:hidden"
           style={{ backgroundColor: 'var(--bg)' }}
         >
-          <ul className="mx-auto flex w-full max-w-[1440px] flex-col gap-1 px-6 py-4">
+          <ul className="mx-auto flex w-full max-w-[1400px] flex-col gap-1 px-6 py-4">
             {NAV_ITEMS.map((item) => {
-              const active = isActive(item.href);
-
               if (item.kind === 'link') {
                 return (
                   <li key={item.key}>
                     <Link
                       href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`block rounded-sm px-3 py-3 text-base transition-colors duration-150 ${
-                        active ? 'bg-surface text-ink' : 'text-secondary hover:bg-surface hover:text-ink'
-                      }`}
+                      onClick={onClose}
+                      className="block rounded-md px-3 py-3.5 text-[16px] text-secondary hover:bg-surface hover:text-ink"
                     >
                       {t(item.key)}
                     </Link>
@@ -271,93 +439,90 @@ export function Nav() {
               }
 
               const data = OFFERING_MAP[item.key];
-              const isExpanded = mobileExpanded === item.key;
-              const accordionId = `${idPrefix}-mobile-${item.key}`;
+              const isExpanded = expanded === item.key;
               return (
                 <li key={item.key} className="border-b border-border-soft last:border-b-0">
                   <button
                     type="button"
                     aria-expanded={isExpanded}
-                    aria-controls={accordionId}
-                    onClick={() =>
-                      setMobileExpanded((cur) => (cur === item.key ? null : item.key))
-                    }
-                    className={`flex w-full items-center justify-between rounded-sm px-3 py-3 text-base transition-colors duration-150 ${
-                      active || isExpanded
-                        ? 'text-ink'
-                        : 'text-secondary hover:bg-surface hover:text-ink'
-                    }`}
+                    onClick={() => onToggle(item.key)}
+                    className="flex w-full items-center justify-between rounded-md px-3 py-3.5 text-[16px] text-ink"
                   >
                     <span>{t(item.key)}</span>
-                    <ChevronDown
-                      size={16}
+                    <motion.span
+                      animate={{ rotate: isExpanded ? 180 : 0 }}
+                      transition={SPRING}
                       aria-hidden
-                      className="transition-transform duration-150"
-                      style={{ transform: isExpanded ? 'rotate(180deg)' : undefined, opacity: 0.7 }}
-                    />
-                  </button>
-                  {isExpanded ? (
-                    <ul
-                      id={accordionId}
-                      className="flex flex-col gap-1 pb-3 pl-3 pr-1 pt-1"
+                      className="inline-flex text-tertiary"
                     >
-                      {data.items.map((child, idx) => {
-                        const Icon = child.icon;
-                        return (
-                          <li key={`${idx}-${child.title}`}>
-                            <Link
-                              href={child.href}
-                              onClick={() => {
-                                setMobileOpen(false);
-                                setMobileExpanded(null);
-                              }}
-                              className="flex items-start gap-3 rounded-sm px-3 py-2 transition-colors duration-150 hover:bg-surface"
-                            >
-                              <Icon
-                                size={18}
-                                strokeWidth={1.5}
-                                aria-hidden
-                                className="mt-1 shrink-0 text-tertiary"
-                              />
-                              <span className="flex flex-col">
-                                <span
-                                  className="text-ink"
-                                  style={{ fontSize: '14px', fontWeight: 500, lineHeight: 1.3 }}
-                                >
-                                  {child.title}
+                      <ChevronDown size={16} strokeWidth={1.75} />
+                    </motion.span>
+                  </button>
+                  <AnimatePresence>
+                    {isExpanded && (
+                      <motion.ul
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={SPRING}
+                        className="overflow-hidden pb-3 pl-3 pr-1"
+                      >
+                        {data.items.map((child, idx) => {
+                          const Icon = child.icon;
+                          return (
+                            <li key={`${idx}-${child.title}`}>
+                              <Link
+                                href={child.href}
+                                onClick={onClose}
+                                className="flex items-start gap-3 rounded-md px-3 py-2.5 hover:bg-surface"
+                              >
+                                <Icon
+                                  size={17}
+                                  strokeWidth={1.5}
+                                  aria-hidden
+                                  className="mt-1 shrink-0 text-tertiary"
+                                />
+                                <span className="flex flex-col">
+                                  <span className="text-[14.5px] font-medium leading-tight text-ink">
+                                    {child.title}
+                                  </span>
+                                  <span className="text-[12.5px] leading-[1.45] text-secondary">
+                                    {child.subtitle}
+                                  </span>
                                 </span>
-                                <span
-                                  className="text-secondary"
-                                  style={{ fontSize: '12px', lineHeight: 1.45 }}
-                                >
-                                  {child.subtitle}
-                                </span>
-                              </span>
-                            </Link>
-                          </li>
-                        );
-                      })}
-                      <li>
-                        <Link
-                          href={data.sidebarCtaHref}
-                          onClick={() => {
-                            setMobileOpen(false);
-                            setMobileExpanded(null);
-                          }}
-                          className="block rounded-sm px-3 py-2 text-sm font-medium transition-opacity duration-150 hover:opacity-80"
-                          style={{ color: 'var(--accent)' }}
-                        >
-                          {data.sidebarCtaLabel}
-                        </Link>
-                      </li>
-                    </ul>
-                  ) : null}
+                              </Link>
+                            </li>
+                          );
+                        })}
+                        <li className="mt-2">
+                          <Link
+                            href={data.sidebarCtaHref}
+                            onClick={onClose}
+                            className="block rounded-md px-3 py-2 text-[13.5px] text-accent"
+                          >
+                            {data.sidebarCtaLabel}
+                          </Link>
+                        </li>
+                      </motion.ul>
+                    )}
+                  </AnimatePresence>
                 </li>
               );
             })}
+
+            <li className="mt-3">
+              <Link
+                href="/spoluprace#audit"
+                onClick={onClose}
+                className="flex items-center justify-center gap-2 rounded-full border border-accent bg-accent px-5 py-3 text-[14px] text-bg"
+              >
+                Spustit audit
+                <ArrowUpRight size={15} strokeWidth={1.75} />
+              </Link>
+            </li>
           </ul>
-        </nav>
-      ) : null}
-    </header>
+        </motion.nav>
+      )}
+    </AnimatePresence>
   );
 }

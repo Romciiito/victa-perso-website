@@ -1,21 +1,19 @@
 import type { Metadata } from 'next';
-import { Inter_Tight, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { ThemeProvider } from '@/components/theme-provider';
 import { Nav } from '@/components/nav';
 import { Footer } from '@/components/footer';
 import { CookiebotScript } from '@/components/consent/cookiebot-script';
 import { Ga4Loader } from '@/components/consent/ga4-loader';
-import { antiFlashScript } from '@/lib/anti-flash';
 import '@/styles/globals.css';
 
-const interTight = Inter_Tight({
+const geistSans = Geist({
   subsets: ['latin', 'latin-ext'],
   weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-inter-tight',
+  variable: '--font-geist-sans',
   display: 'swap',
 });
 
@@ -51,21 +49,18 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale} data-theme="dark">
       <head>
-        <script dangerouslySetInnerHTML={{ __html: antiFlashScript }} />
         <CookiebotScript />
       </head>
-      <body className={`${interTight.variable} ${geistMono.variable} bg-grid antialiased`}>
-        <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem storageKey="victa-theme">
-          <NextIntlClientProvider messages={messages} locale={locale}>
-            <Nav />
-            <main id="main" className="relative">
-              {children}
-            </main>
-            <Footer />
-          </NextIntlClientProvider>
-        </ThemeProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable} bg-mesh antialiased`}>
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          <Nav />
+          <main id="main" className="relative">
+            {children}
+          </main>
+          <Footer />
+        </NextIntlClientProvider>
         <Ga4Loader />
       </body>
     </html>
