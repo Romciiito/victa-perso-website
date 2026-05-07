@@ -49,11 +49,15 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} data-theme="dark">
+    <html
+      lang={locale}
+      data-theme="dark"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
       <head>
         <CookiebotScript />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} bg-mesh antialiased`}>
+      <body className="bg-mesh antialiased">
         <NextIntlClientProvider messages={messages} locale={locale}>
           <Nav />
           <main id="main" className="relative">
