@@ -18,7 +18,7 @@
  */
 
 import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, extname } from 'node:path';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { dirname } from 'node:path';
 
@@ -53,13 +53,8 @@ function walk(dir, predicate) {
   return out;
 }
 
-function isCheckable(p) {
-  return p.endsWith('.cs.mdx') || p.endsWith('.mdx') === false && /content[\\/](cs)[\\/].+\.json$/.test(p);
-}
-
 const SINGLE_LETTER_PREPS = ['k', 's', 'v', 'z', 'o', 'u', 'i', 'a', 'K', 'S', 'V', 'Z', 'O', 'U', 'I', 'A'];
 
-const NBSP = ' '; // non-breaking space
 
 const violations = [];
 
@@ -102,13 +97,15 @@ function lintLine(file, lineIdx, line) {
   }
 
   // Rule 3: single-letter preposition followed by regular space (not nbsp).
-  // Match in the middle of text: a Czech word, space, single letter k/s/v/z/o/u/i/a, space.
+  // Match in the middle of text: a Czech word, REGULAR space, single letter
+  // k/s/v/z/o/u/i/a, REGULAR space, Czech word.
+  // CRITICAL: use literal U+0020, not \s, because \s with the `u` flag also
+  // matches U+00A0 (nbsp) and would falsely flag already-fixed strings.
   for (const p of SINGLE_LETTER_PREPS) {
-    // Pattern: <word-char> SPACE prep SPACE <word-char>
-    // Use unicode word chars for Czech diacritics.
-    const re = new RegExp(`(?<=[\\p{L}])\\s${p}\\s(?=[\\p{L}])`, 'gu');
-    let mm;
-    while ((mm = re.exec(line)) !== null) {
+    const re = new RegExp(`(?<=[\\p{L}]) ${p} (?=[\\p{L}])`, 'gu');
+    const matches = line.match(re);
+    if (!matches) continue;
+    for (let i = 0; i < matches.length; i++) {
       violations.push({
         file,
         line: ln,
