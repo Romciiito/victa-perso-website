@@ -9,6 +9,7 @@
     "start": "next start",
     "lint": "next lint",
     "test": "vitest --passWithNoTests",
+    "lint:cs": "node scripts/czech-typography-lint.mjs",
     "e2e": "playwright test",
     "prepare": "node -e \"if (!process.env.CI) require('child_process').execSync('husky', {stdio: 'inherit'})\" || true"
   },
