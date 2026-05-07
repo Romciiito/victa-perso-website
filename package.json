@@ -2,6 +2,7 @@
   "name": "victa-perso-website",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@10.33.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -33,6 +34,15 @@
     "@playwright/test": "^1.45.0",
     "husky": "^9.0.0",
     "lint-staged": "^15.0.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "@swc/core",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ]
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
