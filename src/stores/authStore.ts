@@ -1,16 +1,6 @@
-import { create } from 'zustand';
-import { User } from '@/types';
+// Phase 1.1 stub — auth store placeholder
+// VICTA is a no-login marketing site (architecture.md §1.2)
+// No client-side auth state needed at launch
+// TODO: Remove or repurpose if admin panel added post-launch
 
-interface AuthState {
-  user: User | null;
-  isAuthenticated: boolean;
-  setUser: (user: User | null) => void;
-  logout: () => void;
-}
-
-export const useAuthStore = create<AuthState>((set) => ({
-  user: null,
-  isAuthenticated: false,
-  setUser: (user) => set({ user, isAuthenticated: !!user }),
-  logout: () => set({ user: null, isAuthenticated: false }),
-}));
+export {};

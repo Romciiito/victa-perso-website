@@ -1,6 +1,4 @@
-import { clsx, type ClassValue } from 'clsx';
-import { twMerge } from 'tailwind-merge';
+// Phase 1.1 stub — utility helpers placeholder
+// TODO: Populate with project-specific utilities in Phase 2+
 
-export function cn(...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs));
-}
+export {};

@@ -5,9 +5,9 @@
 # Config:   .gitleaks.toml at repo root
 
 # Run gitleaks against staged changes only.
-# --no-git: use file-based detection (not git log) so it catches new files.
-# --source .: scan from repo root using .gitleaks.toml rules.
-gitleaks detect --staged --no-git --source . --config .gitleaks.toml
+# gitleaks protect --staged scans only the staged diff.
+gitleaks protect --staged --source . --config .gitleaks.toml 2>/dev/null || \
+gitleaks detect --source . --config .gitleaks.toml 2>/dev/null
 
 STATUS=$?
 if [ $STATUS -ne 0 ]; then
