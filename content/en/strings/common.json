@@ -71,6 +71,120 @@
       "headline": "Let's get to know each other.",
       "subhead": "30 minutes, no commitment. We'll discuss your business and tell you straight whether VICTA can help.",
       "cta": "Book consultation →"
+    },
+    "offerings": {
+      "ctaAll": "View all →",
+      "services": {
+        "headline": "Services for your AI journey",
+        "description": "From audit and strategy through data preparation to operations and governance.",
+        "ctaHref": "/sluzby",
+        "items": [
+          {
+            "title": "AI Discovery",
+            "subtitle": "Audit and potential diagnostics",
+            "href": "/sluzby#ai-discovery"
+          },
+          {
+            "title": "AI Strategy",
+            "subtitle": "Implementation and deployment plan",
+            "href": "/sluzby#ai-strategie"
+          },
+          {
+            "title": "Data Platform",
+            "subtitle": "Data readiness, modeling, processing",
+            "href": "/sluzby#datova-platforma"
+          },
+          {
+            "title": "AI-driven Development",
+            "subtitle": "Custom development with AI",
+            "href": "/sluzby#ai-vyvoj"
+          },
+          {
+            "title": "AI Governance",
+            "subtitle": "Security and compliance",
+            "href": "/sluzby#ai-governance"
+          },
+          {
+            "title": "Operations & MLOps",
+            "subtitle": "Monitoring and optimization",
+            "href": "/sluzby#mlops"
+          }
+        ]
+      },
+      "solutions": {
+        "headline": "Turnkey AI solutions",
+        "description": "From knowledge assistants to your own AI infrastructure.",
+        "ctaHref": "/reseni",
+        "items": [
+          {
+            "title": "GenAI and RAG assistants",
+            "subtitle": "Enterprise knowledge assistants",
+            "href": "/reseni#genai-rag"
+          },
+          {
+            "title": "Autonomous AI agents",
+            "subtitle": "Back-office automation",
+            "href": "/reseni#agenti"
+          },
+          {
+            "title": "AI customer support",
+            "subtitle": "Chatbots and voicebots 24/7",
+            "href": "/reseni#zakaznicka-podpora"
+          },
+          {
+            "title": "Predictive analytics",
+            "subtitle": "Dashboards and predictions",
+            "href": "/reseni#prediktivni-analytika"
+          },
+          {
+            "title": "AI Infrastructure",
+            "subtitle": "Own on-premise AI servers",
+            "href": "/reseni#infrastruktura"
+          }
+        ]
+      },
+      "industries": {
+        "headline": "AI solutions for your industry",
+        "description": "Industry-specific AI implementations with measurable impact.",
+        "ctaHref": "/odvetvi",
+        "items": [
+          {
+            "title": "E-commerce & retail",
+            "subtitle": "Personalization and sales automation",
+            "href": "/odvetvi#ecommerce"
+          },
+          {
+            "title": "Finance & Fintech",
+            "subtitle": "Automation and risk analysis",
+            "href": "/odvetvi#finance"
+          },
+          {
+            "title": "Healthcare & medtech",
+            "subtitle": "Diagnostics, clinical research and distribution",
+            "href": "/odvetvi#zdravotnictvi"
+          },
+          {
+            "title": "Manufacturing & logistics",
+            "subtitle": "Predictive maintenance and optimization",
+            "href": "/odvetvi#vyroba"
+          },
+          {
+            "title": "Energy & utilities",
+            "subtitle": "Consumption prediction and smart grids",
+            "href": "/odvetvi#energetika"
+          },
+          {
+            "title": "Customer support & CX",
+            "subtitle": "Chatbots and voicebots 24/7",
+            "href": "/odvetvi#cx"
+          },
+          {
+            "title": "Professional services",
+            "subtitle": "Law, audit, consulting and education",
+            "href": "/odvetvi#profesionalni-sluzby"
+          }
+        ]
+      }
     }
   }
 }

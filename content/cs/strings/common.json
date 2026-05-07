@@ -67,37 +67,118 @@
       "ctaPrimary": "Spustit audit →",
       "ctaGhost": "Domluvit konzultaci"
     },
-    "services": {
-      "heading": "Posloucháme. Navrhujeme. Stavíme. Provozujeme.",
-      "items": {
-        "audit": {
-          "num": "01",
-          "title": "Audit a strategie",
-          "body": "Než cokoli navrhujeme, posloucháme a měříme. Tři úrovně hloubky podle rozsahu zakázky — od strategické session po komplexní podnikový audit.",
-          "meta": "od 4 000 Kč",
-          "ctaLabel": "Detail →"
-        },
-        "dev": {
-          "num": "02",
-          "title": "Vývoj webu a e-shopu",
-          "body": "Stavíme rychlé, server-šetřící a SEO-ready stacky. Next.js, Shopify, headless CMS — podle toho, co skutečně potřebujete, ne podle módy.",
-          "meta": "od poptávky",
-          "ctaLabel": "Detail →"
-        },
-        "marketing": {
-          "num": "03",
-          "title": "Marketing a obsah",
-          "body": "SEO i AEO. Obsah, který skutečně zaujme čtenáře i LLM. Tracking a reporting bez šumu.",
-          "meta": "měsíční retainer",
-          "ctaLabel": "Detail →"
-        },
-        "ai": {
-          "num": "04",
-          "title": "AI integrace",
-          "body": "Automatizace zákaznické podpory, content workflow, interní asistenti. Bez buzzwordu — jen tam, kde dává smysl a přináší úsporu.",
-          "meta": "scoping call",
-          "ctaLabel": "Detail →"
-        }
+    "offerings": {
+      "ctaAll": "Zobrazit vše →",
+      "services": {
+        "headline": "Služby pro vaši AI cestu",
+        "description": "Od auditu a strategie přes datovou přípravu až po provoz a governance.",
+        "ctaHref": "/sluzby",
+        "items": [
+          {
+            "title": "AI Discovery",
+            "subtitle": "Audit a diagnostika potenciálu",
+            "href": "/sluzby#ai-discovery"
+          },
+          {
+            "title": "AI Strategie",
+            "subtitle": "Plán implementace a nasazení",
+            "href": "/sluzby#ai-strategie"
+          },
+          {
+            "title": "Datová platforma",
+            "subtitle": "Data readiness, modelování, zpracování",
+            "href": "/sluzby#datova-platforma"
+          },
+          {
+            "title": "AI-driven vývoj",
+            "subtitle": "Vývoj na míru s AI",
+            "href": "/sluzby#ai-vyvoj"
+          },
+          {
+            "title": "AI Governance",
+            "subtitle": "Bezpečnost a compliance",
+            "href": "/sluzby#ai-governance"
+          },
+          {
+            "title": "Provoz a MLOps",
+            "subtitle": "Monitoring a optimalizace",
+            "href": "/sluzby#mlops"
+          }
+        ]
+      },
+      "solutions": {
+        "headline": "AI řešení na klíč",
+        "description": "Od znalostních asistentů po vlastní AI infrastrukturu.",
+        "ctaHref": "/reseni",
+        "items": [
+          {
+            "title": "GenAI a RAG asistenti",
+            "subtitle": "Firemní znalostní asistenti",
+            "href": "/reseni#genai-rag"
+          },
+          {
+            "title": "Autonomní AI agenti",
+            "subtitle": "Automatizace back-office",
+            "href": "/reseni#agenti"
+          },
+          {
+            "title": "AI zákaznická podpora",
+            "subtitle": "Chatboti a voiceboti 24/7",
+            "href": "/reseni#zakaznicka-podpora"
+          },
+          {
+            "title": "Prediktivní analytika",
+            "subtitle": "Dashboardy a predikce",
+            "href": "/reseni#prediktivni-analytika"
+          },
+          {
+            "title": "AI Infrastruktura",
+            "subtitle": "Vlastní on-premise AI servery",
+            "href": "/reseni#infrastruktura"
+          }
+        ]
+      },
+      "industries": {
+        "headline": "AI řešení pro vaše odvětví",
+        "description": "Oborově specifické AI implementace s měřitelným dopadem.",
+        "ctaHref": "/odvetvi",
+        "items": [
+          {
+            "title": "E-commerce a maloobchod",
+            "subtitle": "Personalizace a automatizace prodeje",
+            "href": "/odvetvi#ecommerce"
+          },
+          {
+            "title": "Finance a Fintech",
+            "subtitle": "Automatizace a analýza rizik",
+            "href": "/odvetvi#finance"
+          },
+          {
+            "title": "Zdravotnictví a medtech",
+            "subtitle": "Diagnostika, klinický výzkum a distribuce",
+            "href": "/odvetvi#zdravotnictvi"
+          },
+          {
+            "title": "Výroba a logistika",
+            "subtitle": "Prediktivní údržba a optimalizace",
+            "href": "/odvetvi#vyroba"
+          },
+          {
+            "title": "Energetika a utility",
+            "subtitle": "Predikce spotřeby a smart grids",
+            "href": "/odvetvi#energetika"
+          },
+          {
+            "title": "Zákaznická podpora a CX",
+            "subtitle": "Chatboti a voiceboti 24/7",
+            "href": "/odvetvi#cx"
+          },
+          {
+            "title": "Profesionální služby",
+            "subtitle": "Právo, audit, konzulting a vzdělávání",
+            "href": "/odvetvi#profesionalni-sluzby"
+          }
+        ]
       }
     },
     "audit": {

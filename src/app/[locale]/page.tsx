@@ -1,10 +1,81 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import { ArrowRight } from 'lucide-react';
+import {
+  ArrowRight,
+  Activity,
+  BarChart3,
+  Boxes,
+  Briefcase,
+  Building2,
+  Code2,
+  Database,
+  Headphones,
+  Heart,
+  Layers,
+  MessageCircle,
+  MessageSquare,
+  Package,
+  Search,
+  Server,
+  Settings,
+  Shield,
+  ShoppingCart,
+  Target,
+  TrendingUp,
+  Zap,
+  type LucideIcon,
+} from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/button';
 import { StatusLine } from '@/components/status-line';
+import { OfferingSection, type OfferingItem } from '@/components/offering-section';
 
 type Props = { params: Promise<{ locale: string }> };
+
+/* ============================================================
+   Offering icon maps — keep icon binding co-located with order
+   from i18n JSON. Each array index maps to the matching items[i]
+   in `home.offerings.<section>.items`.
+   ============================================================ */
+type RawOfferingItem = { title: string; subtitle: string; href?: string };
+
+const servicesIcons: ReadonlyArray<LucideIcon> = [
+  Search, // 1 · AI Discovery
+  Target, // 2 · AI Strategie
+  Database, // 3 · Datová platforma
+  Code2, // 4 · AI-driven vývoj
+  Shield, // 5 · AI Governance
+  Activity, // 6 · Provoz a MLOps
+];
+
+const solutionsIcons: ReadonlyArray<LucideIcon> = [
+  MessageSquare, // 1 · GenAI a RAG asistenti
+  Boxes, // 2 · Autonomní AI agenti
+  Headphones, // 3 · AI zákaznická podpora
+  BarChart3, // 4 · Prediktivní analytika
+  Server, // 5 · AI Infrastruktura
+];
+
+const industriesIcons: ReadonlyArray<LucideIcon> = [
+  ShoppingCart, // 1 · E-commerce a maloobchod
+  TrendingUp, // 2 · Finance a Fintech
+  Heart, // 3 · Zdravotnictví a medtech
+  Settings, // 4 · Výroba a logistika
+  Zap, // 5 · Energetika a utility
+  MessageCircle, // 6 · Zákaznická podpora a CX
+  Briefcase, // 7 · Profesionální služby
+];
+
+function buildOfferingItems(
+  raw: ReadonlyArray<RawOfferingItem>,
+  icons: ReadonlyArray<LucideIcon>,
+): ReadonlyArray<OfferingItem> {
+  return raw.map((it, i) => ({
+    icon: icons[i] ?? icons[icons.length - 1] ?? Briefcase,
+    title: it.title,
+    subtitle: it.subtitle,
+    href: it.href,
+  }));
+}
 
 export default async function Home({ params }: Props) {
   const { locale } = await params;
@@ -135,66 +206,51 @@ async function CzechHome() {
       </section>
 
       {/* ============================================================
-           SERVICES  (locked-preview .services)
-           4-cell modular grid (2 cols on desktop, 1 col on mobile)
+           OFFERINGS — three Atol-style sections
+             A. Services for the AI journey   (6 cells)
+             B. Turnkey AI solutions          (5 cells)
+             C. AI solutions per industry     (7 cells)
+           Layout per section: 6-cell light grid LEFT + dark sticky
+           sidebar RIGHT on desktop · sidebar on TOP, cells below on mobile.
            ============================================================ */}
-      <section
+      <OfferingSection
         id="sluzby"
-        className="relative border-t border-border-soft px-6 py-16 md:px-12 md:py-16"
-      >
-        <div className="mx-auto w-full max-w-[1440px]">
-          <h2
-            className="mb-12 text-ink"
-            style={{
-              fontSize: 'clamp(28px, 3.6vw, 45px)',
-              lineHeight: 1.1,
-              letterSpacing: '-0.025em',
-              fontWeight: 500,
-              maxWidth: '760px',
-            }}
-          >
-            {t('services.heading')}
-          </h2>
+        sidebarIcon={Layers}
+        sidebarHeadline={t('offerings.services.headline')}
+        sidebarDescription={t('offerings.services.description')}
+        sidebarCtaLabel={t('offerings.ctaAll')}
+        sidebarCtaHref={t('offerings.services.ctaHref')}
+        items={buildOfferingItems(
+          t.raw('offerings.services.items') as ReadonlyArray<RawOfferingItem>,
+          servicesIcons,
+        )}
+      />
 
-          <div
-            className="services-grid grid grid-cols-1 overflow-hidden rounded-lg border-l border-t md:grid-cols-2"
-            style={{ borderColor: 'var(--border)' }}
-          >
-            <ServiceCell
-              num={t('services.items.audit.num')}
-              title={t('services.items.audit.title')}
-              body={t('services.items.audit.body')}
-              meta={t('services.items.audit.meta')}
-              ctaLabel={t('services.items.audit.ctaLabel')}
-              href="/spoluprace#audit"
-            />
-            <ServiceCell
-              num={t('services.items.dev.num')}
-              title={t('services.items.dev.title')}
-              body={t('services.items.dev.body')}
-              meta={t('services.items.dev.meta')}
-              ctaLabel={t('services.items.dev.ctaLabel')}
-              href="/sluzby#it-vyvoj"
-            />
-            <ServiceCell
-              num={t('services.items.marketing.num')}
-              title={t('services.items.marketing.title')}
-              body={t('services.items.marketing.body')}
-              meta={t('services.items.marketing.meta')}
-              ctaLabel={t('services.items.marketing.ctaLabel')}
-              href="/sluzby#marketing"
-            />
-            <ServiceCell
-              num={t('services.items.ai.num')}
-              title={t('services.items.ai.title')}
-              body={t('services.items.ai.body')}
-              meta={t('services.items.ai.meta')}
-              ctaLabel={t('services.items.ai.ctaLabel')}
-              href="/sluzby#ai-data"
-            />
-          </div>
-        </div>
-      </section>
+      <OfferingSection
+        id="reseni"
+        sidebarIcon={Package}
+        sidebarHeadline={t('offerings.solutions.headline')}
+        sidebarDescription={t('offerings.solutions.description')}
+        sidebarCtaLabel={t('offerings.ctaAll')}
+        sidebarCtaHref={t('offerings.solutions.ctaHref')}
+        items={buildOfferingItems(
+          t.raw('offerings.solutions.items') as ReadonlyArray<RawOfferingItem>,
+          solutionsIcons,
+        )}
+      />
+
+      <OfferingSection
+        id="odvetvi"
+        sidebarIcon={Building2}
+        sidebarHeadline={t('offerings.industries.headline')}
+        sidebarDescription={t('offerings.industries.description')}
+        sidebarCtaLabel={t('offerings.ctaAll')}
+        sidebarCtaHref={t('offerings.industries.ctaHref')}
+        items={buildOfferingItems(
+          t.raw('offerings.industries.items') as ReadonlyArray<RawOfferingItem>,
+          industriesIcons,
+        )}
+      />
 
       {/* ============================================================
            AUDIT PRICING  (locked-preview .audit-section)
@@ -391,60 +447,6 @@ async function EnglishStub() {
         </p>
       </div>
     </section>
-  );
-}
-
-/* ============================================================
-   ServiceCell — single cell in the 4-up modular services grid
-   (locked-preview .service-cell)
-   ============================================================ */
-function ServiceCell({
-  num,
-  title,
-  body,
-  meta,
-  ctaLabel,
-  href,
-}: {
-  num: string;
-  title: string;
-  body: string;
-  meta: string;
-  ctaLabel: string;
-  href: string;
-}) {
-  return (
-    <article
-      className="service-cell border-b border-r p-8 transition-colors duration-150 hover:bg-surface"
-      style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
-    >
-      <div
-        className="mb-4 font-mono text-xs text-tertiary"
-        style={{ letterSpacing: '0.04em' }}
-      >
-        {num}
-      </div>
-      <h3
-        className="mb-3 text-ink"
-        style={{ fontSize: '25px', lineHeight: 1.2, letterSpacing: '-0.02em', fontWeight: 500 }}
-      >
-        {title}
-      </h3>
-      <p className="mb-6 text-secondary" style={{ fontSize: '15px', lineHeight: 1.6 }}>
-        {body}
-      </p>
-      <div
-        className="flex items-center justify-between font-mono text-xs text-ink"
-      >
-        <span>{meta}</span>
-        <Link
-          href={href}
-          style={{ color: 'var(--accent)', fontWeight: 500 }}
-        >
-          {ctaLabel}
-        </Link>
-      </div>
-    </article>
   );
 }
 
