@@ -1,0 +1,10 @@
+{
+  "enabledPlugins": {
+    "bencium-innovative-ux-designer@bencium-marketplace": true,
+    "bencium-impact-designer@bencium-marketplace": true,
+    "design-audit@bencium-marketplace": true,
+    "typography@bencium-marketplace": true,
+    "bencium-aeo@bencium-marketplace": true,
+    "bencium-code-conventions@bencium-marketplace": true
+  }
+}

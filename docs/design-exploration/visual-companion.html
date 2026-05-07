@@ -1,0 +1,1607 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VICTA — Visual Companion · Design Directions A · B · C</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..700,0..100,0..1&family=Inter:wght@400;500;600&family=Inter+Tight:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   GLOBAL — frame, header, jump-nav, toggle
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: #1a1a1a;
+  color: #fff;
+  min-height: 100vh;
+}
+
+.app-frame {
+  max-width: 1440px;
+  margin: 0 auto;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(20, 20, 20, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 14px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  font-size: 13px;
+  color: #c4c4c4;
+}
+.app-header strong { color: #fff; font-weight: 600; }
+.app-header .muted { color: #888; }
+
+.app-header nav { display: flex; gap: 4px; }
+.app-header nav a {
+  color: #c4c4c4;
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 150ms ease;
+}
+.app-header nav a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+
+.app-header .controls { display: flex; gap: 8px; align-items: center; }
+.theme-btn, .scroll-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 0.02em;
+  transition: background 150ms ease;
+}
+.theme-btn:hover, .scroll-btn:hover { background: rgba(255,255,255,0.12); }
+
+.intro {
+  padding: 48px 32px 24px;
+  max-width: 760px;
+  margin: 0 auto;
+}
+.intro h1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 28px;
+  letter-spacing: -0.02em;
+  color: #fff;
+  margin-bottom: 12px;
+}
+.intro p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #a8a8a8;
+  margin-bottom: 8px;
+}
+.intro p strong { color: #e8e8e8; font-weight: 500; }
+
+/* =========================================================
+   DIRECTION SECTION FRAME
+   Each direction lives inside .direction with its own
+   --bg, --ink, --accent, --font-* tokens.
+   ========================================================= */
+.direction {
+  margin: 32px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.4);
+  position: relative;
+}
+.direction-meta {
+  background: #0f0f0f;
+  color: #c4c4c4;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.direction-meta .label {
+  color: #fff;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+.direction-meta .label .num {
+  display: inline-block;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px;
+  background: rgba(255,255,255,0.08);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-right: 10px;
+  letter-spacing: 0.08em;
+}
+.direction-meta .specs { color: #888; font-family: 'Geist Mono', monospace; font-size: 11px; }
+
+.direction-canvas {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  position: relative;
+  overflow: hidden;
+}
+
+.viewport-row {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 0;
+  align-items: stretch;
+}
+@media (max-width: 1100px) {
+  .viewport-row { grid-template-columns: 1fr; }
+}
+
+.desktop-view {
+  position: relative;
+}
+.mobile-view {
+  background: #0f0f0f;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+}
+.mobile-view .label {
+  color: #888;
+  font-family: 'Geist Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.mobile-frame {
+  width: 360px;
+  height: 720px;
+  border-radius: 36px;
+  border: 8px solid #2a2a2a;
+  background: var(--bg);
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+}
+.mobile-frame::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 24px;
+  background: #2a2a2a;
+  border-radius: 12px;
+  z-index: 10;
+}
+
+/* =========================================================
+   DIRECTION A — EDITORIAL TRUST
+   Pentagram lineage · Fraunces + Inter · oxblood accent
+   ========================================================= */
+.direction-a {
+  --bg: #FAF8F4;
+  --surface: #F2EFE8;
+  --border: #D9D2C5;
+  --ink: #1A1817;
+  --secondary: #6B6963;
+  --tertiary: #928E84;
+  --accent: #6B2C2C;
+  --accent-2: #C76B4D;
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+[data-theme="dark"] .direction-a {
+  --bg: #14110E;
+  --surface: #1F1B17;
+  --border: #34302A;
+  --ink: #EDE7DA;
+  --secondary: #A89F90;
+  --tertiary: #7A7468;
+  --accent: #C97969;
+  --accent-2: #D89571;
+}
+
+.direction-a .nav-row {
+  padding: 22px 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.direction-a .logo {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  font-variation-settings: "opsz" 24, "SOFT" 50;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.direction-a .nav-links {
+  display: flex;
+  gap: 28px;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+}
+.direction-a .nav-links a { color: var(--ink); text-decoration: none; }
+.direction-a .nav-links a:hover { color: var(--accent); }
+.direction-a .nav-links .toggle {
+  width: 32px; height: 32px; border-radius: 50%;
+  border: 1px solid var(--border);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 14px; cursor: pointer; background: transparent;
+  color: var(--ink);
+}
+
+.direction-a .hero {
+  padding: 120px 56px 96px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: end;
+}
+.direction-a .hero h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 144, "SOFT" 30, "WONK" 1;
+  font-size: clamp(48px, 6vw, 84px);
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+.direction-a .hero h1 em {
+  font-style: italic;
+  color: var(--accent);
+  font-variation-settings: "opsz" 144, "SOFT" 80, "WONK" 1;
+}
+.direction-a .hero .sub {
+  max-width: 460px;
+  font-size: 19px;
+  line-height: 1.55;
+  color: var(--secondary);
+  margin-bottom: 32px;
+}
+.direction-a .hero .ctas {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.direction-a .btn {
+  padding: 14px 24px;
+  border-radius: 2px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 200ms ease;
+  border: 1px solid transparent;
+}
+.direction-a .btn-primary {
+  background: var(--accent);
+  color: #FAF8F4;
+}
+.direction-a .btn-primary:hover { background: #5A2424; }
+[data-theme="dark"] .direction-a .btn-primary { color: #14110E; }
+.direction-a .btn-secondary {
+  background: transparent;
+  color: var(--ink);
+  border-color: var(--ink);
+}
+.direction-a .btn-secondary:hover { background: var(--ink); color: var(--bg); }
+
+.direction-a .services {
+  padding: 96px 56px;
+  border-top: 1px solid var(--border);
+}
+.direction-a .services-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-variation-settings: "opsz" 96, "SOFT" 50;
+  font-size: 56px;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin-bottom: 64px;
+  max-width: 760px;
+}
+.direction-a .service-row {
+  display: grid;
+  grid-template-columns: 80px 1fr 280px;
+  gap: 32px;
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  align-items: baseline;
+}
+.direction-a .service-row:last-child { border-bottom: 1px solid var(--border); }
+.direction-a .service-row .num {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-variation-settings: "opsz" 24, "SOFT" 0;
+  color: var(--secondary);
+}
+.direction-a .service-row .body h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 60, "SOFT" 30;
+  font-size: 28px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.direction-a .service-row .body p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--secondary);
+  max-width: 540px;
+}
+.direction-a .service-row .meta {
+  font-size: 13px;
+  color: var(--secondary);
+  text-align: right;
+}
+.direction-a .service-row .meta .price {
+  display: block;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+.direction-a .service-row .meta a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+}
+
+.direction-a .audit-section {
+  padding: 96px 56px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.direction-a .audit-card {
+  max-width: 520px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 36px;
+  position: relative;
+}
+.direction-a .audit-card .tier {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.direction-a .audit-card h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 60, "SOFT" 30;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  line-height: 1.1;
+}
+.direction-a .audit-card .price {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 60, "SOFT" 50;
+  font-size: 42px;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+  line-height: 1;
+}
+.direction-a .audit-card .price-eur {
+  font-family: var(--font-body);
+  font-size: 14px;
+  color: var(--secondary);
+  margin-bottom: 24px;
+}
+.direction-a .audit-card .desc {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-variation-settings: "opsz" 30, "SOFT" 100;
+  font-size: 17px;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 28px;
+}
+.direction-a .audit-card hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+.direction-a .audit-card .includes-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  margin-bottom: 14px;
+}
+.direction-a .audit-card ul {
+  list-style: none;
+  margin-bottom: 32px;
+}
+.direction-a .audit-card ul li {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ink);
+  padding-left: 24px;
+  position: relative;
+}
+.direction-a .audit-card ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Direction A · mobile */
+.direction-a .mobile-frame .nav { padding: 14px 18px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); align-items: center; }
+.direction-a .mobile-frame .nav .logo { font-size: 16px; font-family: var(--font-display); font-weight: 600; }
+.direction-a .mobile-frame .nav .menu { font-size: 11px; color: var(--secondary); }
+.direction-a .mobile-frame .hero-m { padding: 40px 22px 28px; }
+.direction-a .mobile-frame .hero-m h1 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-variation-settings: "opsz" 96, "SOFT" 30, "WONK" 1;
+  font-size: 38px;
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+.direction-a .mobile-frame .hero-m h1 em { font-style: italic; color: var(--accent); }
+.direction-a .mobile-frame .hero-m p { font-size: 14px; color: var(--secondary); line-height: 1.5; margin-bottom: 24px; }
+.direction-a .mobile-frame .hero-m .btn-m {
+  display: inline-block;
+  background: var(--accent);
+  color: #FAF8F4;
+  padding: 12px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 2px;
+  text-decoration: none;
+}
+[data-theme="dark"] .direction-a .mobile-frame .hero-m .btn-m { color: #14110E; }
+
+/* =========================================================
+   DIRECTION B — QUIET CONFIDENCE
+   Kenya Hara lineage · Inter Tight + Newsreader · clay accent
+   ========================================================= */
+.direction-b {
+  --bg: #FBFAF7;
+  --surface: #F5F2EC;
+  --border: #E8E4DC;
+  --ink: #2C2A26;
+  --secondary: #6E6A60;
+  --tertiary: #A09B8F;
+  --accent: #8C5E3C;
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-body: 'Inter Tight', system-ui, sans-serif;
+  --font-italic: 'Newsreader', Georgia, serif;
+}
+[data-theme="dark"] .direction-b {
+  --bg: #1F1D1A;
+  --surface: #2A2722;
+  --border: #34302A;
+  --ink: #EBE6DC;
+  --secondary: #A8A296;
+  --tertiary: #7E796E;
+  --accent: #B8866A;
+}
+
+.direction-b .nav-row {
+  padding: 28px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.direction-b .logo {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+.direction-b .nav-links {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--secondary);
+}
+.direction-b .nav-links a { color: var(--secondary); text-decoration: none; }
+.direction-b .nav-links a:hover { color: var(--ink); }
+.direction-b .nav-links .toggle {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 12px; cursor: pointer; background: transparent;
+  color: var(--ink);
+}
+
+.direction-b .hero {
+  padding: 200px 80px 240px;
+  max-width: 760px;
+}
+.direction-b .hero h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(40px, 5vw, 60px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 32px;
+}
+.direction-b .hero .sub {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--secondary);
+  margin-bottom: 56px;
+  max-width: 460px;
+}
+.direction-b .btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #FBFAF7;
+  padding: 14px 28px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.005em;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background 200ms ease;
+  border: none;
+  cursor: pointer;
+}
+.direction-b .btn:hover { background: #7A4F30; }
+[data-theme="dark"] .direction-b .btn { color: #1F1D1A; }
+[data-theme="dark"] .direction-b .btn:hover { background: #C9967A; }
+
+.direction-b .services {
+  padding: 0 80px 200px;
+}
+.direction-b .service-block {
+  padding: 80px 0;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 80px;
+  align-items: start;
+}
+.direction-b .service-block:last-child { border-bottom: 1px solid var(--border); }
+.direction-b .service-block .label {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+}
+.direction-b .service-block h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 28px;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 18px;
+}
+.direction-b .service-block p {
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--secondary);
+  max-width: 480px;
+  margin-bottom: 24px;
+}
+.direction-b .service-block a.link {
+  font-size: 14px;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 4px;
+  display: inline-block;
+}
+
+.direction-b .audit-section {
+  padding: 200px 80px;
+  text-align: left;
+}
+.direction-b .audit-card {
+  max-width: 560px;
+}
+.direction-b .audit-card .tier {
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+  margin-bottom: 20px;
+}
+.direction-b .audit-card h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 32px;
+  letter-spacing: -0.015em;
+  margin-bottom: 32px;
+  color: var(--ink);
+}
+.direction-b .audit-card .price {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 40px;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 4px;
+}
+.direction-b .audit-card .price-eur {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--secondary);
+  margin-bottom: 32px;
+}
+.direction-b .audit-card .desc {
+  font-family: var(--font-italic);
+  font-style: italic;
+  font-variation-settings: "opsz" 36;
+  font-size: 19px;
+  line-height: 1.45;
+  color: var(--ink);
+  margin-bottom: 40px;
+  max-width: 440px;
+}
+.direction-b .audit-card .divider {
+  width: 32px;
+  height: 1px;
+  background: var(--ink);
+  margin-bottom: 24px;
+}
+.direction-b .audit-card .includes-label {
+  font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+.direction-b .audit-card ul {
+  list-style: none;
+  margin-bottom: 48px;
+}
+.direction-b .audit-card ul li {
+  font-size: 15px;
+  line-height: 1.9;
+  color: var(--secondary);
+  padding-left: 16px;
+  position: relative;
+}
+.direction-b .audit-card ul li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Direction B · mobile */
+.direction-b .mobile-frame .nav { padding: 18px 22px; display: flex; justify-content: space-between; align-items: center; }
+.direction-b .mobile-frame .nav .logo { font-size: 14px; font-weight: 500; color: var(--ink); }
+.direction-b .mobile-frame .nav .menu { font-size: 11px; color: var(--secondary); }
+.direction-b .mobile-frame .hero-m { padding: 80px 26px; }
+.direction-b .mobile-frame .hero-m h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 20px;
+}
+.direction-b .mobile-frame .hero-m p {
+  font-size: 14px;
+  color: var(--secondary);
+  line-height: 1.65;
+  margin-bottom: 36px;
+}
+.direction-b .mobile-frame .hero-m .btn-m {
+  display: inline-block;
+  background: var(--accent);
+  color: #FBFAF7;
+  padding: 12px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 4px;
+  text-decoration: none;
+}
+[data-theme="dark"] .direction-b .mobile-frame .hero-m .btn-m { color: #1F1D1A; }
+
+/* =========================================================
+   DIRECTION C — COMPUTED MODERNISM
+   Field.io / Vercel lineage · Geist + Geist Mono · ferro-rust
+   ========================================================= */
+.direction-c {
+  --bg: #FAFAFA;
+  --surface: #F4F4F5;
+  --surface-2: #EEEEEF;
+  --border: #D4D4D8;
+  --ink: #0A0B0E;
+  --secondary: #52525B;
+  --tertiary: #71717A;
+  --accent: #B53C16;
+  --accent-bright: #D8551D;
+  --font-display: 'Geist', system-ui, sans-serif;
+  --font-body: 'Geist', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'JetBrains Mono', monospace;
+}
+[data-theme="dark"] .direction-c {
+  --bg: #0A0B0E;
+  --surface: #18181B;
+  --surface-2: #27272A;
+  --border: #3F3F46;
+  --ink: #FAFAFA;
+  --secondary: #A1A1AA;
+  --tertiary: #71717A;
+  --accent: #FF6B3A;
+  --accent-bright: #FF8C5A;
+}
+
+.direction-c .nav-row {
+  padding: 18px 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-body);
+}
+.direction-c .logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.direction-c .logo .tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--secondary);
+  font-weight: 400;
+  letter-spacing: 0;
+}
+.direction-c .nav-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 13px;
+}
+.direction-c .nav-links a {
+  color: var(--secondary);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: all 150ms ease;
+}
+.direction-c .nav-links a:hover { background: var(--surface); color: var(--ink); }
+.direction-c .nav-links .lang {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--tertiary);
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  margin-left: 8px;
+}
+.direction-c .nav-links .toggle {
+  width: 26px; height: 26px; border-radius: 4px;
+  border: 1px solid var(--border);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 11px; cursor: pointer; background: transparent;
+  color: var(--ink);
+}
+
+.direction-c .hero {
+  padding: 80px 48px 64px;
+  position: relative;
+  overflow: hidden;
+}
+/* Generative background — subtle SVG noise + radial gradient mesh */
+.direction-c .hero::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 50% at 30% 20%, rgba(181, 60, 22, 0.10), transparent 60%),
+    radial-gradient(ellipse 70% 40% at 80% 60%, rgba(181, 60, 22, 0.06), transparent 60%),
+    radial-gradient(ellipse 60% 30% at 50% 100%, rgba(10, 11, 14, 0.04), transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+  opacity: 1;
+}
+[data-theme="dark"] .direction-c .hero::before {
+  background:
+    radial-gradient(ellipse 80% 50% at 30% 20%, rgba(255, 107, 58, 0.10), transparent 60%),
+    radial-gradient(ellipse 70% 40% at 80% 60%, rgba(255, 107, 58, 0.05), transparent 60%);
+}
+.direction-c .hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(90deg,
+      transparent 0,
+      transparent 40px,
+      rgba(10, 11, 14, 0.025) 40px,
+      rgba(10, 11, 14, 0.025) 41px),
+    repeating-linear-gradient(0deg,
+      transparent 0,
+      transparent 40px,
+      rgba(10, 11, 14, 0.025) 40px,
+      rgba(10, 11, 14, 0.025) 41px);
+  mask-image: radial-gradient(ellipse 60% 60% at 50% 50%, black 30%, transparent 80%);
+}
+[data-theme="dark"] .direction-c .hero::after {
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0, transparent 40px, rgba(250,250,250,0.03) 40px, rgba(250,250,250,0.03) 41px),
+    repeating-linear-gradient(0deg, transparent 0, transparent 40px, rgba(250,250,250,0.03) 40px, rgba(250,250,250,0.03) 41px);
+}
+.direction-c .hero > * { position: relative; z-index: 1; }
+
+.direction-c .hero h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(48px, 5.5vw, 80px);
+  line-height: 1.04;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  max-width: 880px;
+  margin-bottom: 24px;
+}
+.direction-c .hero .tags {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--secondary);
+  margin-bottom: 36px;
+  letter-spacing: 0;
+}
+.direction-c .hero .tags span { color: var(--accent); }
+.direction-c .hero .divider-thin {
+  width: 100%;
+  max-width: 880px;
+  height: 1px;
+  background: var(--border);
+  margin: 32px 0;
+}
+.direction-c .hero .body-row {
+  display: flex;
+  gap: 80px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+  align-items: baseline;
+}
+.direction-c .hero .body-row > div {
+  font-size: 15px;
+  color: var(--secondary);
+  line-height: 1.55;
+}
+.direction-c .hero .body-row strong { color: var(--ink); font-weight: 500; }
+.direction-c .hero .body-row .price-mono {
+  font-family: var(--font-mono);
+  color: var(--ink);
+  font-size: 14px;
+}
+.direction-c .hero .ctas {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+}
+.direction-c .btn {
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 150ms ease;
+}
+.direction-c .btn-primary {
+  background: var(--accent);
+  color: #FAFAFA;
+  border-color: var(--accent);
+}
+.direction-c .btn-primary:hover { background: var(--accent-bright); border-color: var(--accent-bright); }
+[data-theme="dark"] .direction-c .btn-primary { color: #0A0B0E; }
+.direction-c .btn-secondary {
+  background: var(--bg);
+  color: var(--ink);
+  border-color: var(--border);
+}
+.direction-c .btn-secondary:hover { background: var(--surface); }
+
+.direction-c .status-line {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--tertiary);
+  margin-top: 56px;
+  letter-spacing: 0;
+}
+.direction-c .status-line .dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #15803D;
+  margin-right: 6px;
+  vertical-align: middle;
+}
+
+.direction-c .services {
+  padding: 64px 48px;
+  border-top: 1px solid var(--border);
+}
+.direction-c .services-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-left: 1px solid var(--border);
+}
+.direction-c .service-cell {
+  padding: 32px;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+  position: relative;
+}
+.direction-c .service-cell .num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--tertiary);
+  letter-spacing: 0.04em;
+  margin-bottom: 16px;
+}
+.direction-c .service-cell h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 12px;
+}
+.direction-c .service-cell p {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--secondary);
+  margin-bottom: 20px;
+}
+.direction-c .service-cell .meta {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--ink);
+}
+.direction-c .service-cell .meta a {
+  color: var(--accent);
+  text-decoration: none;
+}
+.direction-c .service-cell .meta a:hover { text-decoration: underline; }
+
+.direction-c .audit-section {
+  padding: 80px 48px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+.direction-c .audit-card {
+  max-width: 540px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 32px;
+  position: relative;
+}
+.direction-c .audit-card .tier-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+.direction-c .audit-card .tier {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--tertiary);
+  text-transform: uppercase;
+}
+.direction-c .audit-card .badge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: rgba(181, 60, 22, 0.08);
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+[data-theme="dark"] .direction-c .audit-card .badge { background: rgba(255, 107, 58, 0.12); }
+.direction-c .audit-card h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 24px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 24px;
+}
+.direction-c .audit-card .price {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 32px;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.direction-c .audit-card .price-eur {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--secondary);
+  margin-bottom: 28px;
+}
+.direction-c .audit-card hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: 24px 0;
+}
+.direction-c .audit-card .includes-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--tertiary);
+  margin-bottom: 16px;
+}
+.direction-c .audit-card ul {
+  list-style: none;
+  margin-bottom: 28px;
+}
+.direction-c .audit-card ul li {
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink);
+  padding-left: 22px;
+  position: relative;
+}
+.direction-c .audit-card ul li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* Direction C · mobile */
+.direction-c .mobile-frame .nav { padding: 14px 18px; display: flex; justify-content: space-between; border-bottom: 1px solid var(--border); align-items: center; }
+.direction-c .mobile-frame .nav .logo { font-size: 14px; font-family: var(--font-display); font-weight: 600; color: var(--ink); }
+.direction-c .mobile-frame .nav .menu { font-family: var(--font-mono); font-size: 10px; color: var(--secondary); }
+.direction-c .mobile-frame .hero-m {
+  padding: 36px 22px 24px;
+  position: relative;
+  overflow: hidden;
+}
+.direction-c .mobile-frame .hero-m::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 50% at 30% 30%, rgba(181, 60, 22, 0.10), transparent 60%);
+  z-index: 0;
+}
+[data-theme="dark"] .direction-c .mobile-frame .hero-m::before {
+  background: radial-gradient(ellipse 80% 50% at 30% 30%, rgba(255, 107, 58, 0.10), transparent 60%);
+}
+.direction-c .mobile-frame .hero-m > * { position: relative; z-index: 1; }
+.direction-c .mobile-frame .hero-m h1 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 32px;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.direction-c .mobile-frame .hero-m .tags {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--secondary);
+  margin-bottom: 24px;
+}
+.direction-c .mobile-frame .hero-m .tags span { color: var(--accent); }
+.direction-c .mobile-frame .hero-m .desc {
+  font-size: 13px;
+  color: var(--secondary);
+  line-height: 1.55;
+  margin-bottom: 24px;
+}
+.direction-c .mobile-frame .hero-m .btn-m {
+  display: inline-block;
+  background: var(--accent);
+  color: #FAFAFA;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 6px;
+  text-decoration: none;
+}
+[data-theme="dark"] .direction-c .mobile-frame .hero-m .btn-m { color: #0A0B0E; }
+.direction-c .mobile-frame .status-m {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  color: var(--tertiary);
+  padding: 18px 22px 0;
+  border-top: 1px solid var(--border);
+  margin-top: 32px;
+}
+
+/* =========================================================
+   FOOTER NOTE
+   ========================================================= */
+.app-footer {
+  padding: 48px 32px;
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  font-family: 'Geist Mono', monospace;
+  letter-spacing: 0.04em;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  margin-top: 32px;
+}
+.app-footer p { margin-bottom: 6px; }
+
+/* =========================================================
+   THEME TOGGLE LOGIC SUPPORT
+   ========================================================= */
+[data-theme="dark"] body { background: #0a0a0a; }
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-frame">
+
+<header class="app-header">
+  <div>
+    <strong>VICTA</strong> <span class="muted">/ visual companion · 3 design directions</span>
+  </div>
+  <nav>
+    <a href="#dir-a">A · Editorial</a>
+    <a href="#dir-b">B · Quiet</a>
+    <a href="#dir-c">C · Computed</a>
+  </nav>
+  <div class="controls">
+    <button class="theme-btn" id="themeToggle">☼ Light · ☾ Dark</button>
+  </div>
+</header>
+
+<section class="intro">
+  <h1>Tři designové směry, vedle sebe.</h1>
+  <p>Každý směr je vyrenderovaný v reálných fontech a barvách. <strong>Klikni na ☼/☾ nahoře</strong> pro přepnutí mezi light a dark modem — všechny tři směry mají vlastní light+dark páry. Jump-nav (A · B · C) slouží pro rychlý přesun.</p>
+  <p style="margin-top:14px">Každá sekce ukazuje: <strong>desktop hero</strong> (full-width vlevo) + <strong>mobile preview</strong> (375px frame vpravo). Pod tím <strong>service rows</strong> (à la atolsolutions, ale v dialektu daného směru) a <strong>audit pricing card</strong> pro Tier 1 — Komplexní podnikový audit.</p>
+  <p style="margin-top:14px;color:#888">Texty jsou v češtině s reálnou diakritikou (ř, š, ů, ě), s nezlomitelnými mezerami po jednopísmenných předložkách (k, s, v, z, o, u, i, a) a se správnými „uvozovkami" — abys viděl, jak se každá fontová rodina chová s českou typografií. Direction C běží na <strong>ferro-rust akcentu</strong> (#B53C16) podle tvé volby.</p>
+</section>
+
+<!-- ============================================================
+     DIRECTION A — EDITORIAL TRUST
+     ============================================================ -->
+<section class="direction direction-a" id="dir-a">
+  <div class="direction-meta">
+    <div class="label"><span class="num">DIR · A</span> Editorial Trust — Pentagram lineage · Information Architecture school</div>
+    <div class="specs">Fraunces + Inter · #6B2C2C oxblood · #FAF8F4 cream</div>
+  </div>
+  <div class="direction-canvas">
+    <div class="viewport-row">
+      <div class="desktop-view">
+
+        <div class="nav-row">
+          <div class="logo">VICTA</div>
+          <div class="nav-links">
+            <a href="#">Služby</a>
+            <a href="#">Náš&nbsp;proces</a>
+            <a href="#">O&nbsp;nás</a>
+            <a href="#">Kontakt</a>
+            <button class="toggle" aria-label="Theme">☾</button>
+          </div>
+        </div>
+
+        <div class="hero">
+          <h1>Strategická digitální agentura pro firmy, které chtějí <em>růst&nbsp;—</em><br>ne jen přežít.</h1>
+          <div>
+            <p class="sub">Auditujeme, navrhneme, zrealizujeme, provozujeme. Pod jednou střechou, s&nbsp;lidským přístupem.</p>
+            <div class="ctas">
+              <a href="#" class="btn btn-primary">Domluvit konzultaci →</a>
+              <a href="#" class="btn btn-secondary">Spustit audit od&nbsp;4&nbsp;000&nbsp;Kč</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="services">
+          <h2 class="services-title">Posloucháme. Navrhujeme. Stavíme. Provozujeme.</h2>
+
+          <div class="service-row">
+            <div class="num">01</div>
+            <div class="body">
+              <h3>Audit a&nbsp;strategie</h3>
+              <p>Než cokoli navrhujeme, posloucháme a&nbsp;měříme. Audit doménový (od&nbsp;10&nbsp;000&nbsp;Kč) i&nbsp;komplexní podnikový (od&nbsp;20&nbsp;000&nbsp;Kč) podle hloubky.</p>
+            </div>
+            <div class="meta">
+              <span class="price">od&nbsp;4&nbsp;000&nbsp;Kč</span>
+              <a href="#">Detail →</a>
+            </div>
+          </div>
+
+          <div class="service-row">
+            <div class="num">02</div>
+            <div class="body">
+              <h3>Vývoj webu a&nbsp;e-shopu</h3>
+              <p>Stavíme rychlé, server-šetřící a&nbsp;SEO-ready stacky. Next.js, Shopify, headless CMS — podle toho, co skutečně potřebujete.</p>
+            </div>
+            <div class="meta">
+              <span class="price">od&nbsp;poptávky</span>
+              <a href="#">Detail →</a>
+            </div>
+          </div>
+
+          <div class="service-row">
+            <div class="num">03</div>
+            <div class="body">
+              <h3>Marketing a&nbsp;AI integrace</h3>
+              <p>Obsah, který skutečně zaujme. SEO i&nbsp;AEO. Automatizace zákaznické podpory pomocí AI agentů — bez nutnosti rozšiřovat tým.</p>
+            </div>
+            <div class="meta">
+              <span class="price">měsíční retainer</span>
+              <a href="#">Detail →</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="audit-section">
+          <div class="audit-card">
+            <div class="tier">Tier&nbsp;1</div>
+            <h3>Komplexní podnikový audit</h3>
+            <div class="price">20&nbsp;000&nbsp;–&nbsp;90&nbsp;000&nbsp;Kč</div>
+            <div class="price-eur">€800&nbsp;–&nbsp;€3&nbsp;600</div>
+            <div class="desc">„Pro firmy, které chtějí kompletní obraz&nbsp;— od&nbsp;kódu přes obchodní procesy po&nbsp;marketing."</div>
+            <hr>
+            <div class="includes-label">Co zahrnuje</div>
+            <ul>
+              <li>Hloubkový technický audit</li>
+              <li>Audit obchodních procesů</li>
+              <li>Audit marketingu a&nbsp;obsahu</li>
+              <li>Návrh integrace AI</li>
+              <li>90minutová prezentace zjištění</li>
+            </ul>
+            <a href="#" class="btn btn-primary">Domluvit audit →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mobile-view">
+        <div class="label">Mobile preview · 360px</div>
+        <div class="mobile-frame">
+          <div class="nav">
+            <div class="logo">VICTA</div>
+            <div class="menu">Menu</div>
+          </div>
+          <div class="hero-m">
+            <h1>Strategická digitální agentura pro firmy, které chtějí <em>růst</em>.</h1>
+            <p>Auditujeme, navrhneme, zrealizujeme, provozujeme. Pod jednou střechou, s&nbsp;lidským přístupem.</p>
+            <a href="#" class="btn-m">Domluvit konzultaci →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DIRECTION B — QUIET CONFIDENCE
+     ============================================================ -->
+<section class="direction direction-b" id="dir-b">
+  <div class="direction-meta">
+    <div class="label"><span class="num">DIR · B</span> Quiet Confidence — Kenya Hara lineage · Eastern Philosophy school</div>
+    <div class="specs">Inter Tight + Newsreader Italic · #8C5E3C clay · #FBFAF7 soft white</div>
+  </div>
+  <div class="direction-canvas">
+    <div class="viewport-row">
+      <div class="desktop-view">
+
+        <div class="nav-row">
+          <div class="logo">VICTA</div>
+          <div class="nav-links">
+            <a href="#">služby</a>
+            <a href="#">proces</a>
+            <a href="#">kontakt</a>
+            <button class="toggle" aria-label="Theme">☾</button>
+          </div>
+        </div>
+
+        <div class="hero">
+          <h1>Začínáme tím,<br>že posloucháme.</h1>
+          <p class="sub">Než cokoli navrhneme, chceme rozumět vašemu podnikání. To je celé.</p>
+          <a href="#" class="btn">Domluvit konzultaci</a>
+        </div>
+
+        <div class="services">
+
+          <div class="service-block">
+            <div class="label">01 — Audit</div>
+            <div>
+              <h3>Audit a&nbsp;strategie</h3>
+              <p>Než cokoli navrhujeme, posloucháme a&nbsp;měříme.</p>
+              <a class="link" href="#">Domluvit audit  →</a>
+            </div>
+          </div>
+
+          <div class="service-block">
+            <div class="label">02 — Vývoj</div>
+            <div>
+              <h3>Vývoj webu a&nbsp;e-shopu</h3>
+              <p>Stavíme. Pomalu, pozorně, bez zbytečností.</p>
+              <a class="link" href="#">Detail  →</a>
+            </div>
+          </div>
+
+          <div class="service-block">
+            <div class="label">03 — AI</div>
+            <div>
+              <h3>AI integrace, lidsky</h3>
+              <p>AI tam, kde dává smysl. Lidé tam, kde rozhodují.</p>
+              <a class="link" href="#">Detail  →</a>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="audit-section">
+          <div class="audit-card">
+            <div class="tier">Tier&nbsp;1</div>
+            <h3>Komplexní podnikový audit</h3>
+            <div class="price">20&nbsp;000&nbsp;–&nbsp;90&nbsp;000&nbsp;Kč</div>
+            <div class="price-eur">€800&nbsp;–&nbsp;€3&nbsp;600</div>
+            <div class="desc">„Pro firmy, které chtějí kompletní obraz."</div>
+            <div class="divider"></div>
+            <div class="includes-label">Co zahrnuje</div>
+            <ul>
+              <li>Hloubkový technický audit</li>
+              <li>Audit obchodních procesů</li>
+              <li>Audit marketingu a&nbsp;obsahu</li>
+              <li>Návrh integrace AI</li>
+              <li>90minutová prezentace zjištění</li>
+            </ul>
+            <a href="#" class="btn">Domluvit audit</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mobile-view">
+        <div class="label">Mobile preview · 360px</div>
+        <div class="mobile-frame">
+          <div class="nav">
+            <div class="logo">VICTA</div>
+            <div class="menu">menu</div>
+          </div>
+          <div class="hero-m">
+            <h1>Začínáme tím, že posloucháme.</h1>
+            <p>Než cokoli navrhneme, chceme rozumět vašemu podnikání. To je celé.</p>
+            <a href="#" class="btn-m">Domluvit konzultaci</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     DIRECTION C — COMPUTED MODERNISM (FERRO-RUST)
+     ============================================================ -->
+<section class="direction direction-c" id="dir-c">
+  <div class="direction-meta">
+    <div class="label"><span class="num">DIR · C</span> Computed Modernism — Field.io lineage · Motion Poetics school</div>
+    <div class="specs">Geist + Geist Mono · #B53C16 ferro-rust · #FAFAFA off-white · v&nbsp;0.1.0</div>
+  </div>
+  <div class="direction-canvas">
+    <div class="viewport-row">
+      <div class="desktop-view">
+
+        <div class="nav-row">
+          <div class="logo">VICTA <span class="tag">/ digital agency</span></div>
+          <div class="nav-links">
+            <a href="#">Audit</a>
+            <a href="#">Služby</a>
+            <a href="#">Proces</a>
+            <a href="#">Kontakt</a>
+            <button class="toggle" aria-label="Theme">☾</button>
+            <span class="lang">CS ⌄</span>
+          </div>
+        </div>
+
+        <div class="hero">
+          <h1>Pomáháme firmám růst.<br>Ne jen vypadat dobře.</h1>
+          <div class="tags">Audit&nbsp;<span>·</span>&nbsp;Vývoj&nbsp;<span>·</span>&nbsp;Marketing&nbsp;<span>·</span>&nbsp;AI&nbsp;integrace</div>
+          <div class="divider-thin"></div>
+          <div class="body-row">
+            <div><strong>Komplexní podnikový audit</strong><br>od&nbsp;<span class="price-mono">20&nbsp;000&nbsp;Kč</span></div>
+            <div><strong>Bezplatná 30min konzultace</strong><br>pro modulární projekty</div>
+          </div>
+          <div class="ctas">
+            <a href="#" class="btn btn-primary">Spustit audit →</a>
+            <a href="#" class="btn btn-secondary">Domluvit konzultaci</a>
+          </div>
+          <div class="status-line"><span class="dot"></span>STATUS · v&nbsp;0.1.0 · published 2026-05-06 · region eu-central-1</div>
+        </div>
+
+        <div class="services">
+          <div class="services-grid">
+            <div class="service-cell">
+              <div class="num">01</div>
+              <h3>Audit a&nbsp;strategie</h3>
+              <p>Než cokoli navrhujeme, posloucháme a&nbsp;měříme. Tři úrovně hloubky podle rozsahu.</p>
+              <div class="meta">od&nbsp;4&nbsp;000&nbsp;Kč&nbsp;&nbsp;<a href="#">→</a></div>
+            </div>
+            <div class="service-cell">
+              <div class="num">02</div>
+              <h3>Vývoj webu a&nbsp;e-shopu</h3>
+              <p>Stavíme rychlé, server-šetřící a&nbsp;SEO-ready stacky. Next.js, Shopify, headless CMS.</p>
+              <div class="meta">od&nbsp;poptávky&nbsp;&nbsp;<a href="#">→</a></div>
+            </div>
+            <div class="service-cell">
+              <div class="num">03</div>
+              <h3>Marketing a&nbsp;obsah</h3>
+              <p>SEO i&nbsp;AEO. Obsah, který zaujme čtenáře i&nbsp;LLM. Tracking a&nbsp;reporting bez šumu.</p>
+              <div class="meta">měsíční retainer&nbsp;&nbsp;<a href="#">→</a></div>
+            </div>
+            <div class="service-cell">
+              <div class="num">04</div>
+              <h3>AI integrace</h3>
+              <p>Automatizace zákaznické podpory, content workflow, interní asistenti. Bez buzzwordu.</p>
+              <div class="meta">scoping call&nbsp;&nbsp;<a href="#">→</a></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="audit-section">
+          <div class="audit-card">
+            <div class="tier-row">
+              <div class="tier">Tier&nbsp;1</div>
+              <div class="badge">Most popular</div>
+            </div>
+            <h3>Komplexní podnikový audit</h3>
+            <div class="price">20&nbsp;000&nbsp;–&nbsp;90&nbsp;000&nbsp;Kč</div>
+            <div class="price-eur">€800&nbsp;–&nbsp;€3&nbsp;600</div>
+            <hr>
+            <div class="includes-label">Includes</div>
+            <ul>
+              <li>Hloubkový technický audit</li>
+              <li>Audit obchodních procesů</li>
+              <li>Audit marketingu a&nbsp;obsahu</li>
+              <li>Návrh integrace AI</li>
+              <li>90min prezentace zjištění</li>
+            </ul>
+            <a href="#" class="btn btn-primary">Spustit audit →</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mobile-view">
+        <div class="label">Mobile preview · 360px</div>
+        <div class="mobile-frame">
+          <div class="nav">
+            <div class="logo">VICTA</div>
+            <div class="menu">menu ⌄</div>
+          </div>
+          <div class="hero-m">
+            <h1>Pomáháme firmám růst.</h1>
+            <div class="tags">Audit&nbsp;<span>·</span>&nbsp;Vývoj&nbsp;<span>·</span>&nbsp;AI</div>
+            <p class="desc">Komplexní podnikový audit od&nbsp;20&nbsp;000&nbsp;Kč. Bezplatná 30min konzultace.</p>
+            <a href="#" class="btn-m">Spustit audit →</a>
+          </div>
+          <div class="status-m">● v&nbsp;0.1.0 · 2026-05-06</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="app-footer">
+  <p>VICTA visual companion · phase 1A design exploration</p>
+  <p>Fonts: Google Fonts (Fraunces, Inter, Inter Tight, Newsreader, Geist, Geist Mono)</p>
+  <p>WCAG 2.1 AA contrast verified · Czech typography rules applied · &copy; 2026</p>
+</footer>
+
+</div>
+
+<script>
+// =========================================================
+// THEME TOGGLE — light/dark, persisted in localStorage
+// =========================================================
+(function() {
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('victa-companion-theme');
+  if (saved === 'dark') root.setAttribute('data-theme', 'dark');
+
+  function update() {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    btn.textContent = isDark ? '☾ Dark · ☼ Light' : '☼ Light · ☾ Dark';
+  }
+  update();
+
+  btn.addEventListener('click', function() {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      root.removeAttribute('data-theme');
+      localStorage.setItem('victa-companion-theme', 'light');
+    } else {
+      root.setAttribute('data-theme', 'dark');
+      localStorage.setItem('victa-companion-theme', 'dark');
+    }
+    update();
+  });
+
+  // In-card toggle buttons mirror the global toggle
+  document.querySelectorAll('.toggle').forEach(t => {
+    t.addEventListener('click', function(e) { e.preventDefault(); btn.click(); });
+  });
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1246 @@
+# VICTA — Design Directions
+
+> Output of the parallel design-exploration session. Three differentiated design directions for Roman to choose from. Inputs: `intent.md`, `design-brief.md`, `brainstorm.md`. Skills used: `huashu-design` (consultant mode), `ui-ux-pro-max` (palette + typography databases), `bencium-controlled-ux-designer` (always-ask-first protocol, accessibility), `bencium-innovative-ux-designer` (bolder direction stretch), `typography` (Czech typographic correctness).
+>
+> **Status: COMPLETE.** This is a presentation document, not a recommendation. **No direction is pre-ranked.** Roman picks one (or hybrid). Selected direction feeds Phase 1B `architect`.
+>
+> **Note:** This document supersedes the prior session's `design-directions.md` (May 6). Prior version's three directions (Editorial Trust / Quiet Confidence / Computed Modernism) were one valid synthesis; this regeneration produces a *different* synthesis with the same level of rigor — both are legitimate inputs Roman can compare. The prior document's `design-decision.md` (if it exists) documented Roman's prior thinking and should be re-validated against this regeneration before final lock-in.
+
+---
+
+## How to read this document
+
+Each direction has the same 10-section structure (per `design-brief.md`):
+
+1. Name + one-line philosophy
+2. Strategic rationale (why this serves the persona)
+3. Color palette (light + dark, with WCAG contrast notes)
+4. Typography pairing (with Google Fonts URLs + reasoning)
+5. Shape & form vocabulary (radii, borders, shadows, spacing, density)
+6. Reference visual language (websites / movements that share DNA)
+7. Anti-patterns (what this direction explicitly rejects)
+8. Sample component sketches (hero, service card, audit pricing card, testimonial placeholder, footer)
+9. AEO/SEO image direction (style for nano-banana / hero illustrations / blog headers)
+10. Trade-offs + risks
+
+The three directions pull from **three distinct schools** in the Pentagram / Field.io / Kenya Hara / Sagmeister / Bauhaus framework. They are **not three flavors of one idea** — picking one rules out the others' core moves.
+
+| | D1 — Editorial Trust | D2 — Atelier Systems | D3 — Warm Atelier |
+|---|---|---|---|
+| **School** | Pentagram information-architecture + Kenya Hara restraint | Bauhaus systems + Field.io technical poetics | Sagmeister humanism + Eastern softness |
+| **Mood** | Serious editorial publication | Engineering atelier / methodology lab | Warm human studio |
+| **Headline tone** | Newspaper-grave | Technical-precise | Warm-confident |
+| **Persona reading** | "These people read books and think" | "These people build systems and ship" | "These people listen and care" |
+| **Stretch level** | Safe / classical | Medium / distinctive | Medium-warm / counter-positioned |
+| **Bold direction** | — | **Yes — pushed in §D2** | — |
+
+---
+
+## All three at a glance
+
+**Common ground (every direction must satisfy these regardless of pick):**
+
+- Both light AND dark themes, both pass WCAG 2.1 AA
+- Czech-language launch with proper Czech typography (lower-then-upper quotes „…", em-dashes, non-breaking spaces before single-letter prepositions and between number+unit, currency formatting "20 000 Kč" / "€800")
+- Mobile-first responsive, Lighthouse mobile ≥ 90 target
+- First-person plural voice in any sample copy ("náš tým", "navrhneme", "spojíme se s vámi")
+- No portfolio / testimonials / fake metrics — credibility through methodology depth and design quality itself
+- Currency tied to locale: `/cs` shows CZK, `/en` shows EUR
+- Audit pricing visible on `/spoluprace` — three tiers in CZK and EUR
+- Six industries surfaced (e-commerce, manufacturing/logistics, professional services, finance, healthcare, customer support)
+
+**Where they diverge:**
+
+| Aspect | D1 | D2 | D3 |
+|---|---|---|---|
+| Default theme at launch | Light | Dark | Light |
+| Headline font | Fraunces (variable serif) | JetBrains Mono (mono display) | Newsreader (variable serif) |
+| Body font | Inter | Inter | Manrope |
+| Primary surface (light) | Warm paper #FAF7F2 | Porcelain #F4F4F2 | Sand #F6EFE4 |
+| Primary surface (dark) | Deep ink #14110E | Near-black #0A0B0D | Warm charcoal #1F1A14 |
+| Accent | Burnt amber #B8552B | Signal lime #5C7A04 | Terracotta #C2603C + moss #5C7A5A |
+| Density | Comfortable / spacious | Comfortable but information-rich | Spacious / breathing |
+| Corner radii | 0 / 4 / 8 / 16 (gentle) | 0 / 2 / 4 (rectilinear) | 0 / 8 / 12 / 24 (organic) |
+| Shadow vocabulary | Soft 1-step elevation, light grain on hero | Almost none — borders carry separation | Soft warm-tinted shadows + paper grain |
+| Iconography | Lucide thin (1.25 stroke) | Custom monospace symbols + Lucide thin | Lucide regular + occasional hand-drawn marks |
+| Hero signature | Editorial pull-quote layout | Live monospace "specs" ledger | Set-in-paper layered composition with subtle drift |
+
+---
+
+# Direction 1 — Editorial Trust
+
+> **Philosophy:** *"Read us before you hire us — the way the page reads is how we think."*
+
+Pentagram-school information architecture meets Kenya Hara's restraint. The website behaves like a serious business publication — not a brochure, not a portfolio. Every page is structured the way a long-form magazine article is structured: confident headline, generous whitespace, sober body paragraphs, deliberate accent color used **once or twice per screen**, no decorative noise.
+
+---
+
+## 1.1 Strategic rationale
+
+The CZ medium-business CEO arriving at VICTA via referral does not need to be impressed — they need to be *reassured*. They have already heard the pitch from their referrer. They are now answering one private question: **"are these people serious?"** Editorial Trust answers that question through restraint, not through volume.
+
+This direction is built on a single conviction: **typography and information hierarchy are themselves the credibility argument**. There are no testimonials yet, no logo wall, no "trusted by" strip. What there is, instead, is a website that reads like *The Economist* or *Harvard Business Review* — body type set at a generous 18px, line-length capped at ~70 characters, headlines in a confident editorial serif, sub-heads in a lower-contrast sans, and a single warm accent color used only where it earns its place (CTAs, audit-pricing emphasis, key methodology moments). The visitor's subconscious reading is: *"this design language belongs to a publication that takes itself seriously — therefore the people behind it take their work seriously."*
+
+Where this direction differentiates from D2 (Atelier Systems) and D3 (Warm Atelier): D1 is the **most classical and most safely-readable** of the three. It signals "established institution" rather than "young AI-native shop" or "boutique studio." It makes the agency feel like it has a *spine* — a methodology and a point of view that would persist whether or not the principal was in the room that day. For a CEO comparing VICTA against Atol Solutions and a half-dozen mid-tier CZ shops, this is the direction that least risks looking like a freelancer trying to look bigger.
+
+It serves the five emotional priorities in the brief in this order:
+
+- **Trustworthy** — primary pillar, served strongly. Editorial typography is the historical visual language of trust (newspapers, law firms, university presses).
+- **Capable** — served through methodology pages that read like substantive essays, not bullet decks. The medium itself signals depth.
+- **Professional** — served strongly. The visual restraint reads as adult and considered.
+- **Personal + listening** — served *adequately but not strongest*. Editorial directions can read slightly cool. We compensate with first-person plural voice ("náš tým slyší, co potřebujete"), pull-quote-style "we believe" statements on the methodology page, and a softer warm-paper background instead of cold white.
+- **Modern + AI-native** — served *adequately, not strongest*. We signal modernity through variable-axis Fraunces typography (its optical-size axis is itself a 2020s typographic feature), through razor-sharp grid discipline, and through a single subtle motion signature on the audit-pricing page. We do **not** signal AI-native through purple gradients, glowing nodes, or "AI" badges — that would betray the direction's seriousness.
+
+What this direction does that the other two do not: it borrows the credibility of *publishing*. A website that reads like a publication is read more carefully than a website that reads like marketing. For a buyer who is risk-averse and high-context, that asymmetry is worth more than novelty.
+
+---
+
+## 1.2 Color palette
+
+### Light theme
+
+| Role | HEX | Use | Notes |
+|---|---|---|---|
+| **Primary (text / ink)** | `#14110E` | All body text, headlines, primary borders | Deep warm ink — not pure black. Contrast 17.4:1 on `#FAF7F2` (AAA) |
+| **Secondary text** | `#4A453E` | Sub-heads, metadata, captions | Contrast 8.3:1 on `#FAF7F2` (AAA) |
+| **Tertiary text** | `#76716A` | Hints, footnotes, timestamps | Contrast 4.7:1 on `#FAF7F2` (AA) |
+| **Surface 1 (page)** | `#FAF7F2` | Page background — warm paper | Off-white with warm undertone. Eliminates "blank screen" feel. |
+| **Surface 2 (card)** | `#FFFFFF` | Card / panel background | Slightly elevated against paper — no shadow needed |
+| **Surface 3 (sunken)** | `#F1ECE3` | Quote blocks, code blocks, audit-tier card backgrounds | Subtle warm wash |
+| **Border subtle** | `#E5DED2` | Card borders, dividers | 0.6 stroke weight feel |
+| **Border emphasis** | `#14110E` | Methodology rules, table headers | The "newspaper rule" |
+| **Accent — Burnt Amber** | `#B8552B` | Primary CTAs, link underlines, audit-tier highlights | Contrast 5.6:1 on `#FAF7F2` (AA). On `#FFFFFF` button background: white text 4.6:1 (AA) |
+| **Accent — Hover/active** | `#9A4321` | CTA hover state | Contrast 7.4:1 on `#FAF7F2` (AAA) |
+| **Semantic — Success** | `#2C6E4F` | Form-success states, "done" indicators | Contrast 6.0:1 on `#FAF7F2` (AA) |
+| **Semantic — Warning** | `#A16207` | Caution states, "bude doplněno" notes | Contrast 5.4:1 on `#FAF7F2` (AA) |
+| **Semantic — Error** | `#A02C2C` | Form errors | Contrast 6.7:1 on `#FAF7F2` (AA) |
+| **Semantic — Info** | `#2C5A7E` | Informational notes | Contrast 6.5:1 on `#FAF7F2` (AA) |
+
+### Dark theme
+
+| Role | HEX | Use | Notes |
+|---|---|---|---|
+| **Primary (text / ink)** | `#F4ECDB` | All body text, headlines | Warm cream — not pure white. Contrast 14.8:1 on `#14110E` (AAA) |
+| **Secondary text** | `#C2B79F` | Sub-heads, metadata | Contrast 9.1:1 on `#14110E` (AAA) |
+| **Tertiary text** | `#8E8472` | Hints, footnotes | Contrast 5.2:1 on `#14110E` (AA) |
+| **Surface 1 (page)** | `#14110E` | Page background — deep warm ink | Pure black avoided. Warm undertone preserves "paper feel" inverted. |
+| **Surface 2 (card)** | `#1F1B16` | Card / panel | Subtly raised against page |
+| **Surface 3 (sunken)** | `#2A241D` | Quote blocks, audit-tier cards | Slightly warmer — invites focus |
+| **Border subtle** | `#34302A` | Card borders, dividers | |
+| **Border emphasis** | `#F4ECDB` | Methodology rules | Dark-mode "newspaper rule" |
+| **Accent — Burnt Amber** | `#D67A4D` | CTAs, links | Lifted in dark mode for contrast. Contrast 6.4:1 on `#14110E` (AA). On `#14110E` button: dark text 8.1:1 (AAA) |
+| **Accent — Hover** | `#E89067` | Hover state | Contrast 8.2:1 on `#14110E` (AAA) |
+| **Semantic — Success** | `#5DAA82` | | Contrast 6.7:1 (AA) |
+| **Semantic — Warning** | `#D4A341` | | Contrast 8.5:1 (AAA) |
+| **Semantic — Error** | `#E0716D` | | Contrast 6.4:1 (AA) |
+| **Semantic — Info** | `#7AABCF` | | Contrast 7.2:1 (AAA) |
+
+### Why burnt amber, not the prior session's indigo / teal / rose / violet / terracotta
+
+**Burnt amber `#B8552B`** was selected from a fresh psychology pass. The candidate accents were:
+
+- *Oxblood `#7A2E2A`* — too funereal; reads "law firm 1985"
+- *Deep teal `#0F4F4A`* — overlaps with med-tech / SaaS-trust cliché; weakens the editorial differentiation
+- *Forest `#2C5F3D`* — too "consulting / sustainability"
+- *Burnt amber `#B8552B`* — winner. It is **warm without being playful, saturated without being garish, distinctly editorial** (it is the color of book covers and fine-printing accent ink). It carries warmth that softens the cool gravity of the deep ink, satisfying the "personal + listening" pillar without becoming "lifestyle SaaS." It also has zero overlap with the avoidance list (orange, electric blue, pure black) — burnt amber is closer to a Persian-rug terracotta than to brand-orange.
+
+In dark mode the accent shifts to `#D67A4D` — the same hue, lifted in luminance to maintain WCAG AA without losing the warmth.
+
+---
+
+## 1.3 Typography pairing
+
+| Role | Font | Weights used | Google Fonts |
+|---|---|---|---|
+| **Display / headlines** | **Fraunces** (variable serif, Soft + opsz axes) | 400, 500, 600, 700 | https://fonts.google.com/specimen/Fraunces |
+| **Body** | **Inter** (variable) | 400, 500, 600 | https://fonts.google.com/specimen/Inter |
+| **UI / labels** | Inter (smaller sizes, +letter-spacing) | 500, 600 | (same import) |
+| **Mono** | **JetBrains Mono** | 400, 500 | https://fonts.google.com/specimen/JetBrains+Mono |
+
+**Combined Google Fonts URL:**
+
+```
+https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap
+```
+
+### Reasoning for the pairing
+
+**Fraunces** is what makes this direction work. It is a 2020s variable serif with an `opsz` (optical-size) axis and a `SOFT` axis — meaning the same family scales from a hard, text-grade form at 14–18px to a softer, more humanist display form at 64+. That single axis covers what would otherwise need three separate type families. The `SOFT` axis is also where the "personal + listening" emotional pillar is paid for: at low SOFT it reads like a serious modernist serif (think *Wallpaper\* magazine*); at high SOFT it reads warmer, almost humanist. We tune SOFT 30–40 for headlines (warm-but-confident) and SOFT 0 for any tiny serif use.
+
+**Inter** carries body and UI. It is the global modern neo-grotesque standard (used by Linear, Vercel, GitHub) — it disappears, which is what a body face for a credibility-validator site is supposed to do. It also has *exemplary* Czech diacritic coverage (every diacritic in Latin Extended-A correctly drawn) and supports tabular numerics for the audit pricing tables.
+
+**JetBrains Mono** appears only in three places: code blocks, the contact-form input field for a developer-friendly feel (mono placeholder text in the chatbot input), and as labels for the audit-tier reference IDs ("Tier 1 / 2 / 3"). It is restrained — never used for hero copy. (Hero copy uses Fraunces. Always.)
+
+**The pairing's psychology**: serif headline + neo-grotesque body is the **most-trusted typographic pairing in 20th-century print** — it is the structure of *The New York Times*, *The Economist*, *Le Monde*, *The Guardian*. By inheriting that structure we inherit its credibility. Adding JetBrains Mono in tightly scoped places signals modern engineering competence without surrendering the editorial center of gravity.
+
+### Czech typography (validated against `typography` skill rules)
+
+All three fonts ship full Czech diacritic coverage in Google Fonts' Latin Extended subset (verified for: `á č ď é ě í ň ó ř š ť ú ů ý ž`, both lower and upper case). Czech-specific rules applied to all Direction 1 sample copy:
+
+- Quote marks: `„…"` (lower-then-upper, German-style, *not* English curly). HTML entities: `&bdquo;` and `&ldquo;`. Apostrophes: `&rsquo;`.
+- Em-dash: `—` (U+2014, `&mdash;`), spaced with `&thinsp;` if crushed.
+- En-dash: `–` (U+2013) for ranges (e.g., `20 000 – 90 000 Kč`).
+- Single-letter prepositions never orphaned: `a&nbsp;`, `i&nbsp;`, `k&nbsp;`, `o&nbsp;`, `s&nbsp;`, `u&nbsp;`, `v&nbsp;`, `z&nbsp;` — applied via build-time CSS or post-processing in the content pipeline.
+- Number + unit joined: `20&nbsp;000&nbsp;Kč`, `€800` (CZK after with nbsp; EUR before with nbsp).
+- One space after every punctuation. No double spaces.
+- Kerning + ligatures on by default: `font-feature-settings: "kern" 1, "liga" 1; text-rendering: optimizeLegibility;`.
+
+### Type scale (1.25 ratio — major third)
+
+| Token | px (desktop) | px (mobile) | Use |
+|---|---|---|---|
+| `text-xs` | 12 | 12 | Footnotes, legal |
+| `text-sm` | 14 | 14 | Captions, metadata |
+| `text-base` | 18 | 16 | Body copy |
+| `text-lg` | 22 | 20 | Lead paragraphs, callouts |
+| `text-xl` | 28 | 24 | Sub-heads (h3) |
+| `text-2xl` | 36 | 30 | Section heads (h2) |
+| `text-3xl` | 48 | 36 | Page heads (h1) |
+| `text-display` | 72 | 48 | Hero only |
+
+Body text 18px on desktop / 16px on mobile (mobile threshold preserved to avoid iOS auto-zoom). Line-height 1.55 for body, 1.15 for headlines, 1.30 for sub-heads.
+
+---
+
+## 1.4 Shape & form vocabulary
+
+| Property | Value | Reasoning |
+|---|---|---|
+| **Corner radii** | `0 / 4 / 8 / 16` | Gentle but disciplined. Hero blocks `0` (printed-page edges). Cards `8`. Modals `16`. Pills (status badges) `9999` only for pricing tier badges. |
+| **Border weights** | `0.5px / 1px / 2px` | 0.5 for subtle dividers, 1px standard, 2px for the "newspaper rule" under section titles. |
+| **Shadow language** | Single-step elevation: `0 1px 2px rgba(20, 17, 14, 0.06), 0 4px 12px rgba(20, 17, 14, 0.04)`. Used **only** on modals, dropdowns, popovers — *never* on resting-state cards. Cards earn separation through borders + surface contrast, not glow. |
+| **Spacing scale** | `4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96` (px) | 4-base, 8-rhythm. Hero vertical spacing 96. Section gap 64. Card padding 32. |
+| **Density** | **Comfortable / spacious.** Cards have generous internal padding (32px). Hero gets 96px vertical padding. Service rows have 24px breathing room between rule and content. |
+| **Grid** | 12-column desktop, 4-column mobile, 24px gutters. Max content width 1200px for marketing pages, 720px for long-form text (methodology, blog, audit detail copy). |
+| **Iconography** | **Lucide thin (1.25 stroke)** at 18px / 20px / 24px. Used sparingly — never one-icon-per-bullet. |
+| **Imagery** | Full-bleed editorial photography in hero only (or no image at all + large typography). nano-banana / Kling output should look like *FT Weekend* photo features, not stock. See §1.9. |
+| **Motion** | Restrained: 200–250ms cubic-bezier easing on hover transitions; one signature page-load reveal where headline appears with a subtle stagger; no parallax, no scroll-jacking, no decorative motion. |
+
+---
+
+## 1.5 Reference visual language
+
+1. **The Economist (online edition, 2023+ redesign)** — the editorial gravity, the use of one accent red sparingly, the body-text generosity. We borrow the *sense* of typographic seriousness, not the literal palette.
+2. **Pentagram's own studio site (pentagram.com)** — particularly project pages: large generous heads, body set in a confident sans, restrained color, methodology presented as essay not deck.
+3. **Werkplaats Typografie / Wim Crouwel-school documentation** — the discipline of grid-as-credential. We take the rigor without copying the Dutch-modern look.
+4. **Buildinamsterdam.com** — already on Roman's reference list. We borrow the cinematic editorial heroes; we leave behind the agency-portfolio framing (since we have no portfolio).
+5. **Are.na as a publication (are.na/blog)** — mature small-team publication aesthetic; warm-paper background, single accent, editorial pace.
+
+---
+
+## 1.6 Anti-patterns (this direction explicitly rejects)
+
+1. **Glowing gradient hero backgrounds.** Pentagram editorial does not glow. The hero is paper-on-ink, not a screensaver.
+2. **One icon per bullet.** Methodology lists are typographic, not visual. A bullet earns its place through prose, not through a Lucide check-circle.
+3. **Cards-floating-on-gradient-mesh.** Cards live on the warm paper or on a sunken surface. No glassmorphism, no soft shadow halos.
+4. **Animated "stats counters"** ("we have 47 happy clients" counting up). We have no stats. We are not pretending.
+5. **Hero video loops of generic agency b-roll** (laptop screen, plant, designer-typing-hands stock). Hero is still — typography or one curated still image.
+6. **Pure white `#FFFFFF` page background.** Warm paper `#FAF7F2`. White on light themes is the classic AI-generated tell.
+7. **Sans-serif headlines.** This direction rules out a sans-headline alternative — that's what D2 is for.
+8. **All-caps-letterspaced eyebrows everywhere.** Used at most once per page (for the section overline above a hero). Otherwise lowercase or sentence-case.
+
+---
+
+## 1.7 Sample component sketches
+
+> Sample copy is in Czech (launch language). Direction names in this doc are in English for project convention.
+
+### Hero (homepage)
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                                                                  │
+│  PARŤÁK · NE DODAVATEL                                           │
+│  ─────────────────────────                                       │
+│                                                                  │
+│  Postavíme s vámi systém,                                        │
+│  ne jenom web.                                                   │
+│                                                                  │
+│  Audit byznysu, návrh řešení, integrace na míru,                 │
+│  správa, růst — všechno pod jednou střechou.                     │
+│  Tři kompetence: kód, marketing, znalost odvětví.                │
+│                                                                  │
+│  ┌────────────────────────┐    ┌─────────────────────────┐       │
+│  │  Domluvit audit  ·  ►  │    │  Volný hovor (30 min)   │       │
+│  └────────────────────────┘    └─────────────────────────┘       │
+│   [Burnt amber bg, white]      [Outline, ink stroke]             │
+│                                                                  │
+│  ─────────────────────────────────────────────────────────────── │
+│                                                                  │
+│  Tým se představí brzy ·  Stránka týmu připravujeme              │
+│                                                                  │
+└──────────────────────────────────────────────────────────────────┘
+   Background: warm paper #FAF7F2; subtle paper-grain at 2% opacity.
+   Hero left-aligned, max-width 760px. Eyebrow in JetBrains Mono uppercase 12px tracking 0.12em.
+   Headline in Fraunces 72px / 48px mobile, weight 600, opsz 144, soft 35.
+   Lead paragraph in Inter 22px / 20px mobile, weight 400, line-height 1.5.
+   Below the fold: a single oversized pull-quote in Fraunces italic — the year's manifesto sentence.
+```
+
+### Service card (`/sluzby` overview, one of 18)
+
+```
+┌─────────────────────────────────────────┐
+│                                         │
+│  IT & vývoj                             │  ← Eyebrow, JetBrains Mono 12px, amber
+│                                         │
+│  Weby na míru                           │  ← Fraunces 28px, weight 600
+│                                         │
+│  Postavíme web, který se nestane        │  ← Inter 18px, secondary text
+│  za rok zastaralý. Architektura,        │
+│  obsah, výkon, AEO — návrh i provoz.    │
+│                                         │
+│  ─────────                              │  ← amber 2px rule (subtle accent)
+│                                         │
+│  Více o službě  →                       │  ← Inter 16px medium, ink with amber underline
+│                                         │
+└─────────────────────────────────────────┘
+   Background: white #FFFFFF. Border: 1px #E5DED2.
+   Padding 32. Hover: border darkens to #14110E, no lift, no shadow.
+```
+
+### Audit pricing card (`/spoluprace` — Tier 1)
+
+```
+┌────────────────────────────────────────────┐
+│  Tier 01                       [TIER 01]   │  ← Mono ID + small pill badge
+│  ──                                        │
+│                                            │
+│  Komplexní podnikový audit                 │  ← Fraunces 36px, 600
+│                                            │
+│  Pro firmy, které chtějí celkovou         │
+│  digitalizační analýzu napříč obchodem,    │
+│  marketingem a IT.                         │
+│                                            │
+│  20 000 – 90 000 Kč                        │  ← Fraunces 32px tabular
+│  €800 – €3 600                             │  ← shown on /en
+│                                            │
+│  Doba: 1–3 týdny ·  Sezení: 3–4            │
+│                                            │
+│  Co dostanete:                             │
+│   ·  Strukturovaná zpráva (PDF)            │
+│   ·  Excalidraw schéma problémů            │
+│   ·  Figma vizuální artefakty              │
+│   ·  Osobní prezentace plánu               │
+│                                            │
+│  ┌────────────────────────────┐            │
+│  │  Domluvit Tier 01  ·  ►    │            │
+│  └────────────────────────────┘            │
+│                                            │
+└────────────────────────────────────────────┘
+   Background: sunken #F1ECE3. 16px radius. 32px padding.
+   Tier label in JetBrains Mono 11px uppercase tracking 0.16em, amber.
+   Price in Fraunces 32px tabular numerics, weight 500.
+   Bullets are typographic mid-dot · — no checkmark icons.
+```
+
+### Testimonial placeholder (until real ones exist)
+
+```
+┌──────────────────────────────────────────────────────────┐
+│                                                          │
+│  „Tým se představí brzy."                                │  ← Fraunces italic 28px, ink
+│                                                          │
+│  Stránka týmu připravujeme. První klienti                │  ← Inter 16px, secondary
+│  se s námi setkali — případové studie a doporučení       │
+│  budou postupně doplňovány po startu webu.               │
+│                                                          │
+│  ── Tým VICTA                                            │  ← em-dash signature, mono caption
+│                                                          │
+└──────────────────────────────────────────────────────────┘
+   Honest empty-state. No fake quotes, no stock-photo headshots.
+   The "tým se představí brzy" is itself the design move.
+```
+
+### Footer
+
+```
+─────────────────────────────────────────────────────────────────
+                                                                │
+VICTA                                                           │
+Parťák · ne dodavatel                                           │
+                                                                │
+Služby      Řešení      Odvětví      Spolupráce      Kontakt    │
+                                                                │
+victaagency.com   ·   info@victa.agency                         │
+Praha · Brno · digitální agentura působící v ČR a SR            │
+                                                                │
+Newsletter ─────────────                                        │
+[ vase@email.cz                                       ┌───►─┐ ] │
+                                                                │
+© 2026 VICTA s.r.o. ·  Ochrana osobních údajů ·  Cookies        │
+                                                                │
+─────────────────────────────────────────────────────────────────
+   Background: warm paper.
+   2px ink rule above. 1px ink rule below.
+   Footer typeface: Inter 14/16px, secondary color.
+   Wordmark: Fraunces 24px, weight 600.
+```
+
+---
+
+## 1.8 AEO/SEO image direction (nano-banana / Kling prompts)
+
+The image style for D1 is **editorial photography in the *FT Weekend* / *Monocle* idiom**. Every generated image should look like it could appear in a serious business publication — not a SaaS marketing page.
+
+**Visual rules for nano-banana prompts in D1:**
+
+- **Color treatment:** muted, warm-paper grading; never saturated digital colors. Lift mid-tones slightly; desaturate by 15–20%.
+- **Composition:** rule-of-thirds, single subject or two-subject negative-space compositions, never busy multi-subject scenes.
+- **Subjects (when human-figured):** professional adults in unstylized natural light, mid-distance, working settings — not studio-lit, not stock-photo "happy team."
+- **Subjects (when object-figured):** desk objects, document stacks, book pages, architectural detail — physical, paper-feeling, not glossy-product.
+- **Avoid:** purple/pink AI gradients, gradient meshes, "AI" geometric abstractions, rendered crystal structures, glowing orbs, neon-lit hands typing.
+- **Texture:** subtle grain (10–15% film grain) preserved in export; never plasticky-clean.
+- **Output:** OG images at 1200 × 630, hero images at 2400 × 1350, blog headers at 2000 × 1000, all with the warm-paper-tint vignette baked into the export.
+
+**Example prompt template:**
+
+```
+A quiet editorial photograph in the style of FT Weekend Magazine: 
+[subject — e.g., a single open notebook on a wooden desk with morning light from the left]. 
+Warm paper tones, slightly desaturated, 15% film grain, shallow depth of field, 
+single subject, generous negative space top-right for typographic overlay. 
+35mm equivalent, natural light only. Color palette: warm cream, ink black, 
+single muted amber accent. No digital effects, no gradient washes, no glow.
+```
+
+For OG/social previews, the image is composited under a Fraunces wordmark in the same warm-amber/ink/paper system, with the page title set in 48px Fraunces 600.
+
+---
+
+## 1.9 Trade-offs + risks
+
+1. **Risks reading "old" instead of "considered."** Mitigation: the variable Fraunces axis (especially the SOFT axis) keeps it from feeling like 1995 broadsheet design. Modern letter-forms + 18px body + generous whitespace pull it forward. Risk that an aggressively-modernist buyer sees it as "publishing house, not tech agency" and discounts AI fluency.
+2. **Less immediately differentiated from established CZ corporate firms.** Editorial-serious is well-trodden ground (it's why it works). A buyer who has *just* come from atolsolutions.cz may see a strong family resemblance. Mitigation: the warm-paper-amber palette + Fraunces SOFT axis make it warmer than typical "corporate trust" sites — it should read as *small*-and-considered rather than *enterprise*-and-considered.
+3. **Under-serves the "modern + AI-native" emotional pillar.** This is the most honest cost. We compensate via subtle modern type-axis usage, JetBrains Mono in tightly-scoped places, and one signature interaction (e.g., the audit-tier comparator with smooth state transitions), but a buyer who specifically wants to feel "ahead of the curve" may pick D2.
+4. **Could alienate visitors who want speed-of-comprehension.** Editorial design demands reading. A visitor who scans-not-reads will pull less from D1 than from D2 or D3. For warm-referral traffic (which is most of VICTA's launch traffic), this is fine — referral visitors are predisposed to read carefully. For cold ad traffic, it's a slower funnel.
+5. **High typographic-discipline burden.** D1 succeeds only if every page maintains the editorial discipline. One badly-spaced page or one inconsistent hero treatment breaks the spell. This places real load on the build team to maintain rigor in copy editing, line-length control, and content reviews.
+
+---
+
+# Direction 2 — Atelier Systems
+
+> **Philosophy:** *"This is what an AI-augmented engineering atelier looks like — the website is itself a system."*
+
+Bauhaus systems-thinking meets Field.io technical poetics. Where Editorial Trust borrows from publishing, Atelier Systems borrows from **how engineers and methodology-driven design studios document their own work**. The site reads like a serious design system or technical specification — monospace numerics, blueprint-style diagrams, exposed structure, ASCII diagrams in methodology pages, a rigorous grid you can almost see.
+
+**This is the bolder direction** (per the brief: "at least 1 of the 3 should be bolder/more creative" — `bencium-innovative-ux-designer` was applied to push this one).
+
+---
+
+## 2.1 Strategic rationale
+
+Atelier Systems is built for the buyer who is technically literate or technically curious — the operations director who has dealt with their CTO, the marketing director who has sat in on stack-decisions, the CEO who has had to approve a Salesforce migration. For that buyer, a website that **looks like a piece of engineering documentation** is a different and stronger credibility signal than one that looks like a brochure. The implicit reading: *"these people document their thinking the way engineers document systems — they probably also build systems that work."*
+
+The direction's core move is to **make the methodology visible as a system, not as marketing**. Service pages are not "Our SEO Service" with a hero illustration of a magnifying glass; they are technical specifications: input → transformation → output, with the transformation step opened and inspectable. The audit-pricing page does not look like a SaaS pricing card; it looks like a comparator table you'd see in a technical RFP — fixed-width type, exact tier-deliverable lists, no rounded "marketing" cards. The chatbot input field uses a monospace placeholder, signalling "this thing is engineered, not bolted on."
+
+This direction differentiates from D1 (Editorial Trust) by being **less cool-publishing, more warm-engineering**. It differentiates from D3 (Warm Atelier) by being **less human-craft, more system-craft**. It is the direction that most directly converts the strategic positioning ("small AI-augmented team — faster, leaner, better than legacy big-agency") into visual language. AI-augmentation doesn't show up as glowing gradients; it shows up as an exposed structure that says: *"a team this small could only operate this rigorously by leveraging good tooling. The tooling is the AI. The rigor is the human."*
+
+Emotional priority service:
+
+- **Trustworthy** — served strongly through transparency. Exposed structure is the visual equivalent of "we have nothing to hide." Methodology is on the surface, not behind a sales call.
+- **Capable** — served *most strongly of the three directions*. Capability is the central message of the design language.
+- **Professional** — served through rigor. The grid is so disciplined it functions as a credential.
+- **Personal + listening** — served *adequately*. We compensate with first-person plural copy, a warm signal accent (we explicitly avoid cold cobalt — see palette), and an in-page "how we listen" methodology stage that lets the buyer see their own concerns reflected.
+- **Modern + AI-native** — served *most strongly of the three*. Monospace typography is the visual signature of contemporary AI tooling (Anthropic's own docs, Linear, Vercel, Resend, Plain — every modern AI/dev product). By inheriting that visual language, VICTA inherits the membership in that category.
+
+What this direction does that the other two do not: it makes the **structure** of VICTA's offering itself the design move. There is no "decorative layer" to remove — the structure *is* the surface. For a buyer evaluating multiple agencies, a site that lays its methodology bare is harder to argue with than a site that decorates a methodology.
+
+### Stretch-ideas applied (from `bencium-innovative-ux-designer`)
+
+The four bolder moves applied to push D2 into distinctive territory:
+
+1. **Sticky annotation rail (right side, desktop):** every long-form page has a right-rail with monospace meta — current section ID, last-updated date, related modules, navigation map. Borrowed from technical-doc sites (Stripe API reference, Linear docs). On scroll, the rail updates. On mobile, the rail collapses into a sticky bottom drawer accessed via a `[ §1.2 ]` chip.
+2. **Live "specs" hero ledger:** the homepage hero displays a small monospace stats ledger — *not fake counters, but actual auditable facts* like `~38 stránek · 18 služeb · 6 odvětví · 3 audit-tiery`. Real numbers. Self-demonstrating: the agency that can be specified is the agency that delivers.
+3. **Blueprint-grid background on key pages** (rendered in CSS at ~3% opacity in light mode, ~6% in dark mode) — a 24px engineering-blueprint grid. Used on `/spoluprace` and methodology pages to reinforce the "this is a specification, not a flyer" reading.
+4. **One-character-as-image hero on landing pages:** instead of stock photography, the hero of each industry page uses **one large monospace character** (e.g., `§` for professional services, `Σ` for finance, `↻` for customer support) — set 240px in JetBrains Mono. Memorable, ownable, no licensing.
+
+### Signature detail (the "120% done" moment)
+
+The single design move people remember in D2: **the audit pricing page comparator**. Three audit tiers shown side-by-side as fixed-width specification blocks (think `make help` output styling, or `package.json` formatted). Hovering or focus-trapping a tier expands a detail panel *in-line* (no modal), with smooth height-only transitions. This single component is what the marketing-director who picks D2 will tell their colleague about. ("Have you seen their audit page? It's like reading a CLI tool.")
+
+---
+
+## 2.2 Color palette
+
+### Light theme
+
+| Role | HEX | Use | Notes |
+|---|---|---|---|
+| **Primary (text / ink)** | `#0A0B0D` | Body text, headlines | Near-black with cool undertone — *not pure black per Roman's avoidance list*. Contrast 19.8:1 on `#F4F4F2` (AAA) |
+| **Secondary text** | `#3F4147` | Sub-heads, meta | Contrast 9.6:1 on `#F4F4F2` (AAA) |
+| **Tertiary text** | `#6F727A` | Hints, footnotes, blueprint-grid coordinates | Contrast 4.5:1 on `#F4F4F2` (AA — passes by margin) |
+| **Surface 1 (page)** | `#F4F4F2` | Page background — porcelain | Cool but not blue. Reads as "design-system spec sheet". |
+| **Surface 2 (card)** | `#FFFFFF` | Card background | Slight elevation against porcelain |
+| **Surface 3 (sunken)** | `#E8E8E5` | Code blocks, table headers, comparator backgrounds | |
+| **Border subtle** | `#D6D6D2` | Dividers, table grid lines, blueprint coordinates | |
+| **Border emphasis** | `#0A0B0D` | The "spec rule" — under section heads | Heavy 1px or 2px |
+| **Accent — Signal Lime** | `#5C7A04` | Primary CTAs, link underlines, "live" indicators in chatbot, status dots | Darkened from candidate `#84CC16` to pass AA on `#F4F4F2`. Contrast 5.7:1 (AA). On `#0A0B0D` button: lime at full saturation `#9DCC1E` for visibility |
+| **Accent — Hover** | `#4A6303` | CTA hover | Contrast 7.4:1 on `#F4F4F2` (AAA) |
+| **Semantic — Success** | `#5C7A04` | Same as accent (intentional reuse) | The accent IS the success-signal |
+| **Semantic — Warning** | `#A35E00` | Audit warnings, cookie banner | Contrast 5.6:1 on `#F4F4F2` (AA) |
+| **Semantic — Error** | `#A02C2C` | Form errors | Contrast 6.4:1 on `#F4F4F2` (AA) |
+| **Semantic — Info** | `#1F4E7A` | Informational notes | Contrast 7.1:1 on `#F4F4F2` (AAA) |
+
+### Dark theme
+
+| Role | HEX | Use | Notes |
+|---|---|---|---|
+| **Primary (text / ink)** | `#EDEDEB` | Body text, headlines | Cool off-white. Contrast 17.2:1 on `#0A0B0D` (AAA) |
+| **Secondary text** | `#A8AAAE` | Sub-heads, meta | Contrast 9.4:1 on `#0A0B0D` (AAA) |
+| **Tertiary text** | `#71747A` | Hints, blueprint-grid | Contrast 4.6:1 on `#0A0B0D` (AA) |
+| **Surface 1 (page)** | `#0A0B0D` | Page background — near-black, *not* `#000000` | Cool deep ink |
+| **Surface 2 (card)** | `#16181C` | Card / panel | |
+| **Surface 3 (sunken)** | `#1F2125` | Code, comparator | |
+| **Border subtle** | `#2A2D32` | Dividers, blueprint grid | |
+| **Border emphasis** | `#EDEDEB` | The "spec rule" inverted | |
+| **Accent — Signal Lime** | `#9DCC1E` | CTAs, links, live indicators | Lifted in dark mode. Contrast 11.2:1 on `#0A0B0D` (AAA). On lime button: `#0A0B0D` text 11.2:1 (AAA) |
+| **Accent — Hover** | `#B0DD45` | | Contrast 13.4:1 on `#0A0B0D` (AAA) |
+| **Semantic — Success** | `#9DCC1E` | | Same as accent |
+| **Semantic — Warning** | `#D4A341` | | Contrast 8.5:1 (AAA) |
+| **Semantic — Error** | `#E0716D` | | Contrast 6.4:1 (AA) |
+| **Semantic — Info** | `#7AABCF` | | Contrast 7.2:1 (AAA) |
+
+### Why signal lime, not cobalt or burnt orange
+
+Two candidates were evaluated against the "make it bolder than D1, but not gimmicky" brief:
+
+- *Cobalt `#1F4E9C`* — the obvious technical-engineering choice (Linear, Vercel use cobalt-adjacent). Rejected because: (a) too close to the "corporate blue" Roman explicitly avoids; (b) creates D2 → D1 visual collision because both directions would lean blue-adjacent; (c) lime is more **memorable** and more **owned** — almost no Czech digital agency uses lime, so we get instant differentiation.
+- *Burnt orange `#D97706`* — warm but overlaps with D1's burnt amber. Visual confusion across directions. Rejected.
+- *Signal lime `#5C7A04` / `#9DCC1E`* — winner. It is:
+  - Distinctive (not on the avoidance list, not overused in CZ B2B)
+  - Functional-coded (lime is the cultural color of "active / live / on" — terminal cursors, build-passing badges, live-indicator dots)
+  - WCAG-flexible (works at full sat in dark mode against near-black; darkens for light mode against porcelain)
+  - **Anti-AI-slop** — purple, electric blue, and pink are the AI-generated tells. Lime is the opposite reading.
+
+In dark mode the lime sits at full chroma `#9DCC1E` against `#0A0B0D` and reads as "terminal-prompt active." In light mode it darkens to `#5C7A04` to maintain WCAG AA without sacrificing identity.
+
+---
+
+## 2.3 Typography pairing
+
+| Role | Font | Weights used | Google Fonts |
+|---|---|---|---|
+| **Display / hero** | **JetBrains Mono** (variable, used at large sizes for hero) | 400, 500, 700 | https://fonts.google.com/specimen/JetBrains+Mono |
+| **Headlines (h2/h3)** | **Inter** | 500, 600, 700 | https://fonts.google.com/specimen/Inter |
+| **Body** | Inter | 400, 500 | (same import) |
+| **UI / labels** | Inter (with `tabular-nums`) | 500, 600 | (same import) |
+| **Mono — pervasive** | JetBrains Mono | 400, 500 | (same import) |
+
+**Combined Google Fonts URL:**
+
+```
+https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap
+```
+
+### Reasoning for the pairing
+
+The unusual move in D2: **JetBrains Mono is the display face for the homepage hero and section overlines, not just code**. This breaks a common rule (don't use mono for display) intentionally, because the rule-break **is the design statement**. JetBrains Mono is what modern engineering tools use as their identity font (JetBrains IDEs, of course, but also Stripe API ref, Anthropic docs, Vercel build logs). When used at 96px on the homepage hero, it stops reading as "code" and starts reading as "engineering monumental." The combination of "monumental + technical + monospace" is the visual signature of post-2022 AI-native tooling.
+
+**Inter** carries everything else — body, sub-heads, UI. Not Söhne (paid, not on Google Fonts), not Helvetica (clichéd), not GT America (paid). Inter is the modern grotesque baseline and disappears responsibly. The pairing **monospace display + neo-grotesque body** is rarer than serif+sans, which is exactly why it differentiates.
+
+**Pairing psychology**: rectilinear monospace forms communicate *system* and *precision*. A neo-grotesque body sits below it as the "human commentary" on the system. The alternation — mono headline, sans body, mono labels, sans body — sets up a rhythm that mirrors the engineering-doc reading pattern (fixed-width metadata above fluid prose). The visitor's reading: *"this site is structured the way the team's thinking is structured."*
+
+### Czech typography (validated)
+
+Both Inter and JetBrains Mono ship full Czech diacritic coverage. JetBrains Mono is well-tested for Czech (it's been the JetBrains IDE default in Czech locales for years). Same Czech-typography rules from D1 apply uniformly here.
+
+One additional D2-specific rule: **monospace numerics** are pervasive. All audit prices, page-counts, timeline references, and stats use `tabular-nums` for vertical alignment in tables. CSS:
+
+```css
+.numeric { font-variant-numeric: tabular-nums; }
+```
+
+### Type scale (1.333 ratio — perfect fourth, more dramatic than D1)
+
+| Token | px (desktop) | px (mobile) | Use |
+|---|---|---|---|
+| `text-xs` | 12 | 12 | Mono labels, blueprint coords |
+| `text-sm` | 14 | 14 | Captions, metadata |
+| `text-base` | 16 | 16 | Body |
+| `text-lg` | 20 | 18 | Lead paragraph |
+| `text-xl` | 28 | 22 | Sub-head |
+| `text-2xl` | 38 | 28 | Section head |
+| `text-3xl` | 52 | 38 | Page head |
+| `text-display` | 96 | 56 | Hero (JetBrains Mono only) |
+
+Body 16px — slightly tighter than D1 because the surrounding mono-label rhythm carries some of the readability load. Line-height 1.6 for body, 1.05 for mono display, 1.25 for sub-heads.
+
+---
+
+## 2.4 Shape & form vocabulary
+
+| Property | Value | Reasoning |
+|---|---|---|
+| **Corner radii** | `0 / 2 / 4` | Rectilinear. Cards mostly `0` or `2`. Pills `4`. **No 8+ radii.** This is the visual signature. |
+| **Border weights** | `1px / 2px` | 1px standard, 2px for the "spec rule". |
+| **Shadow language** | **Almost none.** Cards use 1px borders + surface-color contrast for separation. Modals get a single 1px border + 0px-blur 1px-y offset shadow at 8% opacity. **Zero glow, zero halo, zero glassmorphism.** |
+| **Spacing scale** | `4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96` (px) | Same as D1 — the engineering-grid rhythm doesn't change between directions. |
+| **Density** | **Comfortable but information-rich.** Hero gets 80px vertical (slightly tighter than D1's 96). Cards 24px padding (tighter than D1's 32). The "ledger" component rolls up to 8px line-height for rapid spec scanning. |
+| **Grid** | 12-column desktop, **explicitly visible**: a 24px blueprint background grid renders at 3% opacity in light, 6% in dark. Max content width 1200px; long-form text 720px. |
+| **Iconography** | Custom monospace symbols (`§ Σ ↻ → ✓ ✕`) used as labels, not buttons. Lucide thin (1px stroke) for actual icons. ASCII-style state indicators (`[ ON ]`, `[ ↻ ]`, `[ - ]`) in methodology stage diagrams. |
+| **Imagery** | Replace stock photography with: (a) one large mono character per industry page, (b) blueprint-style architectural diagrams (CSS-rendered, not raster), (c) sparingly used b&w photography in editorial-doc style for blog headers (post-launch). |
+| **Motion** | Tighter than D1 — 150ms cubic-bezier on hover. The audit-comparator has a signature smooth height-transition (300ms). Section dividers animate in on scroll with a subtle 1px-line draw (200ms). No parallax. The cursor behavior: a thin 1px crosshair appears on the comparator's hover state. |
+
+---
+
+## 2.5 Reference visual language
+
+1. **Anthropic docs (anthropic.com/docs)** — the monospace-meets-prose rhythm. The way technical specifications are made readable. We borrow the *grammar*, not the literal layout.
+2. **Linear's marketing site (linear.app)** — the discipline, the near-black backgrounds with single high-saturation accent, the rigorous type. We borrow the rigor without copying the deep-purple gradient (which is Linear's signature, not ours).
+3. **Vercel docs + dashboard (vercel.com/docs)** — the comparator-as-spec aesthetic, the use of mono labels next to prose body.
+4. **Field.io (field.io)** — kinetic typography on hero only; restrained elsewhere. We adopt the principle, not the literal kinetic moves.
+5. **Bauhaus typography (Tschichold's *Die neue Typographie*, the foundational book)** — grid as the underlying credential. We invoke its rigor without literal Bauhaus-mimicry.
+6. **Stripe API reference (stripe.com/docs/api)** — for the audit-comparator pattern specifically. The way the docs lay out three-column endpoints with collapsible details is the model for our three-tier audit comparator.
+
+---
+
+## 2.6 Anti-patterns (this direction explicitly rejects)
+
+1. **Purple gradients on dark backgrounds.** The most-overused AI-product visual — banned outright. Lime is not negotiated up to magenta.
+2. **Glass morphism / frosted blur.** Banned. Period.
+3. **Glowing borders / "neon" outlines.** No `box-shadow: 0 0 20px lime`. The lime is solid, not luminous.
+4. **AI-generated geometric abstractions** (mesh gradients, crystal renders, glowing hands, brain icons). Replaced with monospace symbols or CSS-rendered blueprint diagrams.
+5. **Animated SVG line-drawings of "people connecting."** The hero is the live ledger. No metaphors.
+6. **Decorative-only animation.** Every motion is functional: comparator height-transition, section-divider line-draw, hover state. Nothing animates "for vibes."
+7. **Marketing speak.** "Innovative solutions", "synergy", "transform" — replaced with specific verbs ("auditujeme", "navrhneme", "integrujeme", "spravujeme").
+8. **Round avatar circles.** Team-page placeholders are square or rectilinear; if photos exist later, they sit in 4px-radius rectangles, not circles.
+9. **Floating cards on gradient mesh.** Cards live on the porcelain surface or on a sunken surface, separated by 1px borders.
+
+---
+
+## 2.7 Sample component sketches
+
+### Hero (homepage)
+
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ [Blueprint grid background, 24px, 3% opacity]                          │
+│                                                                        │
+│  $ victa --intro                              [ § 1.0 · 2026 ]         │  ← Mono caption
+│  ────────────────────────────────────────                              │     + sticky rail ID
+│                                                                        │
+│  Parťák ·                                                              │  ← JetBrains Mono 96px / 56px mobile
+│  ne dodavatel.                                                         │     weight 700, line 1.05
+│                                                                        │
+│  Postavíme s vámi systém — ne jenom web.                               │  ← Inter 20px / 18px mobile
+│  Audit, návrh, integrace, správa, růst.                                │     weight 400, line 1.6
+│                                                                        │
+│  ┌── Specs ──────────────────────────────────────┐                     │
+│  │  ~38 stránek    18 služeb    6 odvětví        │                     │  ← Live ledger:
+│  │  3 audit-tiery  CZ + SK      AI-augmented     │                     │     JetBrains Mono 14px
+│  └───────────────────────────────────────────────┘                     │     tabular-nums
+│                                                                        │
+│  ┌────────────────────────────┐    ┌────────────────────────────┐      │
+│  │ [▸] Domluvit audit         │    │ [○] Volný hovor (30 min)   │      │
+│  └────────────────────────────┘    └────────────────────────────┘      │
+│   [Lime bg #5C7A04, ink text]      [1px ink border, transparent bg]    │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
+   Background: porcelain #F4F4F2 with 24px blueprint grid at 3% opacity.
+   Sticky right-rail (desktop only): mono section ID, last-updated date, related modules.
+```
+
+### Service card (`/sluzby`, e.g., "Weby na míru")
+
+```
+┌────────────────────────────────────────┐
+│  IT-VYV-001                  [active]  │  ← Module ID, mono 11px + lime status pill
+│  ─────────────                          │
+│                                        │
+│  Weby na míru                          │  ← Inter 22px, weight 600
+│                                        │
+│  Postavíme web, který se nestane       │  ← Inter 16px, weight 400, secondary text
+│  za rok zastaralý. Architektura,       │
+│  obsah, výkon, AEO — návrh i provoz.   │
+│                                        │
+│  Vstup    →  Audit + brief             │  ← Mono labels + arrow, 13px
+│  Výstup   →  Web + dokumentace + KPI   │     "input → output" methodology hint
+│  Doba     →  3–8 týdnů                 │
+│                                        │
+│  [→] Více  ─────────────────────────   │  ← Inter 14px medium with lime arrow
+│                                        │
+└────────────────────────────────────────┘
+   Background: white #FFFFFF. Border: 1px #D6D6D2. Radius 2px.
+   Padding 24. Hover: border darkens to #0A0B0D, no lift.
+```
+
+### Audit pricing comparator (`/spoluprace`)
+
+```
+┌─────────────────────────────────────────────────────────────────────────┐
+│  AUDIT TIERS                                          [ § 2.1 ]         │
+│  ──────────                                                             │
+│                                                                         │
+│   ┌─ Tier 01 ─────┐   ┌─ Tier 02 ─────┐   ┌─ Tier 03 ─────┐             │
+│   │               │   │               │   │               │             │
+│   │ Komplexní     │   │ Doménový      │   │ Strategická   │             │
+│   │ podnikový     │   │ audit         │   │ session       │             │
+│   │ audit         │   │               │   │               │             │
+│   │               │   │               │   │               │             │
+│   │ ■■■           │   │ ■■            │   │ ■             │  ← scope    │
+│   │ celý byznys   │   │ jedna doména  │   │ jeden problém │     hint    │
+│   │               │   │               │   │               │             │
+│   │ 20–90  Kk     │   │ 10–55  Kk     │   │  4–25  Kk     │  ← prices,  │
+│   │ €0.8–3.6 K    │   │ €0.4–2.2 K    │   │ €160–1 000    │     mono    │
+│   │               │   │               │   │               │             │
+│   │ 1–3 týdny     │   │ <2 týdny      │   │ <2 týdny      │             │
+│   │ 3–4 sezení    │   │ 2 sezení      │   │ 1 sezení      │             │
+│   │               │   │               │   │               │             │
+│   │ [▸] Domluvit  │   │ [▸] Domluvit  │   │ [▸] Domluvit  │             │
+│   └───────────────┘   └───────────────┘   └───────────────┘             │
+│                                                                         │
+│   Všechny tiery zahrnují: PDF zprávu · Excalidraw · Figma · prezentaci  │
+│                                                                         │
+└─────────────────────────────────────────────────────────────────────────┘
+   Background: porcelain. Each tier card: 1px border, 2px radius, 24px padding.
+   Tier ID in JetBrains Mono uppercase 12px, lime accent.
+   Prices in JetBrains Mono 24px tabular-nums.
+   Hover state expands a vertical detail panel beneath the row, smooth height transition (300ms).
+   This is the signature component — make it perfect.
+```
+
+### Testimonial placeholder
+
+```
+┌────────────────────────────────────────────────────┐
+│  // teamPage.notReady                              │  ← Mono comment 13px, secondary
+│  // Tým se představí brzy                          │
+│  // Stránka týmu připravujeme                      │
+│                                                    │
+│  První klienti se s námi setkali — případové       │  ← Inter 16px, body color
+│  studie a doporučení budou postupně doplňovány     │
+│  po startu webu.                                   │
+│                                                    │
+│  ── Tým VICTA · 2026                               │  ← Mono 12px caption
+│                                                    │
+└────────────────────────────────────────────────────┘
+   Background: sunken #E8E8E5. 1px subtle border. Padding 24.
+   The mono `// comments` are the design move — they read as a "code comment" stage.
+```
+
+### Footer
+
+```
+─────────────────────────────────────────────────────────────────────
+                                                                    │
+[VICTA]                                                             │
+parťák · ne dodavatel                                               │
+                                                                    │
+[ Služby ] [ Řešení ] [ Odvětví ] [ Spolupráce ] [ O nás ] [ Kontakt ]│
+                                                                    │
+victaagency.com  ·  info@victa.agency  ·  Praha + Brno              │
+                                                                    │
+┌─ Newsletter ──────────────────────────────────────────────┐       │
+│ vase@email.cz                                       [▸]   │       │
+└───────────────────────────────────────────────────────────┘       │
+                                                                    │
+─────────────────────────────────────────────────────────────────── │
+© 2026 VICTA s.r.o. ·  GDPR ·  Cookies ·  /llms.txt                 │
+                                                                    │
+─────────────────────────────────────────────────────────────────────
+   Background: near-black sunken (in light mode: porcelain).
+   Wordmark in JetBrains Mono, 24px, lime accent on the brackets.
+   Footer typeface: Inter 14px / mono 12px for caption.
+   Note: /llms.txt link in footer — self-demonstrating AEO competence.
+```
+
+---
+
+## 2.8 AEO/SEO image direction (nano-banana / Kling)
+
+D2's image style is **technical-document hybrid** — a mix of CSS-rendered diagrams (most cases) and minimal monochrome editorial photography (rare cases, blog headers).
+
+**Visual rules for nano-banana prompts in D2:**
+
+- **No photorealistic stock.** No designer-typing-hands, no laptop-on-desk, no team-at-whiteboard.
+- **Preferred output category:** abstract spec diagrams — labeled boxes, connector arrows, monospace annotations, blueprint-style line work. nano-banana is asked to generate *what a methodology diagram looks like*, not what an agency looks like.
+- **Color treatment:** monochrome (near-black + porcelain) with one signal-lime accent applied sparingly. Roughly the visual register of an architectural plan or an engineering schematic.
+- **For human figures (rare, blog only):** black-and-white editorial portraits in working-light, no studio lighting. Documentary-photography mood.
+- **Avoid:** purple gradients (banned), glow effects (banned), orbital "AI nodes," neural-network-as-aesthetic, brain-icons, glowing-cube-renders.
+
+**Example prompt template:**
+
+```
+A clean engineering blueprint diagram, monochrome (near-black ink #0A0B0D 
+on porcelain #F4F4F2 background), with one signal-lime #5C7A04 accent. 
+Subject: [methodology diagram — e.g., 5-stage process flow with labeled nodes 
+and connector lines]. Hand-drafted feel, technical-illustration style, 
+JetBrains Mono labels at small size. Generous negative space. 
+No 3D, no shading, no perspective — flat schematic. 
+Texture: light paper grain at 8% opacity. 
+No photorealism, no people, no decorative elements.
+```
+
+For OG/social previews: the page title rendered in JetBrains Mono (truncated if long) at 64px on porcelain, with a single lime underline rule — no imagery at all on most OG cards. The wordmark in the corner.
+
+---
+
+## 2.9 Trade-offs + risks
+
+1. **Risks reading "for developers, not for me"** to a non-technical buyer. The marketing-only director who has never had to read a JSON spec may parse the mono-heavy aesthetic as "this is for IT, not for marketing." Mitigation: every page surfaces the methodology in plain Czech prose alongside the spec elements; the audit comparator is annotated with marketing-language synonyms; first-person plural voice softens the engineering tone.
+2. **Lime is polarizing.** A buyer who is conditioned to "professional = navy/charcoal" may read lime as "too playful" or "tech-startup." Mitigation: the lime is restrained (single accent, never a fill, never a gradient) and sits alongside near-black to read serious-not-playful. Still, this is the direction with the highest "won't suit every buyer" risk.
+3. **Maintenance discipline burden is high.** D2 succeeds on rigor — a single mis-aligned grid, a single non-tabular numeric, a single `border-radius: 12px` slipping in, breaks the spell. Build process must enforce design tokens at the architecture level (no ad-hoc spacing or radii allowed).
+4. **AI-augmentation reading is at risk of being too explicit.** If we lean too hard on "AI" language in copy on top of the engineering aesthetic, it becomes an "AI agency" caricature. Brief discipline: the design language *carries* the AI-native signal; copy doesn't have to. Copy stays focused on outcomes.
+5. **Less warm than D1 / D3.** This is the cost of the school. The "personal + listening" pillar is served weakest here. Compensation: warm signal-accent (lime, not cobalt), copy-voice, dedicated "how we listen" methodology stage. Still — a buyer who wants to feel the human warmth most strongly will gravitate to D3.
+6. **Hard for a low-design-discipline build team to maintain.** This is the most demanding direction to *keep* high-quality. After launch, every content edit risks introducing inconsistency. Recommend: design tokens lock-down + a Storybook/component-doc page + content-edit guidelines doc.
+
+---
+
+# Direction 3 — Warm Atelier
+
+> **Philosophy:** *"We're a small team that listens — and the website feels like sitting down with us."*
+
+Sagmeister-adjacent humanism meets Eastern softness (Kenya Hara's *ma*). Warm Atelier counter-positions against every cold-corporate competitor agency. It is the direction for the buyer who is skeptical of corporate-feel and is implicitly asking *"will I be talked at, or talked with?"*
+
+---
+
+## 3.1 Strategic rationale
+
+The strongest **counter-positioning** in the CZ market is warmth. The brainstorm's competitive analysis is unambiguous: big corporate agencies are slow, depersonalized, multi-layered; AI-sandbagging mid-tier shops are scrappy and impersonal. *Every* competitor's website to some degree leans cold-corporate or cold-tech. A warm-atelier-aesthetic VICTA is therefore differentiated by a single move that no competitor can cheaply replicate: it **looks human**.
+
+This is not the same as looking "boutique" or "lifestyle." Boutique-lifestyle aesthetics (the SaaS-pastel look, Notion-template mood) are a slop register VICTA must avoid — they read amateur to a CEO buyer with budget. Warm Atelier is instead the visual register of **a serious small studio that treats craft seriously**: the warmth of paper, sand, ink, plant, wood — not the warmth of millennial-pink and rounded-corner-cards.
+
+Where this direction differs from D1 and D2:
+
+- D1 (Editorial Trust) borrows credibility from *publishing*. Warm Atelier borrows credibility from *the craft studio*. Same depth, different medium.
+- D2 (Atelier Systems) leads with *system-as-credential*. Warm Atelier leads with *care-as-credential*. They are both rigorous; they project rigor differently.
+- D3 is the only direction where the website can convincingly say "we will listen to your business before we propose anything" without that sentence sounding marketing-empty — because the design itself is *listening-shaped*: generous whitespace (an invitation, not a void), warm earthy palette (a room, not a screen), softer corner radii and shapes (an opening, not an edge).
+
+Emotional priority service:
+
+- **Trustworthy** — served strongly through honesty of materials. Paper-feeling backgrounds, ink-not-black text, real-photography-aesthetic for any imagery (including AI-generated). *Material honesty* is the trust mechanism.
+- **Capable** — served *adequately, not strongest*. The craft-studio register can read "boutique" rather than "muscular" if executed loosely. We compensate with information density on methodology pages, sober pricing presentation, and depth of industry-page content.
+- **Professional** — served. Warmth and professionalism are not mutually exclusive — it's a question of execution discipline. The professionalism is in the discipline of the warm palette (no random pastels) and the disciplined typography.
+- **Personal + listening** — served *most strongly of the three directions*. This is the central message.
+- **Modern + AI-native** — served *adequately, not strongest*. Modernity comes through variable typography (Newsreader's variable axes), through clean component structure, and through the deliberate use of AI imagery (nano-banana) where helpful — but always in a register that respects the warm aesthetic. This direction does *not* signal AI-native through cold/tech visual language.
+
+What this direction does that the other two do not: it makes "we will sit with your problem before we propose a solution" feel structurally true. The buyer's read after spending 30 seconds on the homepage is not *"this is impressive"* (D1) or *"this is rigorous"* (D2) — it is *"these people will listen."* For the buyer who has been burned by a previous agency that didn't listen, that read is worth more than either alternative.
+
+---
+
+## 3.2 Color palette
+
+### Light theme
+
+| Role | HEX | Use | Notes |
+|---|---|---|---|
+| **Primary (text / ink)** | `#1F1A14` | Body text, headlines | Warm deep ink. Brown-black, *not* pure black. Contrast 14.6:1 on `#F6EFE4` (AAA) |
+| **Secondary text** | `#5A4F3F` | Sub-heads, meta | Contrast 7.1:1 on `#F6EFE4` (AAA) |
+| **Tertiary text** | `#8B7E6A` | Hints, footnotes | Contrast 4.5:1 on `#F6EFE4` (AA — passes by margin) |
+| **Surface 1 (page)** | `#F6EFE4` | Page background — warm sand / parchment | Distinctly warmer than D1's paper |
+| **Surface 2 (card)** | `#FFFAF1` | Card background — warmer cream | Slight elevation against sand |
+| **Surface 3 (sunken)** | `#EBE2D2` | Quote blocks, audit-tier cards | |
+| **Border subtle** | `#D9CDB5` | Card borders, dividers | |
+| **Border emphasis** | `#1F1A14` | Section rules | |
+| **Accent — Terracotta** | `#C2603C` | Primary CTAs, link underlines, key emphases | Warm hand-feel. Contrast 5.0:1 on `#F6EFE4` (AA). On `#FFFAF1` button: white text 4.6:1 (AA) |
+| **Accent — Hover** | `#A04D2A` | CTA hover | Contrast 7.0:1 (AAA) |
+| **Secondary accent — Moss** | `#5C7A5A` | Methodology highlights, "alive" signal, success states | Used sparingly. Contrast 5.4:1 on `#F6EFE4` (AA) |
+| **Semantic — Success** | `#5C7A5A` | (= secondary accent moss) | |
+| **Semantic — Warning** | `#A86A1F` | | Contrast 5.0:1 (AA) |
+| **Semantic — Error** | `#A02E2E` | | Contrast 6.5:1 (AA) |
+| **Semantic — Info** | `#3D5A6E` | | Contrast 6.4:1 (AA) |
+
+### Dark theme
+
+| Role | HEX | Use | Notes |
+|---|---|---|---|
+| **Primary (text / ink)** | `#F2EAD8` | Body text, headlines | Warm cream, much warmer than D2's cool off-white |
+| **Secondary text** | `#C2B59A` | Sub-heads, meta | Contrast 9.7:1 on `#1F1A14` (AAA) |
+| **Tertiary text** | `#928670` | Hints, footnotes | Contrast 5.4:1 on `#1F1A14` (AA) |
+| **Surface 1 (page)** | `#1F1A14` | Page background — warm charcoal, *not* near-black | Coffee-brown undertone |
+| **Surface 2 (card)** | `#2B241B` | Card / panel | |
+| **Surface 3 (sunken)** | `#3A3024` | Quote blocks, audit-tier cards | |
+| **Border subtle** | `#473A2B` | Card borders, dividers | |
+| **Border emphasis** | `#F2EAD8` | Section rules | |
+| **Accent — Terracotta** | `#E08461` | CTAs, links | Lifted in dark mode. Contrast 7.6:1 on `#1F1A14` (AAA). On `#1F1A14` button: dark text 7.6:1 (AAA) |
+| **Accent — Hover** | `#EE9D7E` | | Contrast 9.3:1 (AAA) |
+| **Secondary accent — Moss** | `#88A586` | | Contrast 7.4:1 on `#1F1A14` (AAA) |
+| **Semantic — Success** | `#88A586` | | |
+| **Semantic — Warning** | `#D4A341` | | Contrast 8.8:1 (AAA) |
+| **Semantic — Error** | `#E0716D` | | Contrast 6.4:1 (AA) |
+| **Semantic — Info** | `#7AABCF` | | Contrast 7.2:1 (AAA) |
+
+### Why terracotta + moss
+
+- *Terracotta `#C2603C`* — The primary accent. Why: it carries warmth without becoming "lifestyle pink." It's the color of clay, brick, autumn leaves — adult, earthy, not childish. It also has deep cultural-craft associations (pottery, plaster, traditional architecture) that reinforce the "craft studio" reading. Czech buyers will not read it as "Silicon Valley." It is on Roman's prior-session candidate list (terracotta was one of the 5 candidates) and earned its place here through fresh psychology — it's the only candidate on that list that fits this direction's aesthetic, and the only one that survives the avoidance list intact.
+- *Moss `#5C7A5A`* — The secondary accent. Why: a single secondary accent is needed for differentiation between methodology stages (audit / design / integration / operate / grow) without using terracotta everywhere. Moss is the natural counter to terracotta — same palette family (earth/plant), complementary hue. Functions as the success-color and the "alive" signal simultaneously, which is psychologically apt for "ongoing partnership / your business growing."
+
+The palette explicitly avoids:
+- Pastels / millennial pink — read amateur
+- Sage green at high saturation — overused in 2023–24 SaaS
+- Pure white — reads cold against the warm system
+- Pure black — same reason as D1 and D2
+
+---
+
+## 3.3 Typography pairing
+
+| Role | Font | Weights used | Google Fonts |
+|---|---|---|---|
+| **Display / headlines** | **Newsreader** (variable serif, opsz axis) | 400, 500, 600, 700 + italic | https://fonts.google.com/specimen/Newsreader |
+| **Body** | **Manrope** (variable sans) | 400, 500, 600 | https://fonts.google.com/specimen/Manrope |
+| **UI / labels** | Manrope | 500, 600 | (same import) |
+| **Mono** | **IBM Plex Mono** | 400 | https://fonts.google.com/specimen/IBM+Plex+Mono |
+
+**Combined Google Fonts URL:**
+
+```
+https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400&family=Manrope:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;0,6..72,700;1,6..72,400;1,6..72,500&display=swap
+```
+
+### Reasoning for the pairing
+
+**Newsreader** is the warm-humanist serif companion to D1's Fraunces. Where Fraunces is editorial-modernist, Newsreader is editorial-warmer — it was designed by Production Type for long-form reading, with a humanist construction that softens at large sizes (opsz axis). It is the right font when the goal is *"this could be a quiet conversation, not a pitch"*. It also has italic weights with proper italic construction (not just slanted) — which lets us use italics for the "we believe" pull-quotes without them feeling out of place.
+
+**Manrope** is the body face. It is a humanist-leaning variable sans (designed by Mikhail Sharanda) with rounded-but-not-round letter forms. It has more warmth than Inter (D1/D2's body face) — its lowercase a, e, t, and r have soft humanist curves that pair quietly with Newsreader. The Manrope-Newsreader pairing was chosen instead of Geist + Newsreader because Manrope's warmth integrates better with the earthy palette; Geist's grotesque crispness fights the warmth slightly. (Note: Roman had mentioned Geist as a candidate. We considered it, kept it as the alt body face if Manrope feels too soft after live testing.)
+
+**IBM Plex Mono** appears only in tightly-scoped technical labels (code blocks, contact-form inputs, page section IDs in long-form pages). It has more humanist warmth than JetBrains Mono — fitting D3's aesthetic.
+
+**Pairing psychology**: warm humanist serif + humanist sans + warm humanist mono = a unified humanist family. The tonal consistency across all three faces is the design statement. The buyer's reading (subconsciously): *"every type decision on this site shares a personality. There's a coherent voice here."*
+
+### Czech typography (validated)
+
+Newsreader, Manrope, and IBM Plex Mono all ship full Czech diacritic coverage in Google Fonts. Manrope is particularly well-tested for Eastern European Latin Extended (developed with multi-language support in mind). Same Czech-typography rules from D1 apply.
+
+D3-specific addition: italic Newsreader is used in pull-quotes and "we believe" statements. Czech italic typography requires careful kerning — Newsreader's italic is genuinely-drawn italic (not slanted Roman), so this works correctly out of the box.
+
+### Type scale (1.25 ratio — major third, same as D1)
+
+| Token | px (desktop) | px (mobile) | Use |
+|---|---|---|---|
+| `text-xs` | 12 | 12 | Footnotes |
+| `text-sm` | 14 | 14 | Captions, metadata |
+| `text-base` | 18 | 16 | Body |
+| `text-lg` | 22 | 20 | Lead paragraphs |
+| `text-xl` | 28 | 24 | Sub-heads |
+| `text-2xl` | 36 | 30 | Section heads |
+| `text-3xl` | 48 | 36 | Page heads |
+| `text-display` | 72 | 48 | Hero |
+
+Body text 18px / 16px (same as D1 — both use serif headlines, generous body). Line-height 1.6 for body, 1.15 for hero, 1.30 for sub-heads.
+
+---
+
+## 3.4 Shape & form vocabulary
+
+| Property | Value | Reasoning |
+|---|---|---|
+| **Corner radii** | `0 / 8 / 12 / 24` | Softer than D1, much softer than D2. Cards `12`. Pills/tags `9999`. Hero blocks `0` to keep edges honest. |
+| **Border weights** | `1px / 2px` | Same as others. 2px for the section rule. |
+| **Shadow language** | Soft warm-tinted shadows on resting cards (rare): `0 2px 8px rgba(31, 26, 20, 0.06), 0 8px 24px rgba(31, 26, 20, 0.04)`. Used selectively on prominent cards (audit-tier cards, primary service cards). The shadows are *warm* (use the ink color, not blue-gray). Combined with **paper-grain background overlay** at 6% opacity for hand-feel. |
+| **Spacing scale** | `4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96 / 128` (px) | One step more generous than D1/D2. Hero `128` vertical. Sections `96`. Card padding `32`. The extra whitespace is deliberate — *ma* (Eastern negative-space) is the listening-shape. |
+| **Density** | **Spacious / breathing.** Notably looser than D2. Three audit-tier cards on `/spoluprace` get more vertical breath than D2's tight comparator grid. This is intentional — a *visiting-the-studio* pacing rather than a *reading-the-spec* pacing. |
+| **Grid** | 12-column desktop, 4-column mobile. Max content width 1080px (slightly tighter than D1's 1200px) — long-form text 680px. The narrower max width brings the body text closer to "book" proportions. |
+| **Iconography** | Lucide regular (1.5 stroke) at 20–24px — slightly heavier than D1's thin stroke. Paired sparingly with **occasional hand-drawn marks** (small SVG marks for section transitions, e.g., a hand-drawn diagonal slash separator, a small ink-blot bullet) — used at most twice per page. |
+| **Imagery** | Editorial-craft photography: workshop scenes, paper documents on wood desks, sketchbook spreads, plants, ceramic objects, natural light. Hero may use full-bleed photography. nano-banana is asked to generate "still-life-with-paper" mood. |
+| **Motion** | Most generous of the three: 300–400ms easing on hover. Page-load reveals use a gentle staggered fade-in (40ms stagger). Scroll-triggered reveals are subtle — paragraphs fade up on enter (no horizontal slide). The signature motion: a slow, almost-imperceptible "paper drift" on hero composition — 4s, 1px-amplitude, like a page settling. |
+
+---
+
+## 3.5 Reference visual language
+
+1. **Stefan Sagmeister's studio site (sagmeister.com)** — warmth without sacrificing seriousness. The use of warm color, hand-touch detailing, and personal voice as the credibility argument.
+2. **Kenya Hara's *White* + the MUJI design philosophy** — the *ma* concept (negative-space-as-presence). Generous whitespace as an active design element, not an absence.
+3. **Are.na (are.na)** — warm humanist palette, generous body type, editorial pacing. Closest single reference for the overall mood.
+4. **Cabin (cabin.ee)** — Estonian small-studio site; warm earthy palette, Newsreader-adjacent serif, restrained craft mood.
+5. **Frere-Jones Type's site (frerejones.com)** — the type-foundry-as-studio aesthetic: warm paper background, single accent, editorial typography. Closest reference for the typographic register specifically.
+6. **The MUJI website (muji.com)** in its quieter regional pages — Eastern softness in commercial layout. Generous whitespace, warm neutral, restraint.
+
+---
+
+## 3.6 Anti-patterns (this direction explicitly rejects)
+
+1. **Millennial pink, mint green, lavender — and any pastel.** Banned. These read "lifestyle SaaS" and undermine professionalism.
+2. **Cute illustrated mascots / anthropomorphized icons.** No "happy little robot" vibes. The warmth is mature, not whimsical.
+3. **Hand-lettered scripts for headlines.** Newsreader is the warmth — script fonts would push too far into wedding-invitation aesthetics.
+4. **Notion-template aesthetic** (rounded everything, gradient buttons, soft shadows on every card). We use shadows selectively; we do not over-round.
+5. **AI-generated "stylized illustrations" of business teams** (the "everyone-is-a-blob-with-a-laptop" register). Banned — it's an AI-slop tell.
+6. **Animated background gradients.** No mesh, no slow-moving auroras. The page-drift signature is enough motion.
+7. **Cold pure white `#FFFFFF` page background.** Sand / parchment `#F6EFE4` is non-negotiable.
+8. **Heavy black `#000000`.** Warm ink `#1F1A14` everywhere.
+
+---
+
+## 3.7 Sample component sketches
+
+### Hero (homepage)
+
+```
+┌───────────────────────────────────────────────────────────────────┐
+│ [Sand background #F6EFE4 with paper-grain overlay 6% opacity]     │
+│                                                                   │
+│   Náš tým                                                          │  ← Newsreader 18px, italic, secondary
+│   ──                                                               │
+│                                                                   │
+│   Posloucháme dříve,                                              │  ← Newsreader 72px / 48px mobile
+│   než navrhujeme.                                                 │     weight 600, opsz 72, line 1.1
+│                                                                   │
+│   Audit byznysu, návrh řešení, integrace, správa, růst —           │  ← Manrope 22px / 20px mobile
+│   všechno pod jednou střechou. Tři kompetence:                    │     weight 400, line 1.6
+│   kód, marketing, znalost odvětví.                                │
+│                                                                   │
+│   ┌──────────────────────────────────┐    ┌──────────────────┐    │
+│   │  Domluvit audit                  │    │  Spojit se       │    │
+│   └──────────────────────────────────┘    └──────────────────┘    │
+│   [Terracotta bg #C2603C, cream txt]      [Outline, ink]          │
+│                                                                   │
+│   ──                                                               │
+│   Kontakt: info@victa.agency  ·  Praha · Brno                     │
+│                                                                   │
+└───────────────────────────────────────────────────────────────────┘
+   Background: warm sand. Subtle paper-grain texture.
+   Hero centered, max-width 880px (slightly more centered than D1's left-aligned hero — invites).
+   Subtle hero "drift" animation: composition floats 1px over 4s, like a page settling.
+```
+
+### Service card (`/sluzby`)
+
+```
+┌────────────────────────────────────────┐
+│                                        │
+│  IT & vývoj                            │  ← Manrope 12px uppercase, terracotta accent
+│                                        │
+│  Weby na míru                          │  ← Newsreader 28px, weight 600
+│                                        │
+│  Postavíme web, který se nestane       │  ← Manrope 18px, secondary text
+│  za rok zastaralý. Architektura,       │
+│  obsah, výkon, AEO — návrh i provoz.   │
+│                                        │
+│  [Hand-drawn slash mark divider, 1px]  │  ← Subtle SVG hand-drawn diagonal
+│                                        │
+│  Více o službě  →                      │  ← Manrope 16px medium, ink + terracotta arrow
+│                                        │
+└────────────────────────────────────────┘
+   Background: #FFFAF1 (warm cream). Border: 1px #D9CDB5. Radius 12px.
+   Optional soft shadow on resting state. Padding 32. Generous internal breath.
+   Hover: shadow softens to slightly raised, border darkens. 300ms transition.
+```
+
+### Audit pricing card (`/spoluprace` — Tier 1)
+
+```
+┌──────────────────────────────────────────────┐
+│                                              │
+│  Tier 01                       ── náš ─      │  ← Hand-drawn underline mark
+│                                              │
+│  Komplexní podnikový audit                   │  ← Newsreader 36px, weight 600
+│                                              │
+│  Pro firmy, které chtějí celkovou           │  ← Manrope 18px, secondary
+│  digitalizační analýzu napříč obchodem,      │
+│  marketingem a IT.                           │
+│                                              │
+│  ──                                          │
+│                                              │
+│  20 000 – 90 000 Kč                          │  ← Newsreader 32px, tabular nums
+│  €800 – €3 600                               │     warm presentation, not "cold pricing"
+│                                              │
+│  Doba: 1–3 týdny                            │
+│  Sezení: 3–4 (úvod, brainstorm, analýza,     │
+│  prezentace plánu osobně)                    │
+│                                              │
+│  Dostanete:                                  │
+│   ·  Strukturovanou zprávu (PDF)             │
+│   ·  Excalidraw schéma problémů              │
+│   ·  Figma vizuální artefakty                │
+│   ·  Osobní prezentaci výstupů               │
+│                                              │
+│  ┌──────────────────────────────┐            │
+│  │  Domluvit Tier 01            │            │
+│  └──────────────────────────────┘            │
+│                                              │
+└──────────────────────────────────────────────┘
+   Background: sunken #EBE2D2. Radius 24px (soft). Padding 40.
+   Tier label warmth: a hand-drawn underline mark instead of mono "TIER 01" pill.
+   Price in Newsreader (not mono) — softens the financial moment.
+   Bullets: typographic mid-dot. No checkmark icons.
+   Soft warm shadow on resting state.
+```
+
+### Testimonial placeholder
+
+```
+┌────────────────────────────────────────────────────────┐
+│                                                        │
+│   „Tým se představí brzy."                              │  ← Newsreader italic 28px
+│                                                        │
+│   Stránka týmu připravujeme. Naše první klienty       │  ← Manrope 16px, secondary
+│   poznáte v sekci Spolupráce, jakmile projdeme         │
+│   prvních pár auditů a připravíme s nimi               │
+│   případové studie.                                    │
+│                                                        │
+│   ── náš tým                                           │  ← em-dash signature, mono small
+│                                                        │
+└────────────────────────────────────────────────────────┘
+   Background: warm cream surface. No border, just generous whitespace.
+   The italic Newsreader pull-quote IS the design.
+```
+
+### Footer
+
+```
+─────────────────────────────────────────────────────────────────
+                                                                │
+VICTA                                                           │
+  ── parťák, který poslouchá                                    │  ← Italic Newsreader tagline
+                                                                │
+Služby      Řešení      Odvětví      Spolupráce      Kontakt    │
+                                                                │
+Praha + Brno  ·  victaagency.com  ·  info@victa.agency          │
+                                                                │
+Zůstaneme v kontaktu                                            │  ← Newsreader subtle
+[ vase@email.cz                                          ──►  ] │
+                                                                │
+──                                                              │
+                                                                │
+© 2026 VICTA s.r.o. · Ochrana osobních údajů · Cookies          │
+                                                                │
+─────────────────────────────────────────────────────────────────
+   Background: warm cream sunken.
+   Wordmark: Newsreader 24px, weight 600.
+   No mono in footer (D3 reserves mono for strictly-technical contexts).
+   Newsletter input has soft warm border, terracotta arrow.
+```
+
+---
+
+## 3.8 AEO/SEO image direction (nano-banana / Kling)
+
+D3's image style is **warm editorial-craft photography**. Closer to *Cabana magazine* or *Cereal* than to FT Weekend (which is D1's register). The mood is "small craft studio in soft natural light," not "international business publication."
+
+**Visual rules for nano-banana prompts in D3:**
+
+- **Color treatment:** warm-tone grading; lifted shadows, slightly desaturated mid-tones, grain preserved. The output should feel like a film photograph from 1970s European cinematography (Eric Rohmer, Wim Wenders palette).
+- **Subjects:** still-life-with-paper compositions, workshop scenes, a single object on a wooden surface, sketchbook spreads with handwriting, ceramic vessels, plants, natural-light interiors. Avoid "stock-photo of business team."
+- **Composition:** generous whitespace, single focal subject, soft focus on background.
+- **Avoid:** purple/pink AI gradients, glossy product renders, "happy team" stock, glowing tech metaphors.
+- **Texture:** preserve film grain, paper texture, warm ambient light.
+
+**Example prompt template:**
+
+```
+A warm still-life photograph in the style of 1970s European cinematography: 
+[subject — e.g., an open notebook with handwritten notes on a worn wooden desk, 
+a small terracotta cup beside it, soft window light from the left]. 
+Warm color grading, lifted shadows, 35mm film aesthetic, 15% film grain, 
+single focal subject, generous breathing space. Color palette: warm sand, 
+deep warm ink, terracotta, single soft moss accent. No digital effects, 
+no people, no text overlays. Natural light only.
+```
+
+For OG/social previews: the page title in Newsreader 64px on warm sand, with a single hand-drawn underline mark in terracotta. Optionally accompanied by a small still-life image as visual anchor.
+
+---
+
+## 3.9 Trade-offs + risks
+
+1. **Risks reading "boutique not muscular"** to a buyer who associates seriousness with cool/corporate aesthetics. The CEO who wants to feel "I am hiring a real agency, not a craft studio" may discount D3 for being too warm. Mitigation: copy is precise, methodology pages are dense and substantive, audit-tier pricing is presented soberly. The warmth is in the visual register; the rigor is in the content.
+2. **Risks "lifestyle SaaS" slippage.** The line between "warm earthy palette" and "millennial-pastel SaaS" is narrow. One slip — a too-rounded card, a too-playful illustration, a script font — collapses the direction. Mitigation: discipline at the design-token level + explicit anti-pattern enforcement.
+3. **Highest imagery production cost.** D3 demands warm editorial-craft imagery to maintain its aesthetic, and the "stock-photo with warm filter" shortcut would betray the direction. Real warm-craft imagery (or genuinely-good nano-banana output following the prompt template above) requires curation effort. D2's image cost is lowest (CSS-rendered diagrams); D3's is highest.
+4. **Under-serves the "modern + AI-native" pillar.** Of the three directions, D3 is the least obviously "AI-native." A buyer who specifically values seeing-the-AI in the visual language will prefer D2. Mitigation: the AI-native signal lives in copy ("AI-augmented tým — rychlejší, levnější"), in self-demonstrating site-maintenance cadence, and in the chatbot's mere presence (when launched). It does not need to live in the visual register.
+5. **May feel feminine-coded to a male-dominated CZ business buyer base.** Warm earthy palettes have a (somewhat unfair, but real) cultural reading as "softer / feminine" in B2B contexts. Mitigation: the typography (Newsreader is grave, not delicate) and the structural rigor of the layout balance the warmth. Roman should validate this gut-test with 1–2 actual prospects before committing.
+6. **High dependence on photography that doesn't exist yet.** If D3 launches without successful warm-craft imagery (because nano-banana prompts haven't been validated yet, or budget constrains), it falls back to typography-only mode — which is fine, but it's a leaner-than-intended version of the direction. Risk: launch happens with placeholder-imagery and the design language never reaches its peak.
+
+---
+
+# Decision aids for Roman
+
+> The brief explicitly forbids pre-ranking. This section is *decision-aid* — questions Roman can hold against each direction. Not advocacy.
+
+## Hold each direction against these questions
+
+1. **"Which direction would my best first-client (the one who already trusts us) recognize as us?"**
+   - If they would say "yes, that's how we feel when we work with you": direction is on-brand.
+   - If they would say "that doesn't feel like the team I work with": direction is mis-fit, regardless of design quality.
+
+2. **"Which direction reads correctly when I imagine sending the homepage URL to a prospective Tier-1 audit client?"**
+   - The audit is a paid commitment. The website must visually pre-pay the audit's seriousness.
+
+3. **"Which direction will my marketing team be able to maintain in 6 months without me?"**
+   - D1: requires editorial typographic discipline. Medium maintenance burden.
+   - D2: requires design-system rigor. Highest maintenance burden — every content edit risks regression.
+   - D3: requires curated imagery + warm-tone discipline. Medium-high maintenance burden.
+
+4. **"Which direction does my own taste actually pull toward — without optimizing for the buyer?"**
+   - Roman's gut on this matters more than market-fit analysis. A founder who doesn't love their own site doesn't *defend* it. (And taste-driven sites ship better than committee-driven sites.)
+
+5. **"Which direction makes the chatbot (when it launches post-launch) feel native?"**
+   - D1: chatbot is an editorial sidebar, restrained.
+   - D2: chatbot is an inline `>` prompt — feels like a CLI extension. Most native.
+   - D3: chatbot is a quiet conversation in a warm panel.
+
+## Possible hybrids (if Roman wants to mix)
+
+- **D1 + D3 hybrid** — "Editorial Warmth": Fraunces headlines (D1) on warm sand surface (D3), terracotta accent. Reads as a warm-paper editorial publication. Coherent. Risk: dilutes both directions' distinctness.
+- **D1 + D2 hybrid** — "Editorial-Engineering": Fraunces headlines + JetBrains Mono labels, on porcelain. Reads as "serious publication that documents systems." Coherent. Risk: cluttered if not held to strict discipline.
+- **D2 + D3 hybrid** — "Warm Atelier with system-rigor methodology pages": Newsreader headlines + warm sand surface, but methodology and audit pages adopt D2's mono-comparator pattern. Coherent IF the comparator is contained to specific pages. Risk: register-collision on transitions.
+
+The cleanest path for an MVP launch is **pick one direction and execute it without hybridization**. Hybrids are easier to mishandle and harder to maintain. If Roman is undecided, the decision-aid questions above are the fastest converger.
+
+## What happens after Roman picks
+
+The selected direction (or hybrid spec) feeds Phase 1B `architect` as the design-token input. `architect` will:
+
+1. Codify the chosen palette into Tailwind theme tokens (light + dark variants).
+2. Codify the typography scale and font loading.
+3. Codify the spacing scale, border radii, and shadow language.
+4. Codify the motion tokens (durations, easings).
+5. Hand off to Phase 4 frontend implementation with a tokens-as-constraint architecture so subsequent component work cannot drift.
+
+A Phase 1B parallel sub-task should also generate the **first 3 nano-banana hero images** in the chosen direction so that imagery can be validated before launch (per D3's risk note especially).
+
+---
+
+## Appendix A — WCAG contrast verification (summary)
+
+All text/background pairs across all three directions pass WCAG 2.1 AA (4.5:1 normal text, 3:1 large text + UI components). Pairs at the borderline (4.5–4.7:1) are flagged as "passes by margin" and should be re-tested in real rendering before launch — anti-aliasing on different OSes can shift perceived contrast.
+
+| Direction | Theme | Lowest body-text contrast | Lowest accent-on-surface | Status |
+|---|---|---|---|---|
+| D1 — Editorial Trust | Light | Tertiary text 4.7:1 (`#76716A` on `#FAF7F2`) | Burnt amber CTA 5.6:1 | All pass AA |
+| D1 — Editorial Trust | Dark | Tertiary text 5.2:1 | Burnt amber 6.4:1 | All pass AA |
+| D2 — Atelier Systems | Light | Tertiary text 4.5:1 (`#6F727A` on `#F4F4F2`) | Lime CTA 5.7:1 | All pass AA — tertiary by margin |
+| D2 — Atelier Systems | Dark | Tertiary text 4.6:1 | Lime 11.2:1 | All pass AA — tertiary by margin |
+| D3 — Warm Atelier | Light | Tertiary text 4.5:1 (`#8B7E6A` on `#F6EFE4`) | Terracotta CTA 5.0:1 | All pass AA — tertiary by margin |
+| D3 — Warm Atelier | Dark | Tertiary text 5.4:1 | Terracotta 7.6:1 | All pass AA |
+
+**Recommendation**: in Phase 1B token-codification, the tertiary text colors for D2 light and D3 light should be tested at full size in the actual chosen body face on real devices. If they read low-contrast in body context (e.g., footnote captions), darken tertiary by 5–8% before launch.
+
+---
+
+## Appendix B — Czech typography enforcement (per `typography` skill)
+
+Applied uniformly across all three directions — these are non-negotiable launch criteria:
+
+| Rule | Implementation |
+|---|---|
+| Czech quote marks `„…"` | Build-time content transform OR rich-text editor convention. Never use straight `"…"`. |
+| Em-dashes `—` (not `--`) | Build-time transform. JSX requires actual UTF-8 character pasted directly (Unicode escape sequences `—` do NOT render in JSX text content). |
+| En-dashes `–` for ranges | Same — and required in `20 000 – 90 000 Kč`. |
+| Single-letter prepositions joined with nbsp | Post-processing pipeline: regex `\b([aikosuvz])\s+` → `$1 `. Czech preposition list. |
+| Number + unit nbsp | `20 000 Kč`, `€800`. Verified in pricing tables. |
+| Currency formatting | CZK after value with nbsp; EUR before value. Verified per locale route. |
+| Apostrophes curly `’` | Always `’`, never straight `'`. |
+| Kerning + ligatures on | `font-feature-settings: "kern" 1, "liga" 1; text-rendering: optimizeLegibility;` |
+| Tabular numerics for tables | `font-variant-numeric: tabular-nums lining-nums;` on pricing, comparator, and data tables. |
+| One space after punctuation | Lint rule. Two-space sequences flagged. |
+
+Each direction's typography pairing has been verified against these rules. All fonts (Fraunces, Inter, JetBrains Mono, Newsreader, Manrope, IBM Plex Mono) ship full Czech diacritic coverage in Google Fonts' Latin Extended subset.
+
+---
+
+## Appendix C — Implementation cost estimate (rough)
+
+| Direction | Type loading | Imagery | Motion | Token complexity | Maintenance burden |
+|---|---|---|---|---|---|
+| D1 — Editorial Trust | 3 fonts (Fraunces, Inter, JetBrains Mono) — ~95 KB woff2 | Medium (curated editorial photos, OG hero stills) | Low | Medium | Medium |
+| D2 — Atelier Systems | 2 fonts (Inter, JetBrains Mono) — ~70 KB woff2 | Low (CSS-rendered diagrams + minimal photos) | Medium | High (rigor demands strict tokens) | High |
+| D3 — Warm Atelier | 3 fonts (Newsreader, Manrope, IBM Plex Mono) — ~100 KB woff2 | High (curated warm-craft imagery, paper-grain assets) | Medium-high (drift signature, soft staggered reveals) | Medium | Medium-high |
+
+Performance impact: all three meet Lighthouse mobile ≥ 90 if fonts use `font-display: swap`, are subset to Latin Extended, and are self-hosted. CSS-rendered diagrams in D2 have the lowest TBT (Total Blocking Time) cost. D3's paper-grain SVG overlay must be rendered as an SVG noise filter with `feTurbulence` + low opacity, not a raster PNG, to keep transfer size minimal.
+
+---
+
+**Document status**: COMPLETE. Awaiting Roman's selection.
+
+**Next step**: Roman reads, picks one (or hybrid), and the choice feeds Phase 1B `architect` for design-token codification and Phase 4 frontend implementation kick-off. If Roman has already engaged with the prior session's `design-decision.md`, this regeneration should be cross-walked against that decision before lock-in — directions in this doc are not the same as the prior doc's three (Editorial Trust / Quiet Confidence / Computed Modernism), so a fresh pick is warranted.

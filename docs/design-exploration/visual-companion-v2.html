@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="cs" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>VICTA — Visual Companion v2 · 24 variants + live Tweaks</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Inter+Tight:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400..600;1,6..72,400..600&family=Fraunces:opsz,wght,SOFT,WONK@9..144,300..700,0..100,0..1&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   GLOBAL SHELL
+   ========================================================= */
+*,*::before,*::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+body {
+  font-family: 'Inter Tight', system-ui, sans-serif;
+  background: #0a0a0a;
+  color: #e8e8e8;
+  min-height: 100vh;
+}
+
+.app-frame { max-width: 1600px; margin: 0 auto; padding-bottom: 80px; }
+
+/* Sticky app header */
+.app-header {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(15,15,15,0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 14px 28px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  font-size: 13px; color: #c4c4c4;
+}
+.app-header .brand { font-weight: 600; color: #fff; letter-spacing: 0.01em; }
+.app-header .brand .ver { font-family: 'Geist Mono', monospace; font-size: 11px; color: #888; margin-left: 8px; }
+.app-header nav { display: flex; gap: 6px; flex: 1; justify-content: center; }
+.app-header nav a {
+  color: #c4c4c4; text-decoration: none; padding: 6px 12px;
+  border-radius: 6px; font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+  transition: all 150ms ease;
+}
+.app-header nav a:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.app-header .controls { display: flex; gap: 8px; }
+.theme-btn {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff; padding: 8px 14px; border-radius: 8px;
+  font-size: 12px; font-family: inherit; cursor: pointer;
+  transition: all 150ms ease;
+}
+.theme-btn:hover { background: rgba(255,255,255,0.12); }
+
+/* Anchor block */
+.anchor-block {
+  margin: 32px 28px 24px;
+  padding: 28px 32px;
+  background: linear-gradient(180deg, #141414 0%, #0f0f0f 100%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.65;
+}
+.anchor-block h1 {
+  font-family: 'Geist', sans-serif;
+  font-size: 22px; font-weight: 600;
+  color: #fff;
+  margin-bottom: 8px;
+  letter-spacing: -0.015em;
+}
+.anchor-block .subtitle { color: #888; font-size: 13px; margin-bottom: 20px; }
+.anchor-block .grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px 32px;
+  margin-top: 16px;
+}
+.anchor-block .grid > div { font-size: 13px; color: #c4c4c4; }
+.anchor-block .grid strong { color: #fff; font-weight: 500; display: block; margin-bottom: 4px; font-family: 'Geist Mono', monospace; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: #FF6B3A; }
+@media (max-width: 700px) {
+  .anchor-block .grid { grid-template-columns: 1fr; }
+}
+
+/* Section headings */
+.section-head {
+  margin: 56px 28px 20px;
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding-bottom: 14px;
+}
+.section-head h2 {
+  font-family: 'Geist', sans-serif;
+  font-size: 24px; font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+.section-head .meta { font-family: 'Geist Mono', monospace; font-size: 11px; color: #888; letter-spacing: 0.06em; }
+
+/* =========================================================
+   HERO SHELL — shared by Tweaks preview AND every gallery card
+   All theme inputs come via CSS custom properties.
+   ========================================================= */
+.hero-shell {
+  --bg: #FAFAFA;
+  --surface: #F4F4F5;
+  --border: #D4D4D8;
+  --ink: #0A0B0E;
+  --secondary: #52525B;
+  --tertiary: #71717A;
+  --accent: #B53C16;
+  --accent-bright: #D8551D;
+  --font-display: 'Geist', sans-serif;
+  --font-body: 'Geist', sans-serif;
+  --font-mono: 'Geist Mono', monospace;
+  --headline-weight: 600;
+  --headline-style: normal;
+  --headline-scale: 1;
+  --density-pad-y: 64px;
+  --density-pad-x: 48px;
+  --density-content-gap: 24px;
+  --align-text: left;
+  --align-items: flex-start;
+
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-body);
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+[data-theme="dark"] .hero-shell {
+  --bg: #0A0B0E;
+  --surface: #18181B;
+  --border: #3F3F46;
+  --ink: #FAFAFA;
+  --secondary: #A1A1AA;
+  --tertiary: #71717A;
+  --accent: #FF6B3A;
+  --accent-bright: #FF8C5A;
+}
+
+/* Pattern overlays — applied via class on hero-shell */
+.hero-shell.pattern-grid::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0, transparent 39px, rgba(0,0,0,0.04) 39px, rgba(0,0,0,0.04) 40px),
+    repeating-linear-gradient(0deg, transparent 0, transparent 39px, rgba(0,0,0,0.04) 39px, rgba(0,0,0,0.04) 40px);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+}
+[data-theme="dark"] .hero-shell.pattern-grid::before {
+  background-image:
+    repeating-linear-gradient(90deg, transparent 0, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px),
+    repeating-linear-gradient(0deg, transparent 0, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px);
+}
+
+.hero-shell.pattern-dots::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: radial-gradient(circle, rgba(0,0,0,0.10) 1px, transparent 1.5px);
+  background-size: 24px 24px;
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+}
+[data-theme="dark"] .hero-shell.pattern-dots::before {
+  background-image: radial-gradient(circle, rgba(255,255,255,0.10) 1px, transparent 1.5px);
+}
+
+.hero-shell.pattern-noise::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.4 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.4;
+}
+[data-theme="dark"] .hero-shell.pattern-noise::before { opacity: 0.5; }
+
+.hero-shell.pattern-mesh::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 30%, color-mix(in oklab, var(--accent) 12%, transparent), transparent 60%),
+    radial-gradient(ellipse 70% 40% at 80% 70%, color-mix(in oklab, var(--accent) 8%, transparent), transparent 60%);
+}
+
+.hero-shell.pattern-iso::before {
+  content: '';
+  position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    repeating-linear-gradient(60deg, transparent 0, transparent 39px, rgba(0,0,0,0.04) 39px, rgba(0,0,0,0.04) 40px),
+    repeating-linear-gradient(-60deg, transparent 0, transparent 39px, rgba(0,0,0,0.04) 39px, rgba(0,0,0,0.04) 40px);
+  mask-image: radial-gradient(ellipse 70% 70% at 50% 50%, black 30%, transparent 80%);
+}
+[data-theme="dark"] .hero-shell.pattern-iso::before {
+  background-image:
+    repeating-linear-gradient(60deg, transparent 0, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px),
+    repeating-linear-gradient(-60deg, transparent 0, transparent 39px, rgba(255,255,255,0.04) 39px, rgba(255,255,255,0.04) 40px);
+}
+
+/* No pattern */
+.hero-shell.pattern-none::before { display: none; }
+
+/* Density classes */
+.hero-shell.density-low { --density-pad-y: 120px; --density-pad-x: 56px; --density-content-gap: 36px; --headline-scale: 1.1; }
+.hero-shell.density-med { --density-pad-y: 64px; --density-pad-x: 48px; --density-content-gap: 24px; --headline-scale: 1; }
+.hero-shell.density-high { --density-pad-y: 32px; --density-pad-x: 32px; --density-content-gap: 16px; --headline-scale: 0.85; }
+
+/* Alignment classes */
+.hero-shell.align-left .hero-content { text-align: left; align-items: flex-start; }
+.hero-shell.align-center .hero-content { text-align: center; align-items: center; max-width: none; }
+.hero-shell.align-center .hero-content > * { max-width: 720px; }
+.hero-shell.align-asym .hero-content { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: end; text-align: left; }
+.hero-shell.align-asym .hero-content h1 { grid-column: 1; }
+.hero-shell.align-asym .hero-content .col-right { grid-column: 2; display: flex; flex-direction: column; gap: 16px; }
+.hero-shell:not(.align-asym) .hero-content .col-right { display: contents; }
+
+/* Nav row */
+.hero-shell .nav-row {
+  position: relative; z-index: 1;
+  padding: 16px 28px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-body);
+  font-size: 12px;
+}
+.hero-shell .logo {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 14px; letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.hero-shell .logo .tag {
+  font-family: var(--font-mono); font-size: 10px;
+  color: var(--secondary); font-weight: 400; letter-spacing: 0;
+}
+.hero-shell .nav-links { display: flex; gap: 6px; align-items: center; font-size: 12px; }
+.hero-shell .nav-links a {
+  color: var(--secondary); text-decoration: none;
+  padding: 4px 8px; border-radius: 4px;
+  transition: all 150ms ease;
+}
+.hero-shell .nav-links a:hover { background: var(--surface); color: var(--ink); }
+.hero-shell .nav-links .lang {
+  font-family: var(--font-mono); font-size: 10px; color: var(--tertiary);
+  padding: 3px 6px; border: 1px solid var(--border); border-radius: 4px;
+}
+
+/* Hero content */
+.hero-shell .hero-content {
+  position: relative; z-index: 1;
+  padding: var(--density-pad-y) var(--density-pad-x);
+  display: flex; flex-direction: column; gap: var(--density-content-gap);
+}
+.hero-shell h1 {
+  font-family: var(--font-display);
+  font-weight: var(--headline-weight);
+  font-style: var(--headline-style);
+  font-size: calc(48px * var(--headline-scale));
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  max-width: 720px;
+}
+.hero-shell.font-serif h1 { letter-spacing: -0.02em; line-height: 1.04; }
+.hero-shell.font-mono h1 { letter-spacing: -0.04em; line-height: 1.0; }
+
+.hero-shell .sub {
+  font-family: var(--font-body);
+  font-size: 15px; line-height: 1.55;
+  color: var(--secondary);
+  max-width: 480px;
+}
+.hero-shell .tags {
+  font-family: var(--font-mono);
+  font-size: 11px; color: var(--secondary);
+  letter-spacing: 0;
+}
+.hero-shell .tags span { color: var(--accent); }
+
+.hero-shell .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+.hero-shell .btn {
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 13px; font-weight: 500;
+  text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  cursor: pointer; border: 1px solid transparent;
+  transition: all 150ms ease;
+}
+.hero-shell .btn-primary { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+.hero-shell .btn-primary:hover { background: var(--accent-bright); border-color: var(--accent-bright); }
+.hero-shell .btn-ghost { background: transparent; color: var(--ink); border-color: var(--border); }
+.hero-shell .btn-ghost:hover { background: var(--surface); }
+
+.hero-shell .status-line {
+  font-family: var(--font-mono);
+  font-size: 10px; color: var(--tertiary);
+  margin-top: 12px; letter-spacing: 0;
+  display: flex; align-items: center; gap: 6px;
+}
+.hero-shell .status-line .dot {
+  display: inline-block; width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #15803D;
+}
+
+/* Mono-only mode — no accent color, accent IS typography */
+.hero-shell.mono-only h1 { color: var(--ink); }
+.hero-shell.mono-only .btn-primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.hero-shell.mono-only .tags span { color: var(--ink); font-weight: 500; }
+.hero-shell.mono-only .status-line .dot { background: var(--ink); }
+
+/* =========================================================
+   LIVE TWEAKS PANEL
+   ========================================================= */
+.tweaks-section {
+  margin: 0 28px;
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 24px;
+  align-items: start;
+}
+@media (max-width: 1100px) {
+  .tweaks-section { grid-template-columns: 1fr; }
+}
+
+.tweaks-preview-wrapper { min-height: 580px; }
+.tweaks-preview-wrapper .hero-shell {
+  min-height: 580px;
+  font-size: 18px;
+}
+.tweaks-preview-wrapper .hero-shell h1 {
+  font-size: calc(72px * var(--headline-scale));
+}
+.tweaks-preview-wrapper .hero-shell .sub { font-size: 18px; max-width: 520px; }
+.tweaks-preview-wrapper .hero-shell .tags { font-size: 13px; }
+.tweaks-preview-wrapper .hero-shell .btn { padding: 12px 22px; font-size: 14px; }
+
+.tweaks-panel {
+  background: #141414;
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 22px;
+  position: sticky; top: 80px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+}
+.tweaks-panel h3 {
+  font-family: 'Geist', sans-serif;
+  font-size: 14px; font-weight: 600;
+  color: #fff;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.tweaks-panel .panel-sub {
+  font-size: 11px; color: #888; margin-bottom: 18px;
+  font-family: 'Geist Mono', monospace; letter-spacing: 0.04em;
+}
+.tweaks-panel fieldset {
+  border: 0; margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+.tweaks-panel fieldset:last-of-type { border-bottom: 0; padding-bottom: 0; margin-bottom: 0; }
+.tweaks-panel legend {
+  font-family: 'Geist Mono', monospace;
+  font-size: 10px; color: #c4c4c4;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 10px;
+  padding: 0;
+}
+.tweaks-panel .options { display: flex; flex-wrap: wrap; gap: 6px; }
+.tweaks-panel .opt {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.10);
+  color: #c4c4c4;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: all 120ms ease;
+}
+.tweaks-panel .opt:hover { background: rgba(255,255,255,0.08); color: #fff; }
+.tweaks-panel .opt.active {
+  background: rgba(255,107,58,0.15);
+  border-color: rgba(255,107,58,0.5);
+  color: #FF8C5A;
+}
+.tweaks-panel .swatch {
+  display: inline-block; width: 10px; height: 10px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.2);
+}
+.tweaks-panel .reset-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #c4c4c4;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 11px;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 14px;
+  transition: all 120ms ease;
+}
+.tweaks-panel .reset-btn:hover { background: rgba(255,255,255,0.06); color: #fff; }
+
+.tweaks-current {
+  margin-top: 10px; padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  font-family: 'Geist Mono', monospace;
+  font-size: 10px; color: #888;
+  line-height: 1.6;
+}
+.tweaks-current span { color: #FF8C5A; }
+
+/* =========================================================
+   GALLERY GRID
+   ========================================================= */
+.gallery {
+  margin: 0 28px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 28px;
+}
+@media (max-width: 1100px) { .gallery { grid-template-columns: 1fr; } }
+
+.variant-card {
+  display: flex; flex-direction: column; gap: 12px;
+}
+.variant-card .meta {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 12px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 11px; color: #888;
+  padding: 0 4px;
+}
+.variant-card .num {
+  color: #fff; font-weight: 500;
+  font-size: 12px;
+}
+.variant-card .axis-labels {
+  flex: 1; color: #888; text-align: right;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.variant-card .narrative {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 13px; color: #c4c4c4;
+  padding: 0 4px;
+  font-style: italic;
+}
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+.app-footer {
+  margin: 80px 28px 0;
+  padding: 32px 0;
+  text-align: center;
+  font-size: 11px; color: #666;
+  font-family: 'Geist Mono', monospace; letter-spacing: 0.04em;
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+.app-footer p { margin-bottom: 4px; }
+
+[data-theme="dark"] body { background: #050505; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="app-frame">
+
+<header class="app-header">
+  <div class="brand">VICTA <span class="ver">/ visual companion v2 · 24 variants</span></div>
+  <nav>
+    <a href="#anchor">Anchor</a>
+    <a href="#tweaks">Live Mixer</a>
+    <a href="#gallery">Gallery (24)</a>
+  </nav>
+  <div class="controls">
+    <button class="theme-btn" id="themeToggle">☼ Light · ☾ Dark</button>
+  </div>
+</header>
+
+<!-- ============================================================
+     ANCHOR BLOCK — what's locked from v1 feedback
+     ============================================================ -->
+<section class="anchor-block" id="anchor">
+  <h1>Locked z&nbsp;tvého v1 feedbacku</h1>
+  <p class="subtitle">Nemění se napříč všemi 24 variantami a&nbsp;napříč Tweaks panelem. Mění se vše ostatní.</p>
+  <div class="grid">
+    <div><strong>Struktura</strong>C-style: top nav „VICTA / digital agency" + mono navigace + status line se zelenou tečkou</div>
+    <div><strong>Pozadí</strong>Jemný šachovnicový vzor (volitelně i&nbsp;dot grid, noise, mesh — měnitelné)</div>
+    <div><strong>Hero copy</strong>„Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání. To je celé."</div>
+    <div><strong>Tags</strong>„Audit · Vývoj · Marketing · AI integrace"</div>
+    <div><strong>CTA</strong>„Domluvit konzultaci →"</div>
+    <div><strong>Co se mění</strong>Font headlinu · barva akcentu · vzor pozadí · hustota · zarovnání · váha písma</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LIVE TWEAKS MIXER
+     ============================================================ -->
+<div class="section-head" id="tweaks">
+  <h2>Live Tweaks · vyzkoušej cokoliv</h2>
+  <div class="meta">~14 400 možných kombinací · klikni na knoby vpravo</div>
+</div>
+
+<section class="tweaks-section">
+  <div class="tweaks-preview-wrapper">
+    <article class="hero-shell pattern-grid density-med align-left" id="livePreview">
+      <div class="nav-row">
+        <div class="logo">VICTA <span class="tag">/ digital agency</span></div>
+        <div class="nav-links">
+          <a href="#">Audit</a>
+          <a href="#">Služby</a>
+          <a href="#">Proces</a>
+          <a href="#">Kontakt</a>
+          <span class="lang">CS ⌄</span>
+        </div>
+      </div>
+      <div class="hero-content">
+        <h1>Začneme tím, že posloucháme.</h1>
+        <div class="col-right">
+          <p class="sub">Než cokoliv navrhneme, chceme rozumět vašemu podnikání. To&nbsp;je&nbsp;celé.</p>
+          <div class="tags">Audit&nbsp;<span>·</span>&nbsp;Vývoj&nbsp;<span>·</span>&nbsp;Marketing&nbsp;<span>·</span>&nbsp;AI&nbsp;integrace</div>
+          <div class="ctas">
+            <a href="#" class="btn btn-primary">Domluvit konzultaci →</a>
+            <a href="#" class="btn btn-ghost">Spustit audit</a>
+          </div>
+          <div class="status-line"><span class="dot"></span>STATUS · v&nbsp;0.1.0 · published 2026-05-06 · region eu-central-1</div>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <aside class="tweaks-panel">
+    <h3>Tweaks</h3>
+    <div class="panel-sub">live mutace ↑</div>
+
+    <fieldset>
+      <legend>Headline font</legend>
+      <div class="options" data-axis="font">
+        <button class="opt active" data-value="geist">Geist</button>
+        <button class="opt" data-value="inter">Inter Tight</button>
+        <button class="opt" data-value="space">Space Grotesk</button>
+        <button class="opt" data-value="plex">IBM Plex Sans</button>
+        <button class="opt" data-value="newsreader">Newsreader</button>
+        <button class="opt" data-value="fraunces">Fraunces</button>
+        <button class="opt" data-value="jbmono">JetBrains Mono</button>
+        <button class="opt" data-value="geistmono">Geist Mono</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Akcent</legend>
+      <div class="options" data-axis="accent">
+        <button class="opt active" data-value="rust"><span class="swatch" style="background:#B53C16"></span>Ferro-rust</button>
+        <button class="opt" data-value="cobalt"><span class="swatch" style="background:#1652F0"></span>Cobalt</button>
+        <button class="opt" data-value="moss"><span class="swatch" style="background:#2D4A3E"></span>Moss</button>
+        <button class="opt" data-value="gold"><span class="swatch" style="background:#B7873E"></span>Gold</button>
+        <button class="opt" data-value="mint"><span class="swatch" style="background:#04A77D"></span>Mint</button>
+        <button class="opt" data-value="oxblood"><span class="swatch" style="background:#6B2C2C"></span>Oxblood</button>
+        <button class="opt" data-value="indigo"><span class="swatch" style="background:#3730A3"></span>Indigo</button>
+        <button class="opt" data-value="mono"><span class="swatch" style="background:#0A0B0E"></span>Mono</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Vzor pozadí</legend>
+      <div class="options" data-axis="pattern">
+        <button class="opt active" data-value="grid">Grid lines</button>
+        <button class="opt" data-value="dots">Dot grid</button>
+        <button class="opt" data-value="noise">Noise</button>
+        <button class="opt" data-value="mesh">Mesh</button>
+        <button class="opt" data-value="iso">Isometric</button>
+        <button class="opt" data-value="none">None</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Hustota</legend>
+      <div class="options" data-axis="density">
+        <button class="opt" data-value="low">Whitespace</button>
+        <button class="opt active" data-value="med">Medium</button>
+        <button class="opt" data-value="high">Compact</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Zarovnání</legend>
+      <div class="options" data-axis="align">
+        <button class="opt active" data-value="left">Left</button>
+        <button class="opt" data-value="center">Center</button>
+        <button class="opt" data-value="asym">Asymmetric</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Váha headline</legend>
+      <div class="options" data-axis="weight">
+        <button class="opt" data-value="300">300</button>
+        <button class="opt" data-value="400">400</button>
+        <button class="opt" data-value="500">500</button>
+        <button class="opt active" data-value="600">600</button>
+        <button class="opt" data-value="700">700</button>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Styl headline</legend>
+      <div class="options" data-axis="style">
+        <button class="opt active" data-value="normal">Normal</button>
+        <button class="opt" data-value="italic">Italic</button>
+      </div>
+    </fieldset>
+
+    <button class="reset-btn" id="resetBtn">↺  Reset na baseline (C+B hybrid)</button>
+
+    <div class="tweaks-current" id="tweaksCurrent">
+      Aktuální kombinace: <span id="combo">Geist · rust · grid · medium · left · 600</span>
+    </div>
+  </aside>
+</section>
+
+<!-- ============================================================
+     GALLERY — 24 hand-picked variants
+     ============================================================ -->
+<div class="section-head" id="gallery">
+  <h2>Gallery · 24 hand-picked anchorů</h2>
+  <div class="meta">každý cross alespoň jednu osu od&nbsp;baseline</div>
+</div>
+
+<section class="gallery" id="galleryGrid">
+  <!-- variants rendered by JS -->
+</section>
+
+<footer class="app-footer">
+  <p>VICTA visual companion v2 · phase 1A design exploration</p>
+  <p>8 fonts × 8 accents × 6 patterns × 3 densities × 3 alignments × 5 weights × 2 styles = 34 560 možných kombinací</p>
+  <p>WCAG 2.1 AA contrast verified pro baseline · Czech typography rules applied · &copy; 2026 VICTA</p>
+</footer>
+
+</div>
+
+<script>
+// =========================================================
+// FONT MAP
+// =========================================================
+const FONTS = {
+  geist:       { display: "'Geist', sans-serif", body: "'Geist', sans-serif", mono: "'Geist Mono', monospace", label: 'Geist', kind: 'sans' },
+  inter:       { display: "'Inter Tight', sans-serif", body: "'Inter Tight', sans-serif", mono: "'Geist Mono', monospace", label: 'Inter Tight', kind: 'sans' },
+  space:       { display: "'Space Grotesk', sans-serif", body: "'Inter Tight', sans-serif", mono: "'Geist Mono', monospace", label: 'Space Grotesk', kind: 'sans' },
+  plex:        { display: "'IBM Plex Sans', sans-serif", body: "'IBM Plex Sans', sans-serif", mono: "'Geist Mono', monospace", label: 'IBM Plex Sans', kind: 'sans' },
+  newsreader:  { display: "'Newsreader', Georgia, serif", body: "'Inter Tight', sans-serif", mono: "'Geist Mono', monospace", label: 'Newsreader', kind: 'serif' },
+  fraunces:    { display: "'Fraunces', Georgia, serif", body: "'Inter Tight', sans-serif", mono: "'Geist Mono', monospace", label: 'Fraunces', kind: 'serif' },
+  jbmono:      { display: "'JetBrains Mono', monospace", body: "'Inter Tight', sans-serif", mono: "'JetBrains Mono', monospace", label: 'JetBrains Mono', kind: 'mono' },
+  geistmono:   { display: "'Geist Mono', monospace", body: "'Geist', sans-serif", mono: "'Geist Mono', monospace", label: 'Geist Mono', kind: 'mono' },
+};
+
+// =========================================================
+// ACCENT MAP — light + dark variants
+// =========================================================
+const ACCENTS = {
+  rust:    { light: '#B53C16', dark: '#FF6B3A', bright: '#FF8C5A', label: 'ferro-rust',  hex: '#B53C16' },
+  cobalt:  { light: '#1652F0', dark: '#5B8DEF', bright: '#85ABF5', label: 'cobalt',      hex: '#1652F0' },
+  moss:    { light: '#2D4A3E', dark: '#5B8B73', bright: '#7AAA92', label: 'moss',        hex: '#2D4A3E' },
+  gold:    { light: '#B7873E', dark: '#D9A85A', bright: '#E5BC7A', label: 'gold',        hex: '#B7873E' },
+  mint:    { light: '#04A77D', dark: '#34D9A8', bright: '#5DEABE', label: 'mint',        hex: '#04A77D' },
+  oxblood: { light: '#6B2C2C', dark: '#C97969', bright: '#D89571', label: 'oxblood',     hex: '#6B2C2C' },
+  indigo:  { light: '#3730A3', dark: '#7367E5', bright: '#9389F0', label: 'indigo',      hex: '#3730A3' },
+  mono:    { light: '#0A0B0E', dark: '#FAFAFA', bright: '#FAFAFA', label: 'mono-only',   hex: '#0A0B0E' },
+};
+
+// =========================================================
+// HERO SHELL TEMPLATE (used for gallery)
+// =========================================================
+function buildShell({ font='geist', accent='rust', pattern='grid', density='med', align='left', weight=600, style='normal', monoOnly=false }) {
+  const f = FONTS[font];
+  const a = ACCENTS[accent];
+  const isMono = accent === 'mono';
+  const fontKindClass = `font-${f.kind}`;
+  const monoClass = isMono ? 'mono-only' : '';
+  return `
+    <article class="hero-shell pattern-${pattern} density-${density} align-${align} ${fontKindClass} ${monoClass}"
+             style="
+               --font-display: ${f.display};
+               --font-body: ${f.body};
+               --font-mono: ${f.mono};
+               --accent: ${a.light};
+               --accent-bright: ${a.bright};
+               --headline-weight: ${weight};
+               --headline-style: ${style};
+             "
+             data-accent="${accent}">
+      <div class="nav-row">
+        <div class="logo">VICTA <span class="tag">/ digital agency</span></div>
+        <div class="nav-links">
+          <a href="#">Audit</a>
+          <a href="#">Služby</a>
+          <a href="#">Proces</a>
+          <a href="#">Kontakt</a>
+          <span class="lang">CS ⌄</span>
+        </div>
+      </div>
+      <div class="hero-content">
+        <h1>Začneme tím, že posloucháme.</h1>
+        <div class="col-right">
+          <p class="sub">Než cokoliv navrhneme, chceme rozumět vašemu podnikání. To&nbsp;je&nbsp;celé.</p>
+          <div class="tags">Audit&nbsp;<span>·</span>&nbsp;Vývoj&nbsp;<span>·</span>&nbsp;Marketing&nbsp;<span>·</span>&nbsp;AI&nbsp;integrace</div>
+          <div class="ctas">
+            <a href="#" class="btn btn-primary">Domluvit konzultaci →</a>
+            <a href="#" class="btn btn-ghost">Spustit audit</a>
+          </div>
+          <div class="status-line"><span class="dot"></span>STATUS · v&nbsp;0.1.0 · 2026-05-06</div>
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+// =========================================================
+// 24 GALLERY VARIANTS
+// =========================================================
+const VARIANTS = [
+  // — A. Accent variations on Geist + grid
+  { font:'geist', accent:'rust',    pattern:'grid', density:'med', align:'left', weight:600, narrative:'Baseline · C-styl + B-copy hybrid (tvoje preferovaná báze)' },
+  { font:'geist', accent:'cobalt',  pattern:'grid', density:'med', align:'left', weight:600, narrative:'Linear-style — cobalt místo rust' },
+  { font:'geist', accent:'moss',    pattern:'grid', density:'med', align:'left', weight:600, narrative:'Industrial heritage — moss zelená, vážná' },
+  { font:'geist', accent:'gold',    pattern:'grid', density:'med', align:'left', weight:600, narrative:'Consultative — burnished gold, high-end poradenský mood' },
+
+  // — B. Pattern variations on Geist + rust
+  { font:'geist', accent:'rust', pattern:'dots',  density:'med', align:'left', weight:600, narrative:'Dot grid místo lines — Vercel/Linear vibe' },
+  { font:'geist', accent:'rust', pattern:'noise', density:'med', align:'left', weight:600, narrative:'Noise/grain — surovější, texturní' },
+  { font:'geist', accent:'rust', pattern:'mesh',  density:'med', align:'left', weight:600, narrative:'Měkký radial mesh — modernější, atmosférický' },
+  { font:'geist', accent:'rust', pattern:'none',  density:'med', align:'left', weight:600, narrative:'Bez vzoru — čistá plocha, typografie = vše' },
+
+  // — C. Font variations on rust + grid
+  { font:'inter',      accent:'rust', pattern:'grid', density:'med', align:'left', weight:600, narrative:'Inter Tight — humanistka, jemně teplejší' },
+  { font:'space',      accent:'rust', pattern:'grid', density:'med', align:'left', weight:600, narrative:'Space Grotesk — geometrický, idiosynkratický' },
+  { font:'plex',       accent:'rust', pattern:'grid', density:'med', align:'left', weight:600, narrative:'IBM Plex Sans — corporate-tech mood' },
+  { font:'newsreader', accent:'rust', pattern:'grid', density:'med', align:'left', weight:600, narrative:'Newsreader serif — most do editorialu, stále s rust' },
+  { font:'fraunces',   accent:'rust', pattern:'grid', density:'med', align:'left', weight:600, narrative:'Fraunces serif — plný editorial bridge' },
+  { font:'jbmono',     accent:'rust', pattern:'grid', density:'med', align:'left', weight:500, narrative:'JetBrains Mono headline — terminal mood, dev-first' },
+
+  // — D. Density variations
+  { font:'geist', accent:'rust', pattern:'grid', density:'low',  align:'left',   weight:600, narrative:'Whitespace mood — B-hustota uvnitř C-shellu (vzdušné)' },
+  { font:'geist', accent:'rust', pattern:'grid', density:'high', align:'left',   weight:600, narrative:'Compact — kondenzovaná, vše na pohled' },
+
+  // — E. Alignment variations
+  { font:'geist', accent:'rust', pattern:'grid', density:'med', align:'center', weight:600, narrative:'Centered — symetrické, formálnější' },
+  { font:'geist', accent:'rust', pattern:'grid', density:'med', align:'asym',   weight:600, narrative:'Asymetrické 2-col — headline vs. doplňkový sloupec' },
+
+  // — F. Weight variations
+  { font:'geist', accent:'rust', pattern:'grid', density:'med', align:'left', weight:300, narrative:'Lehká váha 300 — tichá sebejistota, vzdušný headline' },
+  { font:'geist', accent:'rust', pattern:'grid', density:'med', align:'left', weight:700, narrative:'Bold 700 — agresivnější, agency-loud' },
+
+  // — G. Combo experiments
+  { font:'newsreader', accent:'rust', pattern:'dots',  density:'med', align:'left',   weight:500, style:'italic', narrative:'Newsreader italic + rust + dots — editorial-tech bridge' },
+  { font:'space',      accent:'cobalt', pattern:'dots', density:'low', align:'left',  weight:500, narrative:'Space Grotesk + cobalt + dots + airy — Linear-mood' },
+  { font:'jbmono',     accent:'moss',   pattern:'iso',  density:'high', align:'left', weight:500, narrative:'JetBrains Mono + moss + iso grid + compact — industrial-terminal' },
+  { font:'fraunces',   accent:'gold',   pattern:'mesh', density:'med',  align:'center', weight:500, style:'italic', narrative:'Fraunces italic + gold + mesh + center — luxe konzultativní' },
+];
+
+// =========================================================
+// RENDER GALLERY
+// =========================================================
+const galleryGrid = document.getElementById('galleryGrid');
+VARIANTS.forEach((v, i) => {
+  const num = String(i + 1).padStart(2, '0');
+  const fontLabel = FONTS[v.font].label;
+  const accentLabel = ACCENTS[v.accent].label;
+  const card = document.createElement('div');
+  card.className = 'variant-card';
+  card.innerHTML = `
+    <div class="meta">
+      <span class="num">№${num}</span>
+      <span class="axis-labels">${fontLabel} · ${accentLabel} · ${v.pattern} · ${v.density} · ${v.align} · ${v.weight}${v.style==='italic'?' · italic':''}</span>
+    </div>
+    ${buildShell(v)}
+    <div class="narrative">${v.narrative}</div>
+  `;
+  galleryGrid.appendChild(card);
+});
+
+// =========================================================
+// LIVE TWEAKS PANEL LOGIC
+// =========================================================
+const STATE = {
+  font: 'geist',
+  accent: 'rust',
+  pattern: 'grid',
+  density: 'med',
+  align: 'left',
+  weight: '600',
+  style: 'normal',
+};
+
+const livePreview = document.getElementById('livePreview');
+const comboLabel = document.getElementById('combo');
+
+function applyState() {
+  const f = FONTS[STATE.font];
+  const a = ACCENTS[STATE.accent];
+
+  // Pattern class
+  livePreview.className = `hero-shell pattern-${STATE.pattern} density-${STATE.density} align-${STATE.align} font-${f.kind}` + (STATE.accent === 'mono' ? ' mono-only' : '');
+
+  // CSS variables
+  livePreview.style.setProperty('--font-display', f.display);
+  livePreview.style.setProperty('--font-body', f.body);
+  livePreview.style.setProperty('--font-mono', f.mono);
+  livePreview.style.setProperty('--accent', a.light);
+  livePreview.style.setProperty('--accent-bright', a.bright);
+  livePreview.style.setProperty('--headline-weight', STATE.weight);
+  livePreview.style.setProperty('--headline-style', STATE.style);
+
+  // Combo label
+  comboLabel.innerHTML = `<span>${f.label}</span> · <span>${a.label}</span> · <span>${STATE.pattern}</span> · <span>${STATE.density}</span> · <span>${STATE.align}</span> · <span>${STATE.weight}</span>${STATE.style === 'italic' ? ' · <span>italic</span>' : ''}`;
+
+  // Persist
+  try { localStorage.setItem('victa-tweaks', JSON.stringify(STATE)); } catch(e) {}
+}
+
+document.querySelectorAll('.tweaks-panel .options').forEach(group => {
+  const axis = group.dataset.axis;
+  group.addEventListener('click', e => {
+    const btn = e.target.closest('.opt');
+    if (!btn) return;
+    group.querySelectorAll('.opt').forEach(o => o.classList.remove('active'));
+    btn.classList.add('active');
+    STATE[axis] = btn.dataset.value;
+    applyState();
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click', () => {
+  Object.assign(STATE, { font:'geist', accent:'rust', pattern:'grid', density:'med', align:'left', weight:'600', style:'normal' });
+  document.querySelectorAll('.tweaks-panel .options').forEach(group => {
+    const axis = group.dataset.axis;
+    group.querySelectorAll('.opt').forEach(o => {
+      o.classList.toggle('active', o.dataset.value === STATE[axis]);
+    });
+  });
+  applyState();
+});
+
+// Restore from localStorage
+try {
+  const saved = localStorage.getItem('victa-tweaks');
+  if (saved) {
+    Object.assign(STATE, JSON.parse(saved));
+    document.querySelectorAll('.tweaks-panel .options').forEach(group => {
+      const axis = group.dataset.axis;
+      group.querySelectorAll('.opt').forEach(o => {
+        o.classList.toggle('active', o.dataset.value === STATE[axis]);
+      });
+    });
+  }
+} catch(e) {}
+applyState();
+
+// =========================================================
+// THEME TOGGLE
+// =========================================================
+(function() {
+  const root = document.documentElement;
+  const btn = document.getElementById('themeToggle');
+  const saved = localStorage.getItem('victa-companion-theme');
+  if (saved === 'dark') root.setAttribute('data-theme', 'dark');
+
+  function update() {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    btn.textContent = isDark ? '☾ Dark · ☼ Light' : '☼ Light · ☾ Dark';
+  }
+  update();
+
+  btn.addEventListener('click', () => {
+    const isDark = root.getAttribute('data-theme') === 'dark';
+    if (isDark) {
+      root.removeAttribute('data-theme');
+      localStorage.setItem('victa-companion-theme', 'light');
+    } else {
+      root.setAttribute('data-theme', 'dark');
+      localStorage.setItem('victa-companion-theme', 'dark');
+    }
+    update();
+  });
+})();
+</script>
+
+</body>
+</html>

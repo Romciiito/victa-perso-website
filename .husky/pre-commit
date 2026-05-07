@@ -1,0 +1,22 @@
+#!/usr/bin/env sh
+# VICTA pre-commit hook
+# Blocks commits that contain secret-like patterns using gitleaks.
+# Requires: gitleaks installed (brew install gitleaks)
+# Config:   .gitleaks.toml at repo root
+
+# Run gitleaks against staged changes only.
+# --no-git: use file-based detection (not git log) so it catches new files.
+# --source .: scan from repo root using .gitleaks.toml rules.
+gitleaks detect --staged --no-git --source . --config .gitleaks.toml
+
+STATUS=$?
+if [ $STATUS -ne 0 ]; then
+  echo ""
+  echo "gitleaks: potential secret detected in staged files."
+  echo "Commit blocked. Review the output above, remove or rotate the secret, then re-stage."
+  echo ""
+  exit 1
+fi
+
+# Run lint-staged (ESLint on changed TS/JS files)
+npx lint-staged

@@ -1,0 +1,55 @@
+# ============================================================
+# VICTA — Dependabot Configuration
+#
+# Automated dependency security updates (REQ-NF-045,
+# security-model.md §4.8, workplan.md §0.3).
+#
+# Two ecosystems monitored:
+#   1. npm (pnpm lockfile) — production + dev dependencies
+#   2. github-actions — workflow action pin versions
+#
+# PRs are reviewed by @Romciiito (Roman).
+# Grouped updates reduce PR noise: production and dev deps
+# are batched into separate PRs rather than one PR per package.
+#
+# Limits:
+#   npm: max 5 open PRs at once (avoids merge queue saturation)
+#   github-actions: max 3 open PRs at once
+# ============================================================
+
+version: 2
+
+updates:
+  # ----------------------------------------------------------
+  # npm / pnpm — application dependencies
+  # Weekly on Monday; groups production and dev separately.
+  # ----------------------------------------------------------
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "Romciiito"
+    labels:
+      - "dependencies"
+    groups:
+      production-dependencies:
+        dependency-type: "production"
+      development-dependencies:
+        dependency-type: "development"
+
+  # ----------------------------------------------------------
+  # GitHub Actions — keep workflow action versions pinned
+  # to latest minor/patch releases (supply chain hygiene).
+  # ----------------------------------------------------------
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "Romciiito"
+    labels:
+      - "github-actions"

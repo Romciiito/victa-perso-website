@@ -1,0 +1,52 @@
+# gitleaks configuration for VICTA
+# Extends the built-in default ruleset with VICTA-specific secret patterns.
+# Docs: https://github.com/gitleaks/gitleaks/blob/master/config/gitleaks.toml
+
+title = "VICTA gitleaks config"
+
+# ── VICTA-specific rules ─────────────────────────────────────────────────────
+
+[[rules]]
+id          = "victa-anthropic-api-key"
+description = "Anthropic API key (sk-ant- prefix) — deferred post-launch but pattern still detected"
+regex       = '''sk-ant-[a-zA-Z0-9\-_]{20,}'''
+tags        = ["anthropic", "api-key", "victa"]
+
+[[rules]]
+id          = "victa-resend-api-key"
+description = "Resend API key (re_ prefix)"
+regex       = '''re_[a-zA-Z0-9]{20,}'''
+tags        = ["resend", "api-key", "victa"]
+
+[[rules]]
+id          = "victa-supabase-service-key"
+description = "Supabase service role key — JWT-like eyJ pattern near supabase context"
+regex       = '''eyJ[a-zA-Z0-9_\-]{30,}\.[a-zA-Z0-9_\-]{20,}\.[a-zA-Z0-9_\-]{20,}'''
+tags        = ["supabase", "jwt", "service-key", "victa"]
+
+[[rules]]
+id          = "victa-calcom-webhook-secret"
+description = "Cal.com webhook HMAC secret (whsec_ prefix)"
+regex       = '''whsec_[a-zA-Z0-9+/=]{20,}'''
+tags        = ["calcom", "webhook-secret", "victa"]
+
+[[rules]]
+id          = "victa-generic-secret-hex"
+description = "Generic 32+ character hex string paired with KEY|SECRET|TOKEN|PASSWORD keyword"
+regex       = '''(?i)(KEY|SECRET|TOKEN|PASSWORD)[^\n]{0,30}[=:][^\n]{0,10}[0-9a-f]{32,}'''
+tags        = ["generic", "hex-secret", "victa"]
+
+# ── Paths to exclude from scanning ───────────────────────────────────────────
+
+[allowlist]
+description = "VICTA allowlist — placeholder-only files safe to commit"
+files       = [
+  '''^\.env\.example$''',
+  '''^\.gitleaks\.toml$''',
+]
+regexes = [
+  # Placeholder values in .env.example are safe
+  '''your-[a-z0-9\-]+-here''',
+  # Deferred comment marker
+  '''deferred-post-launch''',
+]

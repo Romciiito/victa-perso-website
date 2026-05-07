@@ -1,0 +1,48 @@
+# ── Secrets & environment variables ─────────────────────────────────────────
+.env
+.env.local
+.env.production
+.env.*.local
+.env.development.local
+.env.test.local
+
+# Key/secret file patterns
+*.key
+*.pem
+secret*
+secrets*
+
+# ── Node / package managers ───────────────────────────────────────────────────
+node_modules/
+
+# ── Next.js build output ──────────────────────────────────────────────────────
+.next/
+out/
+build/
+dist/
+
+# ── Platform caches ───────────────────────────────────────────────────────────
+.vercel/
+.turbo/
+.cache/
+
+# ── Test coverage ─────────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+
+# ── Logs & OS artefacts ───────────────────────────────────────────────────────
+*.log
+.DS_Store
+
+# ── Editor / IDE ──────────────────────────────────────────────────────────────
+.idea/
+.vscode/settings.json
+# Allow team extensions recommendation:
+# .vscode/extensions.json  <-- intentionally NOT ignored
+
+# ── DNS zone file backups (contain live record data — not for public repo) ────
+dns-backup/*.txt
+
+# ── Workforce runtime files (intent.md is the contract and IS committed) ──────
+.workforce/dispatch.md
+.workforce/integration.md

@@ -1,0 +1,171 @@
+# ============================================================
+# VICTA — CI Pipeline
+# Triggered: PR to main + push to main
+#
+# NOTE: This workflow will not produce a green run until Wave 2
+# when GitHub Actions Secrets are configured:
+#   - SUPABASE_TEST_PROJECT_URL
+#   - SUPABASE_TEST_SERVICE_KEY
+# And Vercel is connected to this repo.
+# First green run is expected in Wave 2 (Phase 1 scaffold).
+#
+# Jobs run in parallel (no dependency chain) for fast feedback.
+# All four jobs must pass before a PR can be merged (branch
+# protection enforced in repo Settings → Branch protection rules).
+# ============================================================
+
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+# Cancel in-progress runs on the same ref to avoid queue buildup.
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ----------------------------------------------------------
+  # Job 1: TypeScript strict type-check
+  # Fails on any type error (--noEmit never emits files).
+  # ----------------------------------------------------------
+  type-check:
+    name: Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run TypeScript type check
+        run: pnpm tsc --noEmit
+
+  # ----------------------------------------------------------
+  # Job 2: ESLint
+  # Uses Next.js default ESLint config (eslint-config-next).
+  # Zero warnings tolerated (--max-warnings 0).
+  # NOTE: pnpm lint assumes "lint": "next lint" in package.json.
+  # Scaffold in Phase 1 adds this script — job will fail until
+  # package.json script exists (expected, not a blocker).
+  # ----------------------------------------------------------
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run ESLint
+        run: pnpm lint
+
+  # ----------------------------------------------------------
+  # Job 3: Secret scan — defensive grep gate
+  #
+  # Scans for NEXT_PUBLIC_* variable names that carry secret
+  # suffixes. These patterns indicate a secret has been
+  # accidentally exposed in client-side code.
+  #
+  # Exit-code logic (counterintuitive grep behaviour):
+  #   grep exit 0 = matches found  → job FAILS
+  #   grep exit 1 = no matches     → job PASSES
+  #   grep exit 2 = error          → job FAILS
+  #
+  # Pattern: NEXT_PUBLIC_ prefix + any of KEY|SECRET|TOKEN|PASSWORD
+  # Covers .ts .tsx .js .jsx .json files.
+  #
+  # This gate complements:
+  #   - gitleaks pre-commit hook (client-side, D-004)
+  #   - GitHub Secret Scanning + Push Protection (D-004)
+  #
+  # If this job fails on a PR, rotate the exposed secret in the
+  # vendor console immediately before re-pushing (architecture.md
+  # §8.1, security-model.md §6 Risk 2, D-004).
+  # ----------------------------------------------------------
+  secret-scan:
+    name: Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Scan for exposed secret patterns in NEXT_PUBLIC_ vars
+        run: |
+          echo "Scanning for NEXT_PUBLIC_* variables with secret suffixes..."
+          if grep -rE "NEXT_PUBLIC_.*(KEY|SECRET|TOKEN|PASSWORD)" \
+            --include="*.ts" \
+            --include="*.tsx" \
+            --include="*.js" \
+            --include="*.jsx" \
+            --include="*.json" \
+            .; then
+            echo ""
+            echo "FAIL: Secret-like NEXT_PUBLIC_ variable detected in source."
+            echo "These values are exposed to the browser bundle."
+            echo "Move to a server-only env var (no NEXT_PUBLIC_ prefix)."
+            echo "See architecture.md §8.1 and security-model.md §4.1."
+            exit 1
+          else
+            echo "PASS: No exposed secret patterns found."
+          fi
+
+  # ----------------------------------------------------------
+  # Job 4: Dependency audit
+  # Fails only on CRITICAL severity CVEs (not high/moderate).
+  # pnpm audit exits non-zero if vulnerabilities at or above
+  # the specified level are found.
+  # ----------------------------------------------------------
+  audit:
+    name: Dependency Audit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run audit (fail on critical CVEs only)
+        run: pnpm audit --audit-level=critical
