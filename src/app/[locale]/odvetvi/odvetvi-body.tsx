@@ -30,7 +30,7 @@ export function OdvetviBody() {
         <div className="mx-auto max-w-[1400px]">
           <SectionHeader
             eyebrow="01 · odvětví"
-            title="Kde působíme."
+            title={t('sectionTitle')}
             lead={t('intro')}
           />
           <KineticList items={KINETIC_ITEMS} />
@@ -45,12 +45,12 @@ export function OdvetviBody() {
               02 · další krok
             </span>
             <h2 className="display mt-5 max-w-[18ch] text-[clamp(40px,5vw,72px)] text-ink">
-              Připraveni začít ve vašem odvětví?
+              {t('ctaLine')}
             </h2>
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary href="/spoluprace#audit">
-              Získat AI audit →
+              {t('ctaButton')}
             </MagneticCta>
             <MagneticCta href="/kontakt">Domluvit konzultaci</MagneticCta>
           </div>

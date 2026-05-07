@@ -535,6 +535,9 @@
       "subhead": "Šest oborů, kterým rozumíme do hloubky. Mluvíme řečí vašeho byznysu — od první schůzky."
     },
     "intro": "Nestavíme generické weby a AI šablony. Než cokoli navrhneme, díváme se na to, jak váš obor reálně funguje — jaké jsou typické integrace, regulační omezení, sezónnost a unit economics. Tady je šest oborů, kde máme zkušenost.",
+    "sectionTitle": "Kde působíme.",
+    "ctaLine": "Připraveni začít ve vašem odvětví?",
+    "ctaButton": "Získat AI audit →",
     "items": [
       {
         "key": "ecommerce",
