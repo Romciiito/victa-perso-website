@@ -17,6 +17,12 @@
   --font-sans: var(--font-inter-tight);
   --font-mono: var(--font-geist-mono);
 
+  /* Tailwind v4 default font override — applied to <html> by preflight.
+     Without this, Tailwind's preflight resets html font-family to system fonts
+     (overriding our html selector below in the cascade). LOCKED §1.2 — Inter Tight. */
+  --default-font-family: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --default-mono-font-family: var(--font-geist-mono), ui-monospace, monospace;
+
   /* Colors — reference CSS Custom Properties set in :root / [data-theme="dark"] */
   --color-bg: var(--bg);
   --color-surface: var(--surface);

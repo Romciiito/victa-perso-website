@@ -47,3 +47,5 @@ dns-backup/*.txt
 .workforce/dispatch.md
 .workforce/integration.md
 .vercel
+.claude/worktrees/
+tsconfig.tsbuildinfo

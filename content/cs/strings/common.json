@@ -154,11 +154,6 @@
             "href": "/odvetvi#finance"
           },
           {
-            "title": "Zdravotnictví a medtech",
-            "subtitle": "Diagnostika, klinický výzkum a distribuce",
-            "href": "/odvetvi#zdravotnictvi"
-          },
-          {
             "title": "Výroba a logistika",
             "subtitle": "Prediktivní údržba a optimalizace",
             "href": "/odvetvi#vyroba"
@@ -559,12 +554,6 @@
         "icon": "Landmark",
         "name": "Finance",
         "body": "Banky, pojišťovny, fintech. Compliance-aware copy, GDPR-first, regulované AI use cases. Datové dashboardy s rolovým přístupem, audit logy."
-      },
-      {
-        "key": "healthcare",
-        "icon": "HeartPulse",
-        "name": "Zdravotnictví",
-        "body": "Kliniky, zdravotnická zařízení, healthtech. Rezervační systémy, ochrana zdravotních dat, integrace s lékařskými IS. AI s lidským dohledem (medical-grade přesnost)."
       },
       {
         "key": "support",

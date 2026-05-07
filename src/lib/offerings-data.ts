@@ -26,7 +26,6 @@ import {
   Code2,
   Database,
   Headphones,
-  Heart,
   Layers,
   MessageCircle,
   MessageSquare,
@@ -168,12 +167,6 @@ export const INDUSTRIES_OFFERING: OfferingData = {
       title: 'Finance a Fintech',
       subtitle: 'Automatizace a analýza rizik',
       href: '/odvetvi#finance',
-    },
-    {
-      icon: Heart,
-      title: 'Zdravotnictví a medtech',
-      subtitle: 'Diagnostika, klinický výzkum a distribuce',
-      href: '/odvetvi#zdravotnictvi',
     },
     {
       icon: Settings,
