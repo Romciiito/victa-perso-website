@@ -58,18 +58,19 @@ async function CzechHome() {
     <>
       {/* ============================================================
            HERO  (locked-preview .hero)
-           padding: 96px 48px 64px desktop · 64px 24px 48px mobile
+           D-007 density (low/whitespace): 120 / 56 px desktop · 96 / 28 px mobile
+           Headline scale 1.1× (max 88px, was 80px)
            ============================================================ */}
       <section
-        className="relative px-6 pb-16 pt-16 md:px-12 md:pb-16 md:pt-24"
-        style={{ paddingTop: 'var(--space-24, 96px)', paddingBottom: 'var(--space-16, 64px)' }}
+        className="relative px-7 pb-24 pt-24 md:px-14 md:pb-24 md:pt-32"
+        style={{ paddingTop: 'var(--space-30, 120px)', paddingBottom: 'var(--space-24, 96px)' }}
       >
         <div className="mx-auto w-full max-w-[1440px]">
           {/* H1 */}
           <h1
             className="mb-6 text-ink"
             style={{
-              fontSize: 'clamp(48px, 6vw, 80px)',
+              fontSize: 'clamp(48px, 6.5vw, 88px)',
               lineHeight: 1.04,
               letterSpacing: '-0.035em',
               fontWeight: 500,
@@ -213,10 +214,15 @@ async function CzechHome() {
       {/* ============================================================
            AUDIT PRICING  (locked-preview .audit-section)
            3 tiers · middle (Tier 1) marked .popular with accent ring
+           D-007 density (low/whitespace): 120 / 56 px desktop, headline 1.1×
+           Note: the parent <section> below is intentionally NOT sticky —
+           after the three sticky offering sections finish stacking, the
+           audit pricing block scrolls normally on top of the final stack.
+           Its `bg-surface` background opaquely covers the offering stack.
            ============================================================ */}
       <section
         id="audit"
-        className="relative border-t border-b border-border-soft px-6 py-16 md:px-12 md:py-16"
+        className="relative border-t border-b border-border-soft px-7 py-24 md:px-14 md:py-32"
         style={{ backgroundColor: 'var(--surface)' }}
       >
         <div className="mx-auto w-full max-w-[1440px]">
@@ -224,7 +230,7 @@ async function CzechHome() {
             <h2
               className="mb-4 text-ink"
               style={{
-                fontSize: 'clamp(28px, 3.6vw, 45px)',
+                fontSize: 'clamp(28px, 4vw, 50px)',
                 lineHeight: 1.1,
                 letterSpacing: '-0.025em',
                 fontWeight: 500,

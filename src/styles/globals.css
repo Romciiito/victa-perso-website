@@ -2,7 +2,8 @@
    VICTA — globals.css
    Tailwind v4 entry point + LOCKED design tokens
    Source of truth: architecture.md §7.1 + design-decision.md §1
-   Combination: Inter Tight · indigo · grid · medium · left · 500
+   Combination: Inter Tight · ferro-rust · grid · low (whitespace) · left · 500
+   Updated 2026-05-07 per D-007 — was indigo + medium; ferro-rust + whitespace now.
    DO NOT change token values without Roman's explicit re-decision
    ============================================================ */
 
@@ -60,10 +61,10 @@
   --secondary: #52525B;                  /* Body copy */
   --tertiary: #71717A;                   /* Captions, mono labels */
 
-  /* Indigo signature */
-  --accent: #3730A3;                     /* Primary CTA bg, link underlines */
-  --accent-bright: #4F46C7;             /* Hover state */
-  --accent-soft: rgba(55, 48, 163, 0.08); /* Badge bg */
+  /* Ferro-rust signature (D-007 · 2026-05-07 — was indigo) */
+  --accent: #B53C16;                     /* Primary CTA bg, link underlines */
+  --accent-bright: #FF8C5A;              /* Hover state */
+  --accent-soft: rgba(181, 60, 22, 0.10); /* Badge bg */
 
   /* Status */
   --success: #15803D;
@@ -92,9 +93,9 @@
   --ink: #FAFAFA;                        /* Bright but not glaring */
   --secondary: #A1A1AA;
   --tertiary: #71717A;                   /* Same as light — passes AA both modes */
-  --accent: #7367E5;                     /* Lifted indigo for dark mode */
-  --accent-bright: #9389F0;             /* Hover state */
-  --accent-soft: rgba(115, 103, 229, 0.14); /* Slightly stronger opacity for dark */
+  --accent: #FF6B3A;                     /* Lifted ferro-rust for dark mode (D-007) */
+  --accent-bright: #FF8C5A;              /* Hover state */
+  --accent-soft: rgba(255, 107, 58, 0.16); /* Slightly stronger opacity for dark */
 }
 
 /* ============================================================

@@ -103,3 +103,24 @@ Read by the orchestrator on startup to give all agents cross-session continuity.
 
 **HSTS note**: `preload` is intentionally absent from the HSTS header. Post-launch task at day 60+: add `preload` and submit to hstspreload.org (architecture.md §8.3, security-model.md §7 Rule 5, devops-engineer.md "What you don't do").
 
+## D-007 · Accent color updated indigo → ferro-rust + density updated medium → whitespace (2026-05-07)
+
+**Decision**: Final locked combination updated from `Inter Tight · indigo · grid · medium · left · 500` to `Inter Tight · ferro-rust · grid · low (whitespace) · left · 500`.
+
+**Reason**: Roman re-tested combinations in `visual-companion-v2.html` Tweaks mixer. Ferro-rust (#B53C16) gives warmer, more distinctive editorial feel vs cool corporate-tech indigo. Whitespace (low) density gives more breathing room and editorial mood — closer to atolsolutions.cz reference.
+
+**New token values**:
+- Light accent: `#B53C16` (was `#3730A3`)
+- Dark accent: `#FF6B3A` (was `#7367E5`)
+- Section padding: 120px y / 56px x (was 64px / 48px)
+- Content gap: 36px (was 24px)
+- Headline scale: 1.1× (was 1×)
+
+**Affected**: `src/styles/globals.css`, `architecture.md` §7.1, all CTA + accent visuals on every page.
+
+**Verification**: `docs/design-exploration/visual-companion-v2.html` — selected combination preview matches new tokens.
+
+**Supersedes (does not delete)**: D-001's combination signature. D-001 remains as historical record of first lock; D-007 supersedes for runtime token values.
+
+**Atol-style stack-on-scroll**: Same revision adds CSS `position: sticky; top: 0` to each `<OfferingSection>` so the three offering blocks stack on top of each other as the user scrolls, matching atolsolutions.cz reference. Sections must keep opaque `bg-bg` so stacking obscures the previous block. No JS animation library — pure CSS sticky.
+

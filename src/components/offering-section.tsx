@@ -9,6 +9,14 @@ import { Link } from '@/i18n/navigation';
      3. AI solutions per industry
    Layout: cells LEFT, dark card RIGHT on desktop;
            dark card on TOP, cells below on mobile.
+
+   D-007 update (2026-05-07): outer <section> is now `position: sticky;
+   top: 0` so successive offering sections stack on top of each other
+   while the user scrolls (atolsolutions.cz cascade reference).
+   `bg-bg` is mandatory on the section so each new block opaquely
+   obscures the previous one as it pins. The hairline `border-t` reads
+   as the seam between stacked cards. Section vertical padding is
+   `py-24 md:py-32` (96 / 128 px) per low-density token (D-007 §1.4).
    ============================================================ */
 
 export type OfferingItem = {
@@ -40,10 +48,10 @@ export function OfferingSection({
   return (
     <section
       id={id}
-      className="relative border-t border-border-soft px-6 py-20 md:px-12 md:py-24"
+      className="sticky top-0 bg-bg border-t border-border-soft px-7 py-24 md:px-14 md:py-32"
     >
       <div className="mx-auto w-full max-w-[1440px]">
-        <div className="grid gap-8 md:grid-cols-[1fr_320px] md:gap-10 lg:grid-cols-[1fr_360px]">
+        <div className="grid gap-9 md:grid-cols-[1fr_320px] md:gap-12 lg:grid-cols-[1fr_360px]">
           {/* Cells grid (left on desktop, below on mobile) */}
           <div
             className="order-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:order-1"
