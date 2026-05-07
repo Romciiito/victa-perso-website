@@ -52,115 +52,102 @@
   },
   "home": {
     "hero": {
-      "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1",
-      "headline": "Parťák, ne dodavatel.",
-      "subhead": "Postavíme s vámi systém, který poroste roky — ne jen web, který za rok zastará.",
-      "ctaPrimary": "Komplexní audit od 20 000 Kč",
-      "ctaGhost": "Domluvte si nezávazné představení"
+      "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1",
+      "headline": "Začneme tím, že posloucháme.",
+      "tagsAudit": "Audit",
+      "tagsDev": "Vývoj",
+      "tagsMarketing": "Marketing",
+      "tagsAi": "AI integrace",
+      "sub": "Než cokoliv navrhneme, chceme rozumět vašemu podnikání. To je celé.",
+      "leadAuditLabel": "Komplexní podnikový audit",
+      "leadAuditPriceFrom": "od ",
+      "leadAuditPrice": "20 000 Kč",
+      "leadConsultLabel": "Bezplatná 30min konzultace",
+      "leadConsultBody": "pro modulární projekty",
+      "ctaPrimary": "Spustit audit →",
+      "ctaGhost": "Domluvit konzultaci"
     },
-    "pillars": {
-      "heading": "Tři důvody, proč nám věřit ještě před první schůzkou.",
+    "services": {
+      "heading": "Posloucháme. Navrhujeme. Stavíme. Provozujeme.",
       "items": {
-        "methodology": {
-          "label": "METODOLOGIE & MYŠLENÍ",
-          "headline": "Ukazujeme svůj proces i své myšlení.",
-          "body": "Podívejte se, jak přemýšlíme — než si nás najmete. Žádné černé skříňky, žádný marketingový teatr.",
-          "cta": "Jak spolupracujeme →"
+        "audit": {
+          "num": "01",
+          "title": "Audit a strategie",
+          "body": "Než cokoli navrhujeme, posloucháme a měříme. Tři úrovně hloubky podle rozsahu zakázky — od strategické session po komplexní podnikový audit.",
+          "meta": "od 4 000 Kč",
+          "ctaLabel": "Detail →"
         },
-        "industry": {
-          "label": "ODVĚTVOVÁ EXPERTIZA",
-          "headline": "Nestavíme generické weby.",
-          "body": "Rozumíme e-commerce, výrobě, financím a 3 dalším oborům do hloubky. Mluvíme řečí vašeho byznysu.",
-          "cta": "Naše odvětví →"
-        },
-        "design": {
-          "label": "DESIGN & PROVEDENÍ",
-          "headline": "Web, který vidíte teď, je naše vizitka.",
-          "body": "Stejnou kvalitu dostane váš projekt. Tohle není šablona koupená v marketplace — tohle je naše práce.",
-          "cta": "Naše služby →"
-        }
-      }
-    },
-    "categories": {
-      "heading": "Tři kompetence pod jednou střechou.",
-      "subhead": "Kód, AI a marketing v jednom týmu — bez předávání mezi vendory.",
-      "items": {
-        "itDev": {
-          "label": "IT & VÝVOJ",
-          "headline": "Weby, e-shopy, integrace.",
-          "body": "Weby na míru, e-shopy, integrace do skladu a účetnictví, custom AI nástroje. Stavíme rychlé a SEO-ready stacky."
-        },
-        "aiData": {
-          "label": "AI & DATA",
-          "headline": "AI, která dává smysl.",
-          "body": "AI chatboti, automatizace procesů, datová platforma, MLOps. Bez buzzwordu — jen tam, kde to přináší úsporu."
+        "dev": {
+          "num": "02",
+          "title": "Vývoj webu a e-shopu",
+          "body": "Stavíme rychlé, server-šetřící a SEO-ready stacky. Next.js, Shopify, headless CMS — podle toho, co skutečně potřebujete, ne podle módy.",
+          "meta": "od poptávky",
+          "ctaLabel": "Detail →"
         },
         "marketing": {
-          "label": "MARKETING & OBSAH",
-          "headline": "Růst, který je měřitelný.",
-          "body": "SEO, AEO, PPC, social media, kreativy, e-commerce management. Tracking a reporting bez šumu."
+          "num": "03",
+          "title": "Marketing a obsah",
+          "body": "SEO i AEO. Obsah, který skutečně zaujme čtenáře i LLM. Tracking a reporting bez šumu.",
+          "meta": "měsíční retainer",
+          "ctaLabel": "Detail →"
+        },
+        "ai": {
+          "num": "04",
+          "title": "AI integrace",
+          "body": "Automatizace zákaznické podpory, content workflow, interní asistenti. Bez buzzwordu — jen tam, kde dává smysl a přináší úsporu.",
+          "meta": "scoping call",
+          "ctaLabel": "Detail →"
         }
-      },
-      "ctaLabel": "Detail služeb →"
+      }
     },
     "audit": {
       "heading": "Audit",
       "subhead": "Než vám něco prodáme, chceme vidět, kde skutečně jste. Tři úrovně hloubky — vyberte podle rozsahu, který má smysl.",
+      "includesLabel": "Zahrnuje",
       "tier1": {
-        "tier": "Tier 1",
-        "badge": "Nejvíce volené",
+        "tier": "Tier 1",
+        "badge": "Nejúplnější",
         "name": "Komplexní podnikový audit",
-        "price": "20 000 – 90 000 Kč",
-        "priceEur": "€800 – €3 600",
-        "duration": "1–3 týdny · 3–4 sezení",
-        "deliverables": "PDF + Figma + Excalidraw + osobní prezentace",
-        "cta": "Rezervovat audit →"
+        "price": "20 000 – 90 000 Kč",
+        "priceEur": "€800 – €3 600",
+        "deliverables": [
+          "Hloubkový technický audit",
+          "Audit obchodních procesů",
+          "Audit marketingu a obsahu",
+          "Návrh integrace AI",
+          "90min prezentace zjištění"
+        ],
+        "cta": "Spustit audit →"
       },
       "tier2": {
-        "tier": "Tier 2",
+        "tier": "Tier 2",
         "name": "Doménový audit",
-        "price": "10 000 – 55 000 Kč",
-        "priceEur": "€400 – €2 200",
-        "duration": "pár dní – 2 týdny · 2 sezení",
-        "deliverables": "Stejné výstupy jako Tier 1, lehčí rozsah",
-        "cta": "Rezervovat audit →"
+        "price": "10 000 – 55 000 Kč",
+        "priceEur": "€400 – €2 200",
+        "deliverables": [
+          "Jedna doména: tech, obchod, marketing nebo AI",
+          "Hloubková analýza",
+          "Konkrétní doporučení",
+          "60min prezentace zjištění"
+        ],
+        "cta": "Domluvit audit →"
       },
       "tier3": {
-        "tier": "Tier 3",
+        "tier": "Tier 3",
         "name": "Strategická session",
-        "price": "4 000 – 25 000 Kč",
-        "priceEur": "€160 – €1 000",
-        "duration": "pár dní – 2 týdny · 1 sezení",
-        "deliverables": "Krátký plán bez dlouhého reportu",
-        "cta": "Rezervovat audit →"
+        "price": "4 000 – 25 000 Kč",
+        "priceEur": "€160 – €1 000",
+        "deliverables": [
+          "1–3hodinová session",
+          "Specifický problém nebo otázka",
+          "Strukturovaný výstup",
+          "Bez dlouhého reportu"
+        ],
+        "cta": "Rezervovat session →"
       },
-      "scoping": "Nebo si domluvte bezplatnou 30 min konzultaci pro modulární zakázky →"
-    },
-    "why": {
-      "heading": "Proč VICTA?",
-      "items": {
-        "tempo": {
-          "label": "TEMPO",
-          "body": "Co u jiných trvá 3 měsíce, u nás 3 týdny."
-        },
-        "price": {
-          "label": "CENA",
-          "body": "Bez režie 30+ hlav, kterou si platí klient."
-        },
-        "ai": {
-          "label": "AI-NATIVE",
-          "body": "AI drží detaily, lidé drží myšlení. Žádné AI-sandbagging."
-        },
-        "partnership": {
-          "label": "PARTNERSTVÍ",
-          "body": "Nestavíme web a nezmizíme. Spravujeme, inovujeme, rosteme s vámi."
-        }
-      }
-    },
-    "finalCta": {
-      "headline": "Pojďme se poznat.",
-      "subhead": "30 minut konzultace. Bez závazku. Probereme váš byznys a poradíme, jestli vám VICTA umí pomoct.",
-      "cta": "Domluvit konzultaci →"
+      "scopingPrefix": "Pro modulární projekty máme ",
+      "scopingLink": "bezplatnou 30min scoping call",
+      "scopingSuffix": "."
     }
   },
   "spoluprace": {

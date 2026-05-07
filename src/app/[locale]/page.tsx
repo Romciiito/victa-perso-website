@@ -2,7 +2,6 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { ArrowRight } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/button';
-import { PricingCard } from '@/components/pricing-card';
 import { StatusLine } from '@/components/status-line';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -15,19 +14,29 @@ export default async function Home({ params }: Props) {
 }
 
 /* ============================================================
-   CZECH HOMEPAGE — full version
+   CZECH HOMEPAGE — matches docs/design-exploration/locked-preview.html
+   This is the canonical visual contract per D-001 / design-decision.md §3.
+   Every visible Czech string and section structure mirrors the locked preview.
    ============================================================ */
 async function CzechHome() {
   const t = await getTranslations('home');
 
+  // Czech tags row uses the middle dot (·) wrapped in accent-coloured spans, with
+  // non-breaking spaces hugging the bullet on both sides.
+  const NBSP = ' ';
+
   return (
     <>
-      {/* Section 1 — Hero */}
-      <section className="relative px-6 pb-16 pt-16 md:px-12 md:pb-24 md:pt-24">
+      {/* ============================================================
+           HERO  (locked-preview .hero)
+           padding: 96px 48px 64px desktop · 64px 24px 48px mobile
+           ============================================================ */}
+      <section
+        className="relative px-6 pb-16 pt-16 md:px-12 md:pb-16 md:pt-24"
+        style={{ paddingTop: 'var(--space-24, 96px)', paddingBottom: 'var(--space-16, 64px)' }}
+      >
         <div className="mx-auto w-full max-w-[1440px]">
-          <div className="mb-8">
-            <StatusLine>{t('hero.status')}</StatusLine>
-          </div>
+          {/* H1 */}
           <h1
             className="mb-6 text-ink"
             style={{
@@ -40,226 +49,256 @@ async function CzechHome() {
           >
             {t('hero.headline')}
           </h1>
-          <p
-            className="mb-10 text-secondary"
-            style={{ fontSize: '19px', lineHeight: 1.55, maxWidth: '720px' }}
+
+          {/* Tags row · Geist Mono, secondary, accent bullets */}
+          <div
+            className="mb-8 font-mono text-secondary"
+            style={{ fontSize: '13px', letterSpacing: 0 }}
           >
-            {t('hero.subhead')}
+            <span>{t('hero.tagsAudit')}</span>
+            {NBSP}
+            <span style={{ color: 'var(--accent)' }}>·</span>
+            {NBSP}
+            <span>{t('hero.tagsDev')}</span>
+            {NBSP}
+            <span style={{ color: 'var(--accent)' }}>·</span>
+            {NBSP}
+            <span>{t('hero.tagsMarketing')}</span>
+            {NBSP}
+            <span style={{ color: 'var(--accent)' }}>·</span>
+            {NBSP}
+            <span>{t('hero.tagsAi')}</span>
+          </div>
+
+          {/* Divider — width 920px, 1px border-soft, vertical margin 32px */}
+          <div
+            className="my-8"
+            style={{
+              width: '100%',
+              maxWidth: '920px',
+              height: '1px',
+              backgroundColor: 'var(--border-soft)',
+            }}
+          />
+
+          {/* Sub paragraph */}
+          <p
+            className="mb-8 text-secondary"
+            style={{ fontSize: '19px', lineHeight: 1.55, maxWidth: '520px' }}
+          >
+            {t('hero.sub')}
           </p>
-          <div className="flex flex-wrap gap-3">
-            <Button href="/spoluprace" variant="primary" size="md" showArrow>
+
+          {/* Lead row · two columns: audit price + free consultation */}
+          <div
+            className="mb-8 flex flex-wrap items-baseline"
+            style={{ gap: 'var(--space-16, 64px)' }}
+          >
+            <div className="text-secondary" style={{ fontSize: '15px', lineHeight: 1.55 }}>
+              <strong
+                className="block text-ink"
+                style={{ fontWeight: 500, marginBottom: '4px' }}
+              >
+                {t('hero.leadAuditLabel')}
+              </strong>
+              {t('hero.leadAuditPriceFrom')}
+              <span className="font-mono text-ink" style={{ fontSize: '13px' }}>
+                {t('hero.leadAuditPrice')}
+              </span>
+            </div>
+            <div className="text-secondary" style={{ fontSize: '15px', lineHeight: 1.55 }}>
+              <strong
+                className="block text-ink"
+                style={{ fontWeight: 500, marginBottom: '4px' }}
+              >
+                {t('hero.leadConsultLabel')}
+              </strong>
+              {t('hero.leadConsultBody')}
+            </div>
+          </div>
+
+          {/* CTAs */}
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Button href="/spoluprace#audit" variant="primary" size="md">
               {t('hero.ctaPrimary')}
             </Button>
-            <Button href="/spoluprace#scoping" variant="ghost" size="md">
+            <Button href="/kontakt" variant="ghost" size="md">
               {t('hero.ctaGhost')}
             </Button>
+          </div>
+
+          {/* Status line — bottom of hero, 48px above */}
+          <div className="mt-12">
+            <StatusLine>{t('hero.status')}</StatusLine>
           </div>
         </div>
       </section>
 
-      {/* Section 2 — Three trust pillars */}
-      <Section className="border-t border-border-soft">
-        <h2
-          className="mb-12 text-ink md:mb-16"
-          style={{ fontSize: 'clamp(28px, 3.6vw, 45px)', lineHeight: 1.1, letterSpacing: '-0.025em', fontWeight: 500, maxWidth: '760px' }}
-        >
-          {t('pillars.heading')}
-        </h2>
-        <div className="grid gap-6 md:grid-cols-3 md:gap-6">
-          <Pillar
-            label={t('pillars.items.methodology.label')}
-            headline={t('pillars.items.methodology.headline')}
-            body={t('pillars.items.methodology.body')}
-            cta={t('pillars.items.methodology.cta')}
-            href="/spoluprace"
-          />
-          <Pillar
-            label={t('pillars.items.industry.label')}
-            headline={t('pillars.items.industry.headline')}
-            body={t('pillars.items.industry.body')}
-            cta={t('pillars.items.industry.cta')}
-            href="/odvetvi"
-          />
-          <Pillar
-            label={t('pillars.items.design.label')}
-            headline={t('pillars.items.design.headline')}
-            body={t('pillars.items.design.body')}
-            cta={t('pillars.items.design.cta')}
-            href="/sluzby"
-          />
-        </div>
-      </Section>
-
-      {/* Section 3 — Service categories teaser */}
-      <Section
-        className="border-t border-border-soft"
-        style={{ backgroundColor: 'var(--surface)' }}
-      >
-        <div className="mb-10 max-w-[760px] md:mb-12">
-          <h2
-            className="mb-4 text-ink"
-            style={{ fontSize: 'clamp(28px, 3.6vw, 45px)', lineHeight: 1.1, letterSpacing: '-0.025em', fontWeight: 500 }}
-          >
-            {t('categories.heading')}
-          </h2>
-          <p className="text-secondary" style={{ fontSize: '19px', lineHeight: 1.55 }}>
-            {t('categories.subhead')}
-          </p>
-        </div>
-        <div
-          className="grid grid-cols-1 overflow-hidden rounded-lg border-l border-t md:grid-cols-3"
-          style={{ borderColor: 'var(--border)' }}
-        >
-          <CategoryCell
-            num="01"
-            label={t('categories.items.itDev.label')}
-            headline={t('categories.items.itDev.headline')}
-            body={t('categories.items.itDev.body')}
-            href="/sluzby#it-vyvoj"
-            ctaLabel={t('categories.ctaLabel')}
-          />
-          <CategoryCell
-            num="02"
-            label={t('categories.items.aiData.label')}
-            headline={t('categories.items.aiData.headline')}
-            body={t('categories.items.aiData.body')}
-            href="/sluzby#ai-data"
-            ctaLabel={t('categories.ctaLabel')}
-          />
-          <CategoryCell
-            num="03"
-            label={t('categories.items.marketing.label')}
-            headline={t('categories.items.marketing.headline')}
-            body={t('categories.items.marketing.body')}
-            href="/sluzby#marketing"
-            ctaLabel={t('categories.ctaLabel')}
-          />
-        </div>
-      </Section>
-
-      {/* Section 4 — Audit pricing teaser */}
-      <Section className="border-t border-border-soft">
-        <div className="mb-10 max-w-[760px] md:mb-12">
-          <h2
-            className="mb-4 text-ink"
-            style={{ fontSize: 'clamp(28px, 3.6vw, 45px)', lineHeight: 1.1, letterSpacing: '-0.025em', fontWeight: 500 }}
-          >
-            {t('audit.heading')}
-          </h2>
-          <p className="text-secondary" style={{ fontSize: '19px', lineHeight: 1.55 }}>
-            {t('audit.subhead')}
-          </p>
-        </div>
-        <div className="grid gap-6 lg:grid-cols-3">
-          <PricingCard
-            tier={t('audit.tier1.tier')}
-            badge={t('audit.tier1.badge')}
-            popular
-            name={t('audit.tier1.name')}
-            price={t('audit.tier1.price')}
-            priceSecondary={t('audit.tier1.priceEur')}
-            duration={t('audit.tier1.duration')}
-            bullets={[t('audit.tier1.deliverables')]}
-            ctaLabel={t('audit.tier1.cta')}
-            ctaHref="/spoluprace"
-          />
-          <PricingCard
-            tier={t('audit.tier2.tier')}
-            name={t('audit.tier2.name')}
-            price={t('audit.tier2.price')}
-            priceSecondary={t('audit.tier2.priceEur')}
-            duration={t('audit.tier2.duration')}
-            bullets={[t('audit.tier2.deliverables')]}
-            ctaLabel={t('audit.tier2.cta')}
-            ctaHref="/spoluprace"
-          />
-          <PricingCard
-            tier={t('audit.tier3.tier')}
-            name={t('audit.tier3.name')}
-            price={t('audit.tier3.price')}
-            priceSecondary={t('audit.tier3.priceEur')}
-            duration={t('audit.tier3.duration')}
-            bullets={[t('audit.tier3.deliverables')]}
-            ctaLabel={t('audit.tier3.cta')}
-            ctaHref="/spoluprace"
-          />
-        </div>
-        <p className="mt-8 text-center text-base text-secondary">
-          <Link
-            href="/spoluprace#scoping"
-            className="font-medium"
-            style={{
-              color: 'var(--accent)',
-              borderBottom: '1px solid var(--accent)',
-              paddingBottom: '2px',
-            }}
-          >
-            {t('audit.scoping')}
-          </Link>
-        </p>
-      </Section>
-
-      {/* Section 5 — Why VICTA (counter-positioning) */}
-      <Section
-        className="border-t border-border-soft"
-        style={{ backgroundColor: 'var(--surface)' }}
-      >
-        <h2
-          className="mb-12 text-ink md:mb-16"
-          style={{ fontSize: 'clamp(28px, 3.6vw, 45px)', lineHeight: 1.1, letterSpacing: '-0.025em', fontWeight: 500 }}
-        >
-          {t('why.heading')}
-        </h2>
-        <div className="grid gap-8 md:grid-cols-2 md:gap-12">
-          <WhyCallout label={t('why.items.tempo.label')} body={t('why.items.tempo.body')} />
-          <WhyCallout label={t('why.items.price.label')} body={t('why.items.price.body')} />
-          <WhyCallout label={t('why.items.ai.label')} body={t('why.items.ai.body')} />
-          <WhyCallout label={t('why.items.partnership.label')} body={t('why.items.partnership.body')} />
-        </div>
-      </Section>
-
-      {/* Section 6 — Final CTA (dark contrast) */}
+      {/* ============================================================
+           SERVICES  (locked-preview .services)
+           4-cell modular grid (2 cols on desktop, 1 col on mobile)
+           ============================================================ */}
       <section
-        className="relative px-6 py-20 md:px-12 md:py-32"
-        style={{ backgroundColor: 'var(--ink)', color: 'var(--bg)' }}
+        id="sluzby"
+        className="relative border-t border-border-soft px-6 py-16 md:px-12 md:py-16"
       >
         <div className="mx-auto w-full max-w-[1440px]">
           <h2
+            className="mb-12 text-ink"
             style={{
-              fontSize: 'clamp(36px, 5vw, 64px)',
-              lineHeight: 1.06,
-              letterSpacing: '-0.035em',
+              fontSize: 'clamp(28px, 3.6vw, 45px)',
+              lineHeight: 1.1,
+              letterSpacing: '-0.025em',
               fontWeight: 500,
               maxWidth: '760px',
-              color: 'var(--bg)',
-              marginBottom: '24px',
             }}
           >
-            {t('finalCta.headline')}
+            {t('services.heading')}
           </h2>
+
+          <div
+            className="services-grid grid grid-cols-1 overflow-hidden rounded-lg border-l border-t md:grid-cols-2"
+            style={{ borderColor: 'var(--border)' }}
+          >
+            <ServiceCell
+              num={t('services.items.audit.num')}
+              title={t('services.items.audit.title')}
+              body={t('services.items.audit.body')}
+              meta={t('services.items.audit.meta')}
+              ctaLabel={t('services.items.audit.ctaLabel')}
+              href="/spoluprace#audit"
+            />
+            <ServiceCell
+              num={t('services.items.dev.num')}
+              title={t('services.items.dev.title')}
+              body={t('services.items.dev.body')}
+              meta={t('services.items.dev.meta')}
+              ctaLabel={t('services.items.dev.ctaLabel')}
+              href="/sluzby#it-vyvoj"
+            />
+            <ServiceCell
+              num={t('services.items.marketing.num')}
+              title={t('services.items.marketing.title')}
+              body={t('services.items.marketing.body')}
+              meta={t('services.items.marketing.meta')}
+              ctaLabel={t('services.items.marketing.ctaLabel')}
+              href="/sluzby#marketing"
+            />
+            <ServiceCell
+              num={t('services.items.ai.num')}
+              title={t('services.items.ai.title')}
+              body={t('services.items.ai.body')}
+              meta={t('services.items.ai.meta')}
+              ctaLabel={t('services.items.ai.ctaLabel')}
+              href="/sluzby#ai-data"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ============================================================
+           AUDIT PRICING  (locked-preview .audit-section)
+           3 tiers · middle (Tier 1) marked .popular with accent ring
+           ============================================================ */}
+      <section
+        id="audit"
+        className="relative border-t border-b border-border-soft px-6 py-16 md:px-12 md:py-16"
+        style={{ backgroundColor: 'var(--surface)' }}
+      >
+        <div className="mx-auto w-full max-w-[1440px]">
+          <div className="mb-12 max-w-[760px]">
+            <h2
+              className="mb-4 text-ink"
+              style={{
+                fontSize: 'clamp(28px, 3.6vw, 45px)',
+                lineHeight: 1.1,
+                letterSpacing: '-0.025em',
+                fontWeight: 500,
+              }}
+            >
+              {t('audit.heading')}
+            </h2>
+            <p className="text-secondary" style={{ fontSize: '19px', lineHeight: 1.5 }}>
+              {t('audit.subhead')}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+            {/* Tier 1 (popular) */}
+            <AuditCard
+              tier={t('audit.tier1.tier')}
+              badge={t('audit.tier1.badge')}
+              popular
+              name={t('audit.tier1.name')}
+              price={t('audit.tier1.price')}
+              priceEur={t('audit.tier1.priceEur')}
+              includesLabel={t('audit.includesLabel')}
+              bullets={[
+                t('audit.tier1.deliverables.0'),
+                t('audit.tier1.deliverables.1'),
+                t('audit.tier1.deliverables.2'),
+                t('audit.tier1.deliverables.3'),
+                t('audit.tier1.deliverables.4'),
+              ]}
+              ctaLabel={t('audit.tier1.cta')}
+              ctaHref="/kontakt"
+              ctaVariant="primary"
+            />
+            {/* Tier 2 */}
+            <AuditCard
+              tier={t('audit.tier2.tier')}
+              name={t('audit.tier2.name')}
+              price={t('audit.tier2.price')}
+              priceEur={t('audit.tier2.priceEur')}
+              includesLabel={t('audit.includesLabel')}
+              bullets={[
+                t('audit.tier2.deliverables.0'),
+                t('audit.tier2.deliverables.1'),
+                t('audit.tier2.deliverables.2'),
+                t('audit.tier2.deliverables.3'),
+              ]}
+              ctaLabel={t('audit.tier2.cta')}
+              ctaHref="/kontakt"
+              ctaVariant="ghost"
+            />
+            {/* Tier 3 */}
+            <AuditCard
+              tier={t('audit.tier3.tier')}
+              name={t('audit.tier3.name')}
+              price={t('audit.tier3.price')}
+              priceEur={t('audit.tier3.priceEur')}
+              includesLabel={t('audit.includesLabel')}
+              bullets={[
+                t('audit.tier3.deliverables.0'),
+                t('audit.tier3.deliverables.1'),
+                t('audit.tier3.deliverables.2'),
+                t('audit.tier3.deliverables.3'),
+              ]}
+              ctaLabel={t('audit.tier3.cta')}
+              ctaHref="/kontakt"
+              ctaVariant="ghost"
+            />
+          </div>
+
+          {/* Scoping call line */}
           <p
-            style={{
-              fontSize: '19px',
-              lineHeight: 1.55,
-              maxWidth: '640px',
-              color: 'var(--bg)',
-              opacity: 0.85,
-              marginBottom: '40px',
-            }}
+            className="mt-8 text-center text-secondary"
+            style={{ fontSize: '15px' }}
           >
-            {t('finalCta.subhead')}
+            {t('audit.scopingPrefix')}
+            <Link
+              href="/kontakt"
+              style={{
+                color: 'var(--accent)',
+                fontWeight: 500,
+                borderBottom: '1px solid var(--accent)',
+                paddingBottom: '2px',
+              }}
+            >
+              {t('audit.scopingLink')}
+            </Link>
+            {t('audit.scopingSuffix')}
           </p>
-          <Link
-            href="/spoluprace#scoping"
-            className="inline-flex items-center gap-2 rounded-md px-6 py-3 text-sm font-medium transition-colors duration-150 hover:opacity-90"
-            style={{
-              backgroundColor: 'var(--bg)',
-              color: 'var(--ink)',
-              letterSpacing: '-0.005em',
-            }}
-          >
-            {t('finalCta.cta')}
-          </Link>
         </div>
       </section>
     </>
@@ -356,123 +395,186 @@ async function EnglishStub() {
 }
 
 /* ============================================================
-   Helpers
+   ServiceCell — single cell in the 4-up modular services grid
+   (locked-preview .service-cell)
    ============================================================ */
-function Section({
-  children,
-  className = '',
-  style,
-}: {
-  children: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-}) {
-  return (
-    <section className={`relative px-6 py-20 md:px-12 md:py-24 ${className}`} style={style}>
-      <div className="mx-auto w-full max-w-[1440px]">{children}</div>
-    </section>
-  );
-}
-
-function Pillar({
-  label,
-  headline,
+function ServiceCell({
+  num,
+  title,
   body,
-  cta,
+  meta,
+  ctaLabel,
   href,
 }: {
-  label: string;
-  headline: string;
+  num: string;
+  title: string;
   body: string;
-  cta: string;
+  meta: string;
+  ctaLabel: string;
   href: string;
 }) {
   return (
     <article
-      className="flex flex-col rounded-lg border p-6 md:p-8"
+      className="service-cell border-b border-r p-8 transition-colors duration-150 hover:bg-surface"
       style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
-    >
-      <div
-        className="mb-4 font-mono text-xs uppercase text-tertiary"
-        style={{ letterSpacing: '0.12em' }}
-      >
-        {label}
-      </div>
-      <h3
-        className="mb-3 text-ink"
-        style={{ fontSize: '25px', lineHeight: 1.2, letterSpacing: '-0.02em', fontWeight: 500 }}
-      >
-        {headline}
-      </h3>
-      <p className="mb-6 flex-1 text-secondary" style={{ fontSize: '15px', lineHeight: 1.6 }}>
-        {body}
-      </p>
-      <Link
-        href={href}
-        className="font-mono text-xs font-medium"
-        style={{ color: 'var(--accent)' }}
-      >
-        {cta}
-      </Link>
-    </article>
-  );
-}
-
-function CategoryCell({
-  num,
-  label,
-  headline,
-  body,
-  href,
-  ctaLabel,
-}: {
-  num: string;
-  label: string;
-  headline: string;
-  body: string;
-  href: string;
-  ctaLabel: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="block border-b border-r p-6 transition-colors duration-150 hover:bg-bg md:p-8"
-      style={{ borderColor: 'var(--border)', backgroundColor: 'transparent' }}
     >
       <div
         className="mb-4 font-mono text-xs text-tertiary"
         style={{ letterSpacing: '0.04em' }}
       >
-        {num} · {label}
+        {num}
       </div>
       <h3
         className="mb-3 text-ink"
         style={{ fontSize: '25px', lineHeight: 1.2, letterSpacing: '-0.02em', fontWeight: 500 }}
       >
-        {headline}
+        {title}
       </h3>
       <p className="mb-6 text-secondary" style={{ fontSize: '15px', lineHeight: 1.6 }}>
         {body}
       </p>
-      <span className="font-mono text-xs font-medium" style={{ color: 'var(--accent)' }}>
-        {ctaLabel}
-      </span>
-    </Link>
+      <div
+        className="flex items-center justify-between font-mono text-xs text-ink"
+      >
+        <span>{meta}</span>
+        <Link
+          href={href}
+          style={{ color: 'var(--accent)', fontWeight: 500 }}
+        >
+          {ctaLabel}
+        </Link>
+      </div>
+    </article>
   );
 }
 
-function WhyCallout({ label, body }: { label: string; body: string }) {
+/* ============================================================
+   AuditCard — single tier card in the audit pricing 3-up grid
+   (locked-preview .audit-card · .popular variant for emphasized tier)
+   ============================================================ */
+function AuditCard({
+  tier,
+  badge,
+  name,
+  price,
+  priceEur,
+  includesLabel,
+  bullets,
+  ctaLabel,
+  ctaHref,
+  ctaVariant,
+  popular = false,
+}: {
+  tier: string;
+  badge?: string;
+  name: string;
+  price: string;
+  priceEur: string;
+  includesLabel: string;
+  bullets: ReadonlyArray<string>;
+  ctaLabel: string;
+  ctaHref: string;
+  ctaVariant: 'primary' | 'ghost';
+  popular?: boolean;
+}) {
   return (
-    <div className="border-l pl-6" style={{ borderColor: 'var(--accent)' }}>
-      <div
-        className="mb-3 font-mono text-xs uppercase text-tertiary"
-        style={{ letterSpacing: '0.12em' }}
-      >
-        {label}
+    <article
+      className={`audit-card flex h-full flex-col rounded-lg border p-8 ${popular ? 'popular' : ''}`}
+      style={{
+        backgroundColor: 'var(--bg)',
+        borderColor: popular ? 'var(--accent)' : 'var(--border)',
+        boxShadow: popular ? '0 0 0 1px var(--accent)' : undefined,
+      }}
+    >
+      {/* Tier row */}
+      <div className="mb-6 flex items-center justify-between gap-3">
+        <span
+          className="font-mono uppercase"
+          style={{
+            color: 'var(--tertiary)',
+            fontSize: '12px',
+            letterSpacing: '0.12em',
+          }}
+        >
+          {tier}
+        </span>
+        {popular && badge ? (
+          <span
+            className="font-mono uppercase"
+            style={{
+              backgroundColor: 'var(--accent-soft)',
+              color: 'var(--accent)',
+              fontSize: '10px',
+              letterSpacing: '0.08em',
+              padding: '4px 8px',
+              borderRadius: 'var(--radius-sm)',
+              fontWeight: 500,
+            }}
+          >
+            {badge}
+          </span>
+        ) : null}
       </div>
-      <p className="text-ink" style={{ fontSize: '19px', lineHeight: 1.4, fontWeight: 500, letterSpacing: '-0.01em' }}>
-        {body}
-      </p>
-    </div>
+
+      {/* Name */}
+      <h3
+        className="mb-6 text-ink"
+        style={{ fontSize: '25px', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.2 }}
+      >
+        {name}
+      </h3>
+
+      {/* Price (CZK primary) */}
+      <div
+        className="font-mono text-ink"
+        style={{ fontSize: '33px', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1, marginBottom: '4px' }}
+      >
+        {price}
+      </div>
+      {/* Price (EUR secondary) */}
+      <div className="font-mono text-secondary" style={{ fontSize: '13px', marginBottom: '24px' }}>
+        {priceEur}
+      </div>
+
+      {/* Divider */}
+      <hr className="border-0 border-t" style={{ borderColor: 'var(--border)', margin: '24px 0' }} />
+
+      {/* Includes label */}
+      <div
+        className="mb-4 font-mono uppercase"
+        style={{
+          color: 'var(--tertiary)',
+          fontSize: '12px',
+          letterSpacing: '0.12em',
+        }}
+      >
+        {includesLabel}
+      </div>
+
+      {/* Bullets */}
+      <ul className="mb-8 flex-1 list-none">
+        {bullets.map((b, i) => (
+          <li
+            key={`${i}-${b.slice(0, 16)}`}
+            className="relative pl-6 text-ink"
+            style={{ fontSize: '13px', lineHeight: 1.7, marginBottom: '8px' }}
+          >
+            <span
+              aria-hidden
+              className="absolute left-0 top-0 select-none font-semibold"
+              style={{ color: 'var(--accent)' }}
+            >
+              ✓
+            </span>
+            {b}
+          </li>
+        ))}
+      </ul>
+
+      {/* CTA */}
+      <Button href={ctaHref} variant={ctaVariant} className="w-full">
+        {ctaLabel}
+      </Button>
+    </article>
   );
 }
