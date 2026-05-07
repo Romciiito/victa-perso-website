@@ -10,7 +10,7 @@
     "lint": "next lint",
     "test": "vitest --passWithNoTests",
     "e2e": "playwright test",
-    "prepare": "husky"
+    "prepare": "node -e \"if (!process.env.CI) require('child_process').execSync('husky', {stdio: 'inherit'})\" || true"
   },
   "dependencies": {
     "next": "^15.0.0",
