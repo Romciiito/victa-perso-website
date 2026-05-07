@@ -1,14 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
-  "_comments": {
-    "region": "fra1 = Frankfurt. Non-negotiable GDPR data residency requirement (AR-13, devops-engineer.md). Never change to a non-EU region.",
-    "csp_mode": "CSP is Content-Security-Policy-Report-Only (report-only, NOT enforced). This is intentional per devops-engineer.md §8.3 and architecture.md §8.2: deploy report-only first, observe violations in Sentry CSP reporting endpoint on preview, then promote to enforced Content-Security-Policy header in Phase 5 pre-launch QA. Do NOT change to enforced before Phase 5 sign-off.",
-    "hsts_preload": "HSTS preload is intentionally ABSENT. Per architecture.md §8.3 and security-model.md §7 Rule 5: preload is added only after 60+ days of stable production. A misconfiguration in the first week would lock all browsers to HTTPS for 2 years. Post-launch task: add 'preload' at day 60+ and submit victaagency.com to https://hstspreload.org.",
-    "chat_function": "api/chat maxDuration is defined here even though the chatbot is deferred post-launch (D-002). Keeping the config in place avoids forgetting the 10-second timeout when chatbot is reactivated. Cost protection requirement: security-model.md §4.1, architecture.md §8.1.",
-    "csp_enforcement": "Phase 5 pre-launch task: change 'Content-Security-Policy-Report-Only' to 'Content-Security-Policy' in the headers array below after observing zero violations on preview deployments. Requires Roman sign-off (D-006)."
-  },
-
   "regions": ["fra1"],
 
   "framework": "nextjs",
