@@ -2,8 +2,11 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import {
   ShoppingCart,
   Factory,
+  Truck,
   Briefcase,
   Landmark,
+  Zap,
+  Stethoscope,
   HeartPulse,
   Headphones,
   type LucideIcon,
@@ -23,8 +26,11 @@ type IndustryItem = {
 const iconMap = {
   ShoppingCart,
   Factory,
+  Truck,
   Briefcase,
   Landmark,
+  Zap,
+  Stethoscope,
   HeartPulse,
   Headphones,
 } satisfies Record<string, LucideIcon>;
