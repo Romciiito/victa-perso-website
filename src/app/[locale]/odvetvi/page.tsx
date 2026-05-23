@@ -2,8 +2,11 @@ import { setRequestLocale, getTranslations } from 'next-intl/server';
 import {
   ShoppingCart,
   Factory,
+  Truck,
   Briefcase,
   Landmark,
+  Zap,
+  Stethoscope,
   HeartPulse,
   Headphones,
   type LucideIcon,
@@ -13,18 +16,25 @@ import { EnglishStub } from '@/components/en-stub';
 
 type Props = { params: Promise<{ locale: string }> };
 
+type FaqItem = { q: string; a: string };
 type IndustryItem = {
   key: string;
   icon: keyof typeof iconMap;
   name: string;
-  body: string;
+  intro: string;
+  useCases?: ReadonlyArray<string>;
+  targetClients?: string;
+  faq?: ReadonlyArray<FaqItem>;
 };
 
 const iconMap = {
   ShoppingCart,
   Factory,
+  Truck,
   Briefcase,
   Landmark,
+  Zap,
+  Stethoscope,
   HeartPulse,
   Headphones,
 } satisfies Record<string, LucideIcon>;
@@ -82,6 +92,7 @@ export default async function IndustriesPage({ params }: Props) {
               return (
                 <article
                   key={item.key}
+                  id={item.key}
                   className="flex flex-col border-b border-r p-6 transition-colors duration-150 md:p-8"
                   style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)' }}
                 >
@@ -97,16 +108,39 @@ export default async function IndustriesPage({ params }: Props) {
                   >
                     {item.name}
                   </h2>
-                  <p className="mb-6 flex-1 text-secondary" style={{ fontSize: '15px', lineHeight: 1.6 }}>
-                    {item.body}
+                  <p className="mb-4 text-secondary" style={{ fontSize: '15px', lineHeight: 1.6 }}>
+                    {item.intro}
                   </p>
-                  <a
-                    href="#"
-                    className="font-mono text-xs font-medium"
-                    style={{ color: 'var(--accent)' }}
-                  >
-                    Zjistit víc →
-                  </a>
+                  {item.useCases && item.useCases.length > 0 && (
+                    <ul
+                      className="mb-4 flex-1 space-y-2 text-secondary"
+                      style={{ fontSize: '14px', lineHeight: 1.55 }}
+                    >
+                      {item.useCases.map((uc, idx) => (
+                        <li key={idx} className="flex gap-2">
+                          <span
+                            aria-hidden
+                            style={{ color: 'var(--accent)', flexShrink: 0 }}
+                          >
+                            ·
+                          </span>
+                          <span>{uc}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                  {item.targetClients && (
+                    <p
+                      className="mt-auto pt-4 font-mono text-secondary"
+                      style={{
+                        fontSize: '12px',
+                        lineHeight: 1.5,
+                        borderTop: '1px solid var(--border-soft)',
+                      }}
+                    >
+                      {item.targetClients}
+                    </p>
+                  )}
                 </article>
               );
             })}
