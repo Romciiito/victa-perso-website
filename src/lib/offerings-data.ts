@@ -15,28 +15,30 @@
        to translations once EN nav is required.
      - `page.tsx` continues to use translations for SEO/i18n parity;
        this file matches those Czech strings 1:1 (kept in sync).
+
+   Last sync with content/cs/strings/common.json: 2026-05-23
+   (full-service positioning rewrite + 18 services + 8 industries)
    ============================================================ */
 
 import {
-  Activity,
   BarChart3,
   Boxes,
-  Briefcase,
   Building2,
   Code2,
-  Database,
+  Factory,
   Headphones,
+  Landmark,
   Layers,
-  MessageCircle,
   MessageSquare,
   Package,
   Search,
   Server,
   Settings,
-  Shield,
   ShoppingCart,
+  Stethoscope,
   Target,
   TrendingUp,
+  Truck,
   Zap,
   type LucideIcon,
 } from 'lucide-react';
@@ -57,50 +59,50 @@ export type OfferingData = {
   items: ReadonlyArray<OfferingDataItem>;
 };
 
-/* ---------- A · Services for the AI journey (6 cells) ---------- */
+/* ---------- A · Services — full-service representatives (6 cells) ---------- */
 export const SERVICES_OFFERING: OfferingData = {
   sidebarIcon: Layers,
-  sidebarHeadline: 'Služby pro vaši AI cestu',
+  sidebarHeadline: 'Tři kompetence, jedna agentura',
   sidebarDescription:
-    'Od auditu a strategie přes datovou přípravu až po provoz a governance.',
+    'Weby, AI a marketing pod jednou střechou. Od prvního pixelu až po měřitelné výsledky.',
   sidebarCtaLabel: 'Zobrazit vše →',
   sidebarCtaHref: '/sluzby',
   items: [
     {
+      icon: Code2,
+      title: 'Weby a e-shopy na míru',
+      subtitle: 'Návrh, vývoj a spuštění na míru',
+      href: '/sluzby#weby',
+    },
+    {
+      icon: Settings,
+      title: 'Správa webů a e-shopů',
+      subtitle: 'Technická péče, aktualizace a rozvoj',
+      href: '/sluzby#sprava',
+    },
+    {
+      icon: MessageSquare,
+      title: 'AI chatboti a automatizace',
+      subtitle: 'Chatboti, agenti a automatizace procesů',
+      href: '/sluzby#ai',
+    },
+    {
       icon: Search,
-      title: 'AI Discovery',
-      subtitle: 'Audit a diagnostika potenciálu',
-      href: '/sluzby#ai-discovery',
+      title: 'SEO a AEO',
+      subtitle: 'Organická viditelnost ve vyhledávačích i AI',
+      href: '/sluzby#seo',
+    },
+    {
+      icon: TrendingUp,
+      title: 'PPC a performance marketing',
+      subtitle: 'Placené kampaně s měřitelným výnosem',
+      href: '/sluzby#ppc',
     },
     {
       icon: Target,
-      title: 'AI Strategie',
-      subtitle: 'Plán implementace a nasazení',
-      href: '/sluzby#ai-strategie',
-    },
-    {
-      icon: Database,
-      title: 'Datová platforma',
-      subtitle: 'Data readiness, modelování, zpracování',
-      href: '/sluzby#datova-platforma',
-    },
-    {
-      icon: Code2,
-      title: 'AI-driven vývoj',
-      subtitle: 'Vývoj na míru s AI',
-      href: '/sluzby#ai-vyvoj',
-    },
-    {
-      icon: Shield,
-      title: 'AI Governance',
-      subtitle: 'Bezpečnost a compliance',
-      href: '/sluzby#ai-governance',
-    },
-    {
-      icon: Activity,
-      title: 'Provoz a MLOps',
-      subtitle: 'Monitoring a optimalizace',
-      href: '/sluzby#mlops',
+      title: 'Komplexní transformace byznysu',
+      subtitle: 'Audit a plán celého digitálního stacku',
+      href: '/spoluprace',
     },
   ],
 };
@@ -110,87 +112,90 @@ export const SOLUTIONS_OFFERING: OfferingData = {
   sidebarIcon: Package,
   sidebarHeadline: 'AI řešení na klíč',
   sidebarDescription:
-    'Od znalostních asistentů po vlastní AI infrastrukturu.',
+    'Pět připravených scénářů — od znalostního asistenta po vlastní AI infrastrukturu.',
   sidebarCtaLabel: 'Zobrazit vše →',
   sidebarCtaHref: '/reseni',
   items: [
     {
       icon: MessageSquare,
-      title: 'GenAI a RAG asistenti',
-      subtitle: 'Firemní znalostní asistenti',
-      href: '/reseni#genai-rag',
+      title: 'Znalostní asistent',
+      subtitle: 'AI natrénované na vaši dokumentaci',
+      href: '/reseni#znalostni-asistent',
     },
     {
       icon: Boxes,
-      title: 'Autonomní AI agenti',
-      subtitle: 'Automatizace back-office',
+      title: 'Autonomní agenti',
+      subtitle: 'Sekvence úkolů bez lidského zásahu',
       href: '/reseni#agenti',
     },
     {
       icon: Headphones,
-      title: 'AI zákaznická podpora',
-      subtitle: 'Chatboti a voiceboti 24/7',
-      href: '/reseni#zakaznicka-podpora',
+      title: 'AI podpora zákazníků',
+      subtitle: 'Chatbot 24/7, eskalace na živého agenta',
+      href: '/reseni#podpora',
     },
     {
       icon: BarChart3,
-      title: 'Prediktivní analytika',
-      subtitle: 'Dashboardy a predikce',
-      href: '/reseni#prediktivni-analytika',
+      title: 'Datové dashboardy',
+      subtitle: 'Jeden přehled pro prodeje, marketing i sklad',
+      href: '/reseni#dashboardy',
     },
     {
       icon: Server,
-      title: 'AI Infrastruktura',
-      subtitle: 'Vlastní on-premise AI servery',
+      title: 'AI infrastruktura',
+      subtitle: 'Platforma pro více AI scénářů najednou',
       href: '/reseni#infrastruktura',
     },
   ],
 };
 
-/* ---------- C · AI solutions per industry (7 cells) ---------- */
+/* ---------- C · Industries (6 cells on homepage / mega-menu) ---------- */
+/* Full 8-industry catalog lives on /odvetvi page. Homepage + mega-menu
+   show 6 highest-leverage verticals; Profesionální služby + Zákaznická
+   podpora accessible directly via /odvetvi. */
 export const INDUSTRIES_OFFERING: OfferingData = {
   sidebarIcon: Building2,
-  sidebarHeadline: 'AI řešení pro vaše odvětví',
+  sidebarHeadline: 'Odvětví, kterým rozumíme',
   sidebarDescription:
-    'Oborově specifické AI implementace s měřitelným dopadem.',
+    'Neřešíme jen techniku — rozumíme procesům a tlakům v každém oboru, se kterým pracujeme.',
   sidebarCtaLabel: 'Zobrazit vše →',
   sidebarCtaHref: '/odvetvi',
   items: [
     {
       icon: ShoppingCart,
-      title: 'E-commerce a maloobchod',
-      subtitle: 'Personalizace a automatizace prodeje',
+      title: 'E-commerce',
+      subtitle: 'Shopify, Shoptet, headless, CZ feedy',
       href: '/odvetvi#ecommerce',
     },
     {
-      icon: TrendingUp,
-      title: 'Finance a Fintech',
-      subtitle: 'Automatizace a analýza rizik',
-      href: '/odvetvi#finance',
-    },
-    {
-      icon: Settings,
-      title: 'Výroba a logistika',
-      subtitle: 'Prediktivní údržba a optimalizace',
+      icon: Factory,
+      title: 'Výroba',
+      subtitle: 'SAP, OEE, prediktivní údržba',
       href: '/odvetvi#vyroba',
     },
     {
+      icon: Truck,
+      title: 'Logistika',
+      subtitle: 'CMR, AETR, optimalizace tras',
+      href: '/odvetvi#logistika',
+    },
+    {
+      icon: Landmark,
+      title: 'Finance',
+      subtitle: 'ČNB, DORA, AML/KYC compliance',
+      href: '/odvetvi#finance',
+    },
+    {
       icon: Zap,
-      title: 'Energetika a utility',
-      subtitle: 'Predikce spotřeby a smart grids',
+      title: 'Energetika',
+      subtitle: 'Air-gapped LLM, ERÚ, fotovoltaika',
       href: '/odvetvi#energetika',
     },
     {
-      icon: MessageCircle,
-      title: 'Zákaznická podpora a CX',
-      subtitle: 'Chatboti a voiceboti 24/7',
-      href: '/odvetvi#cx',
-    },
-    {
-      icon: Briefcase,
-      title: 'Profesionální služby',
-      subtitle: 'Právo, audit, konzulting a vzdělávání',
-      href: '/odvetvi#profesionalni-sluzby',
+      icon: Stethoscope,
+      title: 'Zdravotnictví',
+      subtitle: 'FotoFinder, longevity AI, GDPR',
+      href: '/odvetvi#zdravotnictvi',
     },
   ],
 };
