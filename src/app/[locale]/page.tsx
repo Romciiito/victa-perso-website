@@ -261,7 +261,7 @@ async function CzechHome() {
                 t('audit.tier1.deliverables.4'),
               ]}
               ctaLabel={t('audit.tier1.cta')}
-              ctaHref="/kontakt"
+              ctaHref="/spoluprace#audit"
               ctaVariant="primary"
             />
             {/* Tier 2 */}
@@ -278,7 +278,7 @@ async function CzechHome() {
                 t('audit.tier2.deliverables.3'),
               ]}
               ctaLabel={t('audit.tier2.cta')}
-              ctaHref="/kontakt"
+              ctaHref="/spoluprace#audit"
               ctaVariant="ghost"
             />
             {/* Tier 3 */}
@@ -295,7 +295,7 @@ async function CzechHome() {
                 t('audit.tier3.deliverables.3'),
               ]}
               ctaLabel={t('audit.tier3.cta')}
-              ctaHref="/kontakt"
+              ctaHref="/spoluprace#audit"
               ctaVariant="ghost"
             />
           </div>

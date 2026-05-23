@@ -7,7 +7,7 @@
     "learnMore": "Zjistit víc →",
     "backHome": "Zpět na hlavní stránku",
     "version": "v 0.1.0",
-    "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1"
+    "status": "VICTA DIGITAL · Praha + Hradec Králové"
   },
   "nav": {
     "tag": "/ digital agency",
@@ -25,7 +25,7 @@
   },
   "footer": {
     "tagline": "Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání.",
-    "status": "STATUS · v 0.1.0 · region eu-central-1",
+    "status": "VICTA DIGITAL s.r.o. · 2026",
     "servicesHeading": "Služby",
     "companyHeading": "Společnost",
     "legalHeading": "Právní",
@@ -52,7 +52,7 @@
   },
   "home": {
     "hero": {
-      "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1",
+      "status": "VICTA DIGITAL · česká digitální agentura",
       "headline": "Začneme tím, že posloucháme.",
       "tagsAudit": "Audit",
       "tagsDev": "Vývoj",
@@ -64,7 +64,7 @@
       "leadAuditPrice": "20 000 Kč",
       "leadConsultLabel": "Bezplatná 30min konzultace",
       "leadConsultBody": "pro modulární projekty",
-      "ctaPrimary": "Spustit audit →",
+      "ctaPrimary": "Rezervovat audit →",
       "ctaGhost": "Domluvit konzultaci"
     },
     "offerings": {
@@ -193,7 +193,7 @@
           "Návrh integrace AI",
           "90min prezentace zjištění"
         ],
-        "cta": "Spustit audit →"
+        "cta": "Rezervovat audit →"
       },
       "tier2": {
         "tier": "Tier 2",
@@ -228,7 +228,7 @@
   },
   "spoluprace": {
     "hero": {
-      "status": "STATUS · v 0.1.0 · /cs/spoluprace",
+      "status": "/cs/spoluprace",
       "headline": "Jak spolupracujeme.",
       "subhead": "Dvě cesty: placený audit pro komplexní transformaci, nebo bezplatný 30min hovor pro konkrétní zakázku."
     },
@@ -386,7 +386,7 @@
   },
   "sluzby": {
     "hero": {
-      "status": "STATUS · v 0.1.0 · /cs/sluzby",
+      "status": "/cs/sluzby",
       "headline": "Služby",
       "subhead": "Tři kompetence — kód, AI a marketing — pod jednou střechou. 16 služeb napříč celým digitálním stackem."
     },
@@ -592,7 +592,7 @@
   },
   "reseni": {
     "hero": {
-      "status": "STATUS · v 0.1.0 · /cs/reseni",
+      "status": "/cs/reseni",
       "headline": "Řešení",
       "subhead": "Pět připravených balíčků pro typické scénáře. Místo toho, abyste z 16 služeb skládali sami, vyberte si scénář, který sedí na váš problém."
     },
@@ -638,7 +638,7 @@
   },
   "odvetvi": {
     "hero": {
-      "status": "STATUS · v 0.1.0 · /cs/odvetvi",
+      "status": "/cs/odvetvi",
       "headline": "Odvětví",
       "subhead": "Šest oborů, kterým rozumíme do hloubky. Mluvíme řečí vašeho byznysu — od první schůzky."
     },
@@ -833,7 +833,7 @@
   },
   "oNas": {
     "hero": {
-      "status": "STATUS · v 0.1.0 · /cs/o-nas",
+      "status": "/cs/o-nas",
       "headline": "O VICTA",
       "subhead": "Malý AI-augmented tým s ambicí být partner, ne dodavatel. Tady je, jak přemýšlíme."
     },
@@ -884,7 +884,7 @@
   },
   "kontakt": {
     "hero": {
-      "status": "STATUS · v 0.1.0 · /cs/kontakt",
+      "status": "/cs/kontakt",
       "headline": "Kontakt",
       "subhead": "Pro rychlou odpověď použijte rezervaci hovoru. Nebo nás napište přímo."
     },
@@ -926,7 +926,7 @@
   },
   "blog": {
     "hero": {
-      "status": "STATUS · v 0.1.0 · /cs/blog",
+      "status": "/cs/blog",
       "headline": "Blog",
       "subhead": "Píšeme o tom, jak v praxi propojit web, AI a marketing — bez buzzwordu a bez vendor pitchů."
     },
