@@ -307,7 +307,7 @@
         ],
         "cta": "Rezervovat Tier 3 →"
       },
-      "note": "Přesná cena závisí na rozsahu projektu — rádi ji upřesníme na úvodním sezení."
+      "note": "Přesná cena závisí na rozsahu projektu — rádi ji upřesníme na úvodním sezení. Bonus pro Tier 1 a Tier 2: cenu auditu deduktivně započteme do rozpočtu projektu, když po něm pokračujete v implementaci s námi. Audit tak nikdy není ztracená investice. Tier 3 (strategická session) je vždy samostatný produkt bez tohoto pravidla."
     },
     "invoice": {
       "heading": "Jak probíhá platba",
@@ -357,6 +357,10 @@
         {
           "q": "Jsem zavázán k pokračování po auditu?",
           "a": "Ne. Audit je samostatný produkt. Po auditu dostanete plán, který si můžete realizovat sami, s námi, nebo s kýmkoliv jiným. My ovšem doufáme, že se vám naše práce zalíbí natolik, že budete chtít pokračovat."
+        },
+        {
+          "q": "Co když po auditu nebudu chtít pokračovat s vámi?",
+          "a": "Cena auditu zůstává — je to férové, protože jste dostali plán, schémata a doporučení použitelné kdekoliv. Když ale pokračujete v implementaci s námi, cenu auditu (Tier 1 nebo Tier 2) deduktivně započteme do rozpočtu projektu. Tier 3 — strategická session — je samostatný produkt bez tohoto pravidla."
         },
         {
           "q": "Jak dlouho trvá, než dostanu výsledky?",
@@ -849,20 +853,20 @@
         "headline": "Čtyři principy, které držíme.",
         "items": [
           {
-            "label": "TRANSPARENTNOST",
-            "body": "Ukazujeme proces, ceny, myšlení. Žádné černé skříňky."
+            "label": "AUDIT JE INVESTICE",
+            "body": "Cenu auditu započteme do rozpočtu projektu, pokud s námi pokračujete v implementaci. Pokud ne, máte zprávu, schémata a doporučení použitelné u kohokoli jiného. Žádný úvodní sales hovor zdarma — od první hodiny pracujeme na vašem problému."
           },
           {
-            "label": "PARTNERSTVÍ",
-            "body": "Nestavíme a nezmizíme. Rosteme s klientem dlouhodobě."
+            "label": "PARŤÁK PO LAUNCHI",
+            "body": "Nestavíme a nezmizíme. Klient je s námi v kontaktu měsíčně, ne jen po předání. Měsíční reporting a přímá konzultační dostupnost — bez ticketing systému."
           },
           {
-            "label": "AI-NATIVE",
-            "body": "AI drží detaily, lidé drží myšlení. Tempo a kvalita zároveň."
+            "label": "AI DRŽÍ DETAILY, LIDÉ DRŽÍ MYŠLENÍ",
+            "body": "Co u velkých agentur trvá 3 měsíce, u nás 3 týdny. Bez režie 30+ hlav, kterou si platí klient. AI je náš nástroj rychlosti — myšlení a strategii drží lidé."
           },
           {
-            "label": "ŘEMESLO",
-            "body": "Design, kód i obsah dotahujeme do detailu. Žádné šablony."
+            "label": "ŽÁDNÉ ŠABLONY",
+            "body": "Každý web stavíme od nuly na váš stack a brand. Žádné WordPress themes, žádné drag-and-drop blocky, žádný stock. Design system, copywriting i kód jsou na míru."
           }
         ]
       },
