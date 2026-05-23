@@ -44,8 +44,8 @@
       "cookies": "Zásady cookies"
     },
     "bottom": {
-      "copyright": "© 2026 Victa Digital s.r.o.",
-      "ico": "IČO [doplnit]",
+      "copyright": "© 2026 VICTA DIGITAL s.r.o.",
+      "ico": "IČO 28859511",
       "city": "Praha",
       "country": "Česká republika"
     }
@@ -640,8 +640,8 @@
       },
       "address": {
         "label": "ADRESA",
-        "value": "Praha [TBD]",
-        "note": "Sídlo Victa Digital s.r.o. — přesnou adresu doplníme po dokončení registrace."
+        "value": "Haškova 1238/8, 500 02 Hradec Králové",
+        "note": "Sídlo VICTA DIGITAL s.r.o. (IČO 28859511). Korespondenční adresa: Babákova 14, 148 00 Praha 11."
       },
       "social": {
         "label": "SOCIÁLNÍ SÍTĚ",
@@ -680,11 +680,11 @@
       "version": "Verze 1.0 (draft) · účinné od 2026-05-07",
       "noteTitle": "Poznámka",
       "noteBody": "Tento dokument je draft připravený na základě technické architektury VICTA. Před finálním uvedením do provozu prochází ještě právním reviewem. Pro dotazy nás kontaktujte na privacy@victaagency.com.",
-      "intro": "V tomto dokumentu popisujeme, jak my, společnost Victa Digital s.r.o., nakládáme s osobními údaji návštěvníků našich webových stránek. Bereme ochranu osobních údajů vážně — proto jsme tyto zásady připravili tak, aby byly konkrétní, čitelné a v souladu s nařízením GDPR a se zákonem č. 110/2019 Sb., o zpracování osobních údajů.",
+      "intro": "V tomto dokumentu popisujeme, jak my, společnost VICTA DIGITAL s.r.o., nakládáme s osobními údaji návštěvníků našich webových stránek. Bereme ochranu osobních údajů vážně — proto jsme tyto zásady připravili tak, aby byly konkrétní, čitelné a v souladu s nařízením GDPR a se zákonem č. 110/2019 Sb., o zpracování osobních údajů.",
       "sections": [
         {
           "heading": "1. Provozovatel webu a správce osobních údajů",
-          "body": "Správcem osobních údajů ve smyslu čl. 4 odst. 7 GDPR je Victa Digital s.r.o., se sídlem v Praze, IČO [doplnit]. Pro veškeré dotazy týkající se ochrany osobních údajů se prosím obracejte na adresu privacy@victaagency.com."
+          "body": "Správcem osobních údajů ve smyslu čl. 4 odst. 7 GDPR je VICTA DIGITAL s.r.o., IČO 28859511, se sídlem Haškova 1238/8, 500 02 Hradec Králové - Pražské Předměstí. Pro veškeré dotazy týkající se ochrany osobních údajů se prosím obracejte na adresu privacy@victaagency.com nebo poštou na korespondenční adresu Babákova 14, 148 00 Praha 11."
         },
         {
           "heading": "2. Účel zpracování a právní základ",
@@ -722,7 +722,7 @@
       "version": "Verze 1.0 (draft) · účinné od 2026-05-07",
       "noteTitle": "Poznámka",
       "noteBody": "Tento dokument je draft a před spuštěním analytiky a CMP banneru projde právním reviewem. Aktuálně web ještě cookies třetích stran neukládá — viz upozornění níže.",
-      "intro": "V těchto zásadách vám my, společnost Victa Digital s.r.o., vysvětlujeme, jaké cookies a obdobné technologie používáme na našich webových stránkách, k čemu je používáme, jak dlouho je uchováváme a jak můžete spravovat svůj souhlas s jejich použitím.",
+      "intro": "V těchto zásadách vám my, společnost VICTA DIGITAL s.r.o., vysvětlujeme, jaké cookies a obdobné technologie používáme na našich webových stránkách, k čemu je používáme, jak dlouho je uchováváme a jak můžete spravovat svůj souhlas s jejich použitím.",
       "sections": [
         {
           "heading": "1. Co jsou cookies",
