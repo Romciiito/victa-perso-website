@@ -240,7 +240,7 @@
         "label": "CESTA 1 · PLACENÝ AUDIT",
         "headline": "Komplexní transformace byznysu",
         "body": "Když chcete přepracovat celý digitální stack — web, marketing, integrace, AI. Audit je placený proto, že jde o reálnou strategickou práci, ne sales call. Po auditu se rozhodnete, jestli pokračujeme.",
-        "fit": "Hodí se pro: e-commerce s rostoucí komplexitou, firmy s rozbitým marketing-tech stackem, zakázky nad 200 000 Kč.",
+        "fit": "Hodí se pro: e-commerce s rostoucí komplexitou, firmy s rozbitým marketing-tech stackem, zakázky nad 200 000 Kč.",
         "cta": "Vybrat tier →"
       },
       "scoping": {
@@ -261,7 +261,7 @@
         "ideal": "Pro firmy, které řeší celý digitální stack — web, e-shop, marketing, integrace, AI. Hloubková analýza všeho.",
         "duration": "1–3 týdny",
         "sessions": "3–4 sezení",
-        "price": "20 000 – 90 000 Kč",
+        "price": "20 000 – 90 000 Kč",
         "priceEur": "€800 – €3 600",
         "deliverables": [
           "Hloubkový technický audit",
@@ -279,7 +279,7 @@
         "ideal": "Pro firmy, které chtějí hloubkově pokrýt jednu doménu — kompletní marketingovou strategii, e-commerce strategii, AI strategii nebo technický stack.",
         "duration": "pár dní – 2 týdny",
         "sessions": "2 sezení",
-        "price": "10 000 – 55 000 Kč",
+        "price": "10 000 – 55 000 Kč",
         "priceEur": "€400 – €2 200",
         "deliverables": [
           "Jedna doména: tech, obchod, marketing nebo AI",
@@ -295,8 +295,8 @@
         "name": "Strategická session",
         "ideal": "Pro firmy s konkrétní jednorázovou otázkou nebo problémem. Žádný dlouhý report — jen strukturovaný výstup, který hned použijete.",
         "duration": "pár dní – 2 týdny",
-        "sessions": "1 sezení (90 min)",
-        "price": "4 000 – 25 000 Kč",
+        "sessions": "1 sezení (90 min)",
+        "price": "4 000 – 25 000 Kč",
         "priceEur": "€160 – €1 000",
         "deliverables": [
           "1–3hodinová session",
@@ -307,7 +307,7 @@
         ],
         "cta": "Rezervovat Tier 3 →"
       },
-      "note": "Přesná cena závisí na rozsahu projektu — rádi ji upřesníme na úvodním sezení. Bonus pro Tier 1 a Tier 2: cenu auditu deduktivně započteme do rozpočtu projektu, když po něm pokračujete v implementaci s námi. Audit tak nikdy není ztracená investice. Tier 3 (strategická session) je vždy samostatný produkt bez tohoto pravidla."
+      "note": "Přesná cena závisí na rozsahu projektu — rádi ji upřesníme na úvodním sezení. Bonus pro Tier 1 a Tier 2: cenu auditu deduktivně započteme do rozpočtu projektu, když po něm pokračujete v implementaci s námi. Audit tak nikdy není ztracená investice. Tier 3 (strategická session) je vždy samostatný produkt bez tohoto pravidla."
     },
     "invoice": {
       "heading": "Jak probíhá platba",
@@ -336,7 +336,7 @@
       ]
     },
     "scoping": {
-      "heading": "Bezplatná 30 min konzultace",
+      "heading": "Bezplatná 30 min konzultace",
       "body": "Pro klienty s konkrétní jednorázovou zakázkou — chatbot, AI integrace, jednorázový vývoj, samostatná kampaň. Žádný audit potřeba. Probereme, co řešíte, a do 2 dnů pošleme nabídku.",
       "what": "Co se na hovoru stane",
       "items": [
@@ -345,7 +345,7 @@
         "Domluvíme rozsah a orientační cenu",
         "Pokud sedneme, do 2 dnů pošleme oficiální nabídku"
       ],
-      "cta": "Domluvit hovor (30 min, zdarma)"
+      "cta": "Domluvit hovor (30 min, zdarma)"
     },
     "faq": {
       "heading": "Často kladené otázky",
@@ -359,8 +359,8 @@
           "a": "Ne. Audit je samostatný produkt. Po auditu dostanete plán, který si můžete realizovat sami, s námi, nebo s kýmkoliv jiným. My ovšem doufáme, že se vám naše práce zalíbí natolik, že budete chtít pokračovat."
         },
         {
-          "q": "Co když po auditu nebudu chtít pokračovat s vámi?",
-          "a": "Cena auditu zůstává — je to férové, protože jste dostali plán, schémata a doporučení použitelné kdekoliv. Když ale pokračujete v implementaci s námi, cenu auditu (Tier 1 nebo Tier 2) deduktivně započteme do rozpočtu projektu. Tier 3 — strategická session — je samostatný produkt bez tohoto pravidla."
+          "q": "Co když po auditu nebudu chtít pokračovat s vámi?",
+          "a": "Cena auditu zůstává — je to férové, protože jste dostali plán, schémata a doporučení použitelné kdekoliv. Když ale pokračujete v implementaci s námi, cenu auditu (Tier 1 nebo Tier 2) deduktivně započteme do rozpočtu projektu. Tier 3 — strategická session — je samostatný produkt bez tohoto pravidla."
         },
         {
           "q": "Jak dlouho trvá, než dostanu výsledky?",
@@ -368,7 +368,7 @@
         },
         {
           "q": "Mohu si vybrat jen jednu konkrétní službu bez auditu?",
-          "a": "Ano. Pokud máte jasné zadání — chatbot, integrace, samostatná kampaň — domluvte si bezplatnou 30 min konzultaci. Audit dělá smysl jen pro komplexní transformace."
+          "a": "Ano. Pokud máte jasné zadání — chatbot, integrace, samostatná kampaň — domluvte si bezplatnou 30 min konzultaci. Audit dělá smysl jen pro komplexní transformace."
         },
         {
           "q": "Proč jsou ceny jako rozsah, ne jako fixní částka?",
@@ -384,7 +384,7 @@
         },
         {
           "q": "Děláte i pro malé firmy a startupy?",
-          "a": "Ano, ale s realistickými očekáváními. Pokud je projekt pod 50 000 Kč, většinou dává smysl jít cestou bezplatné konzultace, ne placeného auditu. Pomůžeme vám rozhodnout."
+          "a": "Ano, ale s realistickými očekáváními. Pokud je projekt pod 50 000 Kč, většinou dává smysl jít cestou bezplatné konzultace, ne placeného auditu. Pomůžeme vám rozhodnout."
         }
       ]
     }
@@ -854,19 +854,19 @@
         "items": [
           {
             "label": "AUDIT JE INVESTICE",
-            "body": "Cenu auditu započteme do rozpočtu projektu, pokud s námi pokračujete v implementaci. Pokud ne, máte zprávu, schémata a doporučení použitelné u kohokoli jiného. Žádný úvodní sales hovor zdarma — od první hodiny pracujeme na vašem problému."
+            "body": "Cenu auditu započteme do rozpočtu projektu, pokud s námi pokračujete v implementaci. Pokud ne, máte zprávu, schémata a doporučení použitelné u kohokoli jiného. Žádný úvodní sales hovor zdarma — od první hodiny pracujeme na vašem problému."
           },
           {
             "label": "PARŤÁK PO LAUNCHI",
-            "body": "Nestavíme a nezmizíme. Klient je s námi v kontaktu měsíčně, ne jen po předání. Měsíční reporting a přímá konzultační dostupnost — bez ticketing systému."
+            "body": "Nestavíme a nezmizíme. Klient je s námi v kontaktu měsíčně, ne jen po předání. Měsíční reporting a přímá konzultační dostupnost — bez ticketing systému."
           },
           {
             "label": "AI DRŽÍ DETAILY, LIDÉ DRŽÍ MYŠLENÍ",
-            "body": "Co u velkých agentur trvá 3 měsíce, u nás 3 týdny. Bez režie 30+ hlav, kterou si platí klient. AI je náš nástroj rychlosti — myšlení a strategii drží lidé."
+            "body": "Co u velkých agentur trvá 3 měsíce, u nás 3 týdny. Bez režie 30+ hlav, kterou si platí klient. AI je náš nástroj rychlosti — myšlení a strategii drží lidé."
           },
           {
             "label": "ŽÁDNÉ ŠABLONY",
-            "body": "Každý web stavíme od nuly na váš stack a brand. Žádné WordPress themes, žádné drag-and-drop blocky, žádný stock. Design system, copywriting i kód jsou na míru."
+            "body": "Každý web stavíme od nuly na váš stack a brand. Žádné WordPress themes, žádné drag-and-drop blocky, žádný stock. Design system, copywriting i kód jsou na míru."
           }
         ]
       },
@@ -896,7 +896,7 @@
     "primary": {
       "label": "PREFEROVANÁ CESTA",
       "headline": "Domluvit si hovor",
-      "body": "Pro nové poptávky je nejrychlejší cesta rezervovat si bezplatnou 30 min konzultaci, nebo si vybrat tier auditu. Vrátíme se vám do 2 pracovních dnů.",
+      "body": "Pro nové poptávky je nejrychlejší cesta rezervovat si bezplatnou 30 min konzultaci, nebo si vybrat tier auditu. Vrátíme se vám do 2 pracovních dnů.",
       "cta": "Domluvit konzultaci →"
     },
     "channels": {
@@ -957,7 +957,7 @@
       "sections": [
         {
           "heading": "1. Provozovatel webu a správce osobních údajů",
-          "body": "Správcem osobních údajů ve smyslu čl. 4 odst. 7 GDPR je VICTA DIGITAL s.r.o., IČO 28859511, se sídlem Haškova 1238/8, 500 02 Hradec Králové - Pražské Předměstí. Pro veškeré dotazy týkající se ochrany osobních údajů se prosím obracejte na adresu privacy@victaagency.com nebo poštou na korespondenční adresu Babákova 14, 148 00 Praha 11."
+          "body": "Správcem osobních údajů ve smyslu čl. 4 odst. 7 GDPR je VICTA DIGITAL s.r.o., IČO 28859511, se sídlem Haškova 1238/8, 500 02 Hradec Králové — Pražské Předměstí. Pro veškeré dotazy týkající se ochrany osobních údajů se prosím obracejte na adresu privacy@victaagency.com nebo poštou na korespondenční adresu Babákova 14, 148 00 Praha 11."
         },
         {
           "heading": "2. Účel zpracování a právní základ",
