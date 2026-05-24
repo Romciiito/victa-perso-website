@@ -16,6 +16,17 @@ export type ServiceFaq = {
   a: string;
 };
 
+export type ServiceProcessStep = {
+  title: string;
+  body: string;
+};
+
+export type ServiceSections = {
+  problem: string;
+  approach: string;
+  process: ReadonlyArray<ServiceProcessStep>;
+};
+
 export type Service = {
   slug: string;
   categorySlug: string;
@@ -23,6 +34,8 @@ export type Service = {
   desc: string;
   fit: string;
   faq: ReadonlyArray<ServiceFaq>;
+  /** PR 6b content — narratives for detail page. Optional during transition. */
+  sections?: ServiceSections;
 };
 
 export type ServiceCategory = {

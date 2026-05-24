@@ -422,7 +422,29 @@
               }
             ],
             "slug": "weby-na-miru",
-            "categorySlug": "itDev"
+            "categorySlug": "itDev",
+            "sections": {
+              "problem": "WordPress se po čase mění v noční můru — plugin konflikty, pomalé načítání, zranitelnosti. Krabicová řešení jako Wix nebo Webnode mají svůj strop a SEO výsledky pokulhávají.\n\nKdyž firma roste, web ji začne brzdit. Conversion rate klesá, marketingový tým ztrácí čas s admin rozhraním, vývojář externí firmy odpovídá za 3 dny.",
+              "approach": "Stavíme weby na Next.js a Vercelu. Rychlé, SEO-ready, server-šetřící. Headless CMS (Sanity, Storyblok, nebo Payload) dává marketingu plnou kontrolu nad obsahem bez vývojáře.\n\nArchitektura je modulární — sekce, komponenty, design tokeny. Co se postaví dnes, půjde rozšířit za rok bez přepisování od nuly.",
+              "process": [
+                {
+                  "title": "Discovery + design tokens",
+                  "body": "2 týdny: posloucháme, mapujeme uživatelské toky, definujeme design system, content schema, SEO strategii."
+                },
+                {
+                  "title": "Build + iterace",
+                  "body": "4-8 týdnů: stavíme na real obsahu, ne lorem ipsum. Týdenní demo, korekce na živo. CMS schema přizpůsobíme vašemu workflow."
+                },
+                {
+                  "title": "Launch + měření",
+                  "body": "Migrace, redirecty, GA4 + Search Console, monitoring (Sentry). První 30 dnů sledujeme Core Web Vitals a indexaci."
+                },
+                {
+                  "title": "Provoz nebo handoff",
+                  "body": "Buď zůstaneme jako správce (paušál) nebo předáme vašemu internímu týmu s dokumentací a code review."
+                }
+              ]
+            }
           },
           {
             "name": "E-shopy na míru",
@@ -439,7 +461,29 @@
               }
             ],
             "slug": "e-shopy-na-miru",
-            "categorySlug": "itDev"
+            "categorySlug": "itDev",
+            "sections": {
+              "problem": "Shoptet, Eshop-rychle, Upgates dělají dobrý job v začátku, ale jakmile chcete vlastní logiku — customizovaný checkout, ERP propojení, B2B ceník, multi-warehouse — narážíte na strop.\n\nShopify mimo Plus je pomalý a omezuje themes. Vlastní e-shop od nuly přes Magento je projekt na rok a půl.",
+              "approach": "Pro střední e-shopy (5-50 mil. Kč obrat): Shopify Plus s vlastním headless frontend přes Next.js. Pro náročnější (50+ mil., specifické ERP/sklad): Medusa.js jako headless commerce kostra.\n\nV obou případech: rychlost (LCP < 2.5s), SEO/AEO, jeden checkout, jedno administrační rozhraní pro marketing i operations.",
+              "process": [
+                {
+                  "title": "Audit současného stavu",
+                  "body": "Analýza dat (GA4, Shopify reports), ERP/sklad mapování, customer journey, ztráty v conversion funnelu."
+                },
+                {
+                  "title": "Stack + architektura",
+                  "body": "1 týden: rozhodnutí Shopify Plus vs Medusa.js, datový model, payment + shipping integrace."
+                },
+                {
+                  "title": "Build + migrace",
+                  "body": "8-16 týdnů: produkty, kategorie, customer accounts, orders. Parallelní běh starého e-shopu, postupný switch."
+                },
+                {
+                  "title": "Provoz + optimalizace",
+                  "body": "CRO, A/B testy checkout, paid traffic optimalizace. Měsíční reporting a iterace."
+                }
+              ]
+            }
           },
           {
             "name": "Prezentační weby a microsite",
@@ -460,7 +504,29 @@
               }
             ],
             "slug": "prezentacni-weby-a-microsite",
-            "categorySlug": "itDev"
+            "categorySlug": "itDev",
+            "sections": {
+              "problem": "Marketingový tým chce spustit produktovou stránku NA TÝDEN PŘÍŠTÍ. Vlastní vývojáři mají frontu na 6 týdnů. Externí studio nabízí 12 týdnů + 200 000 Kč.\n\nMezi tím konkurence launchuje rychleji a kampaňový timing se rozpadá.",
+              "approach": "Microsity stavíme z předpřipravených komponent — hero, features, pricing, FAQ, CTA — všechno na našem design systému. Obsah a vizuál vyladíme s vámi.\n\nVyjde to za 1-3 týdny, ne 3 měsíce. A nikde žádný technický dluh — kód a hosting jsou vaše.",
+              "process": [
+                {
+                  "title": "Brief + skeleton",
+                  "body": "1-2 dny: kick-off call, pozicování, hero copy direction. Skeleton wireframe."
+                },
+                {
+                  "title": "Design + copy iteration",
+                  "body": "3-7 dní: vizuální návrh, finální copy, real obsah (ne placeholdery). 2-3 kola feedback."
+                },
+                {
+                  "title": "Build + launch",
+                  "body": "3-5 dní: hotový kód, GA4, OG tags, schema markup, sitemap. Doménu napojíme přes DNS."
+                },
+                {
+                  "title": "Měření kampaně",
+                  "body": "Tracking konverzí, A/B testy klíčových sekcí, kampaňový reporting po dobu trvání."
+                }
+              ]
+            }
           },
           {
             "name": "Správa webů a e-shopů",
@@ -481,7 +547,29 @@
               }
             ],
             "slug": "sprava-webu-a-e-shopu",
-            "categorySlug": "itDev"
+            "categorySlug": "itDev",
+            "sections": {
+              "problem": "Hotový web vám sedí dva roky beze změny — pak začne 404 chybami, zranitelný plugin, SEO ranking klesne, mobilní performance zaplaty. Nikdo se mu nevěnuje, protože nikdo neví, kdo má co dělat.\n\nKdyž nahodíte „digital agency\", platíte za reaktivní opravy, ne za prevenci.",
+              "approach": "Proaktivní správa: bezpečnostní patche každý měsíc, SEO monitoring, Core Web Vitals tracking, A/B testy klíčových stránek, content update workflow.\n\nMěsíční reporting jednou A4 — co jsme dělali, jaká data, co plánujeme. Žádné překvapení.",
+              "process": [
+                {
+                  "title": "Onboarding audit",
+                  "body": "1 týden: technický audit, SEO baseline, performance baseline, dependency check, backup setup."
+                },
+                {
+                  "title": "Měsíční plán",
+                  "body": "Stanovené hodiny (10/20/40 hod/měsíc), priority backlog, předem schválené úkoly."
+                },
+                {
+                  "title": "Týdenní iterace",
+                  "body": "Patches, content updates, A/B testy. Slack komunikace, 24-48h response time."
+                },
+                {
+                  "title": "Kvartální review",
+                  "body": "Quarterly business review — co se zlepšilo, co je plánováno, ROI z investice."
+                }
+              ]
+            }
           },
           {
             "name": "Integrace systémů",
@@ -494,7 +582,29 @@
               }
             ],
             "slug": "integrace-systemu",
-            "categorySlug": "itDev"
+            "categorySlug": "itDev",
+            "sections": {
+              "problem": "E-shop, ERP, účetnictví, sklad, CRM, payment gateway, doprava — každý systém dělá svou věc, ale dohromady tvoří chaos: ruční přepisování, chybějící data, neaktuální stavy skladu.\n\nExcel jako lepidlo mezi nimi je únava. A když napadne PR oddělení, jak vypadají reálné prodeje, nikdo neumí říct.",
+              "approach": "API-first integrace. Mezi vašimi systémy postavíme datový bus (Make, n8n, vlastní middleware) — jedna změna v ERP se propíše do e-shopu i do CRM během sekund.\n\nDůraz na monitoring (Sentry, vlastní healthchecks) — když integrace umře, dozvíte se to dřív než zákazník.",
+              "process": [
+                {
+                  "title": "System inventory",
+                  "body": "1 týden: mapujeme všechny systémy, kde jsou data, kde se duplikují, kdo má vlastnictví."
+                },
+                {
+                  "title": "Architecture proposal",
+                  "body": "1 týden: navrhneme integrační vrstvu — pull/push, sync/async, retry strategy, error handling."
+                },
+                {
+                  "title": "Build + test",
+                  "body": "2-6 týdnů: postavíme integrace s důrazem na idempotenci. Test data, staging environment, smoke testy."
+                },
+                {
+                  "title": "Monitor + iterate",
+                  "body": "Sentry alerts, vlastní dashboards. První 30 dnů aktivní monitoring, pak dvouměsíční review."
+                }
+              ]
+            }
           },
           {
             "name": "Webové aplikace a custom vývoj",
@@ -511,7 +621,29 @@
               }
             ],
             "slug": "webove-aplikace-a-custom-vyvoj",
-            "categorySlug": "itDev"
+            "categorySlug": "itDev",
+            "sections": {
+              "problem": "SaaS nesedí — buď je moc generic, drahé per-seat, nebo zamykání ve vendor lock-inu. Vaše specifické workflow vyžaduje něco vlastního, ale interní IT je vytížený.\n\nOutsource přes velkou agenturu znamená 18 měsíců, milionové ceny a něco, co se chová jako enterprise software z roku 2005.",
+              "approach": "Stavíme webové aplikace v Next.js + Supabase nebo Postgres. Rychlý development cycle, vlastní code, open-source stack — žádný lock-in.\n\nDůraz na UX — interní nástroj může být příjemný na použití. Týdenní demo, real-time feedback, deploy preview pro každý PR.",
+              "process": [
+                {
+                  "title": "Discovery + UX wireframes",
+                  "body": "2 týdny: interviews s budoucími uživateli, user flows, paper prototypes."
+                },
+                {
+                  "title": "MVP build",
+                  "body": "6-12 týdnů: postupně rozšiřujeme funkčnost. Week 1: auth + jedna feature. Week 2: ..."
+                },
+                {
+                  "title": "Beta s vašimi uživateli",
+                  "body": "2-4 týdny: real lidé, real data, feedback loop. Bug bashes, UX vylepšení."
+                },
+                {
+                  "title": "Production + provoz",
+                  "body": "Plný release, monitoring, dokumentace pro vaše IT, předání nebo dlouhodobý kontrakt."
+                }
+              ]
+            }
           }
         ]
       },
@@ -523,7 +655,29 @@
             "name": "AI chatboti",
             "desc": "RAG, knowledge-aware asistenti, zákaznická podpora 24/7. Claude, GPT a další modely abstrahované přes Vercel AI Gateway.",
             "slug": "ai-chatboti",
-            "categorySlug": "aiData"
+            "categorySlug": "aiData",
+            "sections": {
+              "problem": "ChatGPT vám vygeneruje cokoli, ale nezná vaše produkty, vaše ceníky, vaši dokumentaci. A zákaznická podpora vyžaduje konzistentní odpovědi, ne kreativní improvizaci.\n\nKrabicový chatbot (Tidio, Intercom AI) řeší 30 % případů, zbytek hází na člověka. Bez kontextu firmy je zhoršuje, ne řeší.",
+              "approach": "RAG (Retrieval-Augmented Generation) asistenti natrénovaní na vaši dokumentaci, znalostní bázi, historii ticketů. Claude, GPT-4o nebo lokálně hostovaný model — podle citlivosti dat.\n\nVčetně hand-off na člověka, escalation flows, audit logu. Měříme deflection rate, response quality, customer satisfaction.",
+              "process": [
+                {
+                  "title": "Data audit + RAG schema",
+                  "body": "1-2 týdny: jaké zdroje (Confluence, Notion, FAQ, tickety), jak je strukturujeme, kde žijí."
+                },
+                {
+                  "title": "Prototype + interní test",
+                  "body": "2-3 týdny: postavíme MVP, testujeme s 5 lidmi v týmu. Iterujeme prompts, retrieval thresholds."
+                },
+                {
+                  "title": "Production launch",
+                  "body": "1-2 týdny: integrace do vašeho webu/aplikace, monitoring, A/B test proti baseline."
+                },
+                {
+                  "title": "Continuous tuning",
+                  "body": "Měsíčně analýza konverzací, retrain na nových datech, prompt iterace. Cost monitoring."
+                }
+              ]
+            }
           },
           {
             "name": "Automatizace procesů",
@@ -549,25 +703,113 @@
               }
             ],
             "slug": "automatizace-procesu",
-            "categorySlug": "aiData"
+            "categorySlug": "aiData",
+            "sections": {
+              "problem": "Vaši lidi tráví 30 % času admin prací — kopírují data mezi systémy, formátují reporty, odpovídají na opakující se dotazy. Není to zábavné a nepřináší to hodnotu.\n\nA když odejdou, znalost odejde s nimi.",
+              "approach": "Začínáme tím, že proces sledujeme — kde se data dotýkají systémů, kde čekají, kde se ztrácejí. Teprve potom automatizujeme to, co dává smysl. Make, n8n, Zapier nebo vlastní mikroservices.\n\nDůraz na monitoring — když automatizace umře, máte alert dřív než klient. A dokumentace zůstává.",
+              "process": [
+                {
+                  "title": "Process mapping",
+                  "body": "1-2 týdny: workshops s týmem, observation, mapování as-is. Cost vs benefit per krok."
+                },
+                {
+                  "title": "Priority backlog",
+                  "body": "1 týden: které automatizace mají nejvyšší ROI, co lze udělat hned, co po čase."
+                },
+                {
+                  "title": "Build + iterace",
+                  "body": "2-8 týdnů: stavíme po jednom, ne všechno najednou. Každá nová automatizace se ověří na 2 týdny."
+                },
+                {
+                  "title": "Handoff + monitoring",
+                  "body": "Dokumentace, alerting, runbook. Vy provozujete, my jsme on-call podle SLA."
+                }
+              ]
+            }
           },
           {
             "name": "AI konzultace + audit + strategie",
             "desc": "AI roadmap pro firmu, governance, výběr modelů, security review, return-on-investment analýza.",
             "slug": "ai-konzultace-audit-strategie",
-            "categorySlug": "aiData"
+            "categorySlug": "aiData",
+            "sections": {
+              "problem": "Vedení chce „nějak nasadit AI\", marketing dělá GPT obrázky na sociálních sítích, IT bojuje s GDPR. Roadmap chybí, prioritizace chybí, governance chybí.\n\nMezi tím konkurence vám dělá to, co byste mohli dělat lépe.",
+              "approach": "AI audit: současné AI/data zdroje, příležitosti vs rizika, ROI scenarios. Výstup je roadmap 6-12 měsíců s prioritami a rozpočtem.\n\nGovernance design — kdo schvaluje AI use cases, jak se měří, kdy se zastavují. Privacy + compliance check.",
+              "process": [
+                {
+                  "title": "Discovery interviews",
+                  "body": "1 týden: 5-10 lidí z různých oddělení. Kde už AI používají, kde by chtěli, co je brzdí."
+                },
+                {
+                  "title": "Use case scoring",
+                  "body": "1 týden: každý use case dostane skóre — ROI, technická složitost, riziko, časová náročnost."
+                },
+                {
+                  "title": "Roadmap + governance doc",
+                  "body": "1-2 týdny: pořadí use casů, rozpočet, governance pravidla, KPI per use case."
+                },
+                {
+                  "title": "Executive readout",
+                  "body": "Prezentace vedení, Q&A, finální úpravy. Pak (volitelně) implementace s námi nebo s interním týmem."
+                }
+              ]
+            }
           },
           {
             "name": "Datová platforma + integrace",
             "desc": "BI dashboardy, ETL/ELT, datový sklad, dashboarding přes Metabase nebo Looker Studio.",
             "slug": "datova-platforma-integrace",
-            "categorySlug": "aiData"
+            "categorySlug": "aiData",
+            "sections": {
+              "problem": "Marketing chce vědět ROI per kanál. Sales chce CRM dashboard. Vedení chce P&L per produkt. A všichni se ptají IT, který má data v 5 různých systémech a žádný čas to spojit.\n\nExcel reporty každý měsíc jsou drahé, pomalé a zastaralé už při doručení.",
+              "approach": "Postavíme datovou platformu — ETL/ELT z vašich zdrojů do datového skladu (BigQuery, Snowflake, nebo lokální Postgres), dashboardy v Metabase nebo Looker Studio.\n\nSelf-service — marketing dělá své reporty, sales své. IT už není reportingový pomocník, ale vlastník platformy.",
+              "process": [
+                {
+                  "title": "Data audit",
+                  "body": "1 týden: kde jsou data, jaká je kvalita, kdo má vlastnictví. Definice klíčových metrik."
+                },
+                {
+                  "title": "Architecture + warehouse",
+                  "body": "2-3 týdny: BigQuery vs Postgres, ETL pipeline (Airbyte/Fivetran nebo vlastní), data model."
+                },
+                {
+                  "title": "První dashboardy",
+                  "body": "3-5 týdnů: 3-5 klíčových dashboardů. Pivot meeting po měsíci — co funguje, co ne."
+                },
+                {
+                  "title": "Training + handoff",
+                  "body": "Workshop pro marketing/sales — jak si dělat své dashboardy. Dokumentace, governance."
+                }
+              ]
+            }
           },
           {
             "name": "MLOps / Provoz AI systémů",
             "desc": "Monitoring, evals, prompt management, cost control, A/B testování modelů. AI v produkci, ne jen v experimentu.",
             "slug": "mlops-provoz-ai-systemu",
-            "categorySlug": "aiData"
+            "categorySlug": "aiData",
+            "sections": {
+              "problem": "AI v produkci je jiná disciplína než AI v Jupyter notebooku. Model se musí monitorovat, verzovat, A/B testovat, cost-controllovat. Když to neděláte, prompts driftujou, latence rostou, faktura se násobí.\n\nA když model halucinuje, dozvíte se to z customer ticketu, ne z alertu.",
+              "approach": "MLOps stack — monitoring (Langfuse, Helicone), evals (custom suites), prompt management, cost tracking, A/B testy modelů.\n\nAI v produkci se chová jako klasický produkční systém — alerts, runbooks, on-call rotace.",
+              "process": [
+                {
+                  "title": "Audit existujících AI use casů",
+                  "body": "1 týden: co běží, jaká je governance, kde jsou rizika."
+                },
+                {
+                  "title": "Observability setup",
+                  "body": "2-3 týdny: Langfuse/Helicone integrace, custom dashboards, alerting rules."
+                },
+                {
+                  "title": "Eval suite + cost controls",
+                  "body": "2-4 týdny: regression tests pro klíčové prompts, daily cost budget, model fallback strategy."
+                },
+                {
+                  "title": "On-call + iteration",
+                  "body": "Měsíční review, prompt updates, model upgrade rollouts. SLA na response."
+                }
+              ]
+            }
           }
         ]
       },
@@ -579,31 +821,141 @@
             "name": "SEO",
             "desc": "Technické SEO, content strategie, link building, lokální SEO. Měříme přes Search Console a vlastní dashboardy.",
             "slug": "seo",
-            "categorySlug": "marketing"
+            "categorySlug": "marketing",
+            "sections": {
+              "problem": "Google změnil algoritmus, vaše rankingy spadly. Nový obsah generuje konkurence rychleji než vy. A když se podíváte do Search Console, polovinu URL Google ani nezná.\n\nSEO agentura vám pošle PDF report jednou měsíčně, ale na otázku „proč jsme spadli\" nemá odpověď.",
+              "approach": "Začínáme technickým auditem — crawlability, indexability, Core Web Vitals, schema. Bez čistého základu content nepomůže.\n\nContent strategie postavená na keyword data (Ahrefs, SEMrush) a real search intent. Měřitelné, s KPI per stránku, ne „celkové návštěvy\".",
+              "process": [
+                {
+                  "title": "Technický audit",
+                  "body": "1-2 týdny: crawl celého webu, technical SEO checklist, performance, schema markup."
+                },
+                {
+                  "title": "Keyword + competitive research",
+                  "body": "1-2 týdny: jaké queries, jaká konkurence, kde jsou opportunity."
+                },
+                {
+                  "title": "Content roadmap + on-page",
+                  "body": "3-6 měsíců: měsíční dávka článků/stránek, internal linking, schema rollout."
+                },
+                {
+                  "title": "Měření + iterace",
+                  "body": "Měsíční reporting (Search Console, GA4, ranking trackers). Quarterly strategy review."
+                }
+              ]
+            }
           },
           {
             "name": "AEO (Answer Engine Optimization)",
             "desc": "Optimalizace pro ChatGPT, Claude, Gemini, Perplexity. FAQ schema, evidence panely, citation hygiene.",
             "slug": "aeo-answer-engine-optimization",
-            "categorySlug": "marketing"
+            "categorySlug": "marketing",
+            "sections": {
+              "problem": "Lidi se přestávají ptát Googlu a začínají ptát ChatGPT, Claude, Gemini. „Jaká je nejlepší účetní agentura v Brně?\" — odpověď přijde z LLM, ne z 10 modrých odkazů.\n\nVaše konkurence se v AI odpovědích cituje, vy ne. SEO budget najednou neřeší to, co potřebuje.",
+              "approach": "AEO (Answer Engine Optimization): FAQ schema na strukturovaných stránkách, evidence panels („podle [zdroje]\"), llms.txt mapping, citation-friendly content.\n\nMěříme — kolikrát se vaše značka objevila v ChatGPT/Claude/Gemini odpovědích. Pravidelný citation audit.",
+              "process": [
+                {
+                  "title": "Citation audit baseline",
+                  "body": "1 týden: 50-100 dotazů na ChatGPT/Claude/Perplexity v vašem oboru. Kde se citujete, kde ne."
+                },
+                {
+                  "title": "Content restrukturalizace",
+                  "body": "2-4 týdny: FAQ schema, evidence panels, llms.txt, semantic clustering."
+                },
+                {
+                  "title": "Monitoring setup",
+                  "body": "1 týden: automated citation tracking. Týdenní reporting."
+                },
+                {
+                  "title": "Iterace na základě dat",
+                  "body": "Měsíční review, content updates, expansion na nová témata."
+                }
+              ]
+            }
           },
           {
             "name": "PPC kampaně",
             "desc": "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Plné tracking nastavení, ne „jen spustit kampaň“.",
             "slug": "ppc-kampane",
-            "categorySlug": "marketing"
+            "categorySlug": "marketing",
+            "sections": {
+              "problem": "Google Ads vám zhoršilo ROAS o 30 % bez varování. Meta CPM stoupá. „Smart bidding\" optimalizuje k klikům, ne k nákupům.\n\nA když nemáte plný tracking (consent mode, server-side tagging, enhanced conversions), algoritmus nemá data pro správné rozhodnutí.",
+              "approach": "Tracking nastavení FIRST — GTM server-side, GA4 enhanced conversions, Cookiebot consent mode v2. Bez čistých dat je optimalizace náhoda.\n\nKampaňová strategie postavená na customer journey, ne na „budget per kanál\". Týdenní bid management + kreativní iterace.",
+              "process": [
+                {
+                  "title": "Tracking audit + setup",
+                  "body": "1-2 týdny: GA4, GTM, consent mode, enhanced conversions, offline conversion import."
+                },
+                {
+                  "title": "Account audit + restructure",
+                  "body": "1-2 týdny: kampaňová struktura, kvalita keywords, ad copy refresh, audience segments."
+                },
+                {
+                  "title": "Měsíční optimalizace",
+                  "body": "Týdenní bid management, kreativní A/B testy, scaling/scaling-back per kampaň."
+                },
+                {
+                  "title": "Quarterly business review",
+                  "body": "ROAS, CAC, LTV. Co funguje, co posunout, co zastavit. Plánování dalšího kvartálu."
+                }
+              ]
+            }
           },
           {
             "name": "Social media management",
             "desc": "Instagram, Facebook, LinkedIn, TikTok. Strategie, kreativy, plánování, community management.",
             "slug": "social-media-management",
-            "categorySlug": "marketing"
+            "categorySlug": "marketing",
+            "sections": {
+              "problem": "Sociální sítě jsou „nutné\", ale firma na ně nemá čas. Interní marketingář dělá vše, social padá. Externí freelancer postuje stock content, který nikoho nezajímá.\n\nA když vyjde krize, nikdo neumí rychle reagovat.",
+              "approach": "Strategie napřed — kdo je publikum, jaký message, jaký tone. Pak pravidelný content kalendář, vlastní kreativy (ne stock), community management s response time pod 4 hod.\n\nMěříme engagement quality, ne jen reach. Měsíční reporting, kvartální strategy review.",
+              "process": [
+                {
+                  "title": "Strategy + persona research",
+                  "body": "2 týdny: kdo, co, jak, kdy. Content pillars, tone of voice, vizuální identita."
+                },
+                {
+                  "title": "Content kalendář + produkce",
+                  "body": "Měsíční plán, vlastní kreativy (foto, video, grafika), copywriting v Czech voice."
+                },
+                {
+                  "title": "Posting + community",
+                  "body": "Plánované posting přes Buffer/Later, community management denně, response time < 4 hod."
+                },
+                {
+                  "title": "Měsíční reporting + iterace",
+                  "body": "Engagement, reach, brand sentiment. Co viralizovalo, co ne. Co adjustnout."
+                }
+              ]
+            }
           },
           {
             "name": "Tvorba kreativ",
             "desc": "Grafika, Reels, video, banners, animace. Vlastní studio, ne stock fotky.",
             "slug": "tvorba-kreativ",
-            "categorySlug": "marketing"
+            "categorySlug": "marketing",
+            "sections": {
+              "problem": "Stock fotky vypadají jako stock fotky. Canva šablony vypadají jako Canva šablony. A vlastní fotograf/designér přijde na 200 000 Kč měsíčně.\n\nMezi tím vaše značka splývá s konkurencí v každém scrollu.",
+              "approach": "Vlastní studio — foto, video, grafika, animace. Jeden brand voice napříč kanály. Reels podle aktuálních trendů, ne podle před dvěma lety.\n\nBriefing → koncept → produkce → revize. Žádné „inspiroval jsem se na Pinterestu\".",
+              "process": [
+                {
+                  "title": "Brand audit + style guide",
+                  "body": "1-2 týdny: existující vizuální assets, gaps, brand voice. Style guide (barvy, typo, fotografie)."
+                },
+                {
+                  "title": "Brief + koncept",
+                  "body": "1 týden per kampaň: cíl, message, formáty (Reels/static/karusel), moodboard."
+                },
+                {
+                  "title": "Produkce",
+                  "body": "Foto session, videografie, post-production. Většinou 1-2 týdny per dávka."
+                },
+                {
+                  "title": "Delivery + iterace",
+                  "body": "Dodávka v balíčcích, lifetime usage rights, revize per kampaň."
+                }
+              ]
+            }
           },
           {
             "name": "E-commerce management",
@@ -624,13 +976,57 @@
               }
             ],
             "slug": "e-commerce-management",
-            "categorySlug": "marketing"
+            "categorySlug": "marketing",
+            "sections": {
+              "problem": "E-shop běží, ale obrat stagnuje. Není to technický problém — produkty fungují, doprava funguje. Problém je marketingový/obchodní: špatný checkout flow, slabé product copy, nelogická navigace, abandoned cart 70 %.\n\nVy potřebujete někoho, kdo se dívá na e-shop jako obchodník, ne jako vývojář.",
+              "approach": "CRO (Conversion Rate Optimization): A/B testy klíčových sekcí, abandoned cart flows, product page redesign. Marketingová automatizace: e-mail flows (Klaviyo/Brevo), retargeting, loyalty.\n\nMěřím obchodní KPIs — AOV, CAC/LTV, repeat rate — ne jen traffic.",
+              "process": [
+                {
+                  "title": "Data audit",
+                  "body": "1-2 týdny: GA4, Shopify/Medusa analytics, funnel analysis. Kde jsou ztráty, kde příležitosti."
+                },
+                {
+                  "title": "Priority roadmap",
+                  "body": "1 týden: top 5 experimentů na 90 dnů. ROI-driven, ne „best practices\"."
+                },
+                {
+                  "title": "Iterace + A/B testy",
+                  "body": "Měsíčně: 2-3 experimenty, statisticky validní. Implementace winnerů."
+                },
+                {
+                  "title": "Quarterly business review",
+                  "body": "AOV, conversion rate, LTV trends. Re-prioritization, nový roadmap."
+                }
+              ]
+            }
           },
           {
             "name": "Marketing strategy + plan",
             "desc": "Pozicování, message-market fit, customer journey, content calendar, channel mix.",
             "slug": "marketing-strategy-plan",
-            "categorySlug": "marketing"
+            "categorySlug": "marketing",
+            "sections": {
+              "problem": "Marketingový plán napsalo vedení v lednu na flipchartu. V březnu marketingář dělá taktiky bez kontextu. V říjnu se vedení diví, proč KPI nesedí.\n\nStrategie a exekuce jsou odpojené. Není „kniha\" pro tým, podle které pracuje.",
+              "approach": "Strategický dokument 30-50 stran: pozicování, ICP (ideal customer profile), customer journey, channel mix, messaging framework, content pillars, KPIs.\n\nŽádný „PPT od konzultantů\" — dokument, který tým reálně používá. Quarterly updates, ne ročně.",
+              "process": [
+                {
+                  "title": "Discovery + research",
+                  "body": "2-3 týdny: interviews s vedením, sales, zákazníky. Competitive analysis, market sizing."
+                },
+                {
+                  "title": "Pozicování + messaging",
+                  "body": "2 týdny: kdo jsme, pro koho, proč. Messaging matrix per segment."
+                },
+                {
+                  "title": "Channel + content plan",
+                  "body": "2 týdny: SEO/PPC/social/PR mix, content kalendář, campaign roadmap."
+                },
+                {
+                  "title": "Workshop + handoff",
+                  "body": "1 týden: prezentace, Q&A, jak se dokument používá v denní práci. Kvartální review checkpoints."
+                }
+              ]
+            }
           }
         ]
       }
