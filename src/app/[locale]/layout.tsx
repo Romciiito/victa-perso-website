@@ -7,6 +7,7 @@ import { routing } from '@/i18n/routing';
 import { ThemeProvider } from '@/components/theme-provider';
 import { Nav } from '@/components/nav';
 import { Footer } from '@/components/footer';
+import { BodyOrbs } from '@/components/body-orbs';
 import { CookiebotScript } from '@/components/consent/cookiebot-script';
 import { Ga4Loader } from '@/components/consent/ga4-loader';
 import { antiFlashScript } from '@/lib/anti-flash';
@@ -66,6 +67,7 @@ export default async function LocaleLayout({
       </head>
       <body className={`${geist.variable} ${geistMono.variable} ${newsreader.variable} antialiased`}>
         <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem storageKey="victa-theme">
+          <BodyOrbs />
           <NextIntlClientProvider messages={messages} locale={locale}>
             <Nav />
             <main id="main" className="relative">
