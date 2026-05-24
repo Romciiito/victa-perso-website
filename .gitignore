@@ -47,3 +47,13 @@ dns-backup/*.txt
 .workforce/dispatch.md
 .workforce/integration.md
 .vercel
+
+# ── TypeScript build cache ────────────────────────────────────────────────────
+*.tsbuildinfo
+
+# ── Claude Code per-developer state (worktrees, local settings) ───────────────
+# .claude/skills/ IS committed (team-shared skill installations)
+# .claude/agents/ IS committed (team-shared agent definitions)
+# .claude/settings.json IS committed (team-shared editor config)
+.claude/worktrees/
+.claude/settings.local.json

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VICTA × Soft-skill — Vibe archetypy</title>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&family=Newsreader:ital,wght@0,400;1,300&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --ink: #0A0B0E;
+    --ink-muted: #4B5159;
+    --ink-soft: #8E949D;
+    --bg: #FAFAFA;
+    --line: rgba(10, 11, 14, 0.08);
+    --accent: #3730A3;
+    --ease: cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Geist', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+  header {
+    padding: 64px 32px 48px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-bottom: 1px solid var(--line);
+  }
+  header .eyebrow {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 18px;
+  }
+  header h1 {
+    font-size: clamp(36px, 4vw, 56px);
+    font-weight: 500;
+    letter-spacing: -0.04em;
+    line-height: 1.04;
+    max-width: 18ch;
+    margin-bottom: 16px;
+  }
+  header p {
+    font-size: 17px;
+    color: var(--ink-muted);
+    max-width: 60ch;
+  }
+
+  .grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 48px 32px 80px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: white;
+    transition: transform 500ms var(--ease), box-shadow 500ms var(--ease);
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 30px 60px -30px rgba(10, 11, 14, 0.18);
+  }
+
+  .preview {
+    aspect-ratio: 16 / 11;
+    border-bottom: 1px solid var(--line);
+    position: relative;
+    overflow: hidden;
+  }
+  .preview iframe {
+    width: 1440px;
+    height: 990px;
+    border: 0;
+    transform: scale(0.27);
+    transform-origin: 0 0;
+    pointer-events: none;
+  }
+
+  .body {
+    padding: 22px 22px 24px;
+  }
+  .body .num {
+    font-family: 'Geist Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+  }
+  .body h2 {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .body h2 .em {
+    font-family: 'Newsreader', serif;
+    font-style: italic;
+    font-weight: 300;
+  }
+  .body p {
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    line-height: 1.5;
+    margin-bottom: 18px;
+  }
+
+  .meta {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px 16px;
+    font-family: 'Geist Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    margin-bottom: 18px;
+  }
+  .meta div { display: flex; justify-content: space-between; padding: 4px 0; border-bottom: 1px dotted var(--line); }
+  .meta div span:first-child { color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.14em; }
+  .meta div span:last-child { color: var(--ink); }
+
+  .actions {
+    display: flex;
+    gap: 8px;
+  }
+  .btn {
+    flex: 1;
+    text-align: center;
+    padding: 11px 14px;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: transform 250ms var(--ease), background 250ms var(--ease);
+  }
+  .btn-primary {
+    background: var(--ink);
+    color: white;
+  }
+  .btn-primary:hover { transform: translateY(-1px); background: #1c1f26; }
+  .btn-ghost {
+    border: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .btn-ghost:hover { background: var(--bg); }
+
+  footer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-soft);
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  footer code {
+    font-family: 'Geist Mono', monospace;
+    background: var(--bg);
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--ink);
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Soft-skill exploration · 2026-05-24</div>
+    <h1>3 vibe <span style="font-family:'Newsreader',serif;font-style:italic;font-weight:300;">archetypy</span> pro VICTA hero.</h1>
+    <p>Stejný obsah, stejné CTA, stejný hero layout — tři různé visual languages podle <code style="font-family:'Geist Mono',monospace;">soft-skill</code> Section 3A. Klikni na náhled, prohlédni si live, a vrať se mi se zvolenou variantou.</p>
+  </header>
+
+  <section class="grid">
+    <article class="card">
+      <div class="preview">
+        <iframe src="vibe-1-editorial-luxury.html" loading="lazy" title="Vibe 1 preview"></iframe>
+      </div>
+      <div class="body">
+        <div class="num">01</div>
+        <h2>Editorial <span class="em">luxury</span></h2>
+        <p>Warm cream substrate, Newsreader italic serif headings, espresso accents, paper-grain overlay. Soft-skill explicitně doporučuje pro „Agency / Real Estate / Lifestyle". B2B fit: <strong>moderate</strong> — boutique feel, ale agentura prodávající AI pak vypadá jak butikový design studio.</p>
+        <div class="meta">
+          <div><span>Substrate</span><span>#FDFBF7</span></div>
+          <div><span>Headline</span><span>Newsreader</span></div>
+          <div><span>Accent</span><span>Espresso</span></div>
+          <div><span>Mood</span><span>Editorial</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="vibe-1-editorial-luxury.html" target="_blank">Otevřít live</a>
+          <a class="btn btn-ghost" href="vibe-1-editorial-luxury.html">Inline</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="preview">
+        <iframe src="vibe-2-soft-structuralism.html" loading="lazy" title="Vibe 2 preview"></iframe>
+      </div>
+      <div class="body">
+        <div class="num">02</div>
+        <h2>Soft <span class="em">structuralism</span></h2>
+        <p>Silver-grey substrate, bold Geist Grotesk headings, ambient soft shadows, asymmetric bento mini-grid. Apple/Linear/Vercel tech-credible feel. B2B fit: <strong>strong</strong> — pasuje na agenturu prodávající AI/automatizaci, vzbuzuje důvěru u CFO i CTO.</p>
+        <div class="meta">
+          <div><span>Substrate</span><span>#F4F5F7</span></div>
+          <div><span>Headline</span><span>Geist 600</span></div>
+          <div><span>Accent</span><span>Slate</span></div>
+          <div><span>Mood</span><span>Tech-credible</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="vibe-2-soft-structuralism.html" target="_blank">Otevřít live</a>
+          <a class="btn btn-ghost" href="vibe-2-soft-structuralism.html">Inline</a>
+        </div>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="preview">
+        <iframe src="vibe-3-ethereal-glass.html" loading="lazy" title="Vibe 3 preview"></iframe>
+      </div>
+      <div class="body">
+        <div class="num">03</div>
+        <h2>Ethereal <span class="em">glass</span></h2>
+        <p>OLED black substrate, radial mesh gradients (purple/emerald orbs), vantablack glass cards s backdrop-blur, gradient-fill italic accent words. Soft-skill doporučuje pro „SaaS / AI / Tech". B2B fit: <strong>polarizing</strong> — vyhraje technicky orientované klienty (logistika scaleup), ale odradí konzervativní (zdravotnictví, energetika boards).</p>
+        <div class="meta">
+          <div><span>Substrate</span><span>#050508</span></div>
+          <div><span>Headline</span><span>Geist 500</span></div>
+          <div><span>Accent</span><span>Purple/Emerald</span></div>
+          <div><span>Mood</span><span>AI-native</span></div>
+        </div>
+        <div class="actions">
+          <a class="btn btn-primary" href="vibe-3-ethereal-glass.html" target="_blank">Otevřít live</a>
+          <a class="btn btn-ghost" href="vibe-3-ethereal-glass.html">Inline</a>
+        </div>
+      </div>
+    </article>
+  </section>
+
+  <footer>
+    <span>VICTA × Soft-skill exploration · docs/design-exploration/2026-05-24-soft-skill-vibes/</span>
+    <span>Po výběru: spec → workplan → progressive rollout přes všech 41 pages.</span>
+  </footer>
+</body>
+</html>
