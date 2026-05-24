@@ -1,9 +1,8 @@
 /* ============================================================
    VICTA — globals.css
-   Tailwind v4 entry point + LOCKED design tokens
-   Source of truth: architecture.md §7.1 + design-decision.md §1
-   Combination: Inter Tight · indigo · grid · medium · left · 500
-   DO NOT change token values without Roman's explicit re-decision
+   Tailwind v4 entry point + D-008 LOCKED design tokens
+   Source of truth: docs/superpowers/specs/2026-05-24-design-system-v2-design.md
+   DO NOT change token values without D-### successor in decisions.md
    ============================================================ */
 
 @import "tailwindcss";
@@ -13,88 +12,107 @@
    ============================================================ */
 @theme {
   /* Fonts */
-  --font-sans: var(--font-inter-tight);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+  --font-serif: var(--font-newsreader), ui-serif, serif;
 
   /* Colors — reference CSS Custom Properties set in :root / [data-theme="dark"] */
   --color-bg: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-border: var(--border);
-  --color-border-soft: var(--border-soft);
+  --color-bg-elevated: var(--bg-elevated);
+  --color-bg-deep: var(--bg-deep);
   --color-ink: var(--ink);
-  --color-secondary: var(--secondary);
-  --color-tertiary: var(--tertiary);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-soft: var(--ink-soft);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --color-accent: var(--accent);
-  --color-accent-bright: var(--accent-bright);
   --color-accent-soft: var(--accent-soft);
-  --color-success: var(--success);
-  --color-warning: var(--warning);
-  --color-error: var(--error);
+  --color-status-ok: var(--status-ok);
+  --color-status-warn: var(--status-warn);
+  --color-status-err: var(--status-err);
 
   /* Border radius */
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
 
   /* Shadows */
-  --shadow-sm: 0 1px 2px rgba(10, 11, 14, 0.04), 0 4px 12px rgba(10, 11, 14, 0.04);
-  --shadow-md: 0 4px 12px rgba(10, 11, 14, 0.08);
+  --shadow-sm: 0 1px 1px rgba(10,11,14,0.02), 0 4px 14px -4px rgba(10,11,14,0.05);
+  --shadow-card: inset 0 1px 0 rgba(255,255,255,0.9), 0 30px 60px -30px rgba(10,11,14,0.12);
+  --shadow-card-hover: inset 0 1px 0 rgba(255,255,255,0.9), 0 50px 100px -40px rgba(10,11,14,0.18);
+  --shadow-cta: 0 1px 0 rgba(255,255,255,0.15) inset, 0 10px 28px -10px rgba(10,11,14,0.45);
 }
 
 /* ============================================================
-   LOCKED color tokens — Light mode (LOCKED per design-decision.md §1.1)
+   LIGHT MODE (Soft Structuralism — Vibe 2)
+   D-008 LOCKED 2026-05-24, replaces D-001 §1.1
    ============================================================ */
 :root {
   /* Surfaces */
-  --bg: #FAFAFA;                         /* Hlavní pozadí */
-  --surface: #F4F4F5;                    /* Audit cards bg, hover, code blocks */
-  --surface-2: #EEEEEF;                  /* Modal scrim base */
+  --bg: #F4F5F7;
+  --bg-elevated: #FFFFFF;
+  --bg-deep: #ECEEF1;
 
-  /* Borders */
-  --border: #D4D4D8;                     /* Hairline 1px separators */
-  --border-soft: #E4E4E7;               /* Footer dividers */
+  /* Ink */
+  --ink: #0A0B0E;
+  --ink-muted: #4B5159;
+  --ink-soft: #8E949D;
 
-  /* Text */
-  --ink: #0A0B0E;                        /* Primary text */
-  --secondary: #52525B;                  /* Body copy */
-  --tertiary: #71717A;                   /* Captions, mono labels */
+  /* Lines */
+  --line: rgba(10, 11, 14, 0.06);
+  --line-strong: rgba(10, 11, 14, 0.12);
 
-  /* Indigo signature */
-  --accent: #3730A3;                     /* Primary CTA bg, link underlines */
-  --accent-bright: #4F46C7;             /* Hover state */
-  --accent-soft: rgba(55, 48, 163, 0.08); /* Badge bg */
+  /* Accent */
+  --accent: #1F2937;
+  --accent-soft: rgba(31, 41, 55, 0.05);
 
-  /* Status */
-  --success: #15803D;
-  --warning: #A16207;
-  --error: #B91C1C;
+  /* Status (kept from D-001 — WCAG AA verified) */
+  --status-ok: #16A34A;
+  --status-warn: #A16207;
+  --status-err: #B91C1C;
+
+  /* Atmospheric orbs */
+  --orb-1: rgba(56, 70, 91, 0.06);
+  --orb-2: rgba(120, 130, 150, 0.05);
 
   /* Shape */
-  --radius-sm: 4px;                      /* Buttons, badges, mono lang tag */
-  --radius-md: 6px;                      /* Inputs, primary CTA buttons */
-  --radius-lg: 8px;                      /* Cards, audit pricing, modals */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-xl: 28px;
 
-  /* Shadows (minimal) */
-  --shadow-sm: 0 1px 2px rgba(10, 11, 14, 0.04), 0 4px 12px rgba(10, 11, 14, 0.04);
-  --shadow-md: 0 4px 12px rgba(10, 11, 14, 0.08); /* Modals only */
+  /* Motion */
+  --ease: cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 /* ============================================================
-   LOCKED color tokens — Dark mode (LOCKED per design-decision.md §1.1)
+   DARK MODE (Ethereal Glass — Vibe 3)
    ============================================================ */
 [data-theme="dark"] {
-  --bg: #0A0B0E;                         /* Cool ink, near-black, NOT pure #000 */
-  --surface: #18181B;
-  --surface-2: #27272A;
-  --border: #3F3F46;                     /* Hairlines */
-  --border-soft: #2A2A2E;              /* Soft separators */
-  --ink: #FAFAFA;                        /* Bright but not glaring */
-  --secondary: #A1A1AA;
-  --tertiary: #71717A;                   /* Same as light — passes AA both modes */
-  --accent: #7367E5;                     /* Lifted indigo for dark mode */
-  --accent-bright: #9389F0;             /* Hover state */
-  --accent-soft: rgba(115, 103, 229, 0.14); /* Slightly stronger opacity for dark */
+  --bg: #050508;
+  --bg-elevated: rgba(255, 255, 255, 0.03);
+  --bg-deep: #030305;
+
+  --ink: #F4F4F6;
+  --ink-muted: #A8ABB4;
+  --ink-soft: #6B6F78;
+
+  --line: rgba(255, 255, 255, 0.08);
+  --line-strong: rgba(255, 255, 255, 0.14);
+
+  --accent: #DCD7FF;
+  --accent-soft: rgba(150, 120, 255, 0.12);
+
+  --status-ok: #4ADE80;
+
+  --orb-1: rgba(150, 120, 255, 0.55);
+  --orb-2: rgba(60, 220, 180, 0.40);
+
+  /* Dark-mode shadow overrides */
+  --shadow-card: inset 0 1px 0 rgba(255,255,255,0.10), 0 20px 50px -20px rgba(0,0,0,0.5);
+  --shadow-card-hover: inset 0 1px 0 rgba(255,255,255,0.14), 0 30px 70px -20px rgba(0,0,0,0.6);
+  --shadow-cta: inset 0 1px 0 rgba(255,255,255,0.8), 0 14px 32px -10px rgba(120,100,220,0.5), 0 0 0 1px rgba(255,255,255,0.18);
 }
 
 /* ============================================================
@@ -103,85 +121,93 @@
 html {
   background-color: var(--bg);
   color: var(--ink);
-  font-family: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 600ms cubic-bezier(0.32, 0.72, 0, 1), color 600ms cubic-bezier(0.32, 0.72, 0, 1);
 }
 
 body {
   background-color: var(--bg);
   color: var(--ink);
-  /* Body default: weight 400, letter-spacing -0.005em, line-height 1.55 (LOCKED §1.2) */
   font-weight: 400;
   letter-spacing: -0.005em;
-  line-height: 1.55;
+  line-height: 1.5;
   position: relative;
-  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
 }
 
 /* ============================================================
-   Background grid pattern (LOCKED per design-decision.md §1.3)
-   40×40px square grid, 1px lines at 4% opacity
-   Radial mask: visible center 70%, fades to transparent at edges
-   Applied to <body> with class .bg-grid — NOT repeated inside sections
-   ============================================================ */
-.bg-grid {
-  position: relative;
-}
-
-.bg-grid::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background-image:
-    repeating-linear-gradient(90deg, transparent 0, transparent 39px, rgba(10, 11, 14, 0.04) 39px, rgba(10, 11, 14, 0.04) 40px),
-    repeating-linear-gradient(0deg, transparent 0, transparent 39px, rgba(10, 11, 14, 0.04) 39px, rgba(10, 11, 14, 0.04) 40px);
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 80%);
-}
-
-[data-theme="dark"] .bg-grid::before {
-  background-image:
-    repeating-linear-gradient(90deg, transparent 0, transparent 39px, rgba(250, 250, 250, 0.04) 39px, rgba(250, 250, 250, 0.04) 40px),
-    repeating-linear-gradient(0deg, transparent 0, transparent 39px, rgba(250, 250, 250, 0.04) 39px, rgba(250, 250, 250, 0.04) 40px);
-  mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 70% at 50% 40%, black 30%, transparent 80%);
-}
-
-/* ============================================================
-   Utility classes for token-referenced colors
-   All components MUST use these — never hardcode hex in components
-   (claude-rules.md rule 8, REQ-NF-040)
+   Utility classes — token-referenced colors
+   All components MUST use these — never hardcode hex
+   (claude-rules.md rule 8, AR-10)
    ============================================================ */
 
-/* Text colors */
-.text-ink       { color: var(--ink); }
-.text-secondary { color: var(--secondary); }
-.text-tertiary  { color: var(--tertiary); }
-.text-accent    { color: var(--accent); }
-.text-success   { color: var(--success); }
-.text-warning   { color: var(--warning); }
-.text-error     { color: var(--error); }
+.text-ink         { color: var(--ink); }
+.text-ink-muted   { color: var(--ink-muted); }
+.text-ink-soft    { color: var(--ink-soft); }
+.text-accent      { color: var(--accent); }
+.text-status-ok   { color: var(--status-ok); }
 
-/* Background colors */
-.bg-bg        { background-color: var(--bg); }
-.bg-surface   { background-color: var(--surface); }
-.bg-surface-2 { background-color: var(--surface-2); }
-.bg-accent    { background-color: var(--accent); }
+.bg-bg          { background-color: var(--bg); }
+.bg-elevated    { background-color: var(--bg-elevated); }
+.bg-deep        { background-color: var(--bg-deep); }
+.bg-accent      { background-color: var(--accent); }
+.bg-accent-soft { background-color: var(--accent-soft); }
 
-/* Border colors */
-.border-border      { border-color: var(--border); }
-.border-border-soft { border-color: var(--border-soft); }
+.border-line        { border-color: var(--line); }
+.border-line-strong { border-color: var(--line-strong); }
 .border-accent      { border-color: var(--accent); }
 
-/* Typography — headline defaults (LOCKED §1.2) */
-/* weight 500, tracking -0.035em, line-height 1.04 */
+/* ============================================================
+   D-001 → D-008 BACKWARDS COMPATIBILITY ALIASES
+   Existing pages (kontakt, sluzby, reseni, odvetvi, o-nas, spoluprace,
+   ochrana-soukromi, cookies, blog) use the D-001 utility names below.
+   These aliases route them to D-008 tokens until pages are refactored in
+   PR 2-5. REMOVE in PR 7 cleanup once all pages migrated.
+   ============================================================ */
+
+/* Token aliases — old name → new token */
+:root {
+  --secondary: var(--ink-muted);
+  --tertiary: var(--ink-soft);
+  --surface: var(--bg-elevated);
+  --surface-2: var(--bg-deep);
+  --border: var(--line);
+  --border-soft: var(--line-strong);
+  /* Status color aliases — used by status-line, footer, contact-form, newsletter-signup */
+  --success: var(--status-ok);
+  --warning: var(--status-warn);
+  --error:   var(--status-err);
+}
+
+/* Utility classes — old names */
+.text-secondary { color: var(--ink-muted); }
+.text-tertiary  { color: var(--ink-soft); }
+.bg-surface     { background-color: var(--bg-elevated); }
+.bg-surface-2   { background-color: var(--bg-deep); }
+.border-border        { border-color: var(--line); }
+.border-border-soft   { border-color: var(--line-strong); }
+.hover\:bg-surface:hover { background-color: var(--bg-elevated); }
+.hover\:text-ink:hover   { color: var(--ink); }
+
+/* Audit pricing card (D-001 §1.6) — preserve until PR 3 refactors spoluprace */
+.audit-card.popular {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* ============================================================
+   Typography defaults
+   ============================================================ */
+
+/* Headlines: Geist 600, tight letter-spacing, line-height 0.94 */
 h1, h2, h3, h4, h5, h6 {
-  font-weight: 500;
-  letter-spacing: -0.035em;
-  line-height: 1.04;
+  font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 0.94;
 }
 
 /* Czech typography: text-wrap pretty where supported */
@@ -189,8 +215,7 @@ p, h1, h2, h3, h4, h5, h6 {
   text-wrap: pretty;
 }
 
-/* Mono defaults (LOCKED §1.2) */
-/* weight 400, letter-spacing 0, line-height 1.5 */
+/* Mono defaults */
 code, pre, .font-mono {
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-weight: 400;
@@ -198,8 +223,130 @@ code, pre, .font-mono {
   line-height: 1.5;
 }
 
-/* Popular audit card accent ring (LOCKED §1.6) */
-.audit-card.popular {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 1px var(--accent);
+/* Serif accent (used selectively, e.g., H1 italic accent word) */
+.font-serif, em.accent {
+  font-family: var(--font-newsreader), ui-serif, serif;
 }
+
+/* ============================================================
+   Noise overlay (replaces 40×40 grid from D-001)
+   Fixed, pointer-events: none, applied via ::after
+   ============================================================ */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  /* z-index 30 sits above content (z-0/1) but below Nav (z-40) and skip-link (z-60) */
+  z-index: 30;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1, 0 0 0 0 1, 0 0 0 0 1, 0 0 0 0.2 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0;
+  mix-blend-mode: overlay;
+  transition: opacity 600ms cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+[data-theme="dark"] body::after {
+  opacity: 0.18;
+}
+
+/* ============================================================
+   Reduced motion respect
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ============================================================
+   Component keyframes
+   ============================================================ */
+/* BentoShell hover lifts its inner BentoCard */
+.bento-shell-hover:hover .bento-card-inner {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
+@keyframes eyebrow-breathe {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.55; transform: scale(0.85); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(28px); filter: blur(6px); }
+  to { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+/* ============================================================
+   Layout primitives — responsive overrides
+   ============================================================ */
+.editorial-split {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+}
+.editorial-split[data-ratio="balanced"] {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 980px) {
+  .editorial-split,
+  .editorial-split[data-ratio="balanced"] {
+    grid-template-columns: 1fr;
+    gap: 3.5rem !important;
+  }
+}
+
+/* AsymmetricalBento column grids — mobile collapses to 1col */
+.asymmetrical-bento-2 { grid-template-columns: 1fr 1fr; }
+.asymmetrical-bento-3 { grid-template-columns: 1fr 1fr 1fr; }
+.asymmetrical-bento-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+@media (max-width: 768px) {
+  .asymmetrical-bento-2,
+  .asymmetrical-bento-3,
+  .asymmetrical-bento-4 {
+    grid-template-columns: 1fr;
+  }
+  /* On mobile, even feature span-2 cards become full width */
+  .asymmetrical-bento [class*="col-span"] {
+    grid-column: 1 / -1;
+  }
+}
+
+@keyframes body-orbs-drift {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(-3%, 2%); }
+}
+
+/* Button hover: arrow translates and scales slightly */
+.button-arrow {
+  transition: transform 400ms var(--ease);
+}
+a:hover > .button-arrow,
+button:hover > .button-arrow {
+  transform: translateX(2px) translateY(-1px) scale(1.06);
+}
+
+/* Dark mode glass override for Fluid Island Nav */
+[data-theme="dark"] .fluid-island {
+  background: rgba(8, 8, 14, 0.55) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 14px 48px -10px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Dark mode mobile bar override */
+[data-theme="dark"] .mobile-bar {
+  background: rgba(8, 8, 14, 0.7) !important;
+}
+
+/* Nav link hover colour */
+.nav-link:hover {
+  color: var(--ink) !important;
+}
+
+.theme-toggle:hover {
+  color: var(--ink) !important;
+  border-color: var(--line-strong) !important;
+}
+
