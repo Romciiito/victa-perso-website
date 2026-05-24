@@ -314,3 +314,13 @@ body::after {
   0%, 100% { transform: translate(0, 0); }
   50% { transform: translate(-3%, 2%); }
 }
+
+/* Button hover: arrow translates and scales slightly */
+.button-arrow {
+  transition: transform 400ms var(--ease);
+}
+a:hover > .button-arrow,
+button:hover > .button-arrow {
+  transform: translateX(2px) translateY(-1px) scale(1.06);
+}
+
