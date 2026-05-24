@@ -67,12 +67,25 @@ export type Solution = {
   sections?: SolutionSections;
 };
 
+export type IndustryProcessStep = {
+  title: string;
+  body: string;
+};
+
+export type IndustrySections = {
+  problem: string;
+  approach: string;
+  process: ReadonlyArray<IndustryProcessStep>;
+};
+
 export type Industry = {
   slug: string;
   key: string;
   icon: string;
   name: string;
   body: string;
+  /** PR 6d content — narratives for detail page. Optional during transition. */
+  sections?: IndustrySections;
 };
 
 /* ============================================================
