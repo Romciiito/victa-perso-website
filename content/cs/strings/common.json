@@ -854,10 +854,42 @@
       "headline": "Blog",
       "subhead": "Píšeme o tom, jak v praxi propojit web, AI a marketing — bez buzzwordu a bez vendor pitchů."
     },
+    "heroStat": {
+      "label": "STAV",
+      "value": "Připravujeme",
+      "note": "První články zveřejníme s první klientskou vlnou. Žádný balast — píšeme jen o tom, co sami stavíme."
+    },
     "comingSoon": {
       "label": "PŘIPRAVUJEME",
       "headline": "První články brzy.",
       "body": "Blog spouštíme s první klientskou vlnou. Najdete tu články o digitalizaci, AI v praxi, AEO/SEO, e-commerce a o tom, jak vlastně vést dlouhodobý vztah s digitální agenturou."
+    },
+    "topics": {
+      "label": "O ČEM SE TU BUDE PSÁT",
+      "headline": "Témata, na kterých pracujeme.",
+      "intro": "Ukázka okruhů, kterým se budeme věnovat. Žádné generické trendy — jen to, co sami v praxi řešíme s klienty.",
+      "items": [
+        {
+          "label": "AI ROADMAP",
+          "headline": "AI roadmap audit — od nápadu k prioritám.",
+          "body": "Jak strukturovat AI iniciativu uvnitř firmy — od identifikace use-case, přes data readiness, až po build vs. buy rozhodnutí."
+        },
+        {
+          "label": "AI LEGISLATIVA",
+          "headline": "Český kontext AI legislativy.",
+          "body": "AI Act, GDPR a české specifikum — jaké závazky platí pro firmy, které nasazují AI v zákaznickém kontaktu, marketingu nebo HR."
+        },
+        {
+          "label": "CASE STUDIES",
+          "headline": "Klientské případovky bez marketing-speaku.",
+          "body": "Co reálně fungovalo, co ne, kolik to stálo a jaký byl business outcome. Bez NDA — vždy po souhlasu klienta."
+        },
+        {
+          "label": "AEO A SEO",
+          "headline": "AEO — jak být citován v ChatGPT a Perplexity.",
+          "body": "Praktické postupy pro Answer Engine Optimization — proč už nestačí klasické SEO a co konkrétně dělat, aby vás AI engines uváděly jako zdroj."
+        }
+      ]
     },
     "newsletter": {
       "label": "NEWSLETTER",
