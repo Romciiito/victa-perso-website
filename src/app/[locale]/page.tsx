@@ -85,11 +85,15 @@ async function CzechHome() {
             className="mb-8 font-mono text-secondary"
             style={{ fontSize: '13px', letterSpacing: 0 }}
           >
-            <span>{t('hero.tagsAudit')}</span>
+            <span>{t('hero.tagsWeb')}</span>
             {NBSP}
             <span style={{ color: 'var(--accent)' }}>·</span>
             {NBSP}
-            <span>{t('hero.tagsDev')}</span>
+            <span>{t('hero.tagsEshop')}</span>
+            {NBSP}
+            <span style={{ color: 'var(--accent)' }}>·</span>
+            {NBSP}
+            <span>{t('hero.tagsAi')}</span>
             {NBSP}
             <span style={{ color: 'var(--accent)' }}>·</span>
             {NBSP}
@@ -97,7 +101,7 @@ async function CzechHome() {
             {NBSP}
             <span style={{ color: 'var(--accent)' }}>·</span>
             {NBSP}
-            <span>{t('hero.tagsAi')}</span>
+            <span>{t('hero.tagsSprava')}</span>
           </div>
 
           {/* Divider — width 920px, 1px border-soft, vertical margin 32px */}
@@ -261,7 +265,7 @@ async function CzechHome() {
                 t('audit.tier1.deliverables.4'),
               ]}
               ctaLabel={t('audit.tier1.cta')}
-              ctaHref="/kontakt"
+              ctaHref="/spoluprace#audit"
               ctaVariant="primary"
             />
             {/* Tier 2 */}
@@ -278,7 +282,7 @@ async function CzechHome() {
                 t('audit.tier2.deliverables.3'),
               ]}
               ctaLabel={t('audit.tier2.cta')}
-              ctaHref="/kontakt"
+              ctaHref="/spoluprace#audit"
               ctaVariant="ghost"
             />
             {/* Tier 3 */}
@@ -295,7 +299,7 @@ async function CzechHome() {
                 t('audit.tier3.deliverables.3'),
               ]}
               ctaLabel={t('audit.tier3.cta')}
-              ctaHref="/kontakt"
+              ctaHref="/spoluprace#audit"
               ctaVariant="ghost"
             />
           </div>
