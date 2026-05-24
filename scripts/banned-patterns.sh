@@ -34,8 +34,19 @@ check "Inter_Tight|'Inter'|\"Inter\"" "Inter font family (banned by taste-skill 
 # Layout
 check 'h-screen[^a-zA-Z]' "h-screen — use min-h-[100dvh] (iOS viewport bug)"
 
-# Color
-check "#000000|#FFFFFF" "Pure black/white literal — use --ink / --bg tokens"
+# Color — exclude CSS custom property definitions (--name: #FFFFFF is legitimate
+# token declaration, not a component-level hardcode)
+check_color() {
+  local matches
+  matches=$(echo "$FILES" | xargs grep -nE "#000000|#FFFFFF" 2>/dev/null | grep -vE "^\s*--[a-zA-Z0-9_-]+\s*:" | grep -vE ":\s+--[a-zA-Z0-9_-]+\s*:" || true)
+  if [ -n "$matches" ]; then
+    echo "✗ Banned pattern: Pure black/white literal — use --ink / --bg tokens"
+    echo "$matches" | head -10
+    echo ""
+    FAIL=1
+  fi
+}
+check_color
 
 # Content (Jane Doe effect)
 check 'John Doe|Jane Doe|Acme Corp|Lorem ipsum' "Generic placeholder content (use Czech realistic)"

@@ -89,13 +89,22 @@ export function Button(props: Props) {
     );
   }
 
+  // Native button branch — forward all standard button props (disabled, aria-*, type, form, etc.).
+  // Strip our custom props before spreading. The underscore-prefixed destructured
+  // names are intentionally unused (they exist only to remove keys from the rest).
+  /* eslint-disable @typescript-eslint/no-unused-vars */
+  const {
+    children: _children,
+    variant: _variant,
+    size: _size,
+    showArrow: _showArrow,
+    className: _className,
+    ...nativeRest
+  } = props as NativeButtonProps;
+  /* eslint-enable @typescript-eslint/no-unused-vars */
+
   return (
-    <button
-      type="button"
-      className={cls}
-      style={style}
-      onClick={(props as NativeButtonProps).onClick}
-    >
+    <button type="button" {...nativeRest} className={cls} style={style}>
       {inner}
     </button>
   );
