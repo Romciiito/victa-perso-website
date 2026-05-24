@@ -340,3 +340,8 @@ button:hover > .button-arrow {
   color: var(--ink) !important;
 }
 
+.theme-toggle:hover {
+  color: var(--ink) !important;
+  border-color: var(--line-strong) !important;
+}
+
