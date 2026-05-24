@@ -463,7 +463,7 @@
             "slug": "e-shopy-na-miru",
             "categorySlug": "itDev",
             "sections": {
-              "problem": "Shoptet, Eshop-rychle, Upgates dělají dobrý job v začátku, ale jakmile chcete vlastní logiku — customizovaný checkout, ERP propojení, B2B ceník, multi-warehouse — narážíte na strop.\n\nShopify mimo Plus je pomalý a omezuje themes. Vlastní e-shop od nuly přes Magenta je projekt na rok a půl.",
+              "problem": "Shoptet, Eshop-rychle, Upgates dělají dobrý job v začátku, ale jakmile chcete vlastní logiku — customizovaný checkout, ERP propojení, B2B ceník, multi-warehouse — narážíte na strop.\n\nShopify mimo Plus je pomalý a omezuje themes. Vlastní e-shop od nuly přes Magento je projekt na rok a půl.",
               "approach": "Pro střední e-shopy (5-50 mil. Kč obrat): Shopify Plus s vlastním headless frontend přes Next.js. Pro náročnější (50+ mil., specifické ERP/sklad): Medusa.js jako headless commerce kostra.\n\nV obou případech: rychlost (LCP < 2.5s), SEO/AEO, jeden checkout, jedno administrační rozhraní pro marketing i operations.",
               "process": [
                 {
