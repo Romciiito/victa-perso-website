@@ -327,33 +327,34 @@ async function CzechHome() {
       />
 
       {/* ============================================================
-           AUDIT PRICING  (locked-preview .audit-section)
-           3 tiers · middle (Tier 1) marked .popular with accent ring
+           AUDIT PRICING  (D-008)
+           3 tiers · Tier 1 (popular) uses BentoShell ring via
+           .audit-card.popular alias.
            ============================================================ */}
       <section
         id="audit"
-        className="relative border-t border-b border-border-soft px-6 py-16 md:px-12 md:py-16"
-        style={{ backgroundColor: 'var(--surface)' }}
+        className="relative px-6 py-24 md:px-8 md:py-32"
+        style={{ borderTop: '1px solid var(--line)' }}
       >
         <div className="mx-auto w-full max-w-[1440px]">
-          <div className="mb-12 max-w-[760px]">
+          <div className="mb-16 grid gap-4" style={{ maxWidth: '760px' }}>
             <h2
-              className="mb-4 text-ink"
               style={{
-                fontSize: 'clamp(28px, 3.6vw, 45px)',
-                lineHeight: 1.1,
-                letterSpacing: '-0.025em',
-                fontWeight: 500,
+                fontSize: 'clamp(32px, 4vw, 56px)',
+                lineHeight: 1.04,
+                letterSpacing: '-0.045em',
+                fontWeight: 600,
+                color: 'var(--ink)',
               }}
             >
               {t('audit.heading')}
             </h2>
-            <p className="text-secondary" style={{ fontSize: '19px', lineHeight: 1.5 }}>
+            <p style={{ fontSize: '19px', lineHeight: 1.5, color: 'var(--ink-muted)' }}>
               {t('audit.subhead')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             {/* Tier 1 (popular) */}
             <AuditCard
               tier={t('audit.tier1.tier')}
@@ -412,16 +413,16 @@ async function CzechHome() {
 
           {/* Scoping call line */}
           <p
-            className="mt-8 text-center text-secondary"
-            style={{ fontSize: '15px' }}
+            className="mt-10 text-center"
+            style={{ fontSize: '15px', color: 'var(--ink-muted)' }}
           >
             {t('audit.scopingPrefix')}
             <Link
               href="/kontakt"
               style={{
-                color: 'var(--accent)',
+                color: 'var(--ink)',
                 fontWeight: 500,
-                borderBottom: '1px solid var(--accent)',
+                borderBottom: '1px solid var(--ink)',
                 paddingBottom: '2px',
               }}
             >
@@ -525,8 +526,9 @@ async function EnglishStub() {
 }
 
 /* ============================================================
-   AuditCard — single tier card in the audit pricing 3-up grid
-   (locked-preview .audit-card · .popular variant for emphasized tier)
+   AuditCard — D-008 refactor: BentoShell + BentoCard pattern
+   Popular tier gets accent ring via outer BentoShell border (preserves
+   the .audit-card.popular visual signature from D-001 §1.6 alias).
    ============================================================ */
 function AuditCard({
   tier,
@@ -554,103 +556,130 @@ function AuditCard({
   popular?: boolean;
 }) {
   return (
-    <article
-      className={`audit-card flex h-full flex-col rounded-lg border p-8 ${popular ? 'popular' : ''}`}
-      style={{
-        backgroundColor: 'var(--bg)',
-        borderColor: popular ? 'var(--accent)' : 'var(--border)',
-        boxShadow: popular ? '0 0 0 1px var(--accent)' : undefined,
-      }}
+    <div
+      className={popular ? 'audit-card popular' : 'audit-card'}
+      style={popular ? { borderRadius: 'var(--radius-xl)' } : undefined}
     >
-      {/* Tier row */}
-      <div className="mb-6 flex items-center justify-between gap-3">
-        <span
-          className="font-mono uppercase"
-          style={{
-            color: 'var(--tertiary)',
-            fontSize: '12px',
-            letterSpacing: '0.12em',
-          }}
-        >
-          {tier}
-        </span>
-        {popular && badge ? (
-          <span
-            className="font-mono uppercase"
+      <BentoShell>
+        <BentoCard padding="loose">
+          {/* Tier row */}
+          <div className="flex items-center justify-between" style={{ gap: '12px' }}>
+            <span
+              className="font-mono uppercase"
+              style={{
+                color: 'var(--ink-soft)',
+                fontSize: '11px',
+                letterSpacing: '0.16em',
+              }}
+            >
+              {tier}
+            </span>
+            {popular && badge ? (
+              <span
+                className="font-mono uppercase"
+                style={{
+                  backgroundColor: 'var(--accent-soft)',
+                  color: 'var(--accent)',
+                  fontSize: '10px',
+                  letterSpacing: '0.08em',
+                  padding: '4px 10px',
+                  borderRadius: '999px',
+                  fontWeight: 500,
+                }}
+              >
+                {badge}
+              </span>
+            ) : null}
+          </div>
+
+          {/* Name */}
+          <h3
             style={{
-              backgroundColor: 'var(--accent-soft)',
-              color: 'var(--accent)',
-              fontSize: '10px',
-              letterSpacing: '0.08em',
-              padding: '4px 8px',
-              borderRadius: 'var(--radius-sm)',
-              fontWeight: 500,
+              fontSize: 'clamp(22px, 2.2vw, 26px)',
+              fontWeight: 600,
+              letterSpacing: '-0.025em',
+              lineHeight: 1.15,
+              color: 'var(--ink)',
+              marginTop: '8px',
             }}
           >
-            {badge}
-          </span>
-        ) : null}
-      </div>
+            {name}
+          </h3>
 
-      {/* Name */}
-      <h3
-        className="mb-6 text-ink"
-        style={{ fontSize: '25px', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.2 }}
-      >
-        {name}
-      </h3>
-
-      {/* Price (CZK primary) */}
-      <div
-        className="font-mono text-ink"
-        style={{ fontSize: '33px', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1, marginBottom: '4px' }}
-      >
-        {price}
-      </div>
-      {/* Price (EUR secondary) */}
-      <div className="font-mono text-secondary" style={{ fontSize: '13px', marginBottom: '24px' }}>
-        {priceEur}
-      </div>
-
-      {/* Divider */}
-      <hr className="border-0 border-t" style={{ borderColor: 'var(--border)', margin: '24px 0' }} />
-
-      {/* Includes label */}
-      <div
-        className="mb-4 font-mono uppercase"
-        style={{
-          color: 'var(--tertiary)',
-          fontSize: '12px',
-          letterSpacing: '0.12em',
-        }}
-      >
-        {includesLabel}
-      </div>
-
-      {/* Bullets */}
-      <ul className="mb-8 flex-1 list-none">
-        {bullets.map((b, i) => (
-          <li
-            key={`${i}-${b.slice(0, 16)}`}
-            className="relative pl-6 text-ink"
-            style={{ fontSize: '13px', lineHeight: 1.7, marginBottom: '8px' }}
-          >
-            <span
-              aria-hidden
-              className="absolute left-0 top-0 select-none font-semibold"
-              style={{ color: 'var(--accent)' }}
+          {/* Price block */}
+          <div>
+            <div
+              style={{
+                fontFamily: 'var(--font-geist), system-ui, sans-serif',
+                fontSize: 'clamp(32px, 3.6vw, 44px)',
+                fontWeight: 500,
+                letterSpacing: '-0.04em',
+                lineHeight: 1,
+                color: 'var(--ink)',
+                marginBottom: '6px',
+              }}
             >
-              ✓
-            </span>
-            {b}
-          </li>
-        ))}
-      </ul>
+              {price}
+            </div>
+            <div
+              className="font-mono"
+              style={{ fontSize: '12px', color: 'var(--ink-muted)' }}
+            >
+              {priceEur}
+            </div>
+          </div>
 
-      {/* CTA */}
-      <Button href={ctaHref} variant={ctaVariant} className="w-full">
-        {ctaLabel}
-      </Button>
-    </article>
+          {/* Divider */}
+          <hr
+            className="border-0 border-t"
+            style={{ borderColor: 'var(--line)', margin: '4px 0' }}
+          />
+
+          {/* Includes label */}
+          <div
+            className="font-mono uppercase"
+            style={{
+              color: 'var(--ink-soft)',
+              fontSize: '10px',
+              letterSpacing: '0.18em',
+            }}
+          >
+            {includesLabel}
+          </div>
+
+          {/* Bullets */}
+          <ul className="list-none" style={{ display: 'grid', gap: '8px' }}>
+            {bullets.map((b, i) => (
+              <li
+                key={`${i}-${b.slice(0, 16)}`}
+                className="relative"
+                style={{
+                  fontSize: '13px',
+                  lineHeight: 1.55,
+                  color: 'var(--ink)',
+                  paddingLeft: '20px',
+                }}
+              >
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-0"
+                  style={{ color: 'var(--accent)', fontWeight: 600 }}
+                >
+                  ✓
+                </span>
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          {/* CTA — bottom-aligned via mt-auto */}
+          <div style={{ marginTop: 'auto' }}>
+            <Button href={ctaHref} variant={ctaVariant} className="w-full justify-center">
+              {ctaLabel}
+            </Button>
+          </div>
+        </BentoCard>
+      </BentoShell>
+    </div>
   );
 }
