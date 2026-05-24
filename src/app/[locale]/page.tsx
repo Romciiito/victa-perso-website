@@ -28,6 +28,10 @@ import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/button';
 import { StatusLine } from '@/components/status-line';
 import { OfferingSection, type OfferingItem } from '@/components/offering-section';
+import { EditorialSplit } from '@/components/editorial-split';
+import { Eyebrow } from '@/components/eyebrow';
+import { BentoShell, BentoCard } from '@/components/bento';
+import { VisualCanvas } from '@/components/visual-canvas';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -92,118 +96,188 @@ export default async function Home({ params }: Props) {
 async function CzechHome() {
   const t = await getTranslations('home');
 
-  // Czech tags row uses the middle dot (·) wrapped in accent-coloured spans, with
-  // non-breaking spaces hugging the bullet on both sides.
-  const NBSP = ' ';
 
   return (
     <>
       {/* ============================================================
-           HERO  (locked-preview .hero)
-           padding: 96px 48px 64px desktop · 64px 24px 48px mobile
+           HERO  (D-008 EditorialSplit)
+           Left:  Eyebrow + H1 (Geist 600 + Newsreader italic accent) + sub
+                  + mono tags + CTAs (pill + Button-in-Button arrow)
+           Right: Variant C visual canvas (top, span-2) + 2 lead bentos
+                  (audit + consult) in Double-Bezel pattern
            ============================================================ */}
-      <section
-        className="relative px-6 pb-16 pt-16 md:px-12 md:pb-16 md:pt-24"
-        style={{ paddingTop: 'var(--space-24, 96px)', paddingBottom: 'var(--space-16, 64px)' }}
-      >
-        <div className="mx-auto w-full max-w-[1440px]">
-          {/* H1 */}
-          <h1
-            className="mb-6 text-ink"
-            style={{
-              fontSize: 'clamp(48px, 6vw, 80px)',
-              lineHeight: 1.04,
-              letterSpacing: '-0.035em',
-              fontWeight: 500,
-              maxWidth: '920px',
-            }}
-          >
-            {t('hero.headline')}
-          </h1>
+      <EditorialSplit
+        padding="hero"
+        left={
+          <>
+            <Eyebrow>{t('hero.status')}</Eyebrow>
 
-          {/* Tags row · Geist Mono, secondary, accent bullets */}
-          <div
-            className="mb-8 font-mono text-secondary"
-            style={{ fontSize: '13px', letterSpacing: 0 }}
-          >
-            <span>{t('hero.tagsAudit')}</span>
-            {NBSP}
-            <span style={{ color: 'var(--accent)' }}>·</span>
-            {NBSP}
-            <span>{t('hero.tagsDev')}</span>
-            {NBSP}
-            <span style={{ color: 'var(--accent)' }}>·</span>
-            {NBSP}
-            <span>{t('hero.tagsMarketing')}</span>
-            {NBSP}
-            <span style={{ color: 'var(--accent)' }}>·</span>
-            {NBSP}
-            <span>{t('hero.tagsAi')}</span>
-          </div>
-
-          {/* Divider — width 920px, 1px border-soft, vertical margin 32px */}
-          <div
-            className="my-8"
-            style={{
-              width: '100%',
-              maxWidth: '920px',
-              height: '1px',
-              backgroundColor: 'var(--border-soft)',
-            }}
-          />
-
-          {/* Sub paragraph */}
-          <p
-            className="mb-8 text-secondary"
-            style={{ fontSize: '19px', lineHeight: 1.55, maxWidth: '520px' }}
-          >
-            {t('hero.sub')}
-          </p>
-
-          {/* Lead row · two columns: audit price + free consultation */}
-          <div
-            className="mb-8 flex flex-wrap items-baseline"
-            style={{ gap: 'var(--space-16, 64px)' }}
-          >
-            <div className="text-secondary" style={{ fontSize: '15px', lineHeight: 1.55 }}>
-              <strong
-                className="block text-ink"
-                style={{ fontWeight: 500, marginBottom: '4px' }}
+            <h1
+              className="text-ink"
+              style={{
+                fontSize: 'clamp(56px, 8vw, 116px)',
+                lineHeight: 0.94,
+                letterSpacing: '-0.045em',
+                fontWeight: 600,
+                maxWidth: '14ch',
+              }}
+            >
+              {t('hero.headlineLead')}{' '}
+              <em
+                className="accent"
+                style={{ fontWeight: 300, fontStyle: 'italic', letterSpacing: '-0.03em' }}
               >
-                {t('hero.leadAuditLabel')}
-              </strong>
-              {t('hero.leadAuditPriceFrom')}
-              <span className="font-mono text-ink" style={{ fontSize: '13px' }}>
-                {t('hero.leadAuditPrice')}
-              </span>
-            </div>
-            <div className="text-secondary" style={{ fontSize: '15px', lineHeight: 1.55 }}>
-              <strong
-                className="block text-ink"
-                style={{ fontWeight: 500, marginBottom: '4px' }}
-              >
-                {t('hero.leadConsultLabel')}
-              </strong>
-              {t('hero.leadConsultBody')}
-            </div>
-          </div>
+                {t('hero.headlineAccent')}
+              </em>
+            </h1>
 
-          {/* CTAs */}
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button href="/spoluprace#audit" variant="primary" size="md">
-              {t('hero.ctaPrimary')}
-            </Button>
-            <Button href="/kontakt" variant="ghost" size="md">
-              {t('hero.ctaGhost')}
-            </Button>
-          </div>
+            <p
+              style={{
+                fontSize: '19px',
+                lineHeight: 1.5,
+                color: 'var(--ink-muted)',
+                maxWidth: '44ch',
+                fontWeight: 400,
+              }}
+            >
+              {t('hero.sub')}
+            </p>
 
-          {/* Status line — bottom of hero, 48px above */}
-          <div className="mt-12">
-            <StatusLine>{t('hero.status')}</StatusLine>
+            {/* Tags row · Geist Mono uppercase, ink-soft dots */}
+            <div
+              className="flex flex-wrap items-center font-mono uppercase"
+              style={{
+                gap: '14px',
+                fontSize: '12px',
+                letterSpacing: '0.05em',
+                color: 'var(--ink-soft)',
+              }}
+            >
+              <span>{t('hero.tagsAudit')}</span>
+              <span
+                aria-hidden
+                className="inline-block h-[5px] w-[5px] rounded-full"
+                style={{ background: 'var(--ink-soft)' }}
+              />
+              <span>{t('hero.tagsDev')}</span>
+              <span
+                aria-hidden
+                className="inline-block h-[5px] w-[5px] rounded-full"
+                style={{ background: 'var(--ink-soft)' }}
+              />
+              <span>{t('hero.tagsMarketing')}</span>
+              <span
+                aria-hidden
+                className="inline-block h-[5px] w-[5px] rounded-full"
+                style={{ background: 'var(--ink-soft)' }}
+              />
+              <span>{t('hero.tagsAi')}</span>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap" style={{ gap: '12px' }}>
+              <Button href="/spoluprace#audit" variant="primary" size="md">
+                {t('hero.ctaPrimary')}
+              </Button>
+              <Button href="/kontakt" variant="ghost" size="md">
+                {t('hero.ctaGhost')}
+              </Button>
+            </div>
+          </>
+        }
+        right={
+          <div
+            className="grid h-full content-center"
+            style={{ gridTemplateColumns: '1fr 1fr', gap: '12px' }}
+          >
+            {/* Top row (span 2): Visual canvas — Variant C per spec */}
+            <BentoShell span={2}>
+              <VisualCanvas
+                tag={t('hero.visualTag')}
+                title={t('hero.visualTitle')}
+                minHeight={200}
+              />
+            </BentoShell>
+
+            {/* Bottom row: audit + consult bentos */}
+            <BentoShell>
+              <BentoCard>
+                <div
+                  className="flex items-start justify-between"
+                  style={{ gap: '8px' }}
+                >
+                  <div
+                    className="font-mono uppercase"
+                    style={{
+                      fontSize: '10px',
+                      letterSpacing: '0.18em',
+                      color: 'var(--ink-soft)',
+                    }}
+                  >
+                    {t('hero.leadAuditLabel')} · {t('hero.leadAuditPriceFrom')}
+                    {t('hero.leadAuditPrice')}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: '17px',
+                    fontWeight: 500,
+                    letterSpacing: '-0.015em',
+                    color: 'var(--ink)',
+                    lineHeight: 1.25,
+                  }}
+                >
+                  {t('hero.leadAuditHeadline')}
+                </div>
+                <div
+                  style={{
+                    fontSize: '13px',
+                    color: 'var(--ink-muted)',
+                    lineHeight: 1.45,
+                  }}
+                >
+                  {t('hero.leadAuditMeta')}
+                </div>
+              </BentoCard>
+            </BentoShell>
+
+            <BentoShell>
+              <BentoCard>
+                <div
+                  className="font-mono uppercase"
+                  style={{
+                    fontSize: '10px',
+                    letterSpacing: '0.18em',
+                    color: 'var(--ink-soft)',
+                  }}
+                >
+                  {t('hero.leadConsultLabel')}
+                </div>
+                <div
+                  style={{
+                    fontSize: 'clamp(28px, 3.5vw, 40px)',
+                    fontWeight: 500,
+                    letterSpacing: '-0.04em',
+                    color: 'var(--ink)',
+                    lineHeight: 1,
+                  }}
+                >
+                  {t('hero.leadConsultHeadline')}
+                </div>
+                <div
+                  style={{
+                    fontSize: '13px',
+                    color: 'var(--ink-muted)',
+                    lineHeight: 1.45,
+                  }}
+                >
+                  {t('hero.leadConsultMeta')}
+                </div>
+              </BentoCard>
+            </BentoShell>
           </div>
-        </div>
-      </section>
+        }
+      />
 
       {/* ============================================================
            OFFERINGS — three Atol-style sections
