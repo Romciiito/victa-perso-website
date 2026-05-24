@@ -85,27 +85,27 @@
           {
             "title": "Weby a e-shopy na míru",
             "subtitle": "Návrh, vývoj a spuštění na míru",
-            "href": "/sluzby#weby"
+            "href": "/sluzby#itDev"
           },
           {
             "title": "Správa webů a e-shopů",
             "subtitle": "Technická péče, aktualizace a rozvoj",
-            "href": "/sluzby#sprava"
+            "href": "/sluzby#itDev"
           },
           {
             "title": "AI chatboti a automatizace",
             "subtitle": "Chatboti, agenti a automatizace procesů",
-            "href": "/sluzby#ai"
+            "href": "/sluzby#aiData"
           },
           {
             "title": "SEO a AEO",
             "subtitle": "Organická viditelnost ve vyhledávačích i AI",
-            "href": "/sluzby#seo"
+            "href": "/sluzby#marketing"
           },
           {
             "title": "PPC a performance marketing",
             "subtitle": "Placené kampaně s měřitelným výnosem",
-            "href": "/sluzby#ppc"
+            "href": "/sluzby#marketing"
           },
           {
             "title": "Komplexní transformace byznysu",
@@ -122,27 +122,27 @@
           {
             "title": "Znalostní asistent",
             "subtitle": "AI natrénované na vaši dokumentaci",
-            "href": "/reseni#znalostni-asistent"
+            "href": "/reseni/knowledge"
           },
           {
             "title": "Autonomní agenti",
             "subtitle": "Sekvence úkolů bez lidského zásahu",
-            "href": "/reseni#agenti"
+            "href": "/reseni/agents"
           },
           {
             "title": "AI podpora zákazníků",
             "subtitle": "Chatbot 24/7, eskalace na živého agenta",
-            "href": "/reseni#podpora"
+            "href": "/reseni/support"
           },
           {
             "title": "Datové dashboardy",
             "subtitle": "Jeden přehled pro prodeje, marketing i sklad",
-            "href": "/reseni#dashboardy"
+            "href": "/reseni/dashboards"
           },
           {
             "title": "AI infrastruktura",
             "subtitle": "Platforma pro více AI scénářů najednou",
-            "href": "/reseni#infrastruktura"
+            "href": "/reseni/infra"
           }
         ]
       },
@@ -154,32 +154,32 @@
           {
             "title": "E-commerce",
             "subtitle": "Shopify, Shoptet, headless, CZ feedy",
-            "href": "/odvetvi#ecommerce"
+            "href": "/odvetvi/ecommerce"
           },
           {
             "title": "Výroba",
             "subtitle": "SAP, OEE, prediktivní údržba",
-            "href": "/odvetvi#vyroba"
+            "href": "/odvetvi/vyroba"
           },
           {
             "title": "Logistika",
             "subtitle": "CMR, AETR, optimalizace tras",
-            "href": "/odvetvi#logistika"
+            "href": "/odvetvi/logistika"
           },
           {
             "title": "Finance",
             "subtitle": "ČNB, DORA, AML/KYC compliance",
-            "href": "/odvetvi#finance"
+            "href": "/odvetvi/finance"
           },
           {
             "title": "Energetika",
             "subtitle": "Air-gapped LLM, ERÚ, fotovoltaika",
-            "href": "/odvetvi#energetika"
+            "href": "/odvetvi/energetika"
           },
           {
             "title": "Zdravotnictví",
             "subtitle": "FotoFinder, longevity AI, GDPR",
-            "href": "/odvetvi#zdravotnictvi"
+            "href": "/odvetvi/zdravotnictvi"
           }
         ]
       }
