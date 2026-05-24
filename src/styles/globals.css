@@ -161,6 +161,40 @@ body {
 .border-accent      { border-color: var(--accent); }
 
 /* ============================================================
+   D-001 → D-008 BACKWARDS COMPATIBILITY ALIASES
+   Existing pages (kontakt, sluzby, reseni, odvetvi, o-nas, spoluprace,
+   ochrana-soukromi, cookies, blog) use the D-001 utility names below.
+   These aliases route them to D-008 tokens until pages are refactored in
+   PR 2-5. REMOVE in PR 7 cleanup once all pages migrated.
+   ============================================================ */
+
+/* Token aliases — old name → new token */
+:root {
+  --secondary: var(--ink-muted);
+  --tertiary: var(--ink-soft);
+  --surface: var(--bg-elevated);
+  --surface-2: var(--bg-deep);
+  --border: var(--line);
+  --border-soft: var(--line-strong);
+}
+
+/* Utility classes — old names */
+.text-secondary { color: var(--ink-muted); }
+.text-tertiary  { color: var(--ink-soft); }
+.bg-surface     { background-color: var(--bg-elevated); }
+.bg-surface-2   { background-color: var(--bg-deep); }
+.border-border        { border-color: var(--line); }
+.border-border-soft   { border-color: var(--line-strong); }
+.hover\:bg-surface:hover { background-color: var(--bg-elevated); }
+.hover\:text-ink:hover   { color: var(--ink); }
+
+/* Audit pricing card (D-001 §1.6) — preserve until PR 3 refactors spoluprace */
+.audit-card.popular {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+/* ============================================================
    Typography defaults
    ============================================================ */
 
