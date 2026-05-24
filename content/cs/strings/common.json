@@ -420,7 +420,9 @@
                 "q": "Jak dlouho trvá vývoj webu na míru?",
                 "a": "Standardní firemní web: 4–8 týdnů od schváleného designu. Záleží na rozsahu stránek, dodání textů a obrázků z vaší strany a počtu revizí. Přesný harmonogram navrhneme po úvodní konzultaci."
               }
-            ]
+            ],
+            "slug": "weby-na-miru",
+            "categorySlug": "itDev"
           },
           {
             "name": "E-shopy na míru",
@@ -435,7 +437,9 @@
                 "q": "Umíte propojit e-shop s Pohodou nebo Heliosem?",
                 "a": "Ano — to je náš standard, ne nadstandard. Napojení na Pohodu, Helios, Zásilkovnu, PPL a Českou poštu jsou hotové integrace, které přizpůsobíme vašemu workflow. Nezačínáme od nuly."
               }
-            ]
+            ],
+            "slug": "e-shopy-na-miru",
+            "categorySlug": "itDev"
           },
           {
             "name": "Prezentační weby a microsite",
@@ -454,7 +458,9 @@
                 "q": "Liší se prezentační web od webu na míru?",
                 "a": "Rozsahem a časem. Prezentační web má zpravidla 1–6 stránek a jasně ohraničený cíl. Web na míru pokrývá celou firemní prezentaci včetně blogu, kariéry a složitější navigace. Cena a harmonogram tomu odpovídají."
               }
-            ]
+            ],
+            "slug": "prezentacni-weby-a-microsite",
+            "categorySlug": "itDev"
           },
           {
             "name": "Správa webů a e-shopů",
@@ -473,7 +479,9 @@
                 "q": "Jak se liší správa od jednorázové zakázky?",
                 "a": "Jednorázová zakázka řeší konkrétní problém a končí. Správa je průběžný vztah — sledujeme trendy, navrhujeme zlepšení a reagujeme na změny v prostředí, aniž byste museli o každém kroku vědět."
               }
-            ]
+            ],
+            "slug": "sprava-webu-a-e-shopu",
+            "categorySlug": "itDev"
           },
           {
             "name": "Integrace systémů",
@@ -484,7 +492,9 @@
                 "q": "Jak zajistíte, že integrace nespadne bez varování?",
                 "a": "Každá integrace, kterou stavíme, má monitoring a alerting. Selhaná synchronizace nebo timeout API se okamžitě hlásí — buď opravíme sami v rámci správy, nebo vás kontaktujeme s konkrétním popisem situace."
               }
-            ]
+            ],
+            "slug": "integrace-systemu",
+            "categorySlug": "itDev"
           },
           {
             "name": "Webové aplikace a custom vývoj",
@@ -499,7 +509,9 @@
                 "q": "Jak se staráte o aplikaci po spuštění?",
                 "a": "Předáme dokumentaci, zdrojový kód a deployment pipeline. Pokud chcete průběžnou správu a rozvoj, domluvíme retainer. Pokud chcete aplikaci předat internímu týmu, připravíme dokumentaci tak, aby na nás nebyli závislí."
               }
-            ]
+            ],
+            "slug": "webove-aplikace-a-custom-vyvoj",
+            "categorySlug": "itDev"
           }
         ]
       },
@@ -509,7 +521,9 @@
         "items": [
           {
             "name": "AI chatboti",
-            "desc": "RAG, knowledge-aware asistenti, zákaznická podpora 24/7. Claude, GPT a další modely abstrahované přes Vercel AI Gateway."
+            "desc": "RAG, knowledge-aware asistenti, zákaznická podpora 24/7. Claude, GPT a další modely abstrahované přes Vercel AI Gateway.",
+            "slug": "ai-chatboti",
+            "categorySlug": "aiData"
           },
           {
             "name": "Automatizace procesů",
@@ -533,19 +547,27 @@
                 "q": "Co když nevíme přesně, co chceme automatizovat?",
                 "a": "To je v pořádku — většina klientů na začátku ví jen, že něco skřípe. Začínáme discovery konzultací: projdeme váš proces krok po kroku, identifikujeme úzká hrdla a teprve potom navrhneme, kde a jak zasáhnout. Viz {{LINK:spoluprace}}."
               }
-            ]
+            ],
+            "slug": "automatizace-procesu",
+            "categorySlug": "aiData"
           },
           {
             "name": "AI konzultace + audit + strategie",
-            "desc": "AI roadmap pro firmu, governance, výběr modelů, security review, return-on-investment analýza."
+            "desc": "AI roadmap pro firmu, governance, výběr modelů, security review, return-on-investment analýza.",
+            "slug": "ai-konzultace-audit-strategie",
+            "categorySlug": "aiData"
           },
           {
             "name": "Datová platforma + integrace",
-            "desc": "BI dashboardy, ETL/ELT, datový sklad, dashboarding přes Metabase nebo Looker Studio."
+            "desc": "BI dashboardy, ETL/ELT, datový sklad, dashboarding přes Metabase nebo Looker Studio.",
+            "slug": "datova-platforma-integrace",
+            "categorySlug": "aiData"
           },
           {
             "name": "MLOps / Provoz AI systémů",
-            "desc": "Monitoring, evals, prompt management, cost control, A/B testování modelů. AI v produkci, ne jen v experimentu."
+            "desc": "Monitoring, evals, prompt management, cost control, A/B testování modelů. AI v produkci, ne jen v experimentu.",
+            "slug": "mlops-provoz-ai-systemu",
+            "categorySlug": "aiData"
           }
         ]
       },
@@ -555,23 +577,33 @@
         "items": [
           {
             "name": "SEO",
-            "desc": "Technické SEO, content strategie, link building, lokální SEO. Měříme přes Search Console a vlastní dashboardy."
+            "desc": "Technické SEO, content strategie, link building, lokální SEO. Měříme přes Search Console a vlastní dashboardy.",
+            "slug": "seo",
+            "categorySlug": "marketing"
           },
           {
             "name": "AEO (Answer Engine Optimization)",
-            "desc": "Optimalizace pro ChatGPT, Claude, Gemini, Perplexity. FAQ schema, evidence panely, citation hygiene."
+            "desc": "Optimalizace pro ChatGPT, Claude, Gemini, Perplexity. FAQ schema, evidence panely, citation hygiene.",
+            "slug": "aeo-answer-engine-optimization",
+            "categorySlug": "marketing"
           },
           {
             "name": "PPC kampaně",
-            "desc": "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Plné tracking nastavení, ne „jen spustit kampaň“."
+            "desc": "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Plné tracking nastavení, ne „jen spustit kampaň“.",
+            "slug": "ppc-kampane",
+            "categorySlug": "marketing"
           },
           {
             "name": "Social media management",
-            "desc": "Instagram, Facebook, LinkedIn, TikTok. Strategie, kreativy, plánování, community management."
+            "desc": "Instagram, Facebook, LinkedIn, TikTok. Strategie, kreativy, plánování, community management.",
+            "slug": "social-media-management",
+            "categorySlug": "marketing"
           },
           {
             "name": "Tvorba kreativ",
-            "desc": "Grafika, Reels, video, banners, animace. Vlastní studio, ne stock fotky."
+            "desc": "Grafika, Reels, video, banners, animace. Vlastní studio, ne stock fotky.",
+            "slug": "tvorba-kreativ",
+            "categorySlug": "marketing"
           },
           {
             "name": "E-commerce management",
@@ -590,11 +622,15 @@
                 "q": "Jak měříme úspěch?",
                 "a": "Primárně revenue, průměrná hodnota objednávky (AOV) a retention rate. U feedů a vyhledávačů sledujeme ROAS a PNO. Reporting dostanete měsíčně — žádná čísla bez kontextu."
               }
-            ]
+            ],
+            "slug": "e-commerce-management",
+            "categorySlug": "marketing"
           },
           {
             "name": "Marketing strategy + plan",
-            "desc": "Pozicování, message-market fit, customer journey, content calendar, channel mix."
+            "desc": "Pozicování, message-market fit, customer journey, content calendar, channel mix.",
+            "slug": "marketing-strategy-plan",
+            "categorySlug": "marketing"
           }
         ]
       }
@@ -614,35 +650,40 @@
         "label": "01 · ZNALOSTNÍ ASISTENT",
         "name": "Znalostní asistent",
         "body": "AI asistent natrénovaný na vaši dokumentaci, znalostní bázi a procesy. RAG, Claude/GPT, integrace do Slacku nebo intranetu. Pro firmy s velkou interní znalostní bází, kde lidé tráví čas hledáním v dokumentech.",
-        "audience": "Hodí se pro: výrobní firmy, profesionální služby, finance, zákaznickou podporu."
+        "audience": "Hodí se pro: výrobní firmy, profesionální služby, finance, zákaznickou podporu.",
+        "slug": "knowledge"
       },
       {
         "key": "agents",
         "label": "02 · AUTONOMNÍ AGENTI",
         "name": "Autonomní agenti",
         "body": "AI agenti, kteří samostatně vykonávají sekvence úkolů — třídí e-maily, generují reporty, rezervují schůzky, kontrolují data. S human-in-the-loop tam, kde je to potřeba.",
-        "audience": "Hodí se pro: e-commerce, profesionální služby, back-office operace."
+        "audience": "Hodí se pro: e-commerce, profesionální služby, back-office operace.",
+        "slug": "agents"
       },
       {
         "key": "support",
         "label": "03 · AI PODPORA ZÁKAZNÍKŮ",
         "name": "AI podpora zákazníků",
         "body": "Chatbot 24/7 pro web nebo Messenger/WhatsApp, který odpovídá na 70 % dotazů sám. Eskalace na živého agenta tam, kde má smysl. Měřitelný dopad na response time a CSAT.",
-        "audience": "Hodí se pro: e-commerce, SaaS, zákaznickou podporu."
+        "audience": "Hodí se pro: e-commerce, SaaS, zákaznickou podporu.",
+        "slug": "support"
       },
       {
         "key": "dashboards",
         "label": "04 · DATOVÉ DASHBOARDY",
         "name": "Datové dashboardy",
         "body": "Jeden přehled, kde vidíte vše — prodeje, marketing, sklady, finance. Metabase nebo Looker Studio, ETL pipeline z vašich systémů, alerting na anomálie.",
-        "audience": "Hodí se pro: e-commerce, výrobu, profesionální služby s vícero datovými zdroji."
+        "audience": "Hodí se pro: e-commerce, výrobu, profesionální služby s vícero datovými zdroji.",
+        "slug": "dashboards"
       },
       {
         "key": "infra",
         "label": "05 · AI INFRASTRUKTURA",
         "name": "AI infrastruktura",
         "body": "Pokud uvažujete o víc AI případů použití, postavíme vám platformu — model abstraction layer, prompt management, cost control, eval framework, governance. Aby každé další AI nebylo nový projekt od nuly.",
-        "audience": "Hodí se pro: firmy s 3+ AI use casey, technologické týmy, oddělení inovací."
+        "audience": "Hodí se pro: firmy s 3+ AI use casey, technologické týmy, oddělení inovací.",
+        "slug": "infra"
       }
     ],
     "ctaLine": "Není vidět scénář, který sedí? Domluvte si bezplatnou konzultaci, navrhneme řešení na míru.",
@@ -660,49 +701,57 @@
         "key": "ecommerce",
         "icon": "ShoppingCart",
         "name": "E-commerce",
-        "body": "E-shop, který přerostl krabicové řešení, potřebuje víc než šablonu — potřebuje tým, který rozumí české infrastruktuře: Shoptet, Heureka, Zásilkovna, Pohoda. Stavíme, napojíme a pak pomáháme růst. AI není volitelný doplněk — je to část toho, jak pracujeme."
+        "body": "E-shop, který přerostl krabicové řešení, potřebuje víc než šablonu — potřebuje tým, který rozumí české infrastruktuře: Shoptet, Heureka, Zásilkovna, Pohoda. Stavíme, napojíme a pak pomáháme růst. AI není volitelný doplněk — je to část toho, jak pracujeme.",
+        "slug": "ecommerce"
       },
       {
         "key": "vyroba",
         "icon": "Factory",
         "name": "Výroba",
-        "body": "Rozumíme výrobnímu provozu — od SAP a MES až po OEE dashboardy a prediktivní údržbu. Nepřicházíme s generickým řešením, ale s integracemi, které sedí na váš ERP a vaše KPIs."
+        "body": "Rozumíme výrobnímu provozu — od SAP a MES až po OEE dashboardy a prediktivní údržbu. Nepřicházíme s generickým řešením, ale s integracemi, které sedí na váš ERP a vaše KPIs.",
+        "slug": "vyroba"
       },
       {
         "key": "logistika",
         "icon": "Truck",
         "name": "Logistika",
-        "body": "Kamionová doprava, kurýři, spedice i 3PL sklady — všechny trpí stejným problémem: ruční přepisování dat z CMR, faktur a e-mailů. Zapojíme AI, která dokumenty čte sama, a automaty, které vedou knihu jízd za vás. Méně administrativy, víc kilometrů."
+        "body": "Kamionová doprava, kurýři, spedice i 3PL sklady — všechny trpí stejným problémem: ruční přepisování dat z CMR, faktur a e-mailů. Zapojíme AI, která dokumenty čte sama, a automaty, které vedou knihu jízd za vás. Méně administrativy, víc kilometrů.",
+        "slug": "logistika"
       },
       {
         "key": "profesionalni-sluzby",
         "icon": "Briefcase",
         "name": "Profesionální služby",
-        "body": "Advokátní kanceláře, daňové poradny a účetní firmy tráví hodiny hledáním v archivech a ručním přepisováním dat z e-mailů do CRM. My tenhle čas vracíme zpět — integrací s vaším stávajícím CRM, nebo postavením vlastního na míru, když žádný SaaS váš workflow nezvládá."
+        "body": "Advokátní kanceláře, daňové poradny a účetní firmy tráví hodiny hledáním v archivech a ručním přepisováním dat z e-mailů do CRM. My tenhle čas vracíme zpět — integrací s vaším stávajícím CRM, nebo postavením vlastního na míru, když žádný SaaS váš workflow nezvládá.",
+        "slug": "profesionalni-sluzby"
       },
       {
         "key": "finance",
         "icon": "Landmark",
         "name": "Finance",
-        "body": "Banky, pojišťovny, fintech startupy, leasingové společnosti. Víme, co ČNB chce vidět — a píšeme marketing i kód tak, aby to regulátor nezametl. AI use cases navrhujeme auditovatelně od začátku, ne jako záplatu."
+        "body": "Banky, pojišťovny, fintech startupy, leasingové společnosti. Víme, co ČNB chce vidět — a píšeme marketing i kód tak, aby to regulátor nezametl. AI use cases navrhujeme auditovatelně od začátku, ne jako záplatu.",
+        "slug": "finance"
       },
       {
         "key": "energetika",
         "icon": "Zap",
         "name": "Energetika",
-        "body": "Distribuční firmy i OZE instalatéři řeší jinou váhu problémů — ale oboje spojuje složitá dokumentace, přísný regulátor a zákazníci, kteří nerozumí svému vyúčtování. Díváme se, jak vaše procesy reálně fungují, a navrhujeme AI a digitální nástroje, které do nich zapadnou."
+        "body": "Distribuční firmy i OZE instalatéři řeší jinou váhu problémů — ale oboje spojuje složitá dokumentace, přísný regulátor a zákazníci, kteří nerozumí svému vyúčtování. Díváme se, jak vaše procesy reálně fungují, a navrhujeme AI a digitální nástroje, které do nich zapadnou.",
+        "slug": "energetika"
       },
       {
         "key": "zdravotnictvi",
         "icon": "Stethoscope",
         "name": "Zdravotnictví",
-        "body": "Soukromé estetické a longevity kliniky mají jiné nároky než běžné ambulance — prémiové klientské zkušenosti, citlivá data a Instagram jako hlavní marketingový kanál. Stavíme infrastrukturu a nástroje, ne lékařská rozhodnutí."
+        "body": "Soukromé estetické a longevity kliniky mají jiné nároky než běžné ambulance — prémiové klientské zkušenosti, citlivá data a Instagram jako hlavní marketingový kanál. Stavíme infrastrukturu a nástroje, ne lékařská rozhodnutí.",
+        "slug": "zdravotnictvi"
       },
       {
         "key": "zakaznicka-podpora",
         "icon": "Headphones",
         "name": "Zákaznická podpora",
-        "body": "Firmy s 1 000+ ticketů měsíčně ztrácejí čas na opakujících se dotazech. Nasadíme AI, která automaticky vyřídí 70 % běžných dotazů, zatímco agenti řeší situace, kde záleží na lidském úsudku. Zendesk, Intercom, Freshdesk a Front zůstávají — jen pracují chytřeji."
+        "body": "Firmy s 1 000+ ticketů měsíčně ztrácejí čas na opakujících se dotazech. Nasadíme AI, která automaticky vyřídí 70 % běžných dotazů, zatímco agenti řeší situace, kde záleží na lidském úsudku. Zendesk, Intercom, Freshdesk a Front zůstávají — jen pracují chytřeji.",
+        "slug": "zakaznicka-podpora"
       }
     ]
   },
