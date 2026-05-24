@@ -1,25 +1,23 @@
-import { ArrowRight, type LucideIcon } from 'lucide-react';
+import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { Link } from '@/i18n/navigation';
+import { BentoShell, BentoCard } from './bento';
 
 /* ============================================================
-   OfferingSection — Atol-style 6-cell light grid + dark sticky sidebar
-   Used on homepage to display three "offering" sections:
-     1. Services for the AI journey
-     2. Turnkey AI solutions
-     3. AI solutions per industry
-   Layout: cells LEFT, dark card RIGHT on desktop;
-           dark card on TOP, cells below on mobile.
+   OfferingSection — D-008 refactor
+   Public API preserved. Internal layout: 380px feature card (left)
+   + 2-col items grid (right). Mobile collapses to single column.
+   Per spec §5: Homepage offerings → Asymmetrical Bento, feature 2fr.
    ============================================================ */
 
 export type OfferingItem = {
-  icon: LucideIcon;
+  icon: PhosphorIcon;
   title: string;
   subtitle: string;
   href?: string;
 };
 
 export type OfferingSectionProps = {
-  sidebarIcon: LucideIcon;
+  sidebarIcon: PhosphorIcon;
   sidebarHeadline: string;
   sidebarDescription: string;
   sidebarCtaLabel: string;
@@ -40,73 +38,68 @@ export function OfferingSection({
   return (
     <section
       id={id}
-      className="relative border-t border-border-soft px-6 py-20 md:px-12 md:py-24"
+      className="relative px-6 py-24 md:px-8 md:py-32"
+      style={{ borderTop: '1px solid var(--line)' }}
     >
       <div className="mx-auto w-full max-w-[1440px]">
-        <div className="grid gap-8 md:grid-cols-[1fr_320px] md:gap-10 lg:grid-cols-[1fr_360px]">
-          {/* Cells grid (left on desktop, below on mobile) */}
-          <div
-            className="order-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:order-1"
-            style={{
-              borderTop: '1px solid var(--border-soft)',
-              borderLeft: '1px solid var(--border-soft)',
-            }}
-          >
-            {items.map((item, idx) => (
-              <OfferingCell key={`${idx}-${item.title}`} item={item} />
+        <div className="grid gap-4 md:grid-cols-[minmax(0,380px)_minmax(0,1fr)] md:gap-6">
+          {/* Feature intro card */}
+          <BentoShell>
+            <BentoCard padding="loose">
+              <div className="flex flex-col gap-6">
+                <div
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-full"
+                  style={{
+                    background: 'var(--accent-soft)',
+                    color: 'var(--accent)',
+                  }}
+                >
+                  <SidebarIcon size={22} weight="light" aria-hidden />
+                </div>
+                <h2
+                  style={{
+                    fontSize: 'clamp(24px, 2.4vw, 32px)',
+                    lineHeight: 1.1,
+                    letterSpacing: '-0.035em',
+                    fontWeight: 600,
+                    color: 'var(--ink)',
+                  }}
+                >
+                  {sidebarHeadline}
+                </h2>
+                <p
+                  style={{
+                    fontSize: '15px',
+                    lineHeight: 1.55,
+                    color: 'var(--ink-muted)',
+                  }}
+                >
+                  {sidebarDescription}
+                </p>
+                <Link
+                  href={sidebarCtaHref}
+                  className="inline-flex items-center gap-2 self-start font-medium transition-colors duration-200"
+                  style={{
+                    fontSize: '14px',
+                    color: 'var(--ink)',
+                    letterSpacing: '-0.005em',
+                  }}
+                >
+                  <span style={{ borderBottom: '1px solid var(--ink)' }}>
+                    {sidebarCtaLabel}
+                  </span>
+                  <CtaArrow />
+                </Link>
+              </div>
+            </BentoCard>
+          </BentoShell>
+
+          {/* Items grid */}
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-4">
+            {items.map((item) => (
+              <OfferingItemCard key={item.title} item={item} />
             ))}
           </div>
-
-          {/* Dark sidebar (right on desktop, above on mobile) */}
-          <aside
-            className="order-1 self-start rounded-lg p-8 md:order-2 md:p-10 md:sticky md:top-24"
-            style={{ backgroundColor: 'var(--ink)', color: 'var(--bg)' }}
-          >
-            <SidebarIcon
-              size={32}
-              strokeWidth={1.5}
-              aria-hidden
-              className="mb-6"
-              style={{ color: 'var(--bg)', opacity: 0.9 }}
-            />
-            <h2
-              className="mb-4"
-              style={{
-                fontSize: 'clamp(24px, 2.4vw, 28px)',
-                lineHeight: 1.1,
-                letterSpacing: '-0.025em',
-                fontWeight: 500,
-                color: 'var(--bg)',
-              }}
-            >
-              {sidebarHeadline}
-            </h2>
-            <p
-              className="mb-8"
-              style={{
-                fontSize: '15px',
-                lineHeight: 1.55,
-                color: 'var(--bg)',
-                opacity: 0.7,
-              }}
-            >
-              {sidebarDescription}
-            </p>
-            <Link
-              href={sidebarCtaHref}
-              className="inline-flex items-center gap-2 transition-opacity duration-150 hover:opacity-80"
-              style={{
-                fontSize: '15px',
-                fontWeight: 500,
-                color: 'var(--bg)',
-                letterSpacing: '-0.005em',
-                borderBottom: '1px solid transparent',
-              }}
-            >
-              <span>{sidebarCtaLabel}</span>
-              <ArrowRight size={16} aria-hidden />
-            </Link>
-          </aside>
         </div>
       </div>
     </section>
@@ -114,59 +107,74 @@ export function OfferingSection({
 }
 
 /* ============================================================
-   OfferingCell — single light cell on the offering grid.
-   Borders are uniform: top + left applied to grid container,
-   each cell adds its own bottom + right hairline → forms a
-   clean 3-col table look without doubled borders.
+   OfferingItemCard — single item in the offerings grid
+   Wraps BentoShell + BentoCard. Becomes a Link when item.href set.
    ============================================================ */
-function OfferingCell({ item }: { item: OfferingItem }) {
+function OfferingItemCard({ item }: { item: OfferingItem }) {
   const Icon = item.icon;
-  const cellClass =
-    'flex h-full flex-col gap-1 px-5 py-6 transition-colors duration-150 hover:bg-surface md:px-7 md:py-8';
-  const cellStyle = {
-    borderRight: '1px solid var(--border-soft)',
-    borderBottom: '1px solid var(--border-soft)',
-  } as const;
-
   const inner = (
-    <>
-      <Icon
-        size={20}
-        strokeWidth={1.5}
-        aria-hidden
-        className="mb-3 text-tertiary"
-      />
-      <h3
-        className="text-ink"
-        style={{
-          fontSize: '16px',
-          fontWeight: 500,
-          lineHeight: 1.25,
-          letterSpacing: '-0.005em',
-          marginBottom: '4px',
-        }}
-      >
-        {item.title}
-      </h3>
-      <p
-        className="text-secondary"
-        style={{ fontSize: '13px', lineHeight: 1.55 }}
-      >
-        {item.subtitle}
-      </p>
-    </>
+    <BentoShell>
+      <BentoCard padding="compact">
+        <div className="flex flex-col gap-2">
+          <Icon
+            size={20}
+            weight="light"
+            aria-hidden
+            style={{ color: 'var(--ink-muted)' }}
+          />
+          <h3
+            style={{
+              fontSize: '16px',
+              fontWeight: 500,
+              lineHeight: 1.25,
+              letterSpacing: '-0.015em',
+              color: 'var(--ink)',
+              marginTop: '8px',
+            }}
+          >
+            {item.title}
+          </h3>
+          <p
+            style={{
+              fontSize: '13px',
+              lineHeight: 1.55,
+              color: 'var(--ink-muted)',
+            }}
+          >
+            {item.subtitle}
+          </p>
+        </div>
+      </BentoCard>
+    </BentoShell>
   );
 
   if (item.href) {
     return (
-      <Link href={item.href} className={cellClass} style={cellStyle}>
+      <Link href={item.href} className="block">
         {inner}
       </Link>
     );
   }
+  return inner;
+}
+
+/* ============================================================
+   CtaArrow — inline SVG arrow (replaces lucide ArrowRight)
+   ============================================================ */
+function CtaArrow() {
   return (
-    <div className={cellClass} style={cellStyle}>
-      {inner}
-    </div>
+    <svg
+      viewBox="0 0 14 14"
+      width="12"
+      height="12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M3 7h8M8 3l4 4-4 4" />
+    </svg>
   );
 }

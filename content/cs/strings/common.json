@@ -52,20 +52,28 @@
   },
   "home": {
     "hero": {
-      "status": "VICTA DIGITAL · česká digitální agentura",
+      "status": "VICTA Digital · česká digitální agentura",
       "headline": "Začneme tím, že posloucháme.",
+      "headlineLead": "Začneme tím, že",
+      "headlineAccent": "posloucháme.",
       "tagsAudit": "Audit",
       "tagsDev": "Vývoj",
       "tagsMarketing": "Marketing",
       "tagsAi": "AI integrace",
       "sub": "Než cokoliv navrhneme, chceme rozumět vašemu podnikání. To je celé.",
-      "leadAuditLabel": "Komplexní podnikový audit",
+      "leadAuditLabel": "Audit",
+      "leadAuditHeadline": "Komplexní podnikový audit",
+      "leadAuditMeta": "2 týdny, písemný report, follow-up call.",
       "leadAuditPriceFrom": "od ",
       "leadAuditPrice": "20 000 Kč",
-      "leadConsultLabel": "Bezplatná 30min konzultace",
+      "leadConsultLabel": "Konzultace",
+      "leadConsultHeadline": "30 minut",
+      "leadConsultMeta": "Bezplatně, pro modulární projekty. Beze závazku.",
       "leadConsultBody": "pro modulární projekty",
-      "ctaPrimary": "Rezervovat audit →",
-      "ctaGhost": "Domluvit konzultaci"
+      "ctaPrimary": "Rezervovat audit",
+      "ctaGhost": "Domluvit konzultaci",
+      "visualTag": "VICTA Process · 2026",
+      "visualTitle": "Audit → strategie → vývoj → provoz."
     },
     "offerings": {
       "ctaAll": "Zobrazit vše →",
