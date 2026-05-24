@@ -119,18 +119,32 @@ jobs:
       - name: Scan for exposed secret patterns in NEXT_PUBLIC_ vars
         run: |
           echo "Scanning for NEXT_PUBLIC_* variables with secret suffixes..."
-          if grep -rE "NEXT_PUBLIC_.*(KEY|SECRET|TOKEN|PASSWORD)" \
+          # Whitelist: vars that ARE intentionally public per vendor design
+          # - NEXT_PUBLIC_TURNSTILE_SITE_KEY: Cloudflare Turnstile site key
+          #   is meant to be rendered in the browser (the secret_key is
+          #   server-only and not in this list).
+          WHITELIST="NEXT_PUBLIC_TURNSTILE_SITE_KEY"
+          # Match must be a full identifier: NEXT_PUBLIC_ followed by
+          # uppercase/digits/underscores ending in KEY|SECRET|TOKEN|PASSWORD
+          # with a word boundary. This avoids false positives where the
+          # pattern straddles a non-identifier boundary (e.g., error
+          # strings concatenating two var names).
+          matches=$(grep -rEo '\bNEXT_PUBLIC_[A-Z0-9_]+(KEY|SECRET|TOKEN|PASSWORD)\b' \
             --include="*.ts" \
             --include="*.tsx" \
             --include="*.js" \
             --include="*.jsx" \
             --include="*.json" \
-            .; then
+            . 2>/dev/null | grep -vE "($WHITELIST)" || true)
+          if [ -n "$matches" ]; then
             echo ""
             echo "FAIL: Secret-like NEXT_PUBLIC_ variable detected in source."
             echo "These values are exposed to the browser bundle."
             echo "Move to a server-only env var (no NEXT_PUBLIC_ prefix)."
             echo "See architecture.md §8.1 and security-model.md §4.1."
+            echo ""
+            echo "Matches found:"
+            echo "$matches"
             exit 1
           else
             echo "PASS: No exposed secret patterns found."
