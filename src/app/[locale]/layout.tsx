@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter_Tight, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono, Newsreader } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
@@ -12,10 +12,10 @@ import { Ga4Loader } from '@/components/consent/ga4-loader';
 import { antiFlashScript } from '@/lib/anti-flash';
 import '@/styles/globals.css';
 
-const interTight = Inter_Tight({
+const geist = Geist({
   subsets: ['latin', 'latin-ext'],
   weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-inter-tight',
+  variable: '--font-geist',
   display: 'swap',
 });
 
@@ -23,6 +23,14 @@ const geistMono = Geist_Mono({
   subsets: ['latin'],
   weight: ['400', '500'],
   variable: '--font-geist-mono',
+  display: 'swap',
+});
+
+const newsreader = Newsreader({
+  subsets: ['latin', 'latin-ext'],
+  weight: ['300'],
+  style: ['italic'],
+  variable: '--font-newsreader',
   display: 'swap',
 });
 
@@ -56,7 +64,7 @@ export default async function LocaleLayout({
         <script dangerouslySetInnerHTML={{ __html: antiFlashScript }} />
         <CookiebotScript />
       </head>
-      <body className={`${interTight.variable} ${geistMono.variable} bg-grid antialiased`}>
+      <body className={`${geist.variable} ${geistMono.variable} ${newsreader.variable} antialiased`}>
         <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem storageKey="victa-theme">
           <NextIntlClientProvider messages={messages} locale={locale}>
             <Nav />
