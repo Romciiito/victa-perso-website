@@ -32,6 +32,17 @@ export type ServiceCategory = {
   items: ReadonlyArray<Service>;
 };
 
+export type SolutionProcessStep = {
+  title: string;
+  body: string;
+};
+
+export type SolutionSections = {
+  problem: string;
+  approach: string;
+  process: ReadonlyArray<SolutionProcessStep>;
+};
+
 export type Solution = {
   slug: string;
   key: string;
@@ -39,6 +50,8 @@ export type Solution = {
   name: string;
   body: string;
   audience: string;
+  /** PR 6c content — narratives for detail page. Optional during transition. */
+  sections?: SolutionSections;
 };
 
 export type Industry = {

@@ -651,7 +651,29 @@
         "name": "Znalostní asistent",
         "body": "AI asistent natrénovaný na vaši dokumentaci, znalostní bázi a procesy. RAG, Claude/GPT, integrace do Slacku nebo intranetu. Pro firmy s velkou interní znalostní bází, kde lidé tráví čas hledáním v dokumentech.",
         "audience": "Hodí se pro: výrobní firmy, profesionální služby, finance, zákaznickou podporu.",
-        "slug": "knowledge"
+        "slug": "knowledge",
+        "sections": {
+          "problem": "Vaši lidé tráví hodiny týdně hledáním v dokumentech, intranetu, sdílených složkách a historii ticketů. Junior se ptá seniora to samé už pošesté. Onboarding nového zaměstnance trvá týdny, protože musí všechno číst od nuly. Veřejné LLM jako ChatGPT odpoví na cokoli, ale o vaší firmě, vašich procesech a vašich klientech neví nic.\n\nMezitím vám firemní know-how leží roztříštěné v PDF, Confluence, e-mailech a hlavách lidí, kteří jednou odejdou. Když se totéž stane podruhé, tým se učí od nuly. Žádná systematická paměť organizace neexistuje.",
+          "approach": "Postavíme znalostního asistenta na základě vaší dokumentace, knowledge báze, historie ticketů a interních zdrojů. Architektura je RAG (Retrieval-Augmented Generation) — Postgres s pgvector pro embeddingy, Claude nebo GPT-4o jako model, Slack nebo intranet jako rozhraní. Asistent neodpovídá z paměti modelu, ale citacemi z vašich dokumentů.\n\nKaždá odpověď obsahuje odkaz na zdrojový dokument, takže se dá ověřit. Pravidelný re-index udržuje znalost aktuální. Citlivá data zůstávají u vás — model je oddělen od trénovacích dat, GDPR-compliant. Měříme tři věci: počet dotazů, podíl odpovědí s vysokým confidence, úspora času oproti hledání ručně.",
+          "process": [
+            {
+              "title": "Audit zdrojů a use casů",
+              "body": "1-2 týdny: mapování dokumentace, identifikace top 10 scénářů, kde asistent přinese největší úsporu. Definice úspěchu (KPIs) a pilotní skupiny."
+            },
+            {
+              "title": "Pilot na jednom oddělení",
+              "body": "3-5 týdnů: ingest dokumentů, vector DB setup, prompt engineering, integrace do Slacku nebo intranetu. Testujeme na 10-20 lidech, sbíráme feedback denně."
+            },
+            {
+              "title": "Rozšíření a evals",
+              "body": "4-6 týdnů: další oddělení, další zdroje, eval framework (gold-standard otázky, accuracy monitoring). Nastavení re-indexu, role-based access."
+            },
+            {
+              "title": "Provoz a iterace",
+              "body": "Měsíční reporting (queries, accuracy, time saved), iterace na top failure modes. Cost control přes AI Gateway. Roadmapa rozšíření o další zdroje."
+            }
+          ]
+        }
       },
       {
         "key": "agents",
@@ -659,7 +681,29 @@
         "name": "Autonomní agenti",
         "body": "AI agenti, kteří samostatně vykonávají sekvence úkolů — třídí e-maily, generují reporty, rezervují schůzky, kontrolují data. S human-in-the-loop tam, kde je to potřeba.",
         "audience": "Hodí se pro: e-commerce, profesionální služby, back-office operace.",
-        "slug": "agents"
+        "slug": "agents",
+        "sections": {
+          "problem": "Vaši lidé dělají repetitivní práci, která má jasná pravidla: třídění e-mailů podle priority, generování týdenních reportů z CRM, kontrola objednávek proti skladu, rezervace schůzek z e-mailové komunikace. Žádný úkol není sám o sobě složitý, ale dohromady zaberou půl pracovního dne — a často tomu nejdražšímu člověku v týmu.\n\nKlasická automatizace přes Zapier nebo Make funguje na rigidní pravidla, ale jakmile do procesu vstoupí rozhodování (priorita, kontext, výjimka), spadne to. Lidé se vrací k ruční práci a automatizace zůstává polovičatá.",
+          "approach": "Stavíme autonomní AI agenty, kteří zvládnou multi-step procesy s rozhodováním. Architektura kombinuje LLM (Claude nebo GPT-4o) jako brain s tool-use vrstvou (API volání, databáze, e-mail) a state machine pro dlouhotrvající procesy. Agent neběží jako black box — každý krok je logovaný a auditovatelný.\n\nTam, kde je riziko nebo finanční dopad, vkládáme human-in-the-loop checkpoint: agent přípraví návrh, člověk schválí jedním klikem. U nízkorizikových úloh běží agent samostatně. Měříme úspěšnost, eskalace na člověka a hodiny ušetřené týmu.",
+          "process": [
+            {
+              "title": "Process discovery",
+              "body": "1-2 týdny: workshop s tým, mapování workflow, identifikace 2-3 kandidátů na agenta. Posouzení rizika, definice human-in-the-loop bodů."
+            },
+            {
+              "title": "Prototyp prvního agenta",
+              "body": "3-5 týdnů: tool integrations (API, e-mail, CRM), prompt + state machine, testovací data. Demo s reálnými případy z minulého měsíce."
+            },
+            {
+              "title": "Pilot v provozu",
+              "body": "4-6 týdnů: nasazení na omezeném scope (např. jen určitý typ e-mailů), monitoring úspěšnosti, iterace na edge cases. Postupné rozšiřování rozsahu."
+            },
+            {
+              "title": "Škálování a další agenti",
+              "body": "Druhý a třetí agent staví na infrastruktuře prvního — sdílený orchestrátor, observability, cost control. Měsíční review výkonu a ROI."
+            }
+          ]
+        }
       },
       {
         "key": "support",
@@ -667,7 +711,29 @@
         "name": "AI podpora zákazníků",
         "body": "Chatbot 24/7 pro web nebo Messenger/WhatsApp, který odpovídá na 70 % dotazů sám. Eskalace na živého agenta tam, kde má smysl. Měřitelný dopad na response time a CSAT.",
         "audience": "Hodí se pro: e-commerce, SaaS, zákaznickou podporu.",
-        "slug": "support"
+        "slug": "support",
+        "sections": {
+          "problem": "Vaše podpora je dlouhodobě zavalená. 70 % dotazů jsou opakující se základní otázky: kde je objednávka, jak vrátit zboží, kde najdu fakturu, jak funguje produkt X. Senior agenti, kteří by měli řešit složité případy, místo toho odpovídají na to samé pořád dokola. Mimo pracovní dobu zákazníci čekají do druhého dne — a část z nich zatím odejde ke konkurenci.\n\nExistující chatboty na trhu jsou většinou rigidní rozhodovací stromy z roku 2018. Zákazník napíše něco trochu jinak a bot odpoví „Tomu nerozumím.“ Frustrace roste, NPS klesá, podpora hlídá další frontu.",
+          "approach": "Stavíme AI chatbota na Claude nebo GPT-4o jako první linii — 24/7 na webu, Messengeru nebo WhatsApp. Bot umí přirozenou češtinu a zná vaši knowledge bázi, FAQ, produktový katalog a tracking objednávek (přes API). Na 70 % dotazů odpoví sám a kompetentně.\n\nTam, kde si nejistí nebo kde má spor s firemními pravidly, eskaluje na živého agenta s celým kontextem konverzace. Žádné „začněte znovu, prosím.“ Měříme response time, deflection rate (% vyřešených bez člověka), CSAT a NPS. Cíl: do tří měsíců snížit vytížení podpory o 40-60 %.",
+          "process": [
+            {
+              "title": "Analýza ticketů",
+              "body": "1-2 týdny: rozbor posledních 3-6 měsíců ticketů, kategorizace, identifikace top intentů, ROI estimace. Definice „red line“ případů (storno, reklamace, eskalace)."
+            },
+            {
+              "title": "Knowledge base + integrace",
+              "body": "3-4 týdny: strukturujeme FAQ a knowledge base tak, aby s ní bot uměl pracovat. Integrace na objednávky, CRM, tracking. Tone of voice kalibrace."
+            },
+            {
+              "title": "Pilot s živými zákazníky",
+              "body": "4-6 týdnů: spuštění na 20-30 % traffic, A/B test s lidskou podporou, denní monitoring kvality. Iterace na top selhání."
+            },
+            {
+              "title": "Plné spuštění a optimalizace",
+              "body": "Spuštění 24/7 napříč kanály, integrace kvality do CRM, měsíční reporting metrik. Roadmapa dalších use casů (proaktivní outreach, upsell)."
+            }
+          ]
+        }
       },
       {
         "key": "dashboards",
@@ -675,7 +741,29 @@
         "name": "Datové dashboardy",
         "body": "Jeden přehled, kde vidíte vše — prodeje, marketing, sklady, finance. Metabase nebo Looker Studio, ETL pipeline z vašich systémů, alerting na anomálie.",
         "audience": "Hodí se pro: e-commerce, výrobu, profesionální služby s vícero datovými zdroji.",
-        "slug": "dashboards"
+        "slug": "dashboards",
+        "sections": {
+          "problem": "Vaše firma žije ve 4-6 systémech: prodejní ERP, e-shop, CRM, skladový software, finanční účetnictví, Google Analytics. Každý má vlastní exporty, vlastní logiku, vlastní rytmus. Reporting jednou týdně dělá někdo ručně v Excelu — kopírováním, slepováním, vlookupy. Když manažer chce odpověď na novou otázku, čeká dva dny.\n\nMezitím rozhodnutí padají na základě tří týdnů starých čísel nebo intuice. Anomálie — propad konverze, neobvyklý nárůst returnů, problém s dodavatelem — zaregistrujete až po dvou týdnech, když už je pozdě.",
+          "approach": "Postavíme jeden dashboard, kde uvidíte vše napříč systémy v reálném čase. Stack: ETL pipeline (Airbyte nebo vlastní Python) → datový sklad (BigQuery, Postgres) → BI vrstva (Metabase pro interní, Looker Studio pro management). Refresh podle use casu — od minutových po denní.\n\nKlíčové metriky mají alerting — anomálie vás najde Slack notifikace, ne až týdenní report. Strukturujeme data tak, aby vlastní analytici nebo manažeři mohli klást vlastní otázky bez nás. Měřitelný cíl: zkrátit čas od otázky k odpovědi z dnů na minuty.",
+          "process": [
+            {
+              "title": "Mapování zdrojů a otázek",
+              "body": "1-2 týdny: inventura datových zdrojů, workshop s management týmem na top 10 byznys otázek, definice KPIs a alerting thresholds."
+            },
+            {
+              "title": "ETL a datový sklad",
+              "body": "3-5 týdnů: konektory na všechny zdroje, ETL pipelines, deduplication, schéma datového skladu. Testy konzistence, historizace klíčových metrik."
+            },
+            {
+              "title": "Dashboardy a alerting",
+              "body": "2-4 týdny: 3-5 hlavních dashboardů (executive overview, sales, operations), alerting na anomálie do Slacku nebo e-mailu, drill-down logika."
+            },
+            {
+              "title": "Adopce a vlastní analytika",
+              "body": "Training pro power users, dokumentace datového modelu, měsíční optimalizace podle reálného použití. Cíl: vaši lidé kladou otázky sami."
+            }
+          ]
+        }
       },
       {
         "key": "infra",
@@ -683,7 +771,29 @@
         "name": "AI infrastruktura",
         "body": "Pokud uvažujete o víc AI případů použití, postavíme vám platformu — model abstraction layer, prompt management, cost control, eval framework, governance. Aby každé další AI nebylo nový projekt od nuly.",
         "audience": "Hodí se pro: firmy s 3+ AI use casey, technologické týmy, oddělení inovací.",
-        "slug": "infra"
+        "slug": "infra",
+        "sections": {
+          "problem": "První AI use case vám stavělo studio za pevnou cenu — fajn. Když přijde druhý, postaví ho další tým, ale od nuly: jiný framework, jiný prompt management, jiná logika cost control. Třetí use case se opakuje. Po roce máte tři AI projekty, tři architektury, tři měsíčně rostoucí účty za API a nikoho, kdo by viděl celkový obraz.\n\nKdyž chcete vyměnit model za levnější (Claude → Gemini, GPT-4 → GPT-4o-mini), znamená to přepsat tři aplikace. Když chcete vědět, kolik vás stojí AI v daném oddělení, sčítáte to ručně. Když model halucinuje, nemáte evals na rychlou detekci.",
+          "approach": "Postavíme vám AI platformu — sdílenou infrastrukturu, na které stojí všechny vaše AI use cases. Klíčové vrstvy: model abstraction layer (Vercel AI Gateway nebo LiteLLM), prompt management s versioningem, cost dashboard po oddělení, eval framework pro regression testy, observability (Langfuse nebo Helicone).\n\nKaždý další AI projekt staví na této základně. Místo tří měsíců a nového stacku — dva týdny a vlastní endpoint. Governance: SOC 2 / ISO 27001 ready, audit trail, role-based access. Pro firmy s 3+ AI use casy se infrastruktura zaplatí do půl roku.",
+          "process": [
+            {
+              "title": "Audit stávajících AI projektů",
+              "body": "1-2 týdny: inventura všech AI use casů, modelů, nákladů, problémů. Identifikace společných potřeb, governance gaps, compliance požadavků."
+            },
+            {
+              "title": "Návrh platformy",
+              "body": "1-2 týdny: výběr stacku (gateway, prompt mgmt, evals, observability), architektura RBAC a tenancy, integrace s vašimi IdP a monitoringem."
+            },
+            {
+              "title": "Build a migrace prvního use casu",
+              "body": "6-8 týdnů: postavení platformy, migrace jednoho stávajícího AI use casu jako proof of value. Cost dashboard, eval suite, documentation."
+            },
+            {
+              "title": "Migrace ostatních a governance",
+              "body": "Postupná migrace dalších use casů, training interních týmů, governance procesy (model approval, prompt change management). Cíl: self-service pro byznysové týmy."
+            }
+          ]
+        }
       }
     ],
     "ctaLine": "Není vidět scénář, který sedí? Domluvte si bezplatnou konzultaci, navrhneme řešení na míru.",
