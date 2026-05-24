@@ -292,3 +292,20 @@ body::after {
     gap: 3.5rem !important;
   }
 }
+
+/* AsymmetricalBento column grids — mobile collapses to 1col */
+.asymmetrical-bento-2 { grid-template-columns: 1fr 1fr; }
+.asymmetrical-bento-3 { grid-template-columns: 1fr 1fr 1fr; }
+.asymmetrical-bento-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+
+@media (max-width: 768px) {
+  .asymmetrical-bento-2,
+  .asymmetrical-bento-3,
+  .asymmetrical-bento-4 {
+    grid-template-columns: 1fr;
+  }
+  /* On mobile, even feature span-2 cards become full width */
+  .asymmetrical-bento [class*="col-span"] {
+    grid-column: 1 / -1;
+  }
+}
