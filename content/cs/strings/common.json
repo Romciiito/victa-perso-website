@@ -759,13 +759,18 @@
     "hero": {
       "status": "/cs/o-nas",
       "headline": "O VICTA",
-      "subhead": "Malý AI-augmented tým s ambicí být partner, ne dodavatel. Tady je, jak přemýšlíme."
+      "subhead": "Malý AI-augmented tým s ambicí být partner, ne dodavatel. Tady je, jak přemýšlíme.",
+      "statLabel": "AKTUÁLNĚ",
+      "statValue": "Praha + HK",
+      "statNote": "Dvě kanceláře, jeden tým. Spolupráce vzdáleně i osobně — vždy s konkrétním člověkem, ne ticketing systémem."
     },
     "sections": {
       "story": {
         "label": "NÁŠ PŘÍBĚH",
         "headline": "Stavíme to, co jsme sami chtěli.",
-        "body": "VICTA vznikla z frustrace. Klienti, kteří přicházeli s rozbitým marketingem, drahým webem a nulovou strategií. Vendoři, kteří dodali a zmizeli. Agentury, které posílaly výstupy přes pět lidí, než dorazily. Rozhodli jsme se to dělat jinak — malý tým, AI-augmented, pod jednou střechou."
+        "body": "VICTA vznikla z frustrace. Klienti, kteří přicházeli s rozbitým marketingem, drahým webem a nulovou strategií. Vendoři, kteří dodali a zmizeli. Agentury, které posílaly výstupy přes pět lidí, než dorazily. Rozhodli jsme se to dělat jinak — malý tým, AI-augmented, pod jednou střechou.",
+        "principleLabel": "JAK PŘEMÝŠLÍME",
+        "principleBody": "Malý tým > velká agentura. Co u velkých trvá tři měsíce, u nás tři týdny — bez režie 30+ hlav, kterou si platí klient."
       },
       "values": {
         "label": "NAŠE HODNOTY",
@@ -792,7 +797,29 @@
       "process": {
         "label": "NÁŠ PROCES",
         "headline": "Posloucháme. Navrhujeme. Stavíme. Provozujeme.",
-        "body": "Než cokoliv navrhneme, chceme rozumět vašemu byznysu. Audit → návrh → implementace → správa a růst. Každá fáze má jasné výstupy a check-pointy."
+        "body": "Než cokoliv navrhneme, chceme rozumět vašemu byznysu. Audit → návrh → implementace → správa a růst. Každá fáze má jasné výstupy a check-pointy.",
+        "steps": [
+          {
+            "label": "AUDIT",
+            "title": "Posloucháme.",
+            "body": "Začneme analýzou. Co je rozbité, co funguje, kam chcete růst. Bez šablon a bez univerzálních doporučení — vždy konkrétně k vašemu byznysu."
+          },
+          {
+            "label": "NÁVRH",
+            "title": "Navrhujeme.",
+            "body": "Architektura, roadmapa, design system, copy framework. Žádné PowerPointy — výstup je použitelný, ne prezentační. Schvalujete check-pointy."
+          },
+          {
+            "label": "IMPLEMENTACE",
+            "title": "Stavíme.",
+            "body": "Vývoj, content, integrace. Týden po týdnu vidíte progres v staging. AI drží detaily, lidé drží myšlení a strategii."
+          },
+          {
+            "label": "PROVOZ",
+            "title": "Provozujeme.",
+            "body": "Po launchi vás nepustíme. Měsíční reporting, kontinuální vylepšování, přímá konzultační dostupnost — bez ticketing systému."
+          }
+        ]
       },
       "team": {
         "label": "NÁŠ TÝM",
