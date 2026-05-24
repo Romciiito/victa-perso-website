@@ -273,3 +273,22 @@ body::after {
   from { opacity: 0; transform: translateY(28px); filter: blur(6px); }
   to { opacity: 1; transform: translateY(0); filter: blur(0); }
 }
+
+/* ============================================================
+   Layout primitives — responsive overrides
+   ============================================================ */
+.editorial-split {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+}
+.editorial-split[data-ratio="balanced"] {
+  grid-template-columns: 1fr 1fr;
+}
+
+@media (max-width: 980px) {
+  .editorial-split,
+  .editorial-split[data-ratio="balanced"] {
+    grid-template-columns: 1fr;
+    gap: 3.5rem !important;
+  }
+}
