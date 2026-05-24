@@ -1,24 +1,23 @@
-import type { LucideIcon } from 'lucide-react';
+import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import { Link } from '@/i18n/navigation';
 import { BentoShell, BentoCard } from './bento';
 
 /* ============================================================
-   OfferingSection — D-008 D-008 refactor
+   OfferingSection — D-008 refactor
    Public API preserved. Internal layout: 380px feature card (left)
-   + AsymmetricalBento-like 2-col items grid (right). Mobile collapses
-   to single column with feature on top.
+   + 2-col items grid (right). Mobile collapses to single column.
    Per spec §5: Homepage offerings → Asymmetrical Bento, feature 2fr.
    ============================================================ */
 
 export type OfferingItem = {
-  icon: LucideIcon;
+  icon: PhosphorIcon;
   title: string;
   subtitle: string;
   href?: string;
 };
 
 export type OfferingSectionProps = {
-  sidebarIcon: LucideIcon;
+  sidebarIcon: PhosphorIcon;
   sidebarHeadline: string;
   sidebarDescription: string;
   sidebarCtaLabel: string;
@@ -55,7 +54,7 @@ export function OfferingSection({
                     color: 'var(--accent)',
                   }}
                 >
-                  <SidebarIcon size={22} strokeWidth={1.5} aria-hidden />
+                  <SidebarIcon size={22} weight="light" aria-hidden />
                 </div>
                 <h2
                   style={{
@@ -119,7 +118,7 @@ function OfferingItemCard({ item }: { item: OfferingItem }) {
         <div className="flex flex-col gap-2">
           <Icon
             size={20}
-            strokeWidth={1.5}
+            weight="light"
             aria-hidden
             style={{ color: 'var(--ink-muted)' }}
           />

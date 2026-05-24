@@ -1,29 +1,29 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
+import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
 import {
   ArrowRight,
-  Activity,
-  BarChart3,
-  Boxes,
+  Pulse,
+  ChartBar,
+  Cube,
   Briefcase,
-  Building2,
-  Code2,
+  Buildings,
+  Code,
   Database,
   Headphones,
   Heart,
-  Layers,
-  MessageCircle,
-  MessageSquare,
+  Stack,
+  ChatCircle,
+  ChatTeardrop,
   Package,
-  Search,
-  Server,
-  Settings,
+  MagnifyingGlass,
+  HardDrives,
+  Gear,
   Shield,
   ShoppingCart,
   Target,
-  TrendingUp,
-  Zap,
-  type LucideIcon,
-} from 'lucide-react';
+  TrendUp,
+  Lightning,
+} from '@phosphor-icons/react/dist/ssr';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/button';
 import { StatusLine } from '@/components/status-line';
@@ -42,36 +42,36 @@ type Props = { params: Promise<{ locale: string }> };
    ============================================================ */
 type RawOfferingItem = { title: string; subtitle: string; href?: string };
 
-const servicesIcons: ReadonlyArray<LucideIcon> = [
-  Search, // 1 · AI Discovery
+const servicesIcons: ReadonlyArray<PhosphorIcon> = [
+  MagnifyingGlass, // 1 · AI Discovery
   Target, // 2 · AI Strategie
   Database, // 3 · Datová platforma
-  Code2, // 4 · AI-driven vývoj
+  Code, // 4 · AI-driven vývoj
   Shield, // 5 · AI Governance
-  Activity, // 6 · Provoz a MLOps
+  Pulse, // 6 · Provoz a MLOps
 ];
 
-const solutionsIcons: ReadonlyArray<LucideIcon> = [
-  MessageSquare, // 1 · GenAI a RAG asistenti
-  Boxes, // 2 · Autonomní AI agenti
+const solutionsIcons: ReadonlyArray<PhosphorIcon> = [
+  ChatTeardrop, // 1 · GenAI a RAG asistenti
+  Cube, // 2 · Autonomní AI agenti
   Headphones, // 3 · AI zákaznická podpora
-  BarChart3, // 4 · Prediktivní analytika
-  Server, // 5 · AI Infrastruktura
+  ChartBar, // 4 · Prediktivní analytika
+  HardDrives, // 5 · AI Infrastruktura
 ];
 
-const industriesIcons: ReadonlyArray<LucideIcon> = [
+const industriesIcons: ReadonlyArray<PhosphorIcon> = [
   ShoppingCart, // 1 · E-commerce a maloobchod
-  TrendingUp, // 2 · Finance a Fintech
+  TrendUp, // 2 · Finance a Fintech
   Heart, // 3 · Zdravotnictví a medtech
-  Settings, // 4 · Výroba a logistika
-  Zap, // 5 · Energetika a utility
-  MessageCircle, // 6 · Zákaznická podpora a CX
+  Gear, // 4 · Výroba a logistika
+  Lightning, // 5 · Energetika a utility
+  ChatCircle, // 6 · Zákaznická podpora a CX
   Briefcase, // 7 · Profesionální služby
 ];
 
 function buildOfferingItems(
   raw: ReadonlyArray<RawOfferingItem>,
-  icons: ReadonlyArray<LucideIcon>,
+  icons: ReadonlyArray<PhosphorIcon>,
 ): ReadonlyArray<OfferingItem> {
   return raw.map((it, i) => ({
     icon: icons[i] ?? icons[icons.length - 1] ?? Briefcase,
@@ -289,7 +289,7 @@ async function CzechHome() {
            ============================================================ */}
       <OfferingSection
         id="sluzby"
-        sidebarIcon={Layers}
+        sidebarIcon={Stack}
         sidebarHeadline={t('offerings.services.headline')}
         sidebarDescription={t('offerings.services.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
@@ -315,7 +315,7 @@ async function CzechHome() {
 
       <OfferingSection
         id="odvetvi"
-        sidebarIcon={Building2}
+        sidebarIcon={Buildings}
         sidebarHeadline={t('offerings.industries.headline')}
         sidebarDescription={t('offerings.industries.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
@@ -506,7 +506,7 @@ async function EnglishStub() {
             }}
           >
             {t('stub.email')}
-            <ArrowRight size={16} aria-hidden />
+            <ArrowRight size={16} weight="regular" aria-hidden />
           </a>
         </div>
 
