@@ -702,56 +702,232 @@
         "icon": "ShoppingCart",
         "name": "E-commerce",
         "body": "E-shop, který přerostl krabicové řešení, potřebuje víc než šablonu — potřebuje tým, který rozumí české infrastruktuře: Shoptet, Heureka, Zásilkovna, Pohoda. Stavíme, napojíme a pak pomáháme růst. AI není volitelný doplněk — je to část toho, jak pracujeme.",
-        "slug": "ecommerce"
+        "slug": "ecommerce",
+        "sections": {
+          "problem": "Krabicová řešení jako Shoptet, Upgades nebo Eshop-rychle jsou dobrý start, ale jakmile chcete vlastní logiku — customizovaný checkout, B2B ceník, napojení na Pohodu nebo Money S3, integraci s Heurekou a Zásilkovnou nad rámec standardu — narážíte na strop. Doba odezvy support týmu se počítá v týdnech, customizace v desítkách tisíc.\n\nSoučasně rostou nároky zákazníků: rychlost (LCP pod 2,5 s), personalizace, věrnostní programy, post-purchase flow. Z e-shopu se stává plnohodnotná platforma, kterou krabicové řešení nezvládá obsloužit, a vlastní vývoj od nuly v Magentu je projekt na rok a půl s nejistým výsledkem.",
+          "approach": "Pro střední e-shopy (5-50 mil. Kč obrat ročně) doporučujeme Shopify Plus s vlastním headless frontendem v Next.js. Pro náročnější provozy (50+ mil., specifické ERP, multi-warehouse) stavíme na Medusa.js jako headless commerce kostře. V obou případech: rychlost, SEO/AEO ready, napojení na Pohodu, Money S3, Heuréku, Zásilkovnu i Packetu.\n\nAI nasazujeme tam, kde má smysl: automatické popisky produktů z PIM dat, doporučovací engine na produktové stránce, AI chatbot na běžné dotazy (velikost, doprava, vrácení), automatická triage e-mailových objednávek z B2B. Žádné generické widgety — vše se učí z vašich dat a integruje do stávajícího workflow.",
+          "process": [
+            {
+              "title": "Audit a datová analýza",
+              "body": "2 týdny: analýza GA4, Shopify reports nebo Shoptet exportů. Mapujeme conversion funnel, customer journey, ztráty v košíku, B2B vs B2C poměr a integrace na ERP a sklad."
+            },
+            {
+              "title": "Stack a architektura",
+              "body": "1 týden: rozhodnutí Shopify Plus vs Medusa.js, datový model, payment a shipping integrace, AI use cases s ROI odhadem."
+            },
+            {
+              "title": "Build a migrace",
+              "body": "8-16 týdnů: produkty, kategorie, customer accounts, orders, ERP propojení. Paralelní běh starého e-shopu, postupný switch s rollback plánem."
+            },
+            {
+              "title": "Provoz a růst",
+              "body": "CRO, A/B testy checkoutu, paid traffic optimalizace, měsíční reporting. AI use cases nasazujeme postupně podle naměřeného dopadu."
+            }
+          ]
+        }
       },
       {
         "key": "vyroba",
         "icon": "Factory",
         "name": "Výroba",
         "body": "Rozumíme výrobnímu provozu — od SAP a MES až po OEE dashboardy a prediktivní údržbu. Nepřicházíme s generickým řešením, ale s integracemi, které sedí na váš ERP a vaše KPIs.",
-        "slug": "vyroba"
+        "slug": "vyroba",
+        "sections": {
+          "problem": "Výrobní provoz žije z dat, která se neumí dostat ven. SAP, MES, OEE systémy, čidla na lince a tabulkové reporty z dílny generují gigabajty informací denně, ale management je vidí v Excelu týden po události. Prediktivní údržba zůstává buzzword, protože napojení čidel na vyhodnocení vyžaduje data engineera, kterého ve firmě nemáte.\n\nExterní ERP konzultanti účtují 2 500 Kč za hodinu a každá úprava trvá týdny. Když přijde nová zakázka s odlišnou specifikací, výrobní plánovači stráví celé dopoledne ručním kopírováním dat mezi systémy. AI a IoT vypadají jako řešení z konference, ne z reality středně velké výroby.",
+          "approach": "Začínáme tam, kde data už jsou — SAP, MES, čidla, ruční zápisy z dílny. Stavíme datovou vrstvu (Snowflake, BigQuery nebo PostgreSQL podle velikosti) a nad ní reporting dashboardy, které management vidí v reálném čase: OEE po linkách, předpověď výpadků, plnění zakázek, spotřebu energií.\n\nPrediktivní údržba není magie — je to model, který si přečte historii poruch a čidlových dat a najde vzorce. Stavíme jednoduché modely, které fungují v provozu, ne PhD práce. Pro plánování výroby a poptávek nasazujeme AI asistenty, kteří umí číst RFQ e-maily a předvyplnit kalkulační šablonu — operátor jen schválí.",
+          "process": [
+            {
+              "title": "Datový audit",
+              "body": "3 týdny: mapujeme zdroje dat (SAP, MES, čidla, Excel), identifikujeme manuální kroky a quick wins. Žádné slibování — ROI počítáme z reálných čísel."
+            },
+            {
+              "title": "Datová vrstva a dashboardy",
+              "body": "4-8 týdnů: stavíme central data warehouse, ETL z primárních systémů, dashboardy v Metabase nebo Lookeru. Management vidí OEE a KPIs v reálném čase."
+            },
+            {
+              "title": "AI/ML use cases",
+              "body": "8-12 týdnů: prediktivní údržba pro klíčové stroje, AI asistent na RFQ, anomálie ve spotřebě. Každý use case má jasnou ROI metriku, kterou měříme."
+            },
+            {
+              "title": "Provoz a rozšíření",
+              "body": "Měsíční sledování modelů (drift, accuracy), iterace nad daty, rozšíření na další linky nebo závody."
+            }
+          ]
+        }
       },
       {
         "key": "logistika",
         "icon": "Truck",
         "name": "Logistika",
         "body": "Kamionová doprava, kurýři, spedice i 3PL sklady — všechny trpí stejným problémem: ruční přepisování dat z CMR, faktur a e-mailů. Zapojíme AI, která dokumenty čte sama, a automaty, které vedou knihu jízd za vás. Méně administrativy, víc kilometrů.",
-        "slug": "logistika"
+        "slug": "logistika",
+        "sections": {
+          "problem": "Kamionová doprava, kurýrní služby, spedice i 3PL sklady trpí stejnou bolestí: hromady papíru a PDF dokumentů, které někdo musí ručně přepsat do TMS, do účetnictví, do CMR. Dispečer stráví hodinu denně přepisováním dodacích listů, řidič hodinu posíláním fotek z mobilu, účetní hodinu shánkou rozdílů mezi fakturou a objednávkou.\n\nOptimalizace tras existuje, ale je drahá a integrace s vlastním TMS trvá měsíce. Last-mile delivery má vlastní specifika (časová okna, neúspěšné doručení, vrácení), která standardní software nezvládá. Celní dokumentace pro mimo-EU zakázky je v Excelu, ne v systému.",
+          "approach": "AI dokumentová triage je dnes nejrychlejší ROI v logistice. Nasadíme model, který přečte CMR, dodací list, fakturu a předvyplní záznam v TMS. Operátor jen schválí, místo přepisování. Zaplaceno za 6-12 měsíců z ušetřených hodin.\n\nPro route optimalizaci integrujeme HERE Maps, OpenStreetMap nebo PTV s vlastním engine, který bere v úvahu vaše constraints: časová okna klientů, typy vozů, předpisy pro řidiče. Last-mile zajistíme přes API konektory do Zásilkovny, DPD, PPL. Celní dokumentaci pro export automatizujeme přes integraci s celní deklarací.",
+          "process": [
+            {
+              "title": "Audit toků dokumentů",
+              "body": "2 týdny: kde se zdržuje čas, kolik papíru, jaké systémy (TMS, ERP, WMS). Pilotní use case s nejvyšším objemem."
+            },
+            {
+              "title": "AI dokumentový pipeline",
+              "body": "6-10 týdnů: model na CMR a fakturu, integrace s TMS, schvalovací workflow pro operátora. Pilot na 1-2 trasách."
+            },
+            {
+              "title": "Route a last-mile",
+              "body": "Souběžně: route engine, API do kurýrních partnerů, klientský tracking. Postupný rollout přes flotilu."
+            },
+            {
+              "title": "Provoz a škálování",
+              "body": "Měsíční metriky (procento dokumentů přes AI, ušetřené hodiny, úspěšnost first-attempt delivery), iterace modelu a rozšíření na další procesy."
+            }
+          ]
+        }
       },
       {
         "key": "profesionalni-sluzby",
         "icon": "Briefcase",
         "name": "Profesionální služby",
         "body": "Advokátní kanceláře, daňové poradny a účetní firmy tráví hodiny hledáním v archivech a ručním přepisováním dat z e-mailů do CRM. My tenhle čas vracíme zpět — integrací s vaším stávajícím CRM, nebo postavením vlastního na míru, když žádný SaaS váš workflow nezvládá.",
-        "slug": "profesionalni-sluzby"
+        "slug": "profesionalni-sluzby",
+        "sections": {
+          "problem": "Advokátní kanceláře, daňové poradny, účetní firmy a auditoři tráví 30-40 % fakturovatelného času administrativou — hledáním v archivu, přepisováním smluv, posíláním e-mailů a vyplňováním time-sheetů. Knowledge management znamená sdílený disk se složkami, kde tří-letý případ najde jen ten, kdo ho dělal.\n\nCRM systémy jsou nasazené, ale tým je nepoužívá, protože byly postavené pro prodejní organizace. Time tracking se zapisuje na konci týdne z paměti, takže fakturace neodpovídá realitě. AI nástroje vypadají atraktivně, ale data klientů jsou citlivá a generické cloud služby nepřipadají v úvahu.",
+          "approach": "Stavíme knowledge management na míru profesi: AI search nad interními dokumenty (smlouvy, judikatura, daňové stanoviska), který odpovídá konkrétně s citacemi a odkazy na zdroj. Data zůstávají u vás — self-hosted nebo izolovaný cloud, žádné posílání do veřejných LLM.\n\nPro time tracking nasazujeme automatický záznam z kalendáře a e-mailu s AI klasifikací podle klienta a typu úkonu — právník jen schválí. CRM stavíme buď customizací stávajícího (Caseware, Targetprocess, HubSpot) nebo vlastní řešení v Notionu/Airtable, když SaaS nesedí. Vše s ohledem na advokátní mlčenlivost a GDPR.",
+          "process": [
+            {
+              "title": "Audit workflow",
+              "body": "2 týdny: kde se ztrácí fakturovatelné hodiny, jak se spravuje knowledge, jaké systémy a integrace již existují. Mapování citlivosti dat."
+            },
+            {
+              "title": "Knowledge base a AI search",
+              "body": "6-10 týdnů: indexace dokumentů (smlouvy, výkazy, stanoviska), AI search engine s citacemi, izolovaná infrastruktura. Pilot pro jedno oddělení."
+            },
+            {
+              "title": "CRM a time tracking",
+              "body": "4-8 týdnů: nastavení CRM, automatické time tracking z kalendáře a e-mailu, integrace s fakturací. Onboarding týmu."
+            },
+            {
+              "title": "Adopce a rozšíření",
+              "body": "Měření použití (kdo aktivně pracuje, kolik hodin AI ušetří), trénink dalších týmů, postupné rozšiřování na celou kancelář."
+            }
+          ]
+        }
       },
       {
         "key": "finance",
         "icon": "Landmark",
         "name": "Finance",
         "body": "Banky, pojišťovny, fintech startupy, leasingové společnosti. Víme, co ČNB chce vidět — a píšeme marketing i kód tak, aby to regulátor nezametl. AI use cases navrhujeme auditovatelně od začátku, ne jako záplatu.",
-        "slug": "finance"
+        "slug": "finance",
+        "sections": {
+          "problem": "Banky, pojišťovny, fintech startupy a leasingové společnosti čelí regulatornímu tlaku z více stran současně: ČNB, ESA, AML 5/6, PSD2, DORA. KYC proces zaměstnává desítky lidí, kteří ručně procházejí dokumenty a manuálně schvalují klienty. Fraud detection generuje tisíce false positives denně, které musí compliance tým prošetřit.\n\nAI vypadá jako řešení, ale regulátor vyžaduje auditovatelnost, explainability a kontrolu nad daty. Generické cloud služby v USA nepřipadají v úvahu. Marketing musí dodržovat zákonné požadavky na investiční reklamu, což zpomaluje kampaně o týdny. Interní systémy jsou staré, ale výměna je projekt na roky.",
+          "approach": "AI v financích stavíme auditovatelně od začátku: každý model má dokumentaci, monitoring, explainability vrstvu a fallback na lidské rozhodnutí. KYC automatizace přes OCR a face matching s manuálním review pouze pro hraniční případy — ne plný outsourcing rozhodnutí. Pro AML a fraud detection používáme ensemble modelů s vysvětlitelností (SHAP, LIME), aby compliance týmu rozuměl, proč model označil transakci.\n\nMarketingovou stranu řešíme stejně pečlivě: copywriting prochází compliance review v rámci CMS workflow, ne na konci. Stavíme weby, investiční kalkulátory a portálová řešení s ohledem na ČNB, GDPR i PSD2. Vše s českou nebo EU jurisdikcí infrastruktury.",
+          "process": [
+            {
+              "title": "Regulatorní a datový audit",
+              "body": "3 týdny: ČNB, AML, GDPR požadavky, mapování existujících systémů, citlivost dat. Definujeme red lines a auditní trail nároky."
+            },
+            {
+              "title": "KYC a fraud pilot",
+              "body": "10-16 týdnů: OCR + face matching pro nové klienty, ensemble model pro fraud detection. Pilot na podmnožině klientů s manuální double-check."
+            },
+            {
+              "title": "Monitoring a compliance",
+              "body": "Sentry-style monitoring modelů (drift, accuracy, fairness), audit logy, integrace s reporting nástroji. Roční review modelu před auditem."
+            },
+            {
+              "title": "Marketing a portály",
+              "body": "Paralelně: web, kalkulátory, klientský portál — vše v compliance workflow. Měření konverze, A/B testy s respektem k regulatorním omezením."
+            }
+          ]
+        }
       },
       {
         "key": "energetika",
         "icon": "Zap",
         "name": "Energetika",
         "body": "Distribuční firmy i OZE instalatéři řeší jinou váhu problémů — ale oboje spojuje složitá dokumentace, přísný regulátor a zákazníci, kteří nerozumí svému vyúčtování. Díváme se, jak vaše procesy reálně fungují, a navrhujeme AI a digitální nástroje, které do nich zapadnou.",
-        "slug": "energetika"
+        "slug": "energetika",
+        "sections": {
+          "problem": "Distribuční firmy řeší planování sítě, řízení odběrů a integraci OZE; OZE instalátoři a obchodníci řeší klientskou administrativu, dotace, vyúčtování. Společné je všem: složitá regulace (ERU, ČEPS), tisíce smluv a klientů, papírová dokumentace a komunikace přes e-mail.\n\nSmart metery generují obrovské objemy dat, ale firmy je používají převážně pro fakturaci, ne pro predikci poptávky nebo detekci anomálií. ESG reporting roste — CSRD, taxonomie, scope 3 emise — a sběr dat trvá měsíce ručního exportu z různých systémů. Zákazníci nerozumí vyúčtování a generují tisíce ticketů support týmu.",
+          "approach": "Pro distribuční firmy stavíme datovou platformu nad smart metery s reporty a predikcemi: demand forecasting po lokalitách, detekce anomálií (krádeže, výpadky), simulace integrace nových OZE zdrojů. ESG reporting automatizujeme datovou pipeline z primárních systémů do finálních CSRD reportů.\n\nPro OZE instalátory a obchodníky stavíme klientské portály se srozumitelným vyúčtováním (graf spotřeby, predikce úspor, status dotace), AI chatbot pro běžné dotazy a automatizaci dokumentace (smlouvy, kolaudační zprávy, předávací protokoly). Snižujeme zátěž support týmu a zrychlujeme cestu od objednávky k instalaci.",
+          "process": [
+            {
+              "title": "Procesní audit",
+              "body": "2-3 týdny: kde se ztrácí čas, jak fungují smart meter data, jaké jsou ESG závazky a regulatorní deadline. Quick wins identifikujeme samostatně."
+            },
+            {
+              "title": "Datová platforma",
+              "body": "8-12 týdnů: ETL ze smart meter systému, demand forecasting model, anomaly detection. Dashboardy pro operations a regulátora."
+            },
+            {
+              "title": "Klientský portál nebo ESG reporting",
+              "body": "8-12 týdnů paralelně: buď klientský portál s AI chatbotem, nebo ESG reporting pipeline — podle priority."
+            },
+            {
+              "title": "Provoz a iterace",
+              "body": "Měsíční sledování přesnosti predikcí, snížení ticketů, rozšíření modelů na další lokality nebo OZE typy."
+            }
+          ]
+        }
       },
       {
         "key": "zdravotnictvi",
         "icon": "Stethoscope",
         "name": "Zdravotnictví",
         "body": "Soukromé estetické a longevity kliniky mají jiné nároky než běžné ambulance — prémiové klientské zkušenosti, citlivá data a Instagram jako hlavní marketingový kanál. Stavíme infrastrukturu a nástroje, ne lékařská rozhodnutí.",
-        "slug": "zdravotnictvi"
+        "slug": "zdravotnictvi",
+        "sections": {
+          "problem": "Nemocnice, kliniky a zdravotnická zařízení žijí v hraniční zóně regulace: GDPR-special category data, eHealth standardy, povinnosti vůči ÚZIS, pojišťovnám i pacientům. Ambulantní systémy jsou často staré 15-20 let a integrace s novými nástroji vyžaduje opatrnost.\n\nPatient flow trpí: pacient čeká hodiny na vyšetření, telefonní rezervace zaměstnává recepci celý den, e-maily o výsledcích chodí s týdenním zpožděním. Soukromé estetické a longevity kliniky řeší navíc prémiovou klientskou zkušenost, Instagram marketing a loajalitu — generické řešení nestačí, ale vlastní vývoj přesahuje rozpočet.",
+          "approach": "U zdravotnictví je první otázka data residency a GDPR. Stavíme na EU/CZ infrastruktuře, žádné posílání pacientských dat do veřejných LLM. AI nasazujeme pouze tam, kde nejde o lékařské rozhodnutí — triage rezervací, automatický recall pacientů, scheduling, klientská komunikace, marketing.\n\nPro soukromé kliniky stavíme prémiové klientské portály s online rezervacemi, sledováním ošetření, fotodokumentací před/po s respektem k souhlasu. Pro veřejné zařízení automatizujeme scheduling a komunikaci o výsledcích. Integrace s NIS/AIS systémy (Medicus, IRES, Stapro) řešíme přes oficiální API nebo HL7.",
+          "process": [
+            {
+              "title": "Data a compliance audit",
+              "body": "3 týdny: GDPR mapování, integrace s NIS, eHealth standardy, pověřenec pro ochranu osobních údajů. Žádný kód se nepíše bez jasných pravidel."
+            },
+            {
+              "title": "Patient flow a scheduling",
+              "body": "8-12 týdnů: online rezervační systém, automatické recall, smart triage s respektem k urgentnosti. Integrace s NIS přes oficiální rozhraní."
+            },
+            {
+              "title": "Klientský portál nebo marketing",
+              "body": "Souběžně podle priority: klientský portál (kliniky) nebo web a marketing automation (estetická medicína). Vždy s ohledem na regulatorní omezení reklamy."
+            },
+            {
+              "title": "Provoz a měření",
+              "body": "Měsíční metriky (čekací doby, no-show rate, NPS), iterace, postupné rozšíření na další oddělení nebo pobočky."
+            }
+          ]
+        }
       },
       {
         "key": "zakaznicka-podpora",
         "icon": "Headphones",
         "name": "Zákaznická podpora",
         "body": "Firmy s 1 000+ ticketů měsíčně ztrácejí čas na opakujících se dotazech. Nasadíme AI, která automaticky vyřídí 70 % běžných dotazů, zatímco agenti řeší situace, kde záleží na lidském úsudku. Zendesk, Intercom, Freshdesk a Front zůstávají — jen pracují chytřeji.",
-        "slug": "zakaznicka-podpora"
+        "slug": "zakaznicka-podpora",
+        "sections": {
+          "problem": "Kontaktní centra a support týmy s 1 000+ tickety měsíčně řeší stále stejné dotazy: kde je objednávka, jak vrátit zboží, jak změnit fakturační údaje. Agenti tráví 70 % času na rutinních případech a 30 % na skutečně složitých — což je naopak.\n\nKnowledge base existuje, ale je rozptýlená v Zendesku, Confluence a sdíleném disku. Trénink nového agenta trvá 6-8 týdnů a fluktuace je vysoká. AI chatboty z roku 2019 mají špatnou reputaci — deflektují zákazníky bez vyřešení a generují negativní reviews. Současně CFO tlačí na snížení nákladů na support.",
+          "approach": "Moderní LLM chatbot dokáže reálně vyřešit 50-70 % typických dotazů, pokud je dobře integrovaný s vašimi systémy a má kvalitní knowledge base. Stavíme řešení nad Zendeskem, Intercomem, Freshdeskem nebo Frontem (záleží, co máte) — žádná migrace, jen rozšíření.\n\nChatbot odpovídá na běžné dotazy s citacemi do knowledge base, umí provést jednoduché operace (změna adresy, status objednávky), a eskaluje na agenta v okamžiku, kdy zákazník chce nebo když si není jistý. Agent dostane kompletní kontext a může se soustředit na složité případy. Současně paralelně budujeme AI klasifikaci ticketů, automatické tagování a návrhy odpovědí — agent zrychlí i tam, kde AI nedeflektuje.",
+          "process": [
+            {
+              "title": "Audit ticketů a knowledge base",
+              "body": "2 týdny: analýza objemu, kategorie dotazů, deflection potenciál, kvalita stávající knowledge base. Definice success metrik (CSAT, deflection rate, AHT)."
+            },
+            {
+              "title": "Knowledge base a AI pilot",
+              "body": "6-8 týdnů: refresh knowledge base, integrace LLM s Zendeskem/Intercomem, eskalační logika. Pilot na 30 % traffic v jednom jazyce."
+            },
+            {
+              "title": "Rollout a agent tooling",
+              "body": "4-6 týdnů: rozšíření na 100 % traffic, AI návrhy odpovědí pro agenty, automatická klasifikace ticketů. Trénink týmu."
+            },
+            {
+              "title": "Provoz a iterace",
+              "body": "Týdenní review CSAT a deflection metrik, ladění promptů, rozšíření na další kanály (chat, e-mail, voice) nebo jazyky."
+            }
+          ]
+        }
       }
     ]
   },
