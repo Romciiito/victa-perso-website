@@ -258,6 +258,12 @@ body::after {
 /* ============================================================
    Component keyframes
    ============================================================ */
+/* BentoShell hover lifts its inner BentoCard */
+.bento-shell-hover:hover .bento-card-inner {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-card-hover);
+}
+
 @keyframes eyebrow-breathe {
   0%, 100% { opacity: 1; transform: scale(1); }
   50% { opacity: 0.55; transform: scale(0.85); }
