@@ -22,7 +22,7 @@ Marketing website for VICTA — Czech/Slovak full-service digital agency targeti
 |-----|------------------------------|
 | `docs/claude/architecture.md` | Understand the system, add a component, trace a data flow |
 | `docs/claude/development.md` | Run locally, write a test, add a route/model/page, deploy |
-| `docs/claude/design-decisions-v2.md` | Question why something is built a certain way, propose alternatives (D-008 system, replaces D-001) |
+| `docs/claude/design-decisions.md` | Question why something is built a certain way, propose alternatives |
 | `docs/claude/env-vars.md` | Add a new config value, debug a missing env var, set up a new environment |
 
 ---
@@ -31,7 +31,7 @@ Marketing website for VICTA — Czech/Slovak full-service digital agency targeti
 
 - All env vars use the `VICTA_` prefix — never use bare names.
 - Check `docs/claude/development.md` for exact run commands before assuming defaults.
-- See `docs/claude/design-decisions-v2.md` before proposing a stack or architecture change (D-008 system, see also `decisions.md` D-008 entry).
+- See `docs/claude/design-decisions.md` before proposing a stack or architecture change.
 
 
 ---

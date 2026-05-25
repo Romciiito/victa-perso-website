@@ -97,15 +97,15 @@ function lintLine(file, lineIdx, line) {
   }
 
   // Rule 3: single-letter preposition followed by regular space (not nbsp).
-  // Match in the middle of text: Czech word, ANY whitespace (incl. NBSP),
-  // single-letter prep, REGULAR SPACE OR TAB (the actual violation),
-  // Czech-letter word.
-  // Why the AFTER side is `[ \t]` (not `\s`): in JS `\s` with the /u flag
-  // also matches U+00A0 NBSP, which would cause false positives on
-  // correctly-formatted content where the prep is already followed by NBSP.
+  // Match in the middle of text: a Czech word, REGULAR space, single letter
+  // k/s/v/z/o/u/i/a, REGULAR space, Czech word.
+  // CRITICAL: use literal U+0020, not \s, because \s with the `u` flag also
+  // matches U+00A0 (nbsp) and would falsely flag already-fixed strings.
   for (const p of SINGLE_LETTER_PREPS) {
-    const re = new RegExp(`(?<=[\\p{L}])\\s${p}[ \\t](?=[\\p{L}])`, 'gu');
-    while (re.exec(line) !== null) {
+    const re = new RegExp(`(?<=[\\p{L}]) ${p} (?=[\\p{L}])`, 'gu');
+    const matches = line.match(re);
+    if (!matches) continue;
+    for (let i = 0; i < matches.length; i++) {
       violations.push({
         file,
         line: ln,

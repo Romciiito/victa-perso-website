@@ -1,4 +1,4 @@
-import { ArrowRight } from '@phosphor-icons/react/dist/ssr';
+import { ArrowRight } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { StatusLine } from './status-line';
 
@@ -56,7 +56,7 @@ export function EnglishStub({ title, pathLabel }: Props) {
             }}
           >
             hello@victaagency.com
-            <ArrowRight size={16} weight="regular" aria-hidden />
+            <ArrowRight size={16} aria-hidden />
           </a>
           <Link
             href="/"
@@ -70,7 +70,7 @@ export function EnglishStub({ title, pathLabel }: Props) {
             }}
           >
             View full site in Czech
-            <ArrowRight size={16} weight="regular" aria-hidden />
+            <ArrowRight size={16} aria-hidden />
           </Link>
         </div>
       </div>

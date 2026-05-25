@@ -40,12 +40,13 @@ export const solutionSlugs = [
   'ai-infrastruktura',
 ] as const;
 
-/** 5 industry vertical slugs (zdravotnictvi removed 2026-05-07 per Roman). */
+/** 6 industry vertical slugs. */
 export const industrySlugs = [
   'ecommerce',
   'vyroba-logistika',
   'profesionalni-sluzby',
   'finance',
+  'zdravotnictvi',
   'zakaznicka-podpora',
 ] as const;
 

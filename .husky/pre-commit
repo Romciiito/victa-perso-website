@@ -20,6 +20,3 @@ fi
 
 # Run lint-staged (ESLint on changed TS/JS files)
 npx lint-staged
-
-# Banned patterns guard (taste-skill anti-slop)
-./scripts/banned-patterns.sh

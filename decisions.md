@@ -103,77 +103,47 @@ Read by the orchestrator on startup to give all agents cross-session continuity.
 
 **HSTS note**: `preload` is intentionally absent from the HSTS header. Post-launch task at day 60+: add `preload` and submit to hstspreload.org (architecture.md §8.3, security-model.md §7 Rule 5, devops-engineer.md "What you don't do").
 
+## D-007 · Accent color updated indigo → ferro-rust + density updated medium → whitespace (2026-05-07)
 
-## D-008 · Design system v2: soft-skill Soft Structuralism + Ethereal Glass (2026-05-25)
+**Decision**: Final locked combination updated from `Inter Tight · indigo · grid · medium · left · 500` to `Inter Tight · ferro-rust · grid · low (whitespace) · left · 500`.
 
-**Decision**: D-001 (2026-05-06) explicitly UNLOCKED. New design system locked
-via Roman's choice using Leonxlnx/taste-skill framework — combination of
-soft-skill principles (Section 3.A high-end agency vibe + Section 3.B
-Editorial Split layout) with vibe 2 (Soft Structuralism) for light mode
-and vibe 3 (Ethereal Glass) for dark mode.
+**Reason**: Roman re-tested combinations in `visual-companion-v2.html` Tweaks mixer. Ferro-rust (#B53C16) gives warmer, more distinctive editorial feel vs cool corporate-tech indigo. Whitespace (low) density gives more breathing room and editorial mood — closer to atolsolutions.cz reference.
 
-**Combination signature**: `Geist · slate-light / lavender-dark · ambient
-shadows · glass-bento · Editorial Split hero · Asymmetrical Bento sections ·
-medium · left · 600`
+**New token values**:
+- Light accent: `#B53C16` (was `#3730A3`)
+- Dark accent: `#FF6B3A` (was `#7367E5`)
+- Section padding: 120px y / 56px x (was 64px / 48px)
+- Content gap: 36px (was 24px)
+- Headline scale: 1.1× (was 1×)
 
-**What changes from D-001**:
+**Affected**: `src/styles/globals.css`, `architecture.md` §7.1, all CTA + accent visuals on every page.
 
-| Token | D-001 (2026-05-06) | D-008 (2026-05-25) |
-|-------|---------------------|---------------------|
-| Sans font | Inter Tight | Geist (Variable 300..800) |
-| Mono font | Geist Mono | Geist Mono (kept) |
-| Accent font | none | Newsreader italic (selective H1 only) |
-| Light bg | #FAFAFA | #F4F5F7 (silver-grey) |
-| Light accent | #3730A3 (indigo) | #1F2937 (slate) |
-| Dark accent | #7367E5 (indigo lift) | #DCD7FF (lavender) |
-| Background | 40×40 grid 4% opacity | Radial mesh orbs + noise overlay |
-| Card radius | 8px | 22px inner / 28px outer (Double-Bezel) |
-| CTA buttons | rounded 6px | Pill 999px with Button-in-Button arrow |
-| Headline weight | 500 | 600 |
-| Layout grammar | Single-column left | Editorial Split + Asymmetrical Bento |
-| Icon library | lucide-react | @phosphor-icons/react (weight="light") |
+**Verification**: `docs/design-exploration/visual-companion-v2.html` — selected combination preview matches new tokens.
 
-**Canonical sources**:
-- Visual mockups: `docs/design-exploration/2026-05-24-soft-skill-vibes/*.html`
-- Skill specs: `.claude/skills/{taste,soft,redesign,minimalist}-skill/SKILL.md`
-- Full design spec: `docs/superpowers/specs/2026-05-24-design-system-v2-design.md`
-- Implementation plan PR 1: `docs/superpowers/plans/2026-05-24-design-system-v2-pr1-foundation.md`
+**Supersedes (does not delete)**: D-001's combination signature. D-001 remains as historical record of first lock; D-007 supersedes for runtime token values.
 
-**Reason**: Roman determined the D-001 system, while WCAG-compliant and
-Czech-typography-correct, read as "safe minimalist template" rather than
-"$150k agency build" per soft-skill anti-slop criteria. Indigo + Inter
-combination falls into "AI default" signature per taste-skill Section 7.
-The new system commits to a clear visual point of view (tech-credible light +
-glass dark mode) that differentiates VICTA from template-based competitors.
+**Atol-style stack-on-scroll**: Same revision adds CSS `position: sticky; top: 0` to each `<OfferingSection>` so the three offering blocks stack on top of each other as the user scrolls, matching atolsolutions.cz reference. Sections must keep opaque `bg-bg` so stacking obscures the previous block. No JS animation library — pure CSS sticky.
 
-**Hand-off** (PRs landed 2026-05-24..2026-05-25):
-- PR #16: PR 1 Foundation (globals.css + 6 component primitives + Button/Nav/ThemeToggle refactor + Phosphor install + banned-patterns hook)
-- PR #17: PR 2 Homepage (EditorialSplit hero + bento offerings + audit pricing on Double-Bezel)
-- PR #18: PR 6a Detail page template + 31 SSG routes (18 services + 5 solutions + 8 industries)
-- PR #19: PR 4 Overviews refactor (/sluzby /reseni /odvetvi) + homepage href migration
-- PR #20: PR 3 Conversion pages refactor (/spoluprace + /kontakt + PricingCard rebuild)
-- PR #21: PR 6b Czech content for 18 service detail pages (+ Magento typo fix)
-- PR #22: PR 6c Czech content for 5 solution detail pages
-- PR #23: PR 6d Czech content for 8 industry detail pages (+ Upgates + Packeta typo fixes)
-- PR #24: PR 5 Content pages refactor (/o-nas with team stub + /blog + legal pages)
-- PR #25 (this PR): PR 7 Cleanup — D-008 entry + lucide-react removal + archive legacy mockups
 
-**Locked items (do not change without D-### successor)**:
-- Geist as sans (replaces Inter Tight permanently)
-- Slate accent light / lavender dark (no return to indigo)
-- Editorial Split + Asymmetrical Bento as layout grammar
-- Variant C (visual canvas) for hero right column — Variant B (testimonial)
-  deferred until 3-5 real client testimonials available from medium+ business
-  clients
-- Phosphor icons (`weight="light"`) for all new code
+## D-008 · REVERTED — taste-skill redesign rolled back (2026-05-25)
 
-**Backwards-compat aliases (D-001 utility names) remain in globals.css**:
-- `--secondary`, `--tertiary`, `--surface`, `--surface-2`, `--border`,
-  `--border-soft`, `--success`, `--warning`, `--error`
-- `.text-secondary`, `.text-tertiary`, `.bg-surface`, `.bg-surface-2`,
-  `.border-border`, `.border-border-soft`
-- `.audit-card.popular` (D-001 §1.6 emphasis ring)
+**Decision**: D-008 (taste-skill production redesign: Geist + slate/lavender + mesh orbs + Editorial Split + Asymmetrical Bento + Newsreader italic + Double-Bezel cards + pill CTAs) is reverted. D-007 reinstated as the active production design system.
 
-These will be removed in a future PR after all 48 active usages across
-refactored pages are migrated to D-008 utility names (`.text-ink-muted`,
-`.bg-elevated`, `.border-line`, etc.).
+**Reason**: After living with D-008 on `main` for ~18 days (2026-05-07 to 2026-05-25), Roman determined the fonts and layout elements do not match the intended VICTA brand feel. The original D-007 combination (Inter Tight, ferro-rust, 40×40 grid, single-col left, custom locked-preview homepage, OfferingSection sticky stack, PricingCard, dedicated MegaMenu component) is the canonical brand expression.
+
+**Implementation**: New branch `revert/d008-to-d007-pre-may7` was hard-reset to commit `2f03059` (last commit before `d922d86` — the D-008 migration commit on 2026-05-07 at 17:59 CEST). Branch opened as a PR for review and explicit merge into `main`.
+
+**Scope of revert** (77 commits removed from main when branch merges):
+- Design system: `docs/claude/design-decisions-v2.md` (deleted), `globals.css` reverts to ferro-rust + grid
+- Layout primitives: `EditorialSplit`, `AsymmetricalBento`, `BentoShell`, `VisualCanvas`, `BodyOrbs`, `SectionHeader`, `StickyTierStack`, `MagneticIslandNav` (all removed)
+- Restored components: `OfferingSection`, `PricingCard`, `MegaMenu`, `ThemeProvider`, `ThemeToggle`, `anti-flash.ts`
+- Restored sandbox: `/redesign-preview` route + `preview-client.tsx`
+- Detail page routes (`/sluzby/[slug]`, `/reseni/[slug]`, `/odvetvi/[slug]`) and their 31 translated content sets — **removed** in revert (they were authored against D-008 templates). To be re-added in a future phase against D-007 templates.
+- Phase 3 page-body migrations (taste-skill bodies for o-nas, blog, kontakt, spoluprace, cookies, ochrana-soukromi) — all reverted to D-001/D-007 scaffold versions.
+
+**Content note**: Bod 11 (hero tags) and Bod 12 (hodnoty) merged from `content-only` branch (PR #27) used D-008 styling. Their translation strings can be cherry-picked back into D-007 templates if Roman wants to preserve them — flagged for a follow-up task, not done automatically.
+
+**Supersedes**: This entry supersedes the D-008 lock declaration that lived in `docs/claude/design-decisions-v2.md` (now deleted). D-007 is the active design system again. Inter Tight is unlocked-for-use, Geist is no longer the locked sans.
+
+**Re-decision path**: If Roman wants to re-attempt a taste-skill / soft-skill direction later, open a new D-### entry and a fresh feature branch — do not resurrect the D-008 commits, since they conflict with restored D-007 components.
+
