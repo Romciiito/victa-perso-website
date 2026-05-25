@@ -1,21 +1,25 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import { List, X } from '@phosphor-icons/react/dist/ssr';
 import { Link, usePathname } from '@/i18n/navigation';
 import { ThemeToggle } from './theme-toggle';
 import { LocaleSwitcher } from './locale-switcher';
+import { MegaMenu } from './mega-menu';
+import { OFFERING_MAP, type OfferingKey } from '@/lib/offerings-data';
 
 type NavItem = {
   href: string;
   key: 'services' | 'solutions' | 'industries' | 'collaboration' | 'about' | 'contact';
+  /** When set, clicking the link opens a mega-menu instead of navigating. */
+  megaMenu?: OfferingKey;
 };
 
 const NAV_ITEMS: ReadonlyArray<NavItem> = [
-  { href: '/sluzby', key: 'services' },
-  { href: '/reseni', key: 'solutions' },
-  { href: '/odvetvi', key: 'industries' },
+  { href: '/sluzby', key: 'services', megaMenu: 'services' },
+  { href: '/reseni', key: 'solutions', megaMenu: 'solutions' },
+  { href: '/odvetvi', key: 'industries', megaMenu: 'industries' },
   { href: '/spoluprace', key: 'collaboration' },
   { href: '/o-nas', key: 'about' },
   { href: '/kontakt', key: 'contact' },
@@ -25,15 +29,27 @@ const NAV_ITEMS: ReadonlyArray<NavItem> = [
  * Nav — Fluid Island floating pill on desktop, classic drawer on mobile.
  * Soft-skill §5.A. Skip-to-content link preserved for accessibility.
  *
- * Mobile fullscreen overlay with hamburger morph + staggered link reveal
- * is deferred to PR 2.
+ * Three primary links (Služby / Řešení / Odvětví) open a D-008 MegaMenu
+ * panel below the pill. Other links navigate directly. Mobile drawer
+ * always navigates (no mega-menu on mobile — the drawer is the menu).
  */
 export function Nav() {
   const t = useTranslations('nav');
   const pathname = usePathname();
-  const [open, setOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [openMenu, setOpenMenu] = useState<OfferingKey | null>(null);
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
+  // Close mega-menu whenever the route changes (defensive — handles
+  // browser back/forward and edge cases where onClose didn't fire).
+  useEffect(() => {
+    setOpenMenu(null);
+  }, [pathname]);
+
+  const handleMegaTrigger = (key: OfferingKey) => {
+    setOpenMenu((current) => (current === key ? null : key));
+  };
 
   return (
     <>
@@ -53,7 +69,7 @@ export function Nav() {
 
       {/* Desktop Fluid Island */}
       <nav
-        className="fluid-island fixed left-1/2 top-[22px] z-40 hidden -translate-x-1/2 items-center gap-7 rounded-full py-2 pl-[18px] pr-2 backdrop-blur-[20px] md:flex"
+        className="fluid-island fixed left-1/2 top-[22px] z-50 hidden -translate-x-1/2 items-center gap-7 rounded-full py-2 pl-[18px] pr-2 backdrop-blur-[20px] md:flex"
         style={{
           background: 'var(--bg-elevated)',
           border: '1px solid var(--line)',
@@ -68,12 +84,43 @@ export function Nav() {
         </Link>
         {NAV_ITEMS.slice(0, 5).map((item) => {
           const active = isActive(item.href);
+          const isMegaTrigger = !!item.megaMenu;
+          const isOpen = isMegaTrigger && openMenu === item.megaMenu;
+          const linkStyle: React.CSSProperties = {
+            color: active || isOpen ? 'var(--ink)' : 'var(--ink-muted)',
+          };
+
+          if (isMegaTrigger && item.megaMenu) {
+            const panelId = `megamenu-${item.megaMenu}`;
+            return (
+              <button
+                key={item.key}
+                type="button"
+                onClick={() => handleMegaTrigger(item.megaMenu as OfferingKey)}
+                aria-expanded={isOpen}
+                aria-controls={panelId}
+                aria-haspopup="menu"
+                className="nav-link relative cursor-pointer bg-transparent p-0 text-[14px] font-medium transition-colors duration-200"
+                style={linkStyle}
+              >
+                {t(item.key)}
+                {active || isOpen ? (
+                  <span
+                    aria-hidden
+                    className="absolute -bottom-[6px] left-0 right-0 h-px"
+                    style={{ background: 'var(--accent)' }}
+                  />
+                ) : null}
+              </button>
+            );
+          }
+
           return (
             <Link
               key={item.key}
               href={item.href}
               className="nav-link relative text-[14px] font-medium transition-colors duration-200"
-              style={{ color: active ? 'var(--ink)' : 'var(--ink-muted)' }}
+              style={linkStyle}
             >
               {t(item.key)}
               {active ? (
@@ -112,6 +159,17 @@ export function Nav() {
         </Link>
       </nav>
 
+      {/* Mega-menu panel — rendered outside the nav so the centered 1200px
+          width can overflow the pill. `openMenu` drives which catalog opens. */}
+      {openMenu ? (
+        <MegaMenu
+          open
+          onClose={() => setOpenMenu(null)}
+          data={OFFERING_MAP[openMenu]}
+          panelId={`megamenu-${openMenu}`}
+        />
+      ) : null}
+
       {/* Mobile bar — minimal, drawer preserved */}
       <header
         className="mobile-bar fixed left-0 right-0 top-0 z-40 md:hidden"
@@ -131,19 +189,19 @@ export function Nav() {
             <LocaleSwitcher />
             <button
               type="button"
-              aria-label={open ? t('close') : t('open')}
-              aria-expanded={open}
+              aria-label={mobileOpen ? t('close') : t('open')}
+              aria-expanded={mobileOpen}
               aria-controls="mobile-menu"
-              onClick={() => setOpen((v) => !v)}
+              onClick={() => setMobileOpen((v) => !v)}
               className="inline-flex h-9 w-9 items-center justify-center rounded-full transition-colors duration-200"
               style={{ background: 'transparent', border: '1px solid var(--line)', color: 'var(--ink)' }}
             >
-              {open ? <X size={16} weight="regular" /> : <List size={16} weight="regular" />}
+              {mobileOpen ? <X size={16} weight="regular" /> : <List size={16} weight="regular" />}
             </button>
           </div>
         </div>
 
-        {open ? (
+        {mobileOpen ? (
           <nav
             id="mobile-menu"
             style={{ background: 'var(--bg)', borderTop: '1px solid var(--line)' }}
@@ -155,7 +213,7 @@ export function Nav() {
                   <li key={item.key}>
                     <Link
                       href={item.href}
-                      onClick={() => setOpen(false)}
+                      onClick={() => setMobileOpen(false)}
                       className="block rounded-lg px-3 py-3 text-base transition-colors duration-200"
                       style={{
                         background: active ? 'var(--bg-deep)' : 'transparent',
