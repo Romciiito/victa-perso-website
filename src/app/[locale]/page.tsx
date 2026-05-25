@@ -303,20 +303,20 @@ async function CzechHome() {
         sidebarCtaHref={t('offerings.services.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.services.items') as ReadonlyArray<RawOfferingItem>,
-          SERVICES_ICONS,
+          servicesIcons,
         )}
       />
 
       <OfferingSection
         id="reseni"
-        sidebarIcon={SOLUTIONS_SIDEBAR_ICON}
+        sidebarIcon={Package}
         sidebarHeadline={t('offerings.solutions.headline')}
         sidebarDescription={t('offerings.solutions.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
         sidebarCtaHref={t('offerings.solutions.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.solutions.items') as ReadonlyArray<RawOfferingItem>,
-          SOLUTIONS_ICONS,
+          solutionsIcons,
         )}
       />
 
@@ -329,7 +329,7 @@ async function CzechHome() {
         sidebarCtaHref={t('offerings.industries.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.industries.items') as ReadonlyArray<RawOfferingItem>,
-          INDUSTRIES_ICONS,
+          industriesIcons,
         )}
       />
 
