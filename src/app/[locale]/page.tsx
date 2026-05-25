@@ -1,17 +1,37 @@
 import { setRequestLocale, getTranslations } from 'next-intl/server';
-import { ArrowRight, Briefcase, type LucideIcon } from 'lucide-react';
+import type { Icon as PhosphorIcon } from '@phosphor-icons/react';
+import {
+  ArrowRight,
+  Pulse,
+  ChartBar,
+  Cube,
+  Briefcase,
+  Buildings,
+  Code,
+  Database,
+  Headphones,
+  Heart,
+  Stack,
+  ChatCircle,
+  ChatTeardrop,
+  Package,
+  MagnifyingGlass,
+  HardDrives,
+  Gear,
+  Shield,
+  ShoppingCart,
+  Target,
+  TrendUp,
+  Lightning,
+} from '@phosphor-icons/react/dist/ssr';
 import { Link } from '@/i18n/navigation';
 import { Button } from '@/components/button';
 import { StatusLine } from '@/components/status-line';
 import { OfferingSection, type OfferingItem } from '@/components/offering-section';
-import {
-  SERVICES_ICONS,
-  SOLUTIONS_ICONS,
-  INDUSTRIES_ICONS,
-  SERVICES_SIDEBAR_ICON,
-  SOLUTIONS_SIDEBAR_ICON,
-  INDUSTRIES_SIDEBAR_ICON,
-} from '@/lib/offerings-data';
+import { EditorialSplit } from '@/components/editorial-split';
+import { Eyebrow } from '@/components/eyebrow';
+import { BentoShell, BentoCard } from '@/components/bento';
+import { VisualCanvas } from '@/components/visual-canvas';
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -23,9 +43,36 @@ type Props = { params: Promise<{ locale: string }> };
    ============================================================ */
 type RawOfferingItem = { title: string; subtitle: string; href?: string };
 
+const servicesIcons: ReadonlyArray<PhosphorIcon> = [
+  MagnifyingGlass, // 1 · AI Discovery
+  Target, // 2 · AI Strategie
+  Database, // 3 · Datová platforma
+  Code, // 4 · AI-driven vývoj
+  Shield, // 5 · AI Governance
+  Pulse, // 6 · Provoz a MLOps
+];
+
+const solutionsIcons: ReadonlyArray<PhosphorIcon> = [
+  ChatTeardrop, // 1 · GenAI a RAG asistenti
+  Cube, // 2 · Autonomní AI agenti
+  Headphones, // 3 · AI zákaznická podpora
+  ChartBar, // 4 · Prediktivní analytika
+  HardDrives, // 5 · AI Infrastruktura
+];
+
+const industriesIcons: ReadonlyArray<PhosphorIcon> = [
+  ShoppingCart, // 1 · E-commerce a maloobchod
+  TrendUp, // 2 · Finance a Fintech
+  Heart, // 3 · Zdravotnictví a medtech
+  Gear, // 4 · Výroba a logistika
+  Lightning, // 5 · Energetika a utility
+  ChatCircle, // 6 · Zákaznická podpora a CX
+  Briefcase, // 7 · Profesionální služby
+];
+
 function buildOfferingItems(
   raw: ReadonlyArray<RawOfferingItem>,
-  icons: ReadonlyArray<LucideIcon>,
+  icons: ReadonlyArray<PhosphorIcon>,
 ): ReadonlyArray<OfferingItem> {
   return raw.map((it, i) => ({
     icon: icons[i] ?? icons[icons.length - 1] ?? Briefcase,
@@ -50,123 +97,194 @@ export default async function Home({ params }: Props) {
 async function CzechHome() {
   const t = await getTranslations('home');
 
-  // Czech tags row uses the middle dot (·) wrapped in accent-coloured spans, with
-  // non-breaking spaces hugging the bullet on both sides.
-  const NBSP = ' ';
 
   return (
     <>
       {/* ============================================================
-           HERO  (locked-preview .hero)
-           D-007 density (low/whitespace): 120 / 56 px desktop · 96 / 28 px mobile
-           Headline scale 1.1× (max 88px, was 80px)
+           HERO  (D-008 EditorialSplit)
+           Left:  Eyebrow + H1 (Geist 600 + Newsreader italic accent) + sub
+                  + mono tags + CTAs (pill + Button-in-Button arrow)
+           Right: Variant C visual canvas (top, span-2) + 2 lead bentos
+                  (audit + consult) in Double-Bezel pattern
            ============================================================ */}
-      <section
-        className="relative px-7 pb-24 pt-24 md:px-14 md:pb-24 md:pt-32"
-        style={{ paddingTop: 'var(--space-30, 120px)', paddingBottom: 'var(--space-24, 96px)' }}
-      >
-        <div className="mx-auto w-full max-w-[1440px]">
-          {/* H1 */}
-          <h1
-            className="mb-6 text-ink"
-            style={{
-              fontSize: 'clamp(48px, 6.5vw, 88px)',
-              lineHeight: 1.04,
-              letterSpacing: '-0.035em',
-              fontWeight: 500,
-              maxWidth: '920px',
-            }}
-          >
-            {t('hero.headline')}
-          </h1>
+      <EditorialSplit
+        padding="hero"
+        left={
+          <>
+            <Eyebrow>{t('hero.status')}</Eyebrow>
 
-          {/* Tags row · Geist Mono, secondary, accent bullets */}
-          <div
-            className="mb-8 font-mono text-secondary"
-            style={{ fontSize: '13px', letterSpacing: 0 }}
-          >
-            <span>{t('hero.tagsWeb')}</span>
-            {NBSP}
-            <span style={{ color: 'var(--accent)' }}>·</span>
-            {NBSP}
-            <span>{t('hero.tagsEshop')}</span>
-            {NBSP}
-            <span style={{ color: 'var(--accent)' }}>·</span>
-            {NBSP}
-            <span>{t('hero.tagsAi')}</span>
-            {NBSP}
-            <span style={{ color: 'var(--accent)' }}>·</span>
-            {NBSP}
-            <span>{t('hero.tagsMarketing')}</span>
-            {NBSP}
-            <span style={{ color: 'var(--accent)' }}>·</span>
-            {NBSP}
-            <span>{t('hero.tagsSprava')}</span>
-          </div>
-
-          {/* Divider — width 920px, 1px border-soft, vertical margin 32px */}
-          <div
-            className="my-8"
-            style={{
-              width: '100%',
-              maxWidth: '920px',
-              height: '1px',
-              backgroundColor: 'var(--border-soft)',
-            }}
-          />
-
-          {/* Sub paragraph */}
-          <p
-            className="mb-8 text-secondary"
-            style={{ fontSize: '19px', lineHeight: 1.55, maxWidth: '520px' }}
-          >
-            {t('hero.sub')}
-          </p>
-
-          {/* Lead row · two columns: audit price + free consultation */}
-          <div
-            className="mb-8 flex flex-wrap items-baseline"
-            style={{ gap: 'var(--space-16, 64px)' }}
-          >
-            <div className="text-secondary" style={{ fontSize: '15px', lineHeight: 1.55 }}>
-              <strong
-                className="block text-ink"
-                style={{ fontWeight: 500, marginBottom: '4px' }}
+            <h1
+              className="text-ink"
+              style={{
+                fontSize: 'clamp(56px, 8vw, 116px)',
+                lineHeight: 0.94,
+                letterSpacing: '-0.045em',
+                fontWeight: 600,
+                maxWidth: '14ch',
+              }}
+            >
+              {t('hero.headlineLead')}{' '}
+              <em
+                className="accent"
+                style={{ fontWeight: 300, fontStyle: 'italic', letterSpacing: '-0.03em' }}
               >
-                {t('hero.leadAuditLabel')}
-              </strong>
-              {t('hero.leadAuditPriceFrom')}
-              <span className="font-mono text-ink" style={{ fontSize: '13px' }}>
-                {t('hero.leadAuditPrice')}
-              </span>
-            </div>
-            <div className="text-secondary" style={{ fontSize: '15px', lineHeight: 1.55 }}>
-              <strong
-                className="block text-ink"
-                style={{ fontWeight: 500, marginBottom: '4px' }}
-              >
-                {t('hero.leadConsultLabel')}
-              </strong>
-              {t('hero.leadConsultBody')}
-            </div>
-          </div>
+                {t('hero.headlineAccent')}
+              </em>
+            </h1>
 
-          {/* CTAs */}
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Button href="/spoluprace#audit" variant="primary" size="md">
-              {t('hero.ctaPrimary')}
-            </Button>
-            <Button href="/kontakt" variant="ghost" size="md">
-              {t('hero.ctaGhost')}
-            </Button>
-          </div>
+            <p
+              style={{
+                fontSize: '19px',
+                lineHeight: 1.5,
+                color: 'var(--ink-muted)',
+                maxWidth: '44ch',
+                fontWeight: 400,
+              }}
+            >
+              {t('hero.sub')}
+            </p>
 
-          {/* Status line — bottom of hero, 48px above */}
-          <div className="mt-12">
-            <StatusLine>{t('hero.status')}</StatusLine>
+            {/* Tags row · Geist Mono uppercase, ink-soft dots */}
+            <div
+              className="flex flex-wrap items-center font-mono uppercase"
+              style={{
+                gap: '14px',
+                fontSize: '12px',
+                letterSpacing: '0.05em',
+                color: 'var(--ink-soft)',
+              }}
+            >
+              <span>{t('hero.tagsWeb')}</span>
+              <span
+                aria-hidden
+                className="inline-block h-[5px] w-[5px] rounded-full"
+                style={{ background: 'var(--ink-soft)' }}
+              />
+              <span>{t('hero.tagsEshop')}</span>
+              <span
+                aria-hidden
+                className="inline-block h-[5px] w-[5px] rounded-full"
+                style={{ background: 'var(--ink-soft)' }}
+              />
+              <span>{t('hero.tagsAi')}</span>
+              <span
+                aria-hidden
+                className="inline-block h-[5px] w-[5px] rounded-full"
+                style={{ background: 'var(--ink-soft)' }}
+              />
+              <span>{t('hero.tagsMarketing')}</span>
+              <span
+                aria-hidden
+                className="inline-block h-[5px] w-[5px] rounded-full"
+                style={{ background: 'var(--ink-soft)' }}
+              />
+              <span>{t('hero.tagsSprava')}</span>
+            </div>
+
+            {/* CTAs */}
+            <div className="flex flex-wrap" style={{ gap: '12px' }}>
+              <Button href="/spoluprace#audit" variant="primary" size="md">
+                {t('hero.ctaPrimary')}
+              </Button>
+              <Button href="/kontakt" variant="ghost" size="md">
+                {t('hero.ctaGhost')}
+              </Button>
+            </div>
+          </>
+        }
+        right={
+          <div
+            className="grid h-full content-center"
+            style={{ gridTemplateColumns: '1fr 1fr', gap: '12px' }}
+          >
+            {/* Top row (span 2): Visual canvas — Variant C per spec */}
+            <BentoShell span={2}>
+              <VisualCanvas
+                tag={t('hero.visualTag')}
+                title={t('hero.visualTitle')}
+                minHeight={200}
+              />
+            </BentoShell>
+
+            {/* Bottom row: audit + consult bentos */}
+            <BentoShell>
+              <BentoCard>
+                <div
+                  className="flex items-start justify-between"
+                  style={{ gap: '8px' }}
+                >
+                  <div
+                    className="font-mono uppercase"
+                    style={{
+                      fontSize: '10px',
+                      letterSpacing: '0.18em',
+                      color: 'var(--ink-soft)',
+                    }}
+                  >
+                    {t('hero.leadAuditLabel')} · {t('hero.leadAuditPriceFrom')}
+                    {t('hero.leadAuditPrice')}
+                  </div>
+                </div>
+                <div
+                  style={{
+                    fontSize: '17px',
+                    fontWeight: 500,
+                    letterSpacing: '-0.015em',
+                    color: 'var(--ink)',
+                    lineHeight: 1.25,
+                  }}
+                >
+                  {t('hero.leadAuditHeadline')}
+                </div>
+                <div
+                  style={{
+                    fontSize: '13px',
+                    color: 'var(--ink-muted)',
+                    lineHeight: 1.45,
+                  }}
+                >
+                  {t('hero.leadAuditMeta')}
+                </div>
+              </BentoCard>
+            </BentoShell>
+
+            <BentoShell>
+              <BentoCard>
+                <div
+                  className="font-mono uppercase"
+                  style={{
+                    fontSize: '10px',
+                    letterSpacing: '0.18em',
+                    color: 'var(--ink-soft)',
+                  }}
+                >
+                  {t('hero.leadConsultLabel')}
+                </div>
+                <div
+                  style={{
+                    fontSize: 'clamp(28px, 3.5vw, 40px)',
+                    fontWeight: 500,
+                    letterSpacing: '-0.04em',
+                    color: 'var(--ink)',
+                    lineHeight: 1,
+                  }}
+                >
+                  {t('hero.leadConsultHeadline')}
+                </div>
+                <div
+                  style={{
+                    fontSize: '13px',
+                    color: 'var(--ink-muted)',
+                    lineHeight: 1.45,
+                  }}
+                >
+                  {t('hero.leadConsultMeta')}
+                </div>
+              </BentoCard>
+            </BentoShell>
           </div>
-        </div>
-      </section>
+        }
+      />
 
       {/* ============================================================
            OFFERINGS — three Atol-style sections
@@ -178,76 +296,72 @@ async function CzechHome() {
            ============================================================ */}
       <OfferingSection
         id="sluzby"
-        sidebarIcon={SERVICES_SIDEBAR_ICON}
+        sidebarIcon={Stack}
         sidebarHeadline={t('offerings.services.headline')}
         sidebarDescription={t('offerings.services.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
         sidebarCtaHref={t('offerings.services.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.services.items') as ReadonlyArray<RawOfferingItem>,
-          SERVICES_ICONS,
+          servicesIcons,
         )}
       />
 
       <OfferingSection
         id="reseni"
-        sidebarIcon={SOLUTIONS_SIDEBAR_ICON}
+        sidebarIcon={Package}
         sidebarHeadline={t('offerings.solutions.headline')}
         sidebarDescription={t('offerings.solutions.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
         sidebarCtaHref={t('offerings.solutions.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.solutions.items') as ReadonlyArray<RawOfferingItem>,
-          SOLUTIONS_ICONS,
+          solutionsIcons,
         )}
       />
 
       <OfferingSection
         id="odvetvi"
-        sidebarIcon={INDUSTRIES_SIDEBAR_ICON}
+        sidebarIcon={Buildings}
         sidebarHeadline={t('offerings.industries.headline')}
         sidebarDescription={t('offerings.industries.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
         sidebarCtaHref={t('offerings.industries.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.industries.items') as ReadonlyArray<RawOfferingItem>,
-          INDUSTRIES_ICONS,
+          industriesIcons,
         )}
       />
 
       {/* ============================================================
-           AUDIT PRICING  (locked-preview .audit-section)
-           3 tiers · middle (Tier 1) marked .popular with accent ring
-           D-007 density (low/whitespace): 120 / 56 px desktop, headline 1.1×
-           Note: the parent <section> below is intentionally NOT sticky —
-           after the three sticky offering sections finish stacking, the
-           audit pricing block scrolls normally on top of the final stack.
-           Its `bg-surface` background opaquely covers the offering stack.
+           AUDIT PRICING  (D-008)
+           3 tiers · Tier 1 (popular) uses BentoShell ring via
+           .audit-card.popular alias.
            ============================================================ */}
       <section
         id="audit"
-        className="relative border-t border-b border-border-soft px-7 py-24 md:px-14 md:py-32"
-        style={{ backgroundColor: 'var(--surface)' }}
+        className="relative px-6 py-24 md:px-8 md:py-32"
+        style={{ borderTop: '1px solid var(--line)' }}
       >
         <div className="mx-auto w-full max-w-[1440px]">
-          <div className="mb-12 max-w-[760px]">
+          <div className="mb-16 grid gap-4" style={{ maxWidth: '760px' }}>
             <h2
-              className="mb-4 text-ink"
               style={{
-                fontSize: 'clamp(28px, 4vw, 50px)',
-                lineHeight: 1.1,
-                letterSpacing: '-0.025em',
-                fontWeight: 500,
+                fontSize: 'clamp(32px, 4vw, 56px)',
+                lineHeight: 1.04,
+                letterSpacing: '-0.045em',
+                fontWeight: 600,
+                color: 'var(--ink)',
               }}
             >
               {t('audit.heading')}
             </h2>
-            <p className="text-secondary" style={{ fontSize: '19px', lineHeight: 1.5 }}>
+            <p style={{ fontSize: '19px', lineHeight: 1.5, color: 'var(--ink-muted)' }}>
               {t('audit.subhead')}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
             {/* Tier 1 (popular) */}
             <AuditCard
               tier={t('audit.tier1.tier')}
@@ -306,16 +420,16 @@ async function CzechHome() {
 
           {/* Scoping call line */}
           <p
-            className="mt-8 text-center text-secondary"
-            style={{ fontSize: '15px' }}
+            className="mt-10 text-center"
+            style={{ fontSize: '15px', color: 'var(--ink-muted)' }}
           >
             {t('audit.scopingPrefix')}
             <Link
               href="/kontakt"
               style={{
-                color: 'var(--accent)',
+                color: 'var(--ink)',
                 fontWeight: 500,
-                borderBottom: '1px solid var(--accent)',
+                borderBottom: '1px solid var(--ink)',
                 paddingBottom: '2px',
               }}
             >
@@ -399,7 +513,7 @@ async function EnglishStub() {
             }}
           >
             {t('stub.email')}
-            <ArrowRight size={16} aria-hidden />
+            <ArrowRight size={16} weight="regular" aria-hidden />
           </a>
         </div>
 
@@ -419,8 +533,9 @@ async function EnglishStub() {
 }
 
 /* ============================================================
-   AuditCard — single tier card in the audit pricing 3-up grid
-   (locked-preview .audit-card · .popular variant for emphasized tier)
+   AuditCard — D-008 refactor: BentoShell + BentoCard pattern
+   Popular tier gets accent ring via outer BentoShell border (preserves
+   the .audit-card.popular visual signature from D-001 §1.6 alias).
    ============================================================ */
 function AuditCard({
   tier,
@@ -448,103 +563,130 @@ function AuditCard({
   popular?: boolean;
 }) {
   return (
-    <article
-      className={`audit-card flex h-full flex-col rounded-lg border p-8 ${popular ? 'popular' : ''}`}
-      style={{
-        backgroundColor: 'var(--bg)',
-        borderColor: popular ? 'var(--accent)' : 'var(--border)',
-        boxShadow: popular ? '0 0 0 1px var(--accent)' : undefined,
-      }}
+    <div
+      className={popular ? 'audit-card popular' : 'audit-card'}
+      style={popular ? { borderRadius: 'var(--radius-xl)' } : undefined}
     >
-      {/* Tier row */}
-      <div className="mb-6 flex items-center justify-between gap-3">
-        <span
-          className="font-mono uppercase"
-          style={{
-            color: 'var(--tertiary)',
-            fontSize: '12px',
-            letterSpacing: '0.12em',
-          }}
-        >
-          {tier}
-        </span>
-        {popular && badge ? (
-          <span
-            className="font-mono uppercase"
+      <BentoShell>
+        <BentoCard padding="loose">
+          {/* Tier row */}
+          <div className="flex items-center justify-between" style={{ gap: '12px' }}>
+            <span
+              className="font-mono uppercase"
+              style={{
+                color: 'var(--ink-soft)',
+                fontSize: '11px',
+                letterSpacing: '0.16em',
+              }}
+            >
+              {tier}
+            </span>
+            {popular && badge ? (
+              <span
+                className="font-mono uppercase"
+                style={{
+                  backgroundColor: 'var(--accent-soft)',
+                  color: 'var(--accent)',
+                  fontSize: '10px',
+                  letterSpacing: '0.08em',
+                  padding: '4px 10px',
+                  borderRadius: '999px',
+                  fontWeight: 500,
+                }}
+              >
+                {badge}
+              </span>
+            ) : null}
+          </div>
+
+          {/* Name */}
+          <h3
             style={{
-              backgroundColor: 'var(--accent-soft)',
-              color: 'var(--accent)',
-              fontSize: '10px',
-              letterSpacing: '0.08em',
-              padding: '4px 8px',
-              borderRadius: 'var(--radius-sm)',
-              fontWeight: 500,
+              fontSize: 'clamp(22px, 2.2vw, 26px)',
+              fontWeight: 600,
+              letterSpacing: '-0.025em',
+              lineHeight: 1.15,
+              color: 'var(--ink)',
+              marginTop: '8px',
             }}
           >
-            {badge}
-          </span>
-        ) : null}
-      </div>
+            {name}
+          </h3>
 
-      {/* Name */}
-      <h3
-        className="mb-6 text-ink"
-        style={{ fontSize: '25px', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.2 }}
-      >
-        {name}
-      </h3>
-
-      {/* Price (CZK primary) */}
-      <div
-        className="font-mono text-ink"
-        style={{ fontSize: '33px', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1, marginBottom: '4px' }}
-      >
-        {price}
-      </div>
-      {/* Price (EUR secondary) */}
-      <div className="font-mono text-secondary" style={{ fontSize: '13px', marginBottom: '24px' }}>
-        {priceEur}
-      </div>
-
-      {/* Divider */}
-      <hr className="border-0 border-t" style={{ borderColor: 'var(--border)', margin: '24px 0' }} />
-
-      {/* Includes label */}
-      <div
-        className="mb-4 font-mono uppercase"
-        style={{
-          color: 'var(--tertiary)',
-          fontSize: '12px',
-          letterSpacing: '0.12em',
-        }}
-      >
-        {includesLabel}
-      </div>
-
-      {/* Bullets */}
-      <ul className="mb-8 flex-1 list-none">
-        {bullets.map((b, i) => (
-          <li
-            key={`${i}-${b.slice(0, 16)}`}
-            className="relative pl-6 text-ink"
-            style={{ fontSize: '13px', lineHeight: 1.7, marginBottom: '8px' }}
-          >
-            <span
-              aria-hidden
-              className="absolute left-0 top-0 select-none font-semibold"
-              style={{ color: 'var(--accent)' }}
+          {/* Price block */}
+          <div>
+            <div
+              style={{
+                fontFamily: 'var(--font-geist), system-ui, sans-serif',
+                fontSize: 'clamp(32px, 3.6vw, 44px)',
+                fontWeight: 500,
+                letterSpacing: '-0.04em',
+                lineHeight: 1,
+                color: 'var(--ink)',
+                marginBottom: '6px',
+              }}
             >
-              ✓
-            </span>
-            {b}
-          </li>
-        ))}
-      </ul>
+              {price}
+            </div>
+            <div
+              className="font-mono"
+              style={{ fontSize: '12px', color: 'var(--ink-muted)' }}
+            >
+              {priceEur}
+            </div>
+          </div>
 
-      {/* CTA */}
-      <Button href={ctaHref} variant={ctaVariant} className="w-full">
-        {ctaLabel}
-      </Button>
-    </article>
+          {/* Divider */}
+          <hr
+            className="border-0 border-t"
+            style={{ borderColor: 'var(--line)', margin: '4px 0' }}
+          />
+
+          {/* Includes label */}
+          <div
+            className="font-mono uppercase"
+            style={{
+              color: 'var(--ink-soft)',
+              fontSize: '10px',
+              letterSpacing: '0.18em',
+            }}
+          >
+            {includesLabel}
+          </div>
+
+          {/* Bullets */}
+          <ul className="list-none" style={{ display: 'grid', gap: '8px' }}>
+            {bullets.map((b, i) => (
+              <li
+                key={`${i}-${b.slice(0, 16)}`}
+                className="relative"
+                style={{
+                  fontSize: '13px',
+                  lineHeight: 1.55,
+                  color: 'var(--ink)',
+                  paddingLeft: '20px',
+                }}
+              >
+                <span
+                  aria-hidden
+                  className="absolute left-0 top-0"
+                  style={{ color: 'var(--accent)', fontWeight: 600 }}
+                >
+                  ✓
+                </span>
+                {b}
+              </li>
+            ))}
+          </ul>
+
+          {/* CTA — bottom-aligned via mt-auto */}
+          <div style={{ marginTop: 'auto' }}>
+            <Button href={ctaHref} variant={ctaVariant} className="w-full justify-center">
+              {ctaLabel}
+            </Button>
+          </div>
+        </BentoCard>
+      </BentoShell>
+    </div>
   );
 }

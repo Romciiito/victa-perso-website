@@ -1,8 +1,9 @@
 /* ============================================================
    offerings-data.ts
    ----------------------------------------------------------------
-   Single source of truth for the three "offering" sections shown
-   on the homepage and inside the desktop mega-menu.
+   Single source of truth for the three "offering" sections used
+   by the desktop mega-menu (and any future consumer that needs a
+   non-translation, static catalog of icons + labels).
 
    Why static Czech strings live here (Phase 1):
      - The CS homepage is the canonical surface (locked-preview).
@@ -14,44 +15,53 @@
        binding + Czech labels here. Phase 2 can move strings back
        to translations once EN nav is required.
      - `page.tsx` continues to use translations for SEO/i18n parity;
-       this file matches those Czech strings 1:1 (kept in sync).
+       this file mirrors those Czech strings 1:1 (kept in sync).
 
-   Last sync with content/cs/strings/common.json: 2026-05-23
-   (full-service positioning rewrite + 18 services + 8 industries)
+   D-008 update (PR 8 mega-menu integration):
+     - Icons swapped from `lucide-react` → `@phosphor-icons/react/dist/ssr`
+       (lucide was removed in PR 7 cleanup). Mapping mirrors the
+       homepage `page.tsx` (commit 682a8d4).
+     - `href` fields realigned with the new detail-page routes that
+       landed in PR 6a (overview + detail templates):
+         · Services  → `/sluzby#{categorySlug}` (itDev / aiData / marketing)
+         · Solutions → `/reseni/{slug}`
+         · Industries → `/odvetvi/{slug}`
+
+   Last sync with content/cs/strings/common.json: 2026-05-25
    ============================================================ */
 
+import type { Icon } from '@phosphor-icons/react';
 import {
-  BarChart3,
-  Boxes,
-  Building2,
-  Code2,
+  Bank,
+  Buildings,
+  ChartBar,
+  ChatTeardrop,
+  Code,
+  Cube,
   Factory,
+  Gear,
+  HardDrives,
   Headphones,
-  Landmark,
-  Layers,
-  MessageSquare,
+  Lightning,
+  MagnifyingGlass,
   Package,
-  Search,
-  Server,
-  Settings,
   ShoppingCart,
+  Stack,
   Stethoscope,
   Target,
-  TrendingUp,
+  TrendUp,
   Truck,
-  Zap,
-  type LucideIcon,
-} from 'lucide-react';
+} from '@phosphor-icons/react/dist/ssr';
 
 export type OfferingDataItem = {
-  icon: LucideIcon;
+  icon: Icon;
   title: string;
   subtitle: string;
   href: string;
 };
 
 export type OfferingData = {
-  sidebarIcon: LucideIcon;
+  sidebarIcon: Icon;
   sidebarHeadline: string;
   sidebarDescription: string;
   sidebarCtaLabel: string;
@@ -59,9 +69,11 @@ export type OfferingData = {
   items: ReadonlyArray<OfferingDataItem>;
 };
 
-/* ---------- A · Services — full-service representatives (6 cells) ---------- */
+/* ---------- A · Services — full-service representatives (6 cells) ----------
+   Hrefs use the 3 category anchors on /sluzby (itDev / aiData / marketing),
+   matching `home.offerings.services.items[].href` in common.json. */
 export const SERVICES_OFFERING: OfferingData = {
-  sidebarIcon: Layers,
+  sidebarIcon: Stack,
   sidebarHeadline: 'Tři kompetence, jedna agentura',
   sidebarDescription:
     'Weby, AI a marketing pod jednou střechou. Od prvního pixelu až po měřitelné výsledky.',
@@ -69,34 +81,34 @@ export const SERVICES_OFFERING: OfferingData = {
   sidebarCtaHref: '/sluzby',
   items: [
     {
-      icon: Code2,
+      icon: Code,
       title: 'Weby a e-shopy na míru',
       subtitle: 'Návrh, vývoj a spuštění na míru',
-      href: '/sluzby#weby',
+      href: '/sluzby#itDev',
     },
     {
-      icon: Settings,
+      icon: Gear,
       title: 'Správa webů a e-shopů',
       subtitle: 'Technická péče, aktualizace a rozvoj',
-      href: '/sluzby#sprava',
+      href: '/sluzby#itDev',
     },
     {
-      icon: MessageSquare,
+      icon: ChatTeardrop,
       title: 'AI chatboti a automatizace',
       subtitle: 'Chatboti, agenti a automatizace procesů',
-      href: '/sluzby#ai',
+      href: '/sluzby#aiData',
     },
     {
-      icon: Search,
+      icon: MagnifyingGlass,
       title: 'SEO a AEO',
       subtitle: 'Organická viditelnost ve vyhledávačích i AI',
-      href: '/sluzby#seo',
+      href: '/sluzby#marketing',
     },
     {
-      icon: TrendingUp,
+      icon: TrendUp,
       title: 'PPC a performance marketing',
       subtitle: 'Placené kampaně s měřitelným výnosem',
-      href: '/sluzby#ppc',
+      href: '/sluzby#marketing',
     },
     {
       icon: Target,
@@ -107,7 +119,8 @@ export const SERVICES_OFFERING: OfferingData = {
   ],
 };
 
-/* ---------- B · Turnkey AI solutions (5 cells) ---------- */
+/* ---------- B · Turnkey AI solutions (5 cells) ----------
+   Hrefs link to per-solution detail pages /reseni/{slug}. */
 export const SOLUTIONS_OFFERING: OfferingData = {
   sidebarIcon: Package,
   sidebarHeadline: 'AI řešení na klíč',
@@ -117,44 +130,45 @@ export const SOLUTIONS_OFFERING: OfferingData = {
   sidebarCtaHref: '/reseni',
   items: [
     {
-      icon: MessageSquare,
+      icon: ChatTeardrop,
       title: 'Znalostní asistent',
       subtitle: 'AI natrénované na vaši dokumentaci',
-      href: '/reseni#znalostni-asistent',
+      href: '/reseni/knowledge',
     },
     {
-      icon: Boxes,
+      icon: Cube,
       title: 'Autonomní agenti',
       subtitle: 'Sekvence úkolů bez lidského zásahu',
-      href: '/reseni#agenti',
+      href: '/reseni/agents',
     },
     {
       icon: Headphones,
       title: 'AI podpora zákazníků',
       subtitle: 'Chatbot 24/7, eskalace na živého agenta',
-      href: '/reseni#podpora',
+      href: '/reseni/support',
     },
     {
-      icon: BarChart3,
+      icon: ChartBar,
       title: 'Datové dashboardy',
       subtitle: 'Jeden přehled pro prodeje, marketing i sklad',
-      href: '/reseni#dashboardy',
+      href: '/reseni/dashboards',
     },
     {
-      icon: Server,
+      icon: HardDrives,
       title: 'AI infrastruktura',
       subtitle: 'Platforma pro více AI scénářů najednou',
-      href: '/reseni#infrastruktura',
+      href: '/reseni/infra',
     },
   ],
 };
 
-/* ---------- C · Industries (6 cells on homepage / mega-menu) ---------- */
-/* Full 8-industry catalog lives on /odvetvi page. Homepage + mega-menu
-   show 6 highest-leverage verticals; Profesionální služby + Zákaznická
+/* ---------- C · Industries (6 cells on mega-menu) ----------
+   Full 8-industry catalog lives on /odvetvi page. Mega-menu shows
+   6 highest-leverage verticals (matches `home.offerings.industries
+   .items` in common.json 1:1). Profesionální služby + Zákaznická
    podpora accessible directly via /odvetvi. */
 export const INDUSTRIES_OFFERING: OfferingData = {
-  sidebarIcon: Building2,
+  sidebarIcon: Buildings,
   sidebarHeadline: 'Odvětví, kterým rozumíme',
   sidebarDescription:
     'Neřešíme jen techniku — rozumíme procesům a tlakům v každém oboru, se kterým pracujeme.',
@@ -165,37 +179,37 @@ export const INDUSTRIES_OFFERING: OfferingData = {
       icon: ShoppingCart,
       title: 'E-commerce',
       subtitle: 'Shopify, Shoptet, headless, CZ feedy',
-      href: '/odvetvi#ecommerce',
+      href: '/odvetvi/ecommerce',
     },
     {
       icon: Factory,
       title: 'Výroba',
       subtitle: 'SAP, OEE, prediktivní údržba',
-      href: '/odvetvi#vyroba',
+      href: '/odvetvi/vyroba',
     },
     {
       icon: Truck,
       title: 'Logistika',
       subtitle: 'CMR, AETR, optimalizace tras',
-      href: '/odvetvi#logistika',
+      href: '/odvetvi/logistika',
     },
     {
-      icon: Landmark,
+      icon: Bank,
       title: 'Finance',
       subtitle: 'ČNB, DORA, AML/KYC compliance',
-      href: '/odvetvi#finance',
+      href: '/odvetvi/finance',
     },
     {
-      icon: Zap,
+      icon: Lightning,
       title: 'Energetika',
       subtitle: 'Air-gapped LLM, ERÚ, fotovoltaika',
-      href: '/odvetvi#energetika',
+      href: '/odvetvi/energetika',
     },
     {
       icon: Stethoscope,
       title: 'Zdravotnictví',
       subtitle: 'FotoFinder, longevity AI, GDPR',
-      href: '/odvetvi#zdravotnictvi',
+      href: '/odvetvi/zdravotnictvi',
     },
   ],
 };
@@ -208,24 +222,3 @@ export const OFFERING_MAP = {
 } as const;
 
 export type OfferingKey = keyof typeof OFFERING_MAP;
-
-/* ============================================================
-   Icon arrays — used by `app/[locale]/page.tsx` to bind icons
-   onto translated `t.raw('home.offerings.<section>.items')` data.
-   Order matches `items[i]` in the i18n JSON exactly.
-   Kept in sync with the OFFERING constants above (single source).
-   ============================================================ */
-export const SERVICES_ICONS: ReadonlyArray<LucideIcon> = SERVICES_OFFERING.items.map(
-  (it) => it.icon,
-);
-export const SOLUTIONS_ICONS: ReadonlyArray<LucideIcon> = SOLUTIONS_OFFERING.items.map(
-  (it) => it.icon,
-);
-export const INDUSTRIES_ICONS: ReadonlyArray<LucideIcon> = INDUSTRIES_OFFERING.items.map(
-  (it) => it.icon,
-);
-
-/* Sidebar icons exposed for direct re-use on the homepage. */
-export const SERVICES_SIDEBAR_ICON = SERVICES_OFFERING.sidebarIcon;
-export const SOLUTIONS_SIDEBAR_ICON = SOLUTIONS_OFFERING.sidebarIcon;
-export const INDUSTRIES_SIDEBAR_ICON = INDUSTRIES_OFFERING.sidebarIcon;

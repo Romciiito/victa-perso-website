@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
-import { Sun, Moon } from 'lucide-react';
 
 export function ThemeToggle() {
   const t = useTranslations('nav');
@@ -16,7 +15,7 @@ export function ThemeToggle() {
 
   // Reserve space during SSR / first paint to avoid layout shift
   if (!mounted) {
-    return <div className="size-9" aria-hidden />;
+    return <div className="h-8 w-8" aria-hidden />;
   }
 
   const isDark = resolvedTheme === 'dark';
@@ -26,9 +25,31 @@ export function ThemeToggle() {
       type="button"
       aria-label={isDark ? t('themeLight') : t('themeDark')}
       onClick={() => setTheme(isDark ? 'light' : 'dark')}
-      className="flex size-9 items-center justify-center rounded-md border border-border text-ink transition-colors duration-150 hover:bg-surface"
+      className="theme-toggle inline-flex h-8 w-8 items-center justify-center rounded-full transition-transform duration-200 hover:rotate-[15deg]"
+      style={{
+        background: 'transparent',
+        border: '1px solid var(--line)',
+        color: 'var(--ink-muted)',
+      }}
     >
-      {isDark ? <Sun size={16} aria-hidden /> : <Moon size={16} aria-hidden />}
+      {isDark ? <SunIcon /> : <MoonIcon />}
     </button>
+  );
+}
+
+function SunIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+    </svg>
+  );
+}
+
+function MoonIcon() {
+  return (
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" />
+    </svg>
   );
 }

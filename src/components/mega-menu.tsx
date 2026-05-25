@@ -1,20 +1,30 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { ArrowRight } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import type { OfferingData } from '@/lib/offerings-data';
+import { BentoShell, BentoCard } from './bento';
 
 /* ============================================================
-   MegaMenu — Atol-style dropdown panel below the nav.
-   Reuses the same 6-cell light grid + dark sticky sidebar
-   pattern as <OfferingSection> on the homepage, but rendered
-   in a fixed-positioned dropdown that anchors below the header.
+   MegaMenu — D-008 dropdown panel below the Fluid Island Nav.
+
+   Visual contract (mirrors OfferingSection, PR 4 commit 6f14c9c):
+   ──────────────────────────────────────────────────────────────
+   - Outer panel: glass backdrop (bg-elevated + backdrop-blur),
+     1px line border, rounded var(--radius-xl), centered max-w.
+   - Layout: 380px feature card sidebar + 2-col items grid.
+   - Sidebar: BentoShell + BentoCard padding=loose, accent-soft
+     icon circle, h2, description, underlined CTA + inline arrow.
+   - Items: BentoShell + BentoCard padding=compact, Phosphor icon
+     (weight="light"), title, subtitle.
+   - Replaces the previous D-001 Atol pattern (6-cell light grid
+     + dark sidebar) so the dropdown reads as a natural extension
+     of the homepage offering sections.
 
    Behaviour
    ─────────
-   - `open=false` → returns null (no DOM cost when closed).
-   - `open=true`  → fixed full-width panel, fades + slides in.
+   - `open=false` → returns null (zero DOM cost when closed).
+   - `open=true`  → fixed panel fades + slides in.
    - Click outside (backdrop) → onClose.
    - Esc keypress → onClose.
    - Any link click inside → onClose (auto-close on navigation).
@@ -47,42 +57,92 @@ export function MegaMenu({ open, onClose, data, panelId }: MegaMenuProps) {
 
   return (
     <>
-      {/* Click-outside backdrop. Sits below the panel but above page. */}
+      {/* Click-outside backdrop. Sits below the panel but above page.
+          The Fluid Island Nav sits at top:22px with ~52px height, so the
+          panel starts at ~88px to leave a visual gap between pill + panel. */}
       <button
         type="button"
         aria-label="Zavřít menu"
         onClick={onClose}
-        className="fixed inset-x-0 bottom-0 z-40 cursor-default"
-        style={{
-          top: '64px', // sits below nav so hover-bridge still works
-          backgroundColor: 'transparent',
-        }}
+        className="fixed inset-0 z-40 cursor-default"
+        style={{ background: 'transparent' }}
       />
 
-      {/* The panel itself. Full viewport width, internal max-w to match nav. */}
+      {/* The panel itself — centered, glass shell, BentoShell grid inside. */}
       <div
         ref={panelRef}
         id={panelId}
         role="menu"
         aria-orientation="vertical"
-        className="megamenu-panel fixed inset-x-0 z-50 border-b border-border-soft"
+        className="megamenu-panel fixed left-1/2 z-50 -translate-x-1/2"
         style={{
-          top: '64px',
-          backgroundColor: 'var(--bg)',
-          boxShadow: 'var(--shadow-md, 0 12px 32px rgba(0,0,0,0.08))',
+          top: '88px',
+          width: 'min(1200px, calc(100vw - 32px))',
+          background: 'var(--bg-elevated)',
+          border: '1px solid var(--line)',
+          borderRadius: 'var(--radius-xl)',
+          boxShadow: '0 24px 64px -16px rgba(10,11,14,0.18), 0 8px 32px -12px rgba(10,11,14,0.10)',
+          backdropFilter: 'blur(20px) saturate(180%)',
+          WebkitBackdropFilter: 'blur(20px) saturate(180%)',
         }}
-        onMouseLeave={onClose}
       >
-        <div className="mx-auto w-full max-w-[1440px] px-6 py-8 md:px-12 md:py-10">
-          <div className="grid gap-6 md:grid-cols-[1fr_320px] md:gap-8 lg:grid-cols-[1fr_360px]">
-            {/* Cells grid — left on desktop */}
-            <div
-              className="order-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:order-1"
-              style={{
-                borderTop: '1px solid var(--border-soft)',
-                borderLeft: '1px solid var(--border-soft)',
-              }}
-            >
+        <div className="p-3 md:p-4">
+          <div className="grid gap-3 md:grid-cols-[minmax(0,380px)_minmax(0,1fr)] md:gap-4">
+            {/* Feature intro card — sidebar */}
+            <BentoShell>
+              <BentoCard padding="loose">
+                <div className="flex flex-col gap-5">
+                  <div
+                    className="inline-flex h-12 w-12 items-center justify-center rounded-full"
+                    style={{
+                      background: 'var(--accent-soft)',
+                      color: 'var(--accent)',
+                    }}
+                  >
+                    <SidebarIcon size={22} weight="light" aria-hidden />
+                  </div>
+                  <h2
+                    style={{
+                      fontSize: 'clamp(22px, 2vw, 28px)',
+                      lineHeight: 1.1,
+                      letterSpacing: '-0.035em',
+                      fontWeight: 600,
+                      color: 'var(--ink)',
+                    }}
+                  >
+                    {data.sidebarHeadline}
+                  </h2>
+                  <p
+                    style={{
+                      fontSize: '14px',
+                      lineHeight: 1.55,
+                      color: 'var(--ink-muted)',
+                    }}
+                  >
+                    {data.sidebarDescription}
+                  </p>
+                  <Link
+                    href={data.sidebarCtaHref}
+                    role="menuitem"
+                    onClick={onClose}
+                    className="inline-flex items-center gap-2 self-start font-medium transition-colors duration-200"
+                    style={{
+                      fontSize: '14px',
+                      color: 'var(--ink)',
+                      letterSpacing: '-0.005em',
+                    }}
+                  >
+                    <span style={{ borderBottom: '1px solid var(--ink)' }}>
+                      {data.sidebarCtaLabel}
+                    </span>
+                    <CtaArrow />
+                  </Link>
+                </div>
+              </BentoCard>
+            </BentoShell>
+
+            {/* Items grid */}
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:gap-3">
               {data.items.map((item, idx) => {
                 const Icon = item.icon;
                 return (
@@ -91,92 +151,45 @@ export function MegaMenu({ open, onClose, data, panelId }: MegaMenuProps) {
                     href={item.href}
                     role="menuitem"
                     onClick={onClose}
-                    className="flex h-full flex-col gap-1 px-5 py-5 transition-colors duration-150 hover:bg-surface md:px-6 md:py-6"
-                    style={{
-                      borderRight: '1px solid var(--border-soft)',
-                      borderBottom: '1px solid var(--border-soft)',
-                    }}
+                    className="block"
                   >
-                    <Icon
-                      size={20}
-                      strokeWidth={1.5}
-                      aria-hidden
-                      className="mb-2 text-tertiary"
-                    />
-                    <h3
-                      className="text-ink"
-                      style={{
-                        fontSize: '15px',
-                        fontWeight: 500,
-                        lineHeight: 1.25,
-                        letterSpacing: '-0.005em',
-                        marginBottom: '2px',
-                      }}
-                    >
-                      {item.title}
-                    </h3>
-                    <p
-                      className="text-secondary"
-                      style={{ fontSize: '12px', lineHeight: 1.55 }}
-                    >
-                      {item.subtitle}
-                    </p>
+                    <BentoShell>
+                      <BentoCard padding="compact">
+                        <div className="flex flex-col gap-2">
+                          <Icon
+                            size={20}
+                            weight="light"
+                            aria-hidden
+                            style={{ color: 'var(--ink-muted)' }}
+                          />
+                          <h3
+                            style={{
+                              fontSize: '15px',
+                              fontWeight: 500,
+                              lineHeight: 1.25,
+                              letterSpacing: '-0.015em',
+                              color: 'var(--ink)',
+                              marginTop: '4px',
+                            }}
+                          >
+                            {item.title}
+                          </h3>
+                          <p
+                            style={{
+                              fontSize: '12.5px',
+                              lineHeight: 1.5,
+                              color: 'var(--ink-muted)',
+                            }}
+                          >
+                            {item.subtitle}
+                          </p>
+                        </div>
+                      </BentoCard>
+                    </BentoShell>
                   </Link>
                 );
               })}
             </div>
-
-            {/* Dark sidebar — right on desktop */}
-            <aside
-              className="order-1 self-start rounded-lg p-7 md:order-2 md:p-8"
-              style={{ backgroundColor: 'var(--ink)', color: 'var(--bg)' }}
-            >
-              <SidebarIcon
-                size={28}
-                strokeWidth={1.5}
-                aria-hidden
-                className="mb-5"
-                style={{ color: 'var(--bg)', opacity: 0.9 }}
-              />
-              <h2
-                className="mb-3"
-                style={{
-                  fontSize: 'clamp(20px, 2vw, 24px)',
-                  lineHeight: 1.15,
-                  letterSpacing: '-0.02em',
-                  fontWeight: 500,
-                  color: 'var(--bg)',
-                }}
-              >
-                {data.sidebarHeadline}
-              </h2>
-              <p
-                className="mb-6"
-                style={{
-                  fontSize: '14px',
-                  lineHeight: 1.55,
-                  color: 'var(--bg)',
-                  opacity: 0.7,
-                }}
-              >
-                {data.sidebarDescription}
-              </p>
-              <Link
-                href={data.sidebarCtaHref}
-                role="menuitem"
-                onClick={onClose}
-                className="inline-flex items-center gap-2 transition-opacity duration-150 hover:opacity-80"
-                style={{
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  color: 'var(--bg)',
-                  letterSpacing: '-0.005em',
-                }}
-              >
-                <span>{data.sidebarCtaLabel}</span>
-                <ArrowRight size={16} aria-hidden />
-              </Link>
-            </aside>
           </div>
         </div>
       </div>
@@ -184,16 +197,16 @@ export function MegaMenu({ open, onClose, data, panelId }: MegaMenuProps) {
       {/* Animation styles — scoped via class. */}
       <style jsx global>{`
         .megamenu-panel {
-          animation: megamenu-in 150ms cubic-bezier(0.2, 0.8, 0.2, 1);
+          animation: megamenu-in 180ms cubic-bezier(0.32, 0.72, 0, 1);
         }
         @keyframes megamenu-in {
           from {
             opacity: 0;
-            transform: translateY(-8px);
+            transform: translateX(-50%) translateY(-8px);
           }
           to {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateX(-50%) translateY(0);
           }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -203,5 +216,27 @@ export function MegaMenu({ open, onClose, data, panelId }: MegaMenuProps) {
         }
       `}</style>
     </>
+  );
+}
+
+/* ============================================================
+   CtaArrow — inline SVG arrow (mirrors offering-section.tsx).
+   No external icon dep so this client component stays minimal.
+   ============================================================ */
+function CtaArrow() {
+  return (
+    <svg
+      viewBox="0 0 14 14"
+      width="12"
+      height="12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M3 7h8M8 3l4 4-4 4" />
+    </svg>
   );
 }
