@@ -153,13 +153,19 @@ async function CzechHome() {
                 color: 'var(--ink-soft)',
               }}
             >
-              <span>{t('hero.tagsAudit')}</span>
+              <span>{t('hero.tagsWeb')}</span>
               <span
                 aria-hidden
                 className="inline-block h-[5px] w-[5px] rounded-full"
                 style={{ background: 'var(--ink-soft)' }}
               />
-              <span>{t('hero.tagsDev')}</span>
+              <span>{t('hero.tagsEshop')}</span>
+              <span
+                aria-hidden
+                className="inline-block h-[5px] w-[5px] rounded-full"
+                style={{ background: 'var(--ink-soft)' }}
+              />
+              <span>{t('hero.tagsAi')}</span>
               <span
                 aria-hidden
                 className="inline-block h-[5px] w-[5px] rounded-full"
@@ -171,7 +177,7 @@ async function CzechHome() {
                 className="inline-block h-[5px] w-[5px] rounded-full"
                 style={{ background: 'var(--ink-soft)' }}
               />
-              <span>{t('hero.tagsAi')}</span>
+              <span>{t('hero.tagsSprava')}</span>
             </div>
 
             {/* CTAs */}

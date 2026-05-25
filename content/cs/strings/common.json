@@ -56,10 +56,11 @@
       "headline": "Začneme tím, že posloucháme.",
       "headlineLead": "Začneme tím, že",
       "headlineAccent": "posloucháme.",
-      "tagsAudit": "Audit",
-      "tagsDev": "Vývoj",
+      "tagsWeb": "Weby",
+      "tagsEshop": "E-shopy",
+      "tagsAi": "AI",
       "tagsMarketing": "Marketing",
-      "tagsAi": "AI integrace",
+      "tagsSprava": "Správa",
       "sub": "Než cokoliv navrhneme, chceme rozumět vašemu podnikání. To je celé.",
       "leadAuditLabel": "Audit",
       "leadAuditHeadline": "Komplexní podnikový audit",
@@ -1513,6 +1514,27 @@
       "headline": "Pojďme se poznat.",
       "body": "Domluvte si bezplatnou konzultaci nebo placený audit.",
       "button": "Spolupráce →"
+    },
+    "hodnoty": {
+      "headline": "Čtyři principy, které držíme.",
+      "items": [
+        {
+          "label": "AUDIT JE INVESTICE",
+          "body": "Cenu auditu započteme do rozpočtu projektu, pokud s námi pokračujete v implementaci. Pokud ne, máte zprávu, schémata a doporučení použitelné u kohokoli jiného. Žádný úvodní sales hovor zdarma — od první hodiny pracujeme na vašem problému."
+        },
+        {
+          "label": "PARŤÁK PO LAUNCHI",
+          "body": "Nestavíme a nezmizíme. Klient je s námi v kontaktu měsíčně, ne jen po předání. Měsíční reporting a přímá konzultační dostupnost — bez ticketing systému."
+        },
+        {
+          "label": "AI DRŽÍ DETAILY, LIDÉ DRŽÍ MYŠLENÍ",
+          "body": "Co u velkých agentur trvá 3 měsíce, u nás 3 týdny. Bez režie 30+ hlav, kterou si platí klient. AI je náš nástroj rychlosti — myšlení a strategii drží lidé."
+        },
+        {
+          "label": "ŽÁDNÉ ŠABLONY",
+          "body": "Každý web stavíme od nuly na váš stack a brand. Žádné WordPress themes, žádné drag-and-drop blocky, žádný stock. Design system, copywriting i kód jsou na míru."
+        }
+      ]
     }
   },
   "kontakt": {
