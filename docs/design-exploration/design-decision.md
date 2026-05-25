@@ -1,6 +1,8 @@
 # VICTA — Design Decision
 
-> **Locked output of Phase 1A design exploration.** Roman vybral `Inter Tight × Indigo × Grid × Medium × Left × 500` z `visual-companion-v2.html` Tweaks mixeru. Tento dokument je hand-off kontrakt pro Phase 1B `architect` — definuje co je rozhodnuté (a tedy nepřednastavitelné v Phase 1B) a co Phase 1B doplní (a co je tedy ještě otevřené).
+> **REVISION NOTE 2026-05-07 (D-007).** Accent token shift `indigo → ferro-rust` and density shift `medium → low (whitespace)`. Locked combination signature is now `Inter Tight · ferro-rust · grid · low · left · 500`. Roman re-tested in `visual-companion-v2.html` Tweaks mixer — ferro-rust (`#B53C16` light / `#FF6B3A` dark) replaces indigo (`#3730A3` / `#7367E5`); section padding bumps to 120 / 56 px; headline scale 1.1×; content gap 36 px. All affected token tables in §1.1 (color) and §1.4 (density) below have been updated in-place. The original indigo / medium values are preserved in `decisions.md` D-001 as historical record; D-007 supersedes for runtime.
+
+> **Locked output of Phase 1A design exploration (D-001).** Roman vybral `Inter Tight × Indigo × Grid × Medium × Left × 500` z `visual-companion-v2.html` Tweaks mixeru. Tento dokument je hand-off kontrakt pro Phase 1B `architect` — definuje co je rozhodnuté (a tedy nepřednastavitelné v Phase 1B) a co Phase 1B doplní (a co je tedy ještě otevřené). **D-007 updated lock 2026-05-07** — viz revision note výše.
 
 > **Status:** LOCKED — všechny `Decided` tokeny jsou závazné pro Phase 4 frontend implementaci. Token bez explicitního lockování v sekci §1 je v sekci §2 (Phase 1B doplní).
 
@@ -22,9 +24,9 @@
 | `--ink` | `#0A0B0E` | Primární text |
 | `--secondary` | `#52525B` | Sekundární text, body kopie |
 | `--tertiary` | `#71717A` | Captions, meta info, mono labels, datelines |
-| `--accent` | `#3730A3` | **Indigo signature** — primární CTA bg, link underlines, accent rules |
-| `--accent-bright` | `#4F46C7` | Indigo hover state, lighter variant |
-| `--accent-soft` | `rgba(55, 48, 163, 0.08)` | Accent badge bg (Most popular badge atd.) |
+| `--accent` | `#B53C16` | **Ferro-rust signature** (D-007 · 2026-05-07; was `#3730A3` indigo) — primární CTA bg, link underlines, accent rules |
+| `--accent-bright` | `#FF8C5A` | Ferro-rust hover state, lighter variant (was `#4F46C7`) |
+| `--accent-soft` | `rgba(181, 60, 22, 0.10)` | Accent badge bg (Most popular badge atd.; was `rgba(55, 48, 163, 0.08)`) |
 | `--success` | `#15803D` | Green dot v status line, success states |
 | `--warning` | `#A16207` | Warning states (Phase 1B může zpřesnit) |
 | `--error` | `#B91C1C` | Error states — záměrně vzdálené od indiga, aby šly rozlišit |
@@ -41,9 +43,9 @@
 | `--ink` | `#FAFAFA` | Primární text — bright but not glaring |
 | `--secondary` | `#A1A1AA` | Sekundární |
 | `--tertiary` | `#71717A` | Tertiary, captions |
-| `--accent` | `#7367E5` | **Lifted indigo** — light variant pro dark mode |
-| `--accent-bright` | `#9389F0` | Hover state |
-| `--accent-soft` | `rgba(115, 103, 229, 0.14)` | Accent badge bg (mírně silnější opacita pro dark) |
+| `--accent` | `#FF6B3A` | **Lifted ferro-rust** (D-007 · 2026-05-07; was `#7367E5` indigo) — bright variant pro dark mode |
+| `--accent-bright` | `#FF8C5A` | Hover state (was `#9389F0`) |
+| `--accent-soft` | `rgba(255, 107, 58, 0.16)` | Accent badge bg (mírně silnější opacita pro dark; was `rgba(115, 103, 229, 0.14)`) |
 
 #### WCAG verification
 
@@ -104,12 +106,14 @@ CSS implementation:
 
 ### §1.4 · Density
 
-**Medium** density tokens:
-- Section padding desktop: `96-128px` vertical, `48px` horizontal
-- Section padding mobile: `64-96px` vertical, `24px` horizontal
-- Component spacing scale: 4px base (4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96 / 128 / 160)
-- Hero padding: `96px 48px 64px` desktop; `64px 24px 48px` mobile
-- Card padding: `32px` desktop, `24px` mobile
+**Low (whitespace)** density tokens (D-007 · 2026-05-07; was Medium):
+- Section padding desktop: `120px` vertical, `56px` horizontal (was `96-128px / 48px`)
+- Section padding mobile: `96px` vertical, `28px` horizontal (was `64-96px / 24px`)
+- Content gap: `36px` (was `24px`)
+- Headline scale factor: `1.1×` (Hero H1 max `88px`, Section H2 max `50px`; was `80px / 45px` at 1×)
+- Component spacing scale: 4px base (4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 96 / 128 / 160) — unchanged
+- Hero padding: `120px 56px 96px` desktop; `96px 28px 72px` mobile
+- Card padding: `32px` desktop, `24px` mobile — unchanged
 
 ### §1.5 · Alignment
 
@@ -232,9 +236,9 @@ Phase 1B by měl rozhodnout JEDNU rodinu a stick to it. Žádné mix-and-match.
 **From `design-directions.md` §C.9** (carry forward):
 - Minimal photography at launch — replaced by:
   - Generative grid pattern (already locked in §1.3)
-  - System diagrams for industry pages (1px lines, mono labels, indigo accent)
-  - Optional: real photography for Tým page when ready (cool grade, slight desaturate, often duotone in indigo)
-- AEO/SEO OG cards: typography-only, indigo accent line, ne stock photos
+  - System diagrams for industry pages (1px lines, mono labels, ferro-rust accent — was indigo pre-D-007)
+  - Optional: real photography for Tým page when ready (cool grade, slight desaturate, often duotone in ferro-rust — was indigo pre-D-007)
+- AEO/SEO OG cards: typography-only, ferro-rust accent line, ne stock photos (was indigo pre-D-007)
 - Industry-page schematics: cohesive visual language across 6 industries (e-commerce, manufacturing, professional services, finance, healthcare, customer support)
 
 Phase 1B `architect` by měl rozhodnout: kdo kreslí systém-diagramy (commissioned, AI-generated via nano-banana, in-house Figma)? A jaké je launch-blocker minimum (homepage + 1 industry hero?).
@@ -246,7 +250,7 @@ Suggested: 1200×630 PNG template, generated at build time via Next.js OG image 
 - Geist Mono accent line (small)
 - `--bg` background
 - Subtle grid pattern (locked)
-- Single indigo accent rule
+- Single ferro-rust accent rule (was indigo pre-D-007)
 
 Phase 1B by měl rozhodnout: per-page OG (different per route) vs single template + per-page title overlay.
 
@@ -300,7 +304,7 @@ Reference outputs from Phase 1A:
 | Phase | Phase 1A complete · awaiting Phase 1B |
 | Decision date | 2026-05-06 |
 | Decided by | Roman, via Tweaks mixer in `visual-companion-v2.html` |
-| Combination signature | `Inter Tight · indigo · grid · medium · left · 500 · normal` |
+| Combination signature | `Inter Tight · ferro-rust · grid · low (whitespace) · left · 500 · normal` (D-007 · 2026-05-07; was `indigo · medium`) |
 | Locked-preview rendered | ✓ `locked-preview.html` |
 | WCAG AA verification | ✓ all critical pairs pass; warning state needs retest at mobile resolution |
 | Czech typography rules | ✓ applied (uvozovky, em-dash, nbsp after k/s/v/z/o/u/i/a, thousand separator) |

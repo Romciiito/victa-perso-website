@@ -1058,7 +1058,9 @@ The linter runs as a Node.js script in the CI pipeline before the build step. A 
 
 ### 7.1 Token Structure — LOCKED per Roman's design decision
 
-> **Source of truth (locked 2026-05-06)**: `docs/design-exploration/design-decision.md` §1.1 + §1.2. Combination signature: `Inter Tight · indigo · grid · medium · left · 500 · normal`. Selected by Roman from `visual-companion-v2.html` Tweaks mixer. Every token below is locked — frontend-developer **MUST NOT** change a value without Roman's explicit re-decision. Locked-preview rendered in `docs/design-exploration/locked-preview.html`.
+> **Source of truth (locked 2026-05-06, accent + density updated 2026-05-07 per D-007)**: `docs/design-exploration/design-decision.md` §1.1 + §1.2. Combination signature: `Inter Tight · ferro-rust · grid · low (whitespace) · left · 500 · normal` (was `indigo · medium` until D-007). Selected by Roman from `visual-companion-v2.html` Tweaks mixer. Every token below is locked — frontend-developer **MUST NOT** change a value without Roman's explicit re-decision. Locked-preview rendered in `docs/design-exploration/locked-preview.html`.
+>
+> **Updated 2026-05-07 per Roman's final lock — was indigo until D-007.** Accent shifted to warmer, more distinctive editorial ferro-rust; density loosened from medium to low (whitespace) for editorial breathing room closer to atolsolutions.cz reference.
 
 All visual tokens are CSS Custom Properties defined in a single root stylesheet:
 
@@ -1079,10 +1081,10 @@ All visual tokens are CSS Custom Properties defined in a single root stylesheet:
   --secondary: #52525B;           /* Body copy */
   --tertiary: #71717A;            /* Captions, mono labels */
 
-  /* Indigo signature */
-  --accent: #3730A3;              /* Primary CTA bg, link underlines */
-  --accent-bright: #4F46C7;       /* Hover state */
-  --accent-soft: rgba(55, 48, 163, 0.08);  /* Badge bg */
+  /* Ferro-rust signature (D-007 · 2026-05-07 — was indigo) */
+  --accent: #B53C16;              /* Primary CTA bg, link underlines */
+  --accent-bright: #FF8C5A;       /* Hover state */
+  --accent-soft: rgba(181, 60, 22, 0.10);  /* Badge bg */
 
   /* Status */
   --success: #15803D;
@@ -1109,9 +1111,9 @@ All visual tokens are CSS Custom Properties defined in a single root stylesheet:
   --ink: #FAFAFA;
   --secondary: #A1A1AA;
   --tertiary: #71717A;
-  --accent: #7367E5;              /* Lifted indigo for dark mode */
-  --accent-bright: #9389F0;
-  --accent-soft: rgba(115, 103, 229, 0.14);
+  --accent: #FF6B3A;              /* Lifted ferro-rust for dark mode (D-007) */
+  --accent-bright: #FF8C5A;
+  --accent-soft: rgba(255, 107, 58, 0.16);
 }
 ```
 
@@ -1127,7 +1129,7 @@ All visual tokens are CSS Custom Properties defined in a single root stylesheet:
 
 **Background pattern (LOCKED per design-decision.md §1.3)**: subtle 40×40px square grid, 1px lines at 4% opacity, masked with radial gradient (visible center 70%, fades to transparent at edges). Applied to `<body>` with class `bg-grid` — NOT repeated inside sections.
 
-**Density (LOCKED §1.4)**: Medium. Section padding desktop 96-128px vertical, 48px horizontal; mobile 64-96px / 24px. Spacing scale 4px base (4/8/12/16/24/32/48/64/96/128/160). Card padding 32px desktop, 24px mobile.
+**Density (LOCKED §1.4 · UPDATED 2026-05-07 per D-007)**: Low (whitespace). Section padding desktop 120px vertical, 56px horizontal; mobile 96px / 28px. Content gap 36px (was 24px). Headline scale 1.1× (Hero H1 max 88px, Section H2 max 50px). Spacing scale 4px base (4/8/12/16/24/32/48/64/96/128/160). Card padding 32px desktop, 24px mobile. (Was Medium · 96-128px / 48px until D-007.)
 
 **Alignment (LOCKED §1.5)**: Left-aligned headlines, body, CTA stacks. Content max-width 720-920px per block. Centered hero headlines NOT permitted.
 

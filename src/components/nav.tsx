@@ -9,12 +9,36 @@ import { LocaleSwitcher } from './locale-switcher';
 import { MegaMenu } from './mega-menu';
 import { OFFERING_MAP, type OfferingKey } from '@/lib/offerings-data';
 
-type NavItem = {
+/* ============================================================
+   Nav — top header with desktop mega-menu + mobile accordion drawer.
+
+   Desktop
+   ───────
+   - "Služby", "Řešení", "Odvětví" are dropdown triggers (button).
+     Hover-with-delay or click toggles the corresponding mega-menu.
+     Hover delay (180ms) prevents accidental opens; switching between
+     triggers swaps panels instantly (no flicker).
+   - "Spolupráce", "O nás", "Kontakt" remain plain links.
+   - Theme toggle + locale switcher stay rightmost.
+
+   Mobile
+   ──────
+   - Hamburger toggles a sheet. Inside the sheet, the same three
+     items become accordion rows that expand inline to show the 6/5/7
+     offering items as a list (icon + title + subtitle), with a
+     "Zobrazit vše" link at the bottom of each section.
+   - Plain link items stay simple links.
+   ============================================================ */
+
+type DropdownItem = { kind: 'dropdown'; key: OfferingKey; href: string };
+type LinkItem = {
+  kind: 'link';
   href: string;
   key: 'services' | 'solutions' | 'industries' | 'collaboration' | 'about' | 'contact';
   /** When set, clicking the link opens a mega-menu instead of navigating. */
   megaMenu?: OfferingKey;
 };
+type NavItem = DropdownItem | LinkItem;
 
 const NAV_ITEMS: ReadonlyArray<NavItem> = [
   { href: '/sluzby', key: 'services', megaMenu: 'services' },
@@ -39,7 +63,62 @@ export function Nav() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openMenu, setOpenMenu] = useState<OfferingKey | null>(null);
 
-  const isActive = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+  const isActive = (href: string) =>
+    pathname === href || pathname.startsWith(`${href}/`) || pathname.startsWith(`${href}#`);
+
+  const closeDropdown = () => {
+    if (hoverTimer.current) {
+      clearTimeout(hoverTimer.current);
+      hoverTimer.current = null;
+    }
+    setOpenDropdown(null);
+  };
+
+  // Close any open dropdown when the route changes (auto-close on navigation).
+  useEffect(() => {
+    closeDropdown();
+    setMobileOpen(false);
+    setMobileExpanded(null);
+    // intentionally listening to pathname only
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
+
+  // Cleanup timer on unmount.
+  useEffect(() => {
+    return () => {
+      if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    };
+  }, []);
+
+  const scheduleOpen = (key: OfferingKey) => {
+    if (hoverTimer.current) clearTimeout(hoverTimer.current);
+    // If another dropdown is already open, switch instantly.
+    if (openDropdown && openDropdown !== key) {
+      setOpenDropdown(key);
+      return;
+    }
+    hoverTimer.current = setTimeout(() => {
+      setOpenDropdown(key);
+    }, HOVER_OPEN_DELAY_MS);
+  };
+
+  const cancelScheduledOpen = () => {
+    if (hoverTimer.current) {
+      clearTimeout(hoverTimer.current);
+      hoverTimer.current = null;
+    }
+  };
+
+  const toggleDropdown = (key: OfferingKey) => {
+    if (hoverTimer.current) {
+      clearTimeout(hoverTimer.current);
+      hoverTimer.current = null;
+    }
+    setOpenDropdown((cur) => (cur === key ? null : key));
+  };
+
+  const activeData: OfferingData | null = openDropdown ? OFFERING_MAP[openDropdown] : null;
+  const panelId = `${idPrefix}-megamenu`;
 
   // Close mega-menu whenever the route changes (defensive — handles
   // browser back/forward and edge cases where onClose didn't fire).

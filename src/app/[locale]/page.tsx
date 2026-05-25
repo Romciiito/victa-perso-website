@@ -36,9 +36,10 @@ import { VisualCanvas } from '@/components/visual-canvas';
 type Props = { params: Promise<{ locale: string }> };
 
 /* ============================================================
-   Offering icon maps — keep icon binding co-located with order
-   from i18n JSON. Each array index maps to the matching items[i]
-   in `home.offerings.<section>.items`.
+   Icon binding for the three "offering" sections lives in
+   `src/lib/offerings-data.ts` (shared with the desktop mega-menu).
+   The arrays exported from there are aligned with the order of
+   `home.offerings.<section>.items` in the i18n JSON files.
    ============================================================ */
 type RawOfferingItem = { title: string; subtitle: string; href?: string };
 
@@ -302,20 +303,20 @@ async function CzechHome() {
         sidebarCtaHref={t('offerings.services.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.services.items') as ReadonlyArray<RawOfferingItem>,
-          servicesIcons,
+          SERVICES_ICONS,
         )}
       />
 
       <OfferingSection
         id="reseni"
-        sidebarIcon={Package}
+        sidebarIcon={SOLUTIONS_SIDEBAR_ICON}
         sidebarHeadline={t('offerings.solutions.headline')}
         sidebarDescription={t('offerings.solutions.description')}
         sidebarCtaLabel={t('offerings.ctaAll')}
         sidebarCtaHref={t('offerings.solutions.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.solutions.items') as ReadonlyArray<RawOfferingItem>,
-          solutionsIcons,
+          SOLUTIONS_ICONS,
         )}
       />
 
@@ -328,7 +329,7 @@ async function CzechHome() {
         sidebarCtaHref={t('offerings.industries.ctaHref')}
         items={buildOfferingItems(
           t.raw('offerings.industries.items') as ReadonlyArray<RawOfferingItem>,
-          industriesIcons,
+          INDUSTRIES_ICONS,
         )}
       />
 
