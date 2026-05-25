@@ -124,3 +124,26 @@ Read by the orchestrator on startup to give all agents cross-session continuity.
 
 **Atol-style stack-on-scroll**: Same revision adds CSS `position: sticky; top: 0` to each `<OfferingSection>` so the three offering blocks stack on top of each other as the user scrolls, matching atolsolutions.cz reference. Sections must keep opaque `bg-bg` so stacking obscures the previous block. No JS animation library — pure CSS sticky.
 
+
+## D-008 · REVERTED — taste-skill redesign rolled back (2026-05-25)
+
+**Decision**: D-008 (taste-skill production redesign: Geist + slate/lavender + mesh orbs + Editorial Split + Asymmetrical Bento + Newsreader italic + Double-Bezel cards + pill CTAs) is reverted. D-007 reinstated as the active production design system.
+
+**Reason**: After living with D-008 on `main` for ~18 days (2026-05-07 to 2026-05-25), Roman determined the fonts and layout elements do not match the intended VICTA brand feel. The original D-007 combination (Inter Tight, ferro-rust, 40×40 grid, single-col left, custom locked-preview homepage, OfferingSection sticky stack, PricingCard, dedicated MegaMenu component) is the canonical brand expression.
+
+**Implementation**: New branch `revert/d008-to-d007-pre-may7` was hard-reset to commit `2f03059` (last commit before `d922d86` — the D-008 migration commit on 2026-05-07 at 17:59 CEST). Branch opened as a PR for review and explicit merge into `main`.
+
+**Scope of revert** (77 commits removed from main when branch merges):
+- Design system: `docs/claude/design-decisions-v2.md` (deleted), `globals.css` reverts to ferro-rust + grid
+- Layout primitives: `EditorialSplit`, `AsymmetricalBento`, `BentoShell`, `VisualCanvas`, `BodyOrbs`, `SectionHeader`, `StickyTierStack`, `MagneticIslandNav` (all removed)
+- Restored components: `OfferingSection`, `PricingCard`, `MegaMenu`, `ThemeProvider`, `ThemeToggle`, `anti-flash.ts`
+- Restored sandbox: `/redesign-preview` route + `preview-client.tsx`
+- Detail page routes (`/sluzby/[slug]`, `/reseni/[slug]`, `/odvetvi/[slug]`) and their 31 translated content sets — **removed** in revert (they were authored against D-008 templates). To be re-added in a future phase against D-007 templates.
+- Phase 3 page-body migrations (taste-skill bodies for o-nas, blog, kontakt, spoluprace, cookies, ochrana-soukromi) — all reverted to D-001/D-007 scaffold versions.
+
+**Content note**: Bod 11 (hero tags) and Bod 12 (hodnoty) merged from `content-only` branch (PR #27) used D-008 styling. Their translation strings can be cherry-picked back into D-007 templates if Roman wants to preserve them — flagged for a follow-up task, not done automatically.
+
+**Supersedes**: This entry supersedes the D-008 lock declaration that lived in `docs/claude/design-decisions-v2.md` (now deleted). D-007 is the active design system again. Inter Tight is unlocked-for-use, Geist is no longer the locked sans.
+
+**Re-decision path**: If Roman wants to re-attempt a taste-skill / soft-skill direction later, open a new D-### entry and a fresh feature branch — do not resurrect the D-008 commits, since they conflict with restored D-007 components.
+
