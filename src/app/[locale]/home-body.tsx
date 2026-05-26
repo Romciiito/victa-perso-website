@@ -112,13 +112,15 @@ function Hero() {
             variants={REVEAL}
             className="mt-7 flex flex-wrap items-center gap-3 font-mono text-[12.5px] uppercase tracking-[0.14em] text-secondary"
           >
-            <span>{t('tagsAudit')}</span>
+            <span>{t('tagsWeb')}</span>
             <Diamond />
-            <span>{t('tagsDev')}</span>
+            <span>{t('tagsEshop')}</span>
+            <Diamond />
+            <span>{t('tagsAi')}</span>
             <Diamond />
             <span>{t('tagsMarketing')}</span>
             <Diamond />
-            <span>{t('tagsAi')}</span>
+            <span>{t('tagsSprava')}</span>
           </motion.div>
 
           <motion.p
@@ -259,7 +261,7 @@ function AuditSection() {
         t('tier1.deliverables.4'),
       ],
       cta: t('tier1.cta'),
-      ctaHref: '/kontakt',
+      ctaHref: '/spoluprace#audit',
       primary: true,
     },
     {
@@ -276,7 +278,7 @@ function AuditSection() {
         t('tier2.deliverables.3'),
       ],
       cta: t('tier2.cta'),
-      ctaHref: '/kontakt',
+      ctaHref: '/spoluprace#audit',
       primary: false,
     },
     {
@@ -293,7 +295,7 @@ function AuditSection() {
         t('tier3.deliverables.3'),
       ],
       cta: t('tier3.cta'),
-      ctaHref: '/kontakt',
+      ctaHref: '/spoluprace#audit',
       primary: false,
     },
   ];

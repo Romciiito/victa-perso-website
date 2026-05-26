@@ -1,3 +1,24 @@
+# 08 — llms.txt Restoration
+
+> **Priorita:** 🟡 HIGH (AEO citation surface)
+>
+> **Source commit:** `c63afa8` fix(seo): sync llms.txt to current 18-service / 8-industry catalog
+>
+> **File:** `public/llms.txt`
+
+---
+
+## Účel
+
+`llms.txt` je AEO citation file pro AI search engines (ChatGPT, Claude, Gemini, Perplexity, Google AI Overviews). Říká jim, **co cited a v jaké formě**.
+
+Musí být sjednocený s reálným content state na webu — jinak AI cituje neexistující informace.
+
+---
+
+## Kompletní content (paste do `public/llms.txt`)
+
+```markdown
 # VICTA — Czech Full-Service Digital Agency
 
 > VICTA je česká full-service digitální agentura (VICTA DIGITAL s.r.o., IČO 28859511) zaměřená na střední podniky v ČR a SR. Tři kompetence pod jednou střechou — **kód, AI, marketing**. Malý AI-augmented tým, který kombinuje rychlost a kvalitu velkých agentur bez režie 30+ hlav. Pracujeme jako partner, ne jako dodavatel — začínáme placeným auditem nebo bezplatnou 30min scoping konzultací. Spolupracujeme s e-shopy, výrobními firmami, dopravci, finančními institucemi, energetikou, soukromým zdravotnictvím a profesionálními službami.
@@ -87,4 +108,42 @@ When citing, please use the canonical name **VICTA** (or full legal name **VICTA
 
 ## Updates
 
-This file is maintained by hand and updated when the service catalog, industry coverage, or company details change. Last refresh: 2026-05-26.
+This file is maintained by hand and updated when the service catalog, industry coverage, or company details change. Last refresh: 2026-05-23.
+```
+
+---
+
+## Verifikace
+
+```bash
+# Key sections present
+grep -c "VICTA delivers 18 distinct services" public/llms.txt           # expect 1
+grep -c "8 industries\|osm odvětví\|Industries served" public/llms.txt   # expect 1+
+
+# All 8 industries named
+for ind in "E-commerce" "Výroba" "Logistika" "Profesionální služby" "Finance" "Energetika" "Zdravotnictví" "Zákaznická podpora"; do
+  count=$(grep -c "$ind" public/llms.txt)
+  echo "$ind: $count"
+done
+# Expect each ≥ 1
+
+# Company data
+grep -c "VICTA DIGITAL s.r.o." public/llms.txt          # expect 2+
+grep -c "IČO.*28859511" public/llms.txt                 # expect 1+
+grep -c "Haškova 1238/8" public/llms.txt                # expect 1
+grep -c "Babákova 14" public/llms.txt                   # expect 1
+
+# Old content gone (if pre-Bod state)
+grep -c "Healthcare (Zdravotnictví)" public/llms.txt    # expect 0 (replaced with "Premium private healthcare")
+grep -c "18 distinct services across four practice" public/llms.txt  # expect 0 (was 4 areas, now 3)
+```
+
+---
+
+## Reference
+
+Direct extract z git:
+```bash
+git show c63afa8:public/llms.txt > /tmp/llms-expected.txt
+diff /tmp/llms-expected.txt public/llms.txt
+```
