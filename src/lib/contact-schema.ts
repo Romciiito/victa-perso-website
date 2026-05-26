@@ -36,4 +36,15 @@ export const contactSchema = z.object({
   locale: z.enum(['cs', 'en']).default('cs'),
 });
 
-export type ContactFormValues = z.infer<typeof contactSchema>;
+/**
+ * `z.input<>` is the *input* shape — what the form sends to the resolver,
+ * where fields with `.default(...)` are still optional. We use this for
+ * useForm so react-hook-form's `Resolver<T>` type matches what zodResolver
+ * expects (Next 16 + newer @hookform/resolvers tighten this check and
+ * reject the previous `z.infer<>` which is the output shape).
+ *
+ * `z.output<>` is the *validated* shape — defaults filled in, optionals
+ * resolved. Use this on the server side after `safeParse`.
+ */
+export type ContactFormValues = z.input<typeof contactSchema>;
+export type ContactFormData = z.output<typeof contactSchema>;

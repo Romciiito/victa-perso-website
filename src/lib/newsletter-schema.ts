@@ -30,7 +30,13 @@ export const newsletterSchema = z.object({
   utm_campaign: z.string().max(80).optional(),
 });
 
-export type NewsletterValues = z.infer<typeof newsletterSchema>;
+/**
+ * `z.input<>` is the form-input shape — `.default(...)` fields stay
+ * optional, which is what react-hook-form's `Resolver<T>` expects.
+ * `z.output<>` is the validated server-side shape.
+ */
+export type NewsletterValues = z.input<typeof newsletterSchema>;
+export type NewsletterData = z.output<typeof newsletterSchema>;
 
 export function consentTextFor(locale: 'cs' | 'en'): string {
   return locale === 'cs' ? NEWSLETTER_CONSENT_TEXT_CS : NEWSLETTER_CONSENT_TEXT_EN;
