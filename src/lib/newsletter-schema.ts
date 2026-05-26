@@ -21,7 +21,7 @@ export const newsletterSchema = z.object({
     .enum(['homepage', 'blog', 'footer', 'kontakt', 'spoluprace', 'other'])
     .default('other'),
   gdpr_consent: z.literal(true, {
-    errorMap: () => ({ message: 'Pro přihlášení k newsletteru je nutný souhlas se zpracováním.' }),
+    message: 'Pro přihlášení k newsletteru je nutný souhlas se zpracováním.',
   }),
   honeypot: z.string().max(0).optional().or(z.literal('')),
   turnstile_token: z.string().min(1, { message: 'Bot kontrola se nepodařila — zkuste znovu.' }),

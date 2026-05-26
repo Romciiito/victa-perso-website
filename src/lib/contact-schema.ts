@@ -27,9 +27,7 @@ export const contactSchema = z.object({
   budget_tier: z.enum(['under_5k', '5k-25k', '25k-100k', '100k+']).optional(),
   service_interest: z.enum(['comprehensive', 'web', 'marketing', 'ai', 'other']).optional(),
   gdpr_consent: z.literal(true, {
-    errorMap: () => ({
-      message: 'Pro odeslání souhlasíte se zpracováním osobních údajů.',
-    }),
+    message: 'Pro odeslání souhlasíte se zpracováním osobních údajů.',
   }),
   honeypot: z.string().max(0).optional().or(z.literal('')),
   turnstile_token: z.string().min(1, { message: 'Bot kontrola se nepodařila — zkuste znovu.' }),
