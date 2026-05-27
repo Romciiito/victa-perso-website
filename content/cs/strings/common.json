@@ -652,7 +652,7 @@
         "name": "Znalostní asistent",
         "body": "AI asistent natrénovaný na vaši dokumentaci, znalostní bázi a procesy. RAG, Claude/GPT, integrace do Slacku nebo intranetu. Pro firmy s velkou interní znalostní bází, kde lidé tráví čas hledáním v dokumentech.",
         "audience": "Hodí se pro: výrobní firmy, profesionální služby, finance, zákaznickou podporu.",
-        "slug": "knowledge"
+        "slug": "znalostni-asistent"
       },
       {
         "key": "agents",
@@ -660,7 +660,7 @@
         "name": "Autonomní agenti",
         "body": "AI agenti, kteří samostatně vykonávají sekvence úkolů — třídí e-maily, generují reporty, rezervují schůzky, kontrolují data. S human-in-the-loop tam, kde je to potřeba.",
         "audience": "Hodí se pro: e-commerce, profesionální služby, back-office operace.",
-        "slug": "agents"
+        "slug": "agenti"
       },
       {
         "key": "support",
@@ -668,7 +668,7 @@
         "name": "AI podpora zákazníků",
         "body": "Chatbot 24/7 pro web nebo Messenger/WhatsApp, který odpovídá na 70 % dotazů sám. Eskalace na živého agenta tam, kde má smysl. Měřitelný dopad na response time a CSAT.",
         "audience": "Hodí se pro: e-commerce, SaaS, zákaznickou podporu.",
-        "slug": "support"
+        "slug": "podpora"
       },
       {
         "key": "dashboards",
@@ -676,7 +676,7 @@
         "name": "Datové dashboardy",
         "body": "Jeden přehled, kde vidíte vše — prodeje, marketing, sklady, finance. Metabase nebo Looker Studio, ETL pipeline z vašich systémů, alerting na anomálie.",
         "audience": "Hodí se pro: e-commerce, výrobu, profesionální služby s vícero datovými zdroji.",
-        "slug": "dashboards"
+        "slug": "dashboardy"
       },
       {
         "key": "infra",
@@ -684,7 +684,7 @@
         "name": "AI infrastruktura",
         "body": "Pokud uvažujete o víc AI případů použití, postavíme vám platformu — model abstraction layer, prompt management, cost control, eval framework, governance. Aby každé další AI nebylo nový projekt od nuly.",
         "audience": "Hodí se pro: firmy s 3+ AI use casey, technologické týmy, oddělení inovací.",
-        "slug": "infra"
+        "slug": "infrastruktura"
       }
     ],
     "ctaLine": "Není vidět scénář, který sedí? Domluvte si bezplatnou konzultaci, navrhneme řešení na míru.",

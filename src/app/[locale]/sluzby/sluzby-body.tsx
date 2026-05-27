@@ -24,7 +24,7 @@ import { SectionHeader } from '@/components/sections/section-header';
 import { BentoGrid, type BentoItem } from '@/components/sections/bento-grid';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
 
-type ServiceItem = { name: string; desc: string };
+type ServiceItem = { name: string; desc: string; slug?: string };
 type Category = { label: string; intro: string; items: ReadonlyArray<ServiceItem> };
 
 /* span pattern per spec:
@@ -40,7 +40,7 @@ function toBento(
     icon: icons[i] ?? icons[icons.length - 1],
     title: it.name,
     subtitle: it.desc,
-    href: '#',
+    href: it.slug ? `/sluzby/${it.slug}` : '#',
     number: String(i + 1).padStart(2, '0'),
     span: SPAN_MAP[i] ?? (7 as BentoItem['span']),
     prominent: i === 0,
