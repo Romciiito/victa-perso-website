@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useRouter } from '@/i18n/navigation';
 import { trackEvent } from '@/lib/ga4';
 import type { BookingType } from './cal-booking-widget';
 
@@ -10,9 +11,22 @@ import type { BookingType } from './cal-booking-widget';
    BookingCta, but exposed as a hook so any styled trigger (e.g.
    the taste-skill MagneticCta) can drive Cal.com without
    re-implementing the embed glue.
+
+   Graceful fallback (2026-05-26): if NEXT_PUBLIC_CALCOM_USERNAME
+   is missing or still the placeholder 'victa' (the original
+   scaffold default — the real Cal.com account is not yet
+   provisioned), the returned handler navigates to /kontakt
+   instead of opening a dead modal. Once Vercel env is updated
+   to a real Cal.com username, every CTA on the site auto-promotes
+   to the modal flow with no code change.
    ============================================================ */
 
 const SCRIPT_ID = 'cal-embed-script';
+const PLACEHOLDER_USERNAME = 'victa';
+
+function calIsConfigured(username: string | undefined): username is string {
+  return Boolean(username) && username !== PLACEHOLDER_USERNAME;
+}
 
 function ensureCalLoaded(): Promise<void> {
   return new Promise((resolve) => {
@@ -50,12 +64,17 @@ export type CalModalConfig = {
 };
 
 export function useCalModal(config: CalModalConfig): () => Promise<void> {
-  const username = process.env.NEXT_PUBLIC_CALCOM_USERNAME ?? 'victa';
+  const username = process.env.NEXT_PUBLIC_CALCOM_USERNAME;
+  const isConfigured = calIsConfigured(username);
   const firedRef = useRef(false);
+  const router = useRouter();
 
   // Pre-warm embed.js after first paint so the first click is instant.
+  // Skip when Cal.com is not configured — no point loading a script we
+  // won't use.
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (!isConfigured) return;
     type IdleCb = (cb: () => void) => unknown;
     const ric = (window as unknown as { requestIdleCallback?: IdleCb }).requestIdleCallback;
     if (ric) {
@@ -67,7 +86,7 @@ export function useCalModal(config: CalModalConfig): () => Promise<void> {
         void ensureCalLoaded();
       }, 1500);
     }
-  }, []);
+  }, [isConfigured]);
 
   return async () => {
     if (!firedRef.current) {
@@ -77,15 +96,28 @@ export function useCalModal(config: CalModalConfig): () => Promise<void> {
       });
       firedRef.current = true;
     }
-    await ensureCalLoaded();
-    if (window.Cal) {
-      const theme =
-        document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
-      window.Cal('init', { origin: 'https://app.cal.com' });
-      window.Cal('modal', {
-        calLink: `${username}/${config.eventSlug}`,
-        config: { theme, layout: 'month_view' },
-      });
+
+    // Cal.com not provisioned — fall back to contact form so users always
+    // have a working path. Roman's 2026-05-11 instruction was "Cal nebo
+    // contact form" — this honours the fallback half until the real
+    // account exists.
+    if (!isConfigured) {
+      router.push('/kontakt');
+      return;
     }
+
+    await ensureCalLoaded();
+    if (!window.Cal) {
+      router.push('/kontakt');
+      return;
+    }
+
+    const theme =
+      document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    window.Cal('init', { origin: 'https://app.cal.com' });
+    window.Cal('modal', {
+      calLink: `${username}/${config.eventSlug}`,
+      config: { theme, layout: 'month_view' },
+    });
   };
 }
