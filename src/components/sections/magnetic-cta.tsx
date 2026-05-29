@@ -7,15 +7,25 @@ import { Link } from '@/i18n/navigation';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
 
-type Props = {
+type CommonProps = {
   children: React.ReactNode;
-  href: string;
   primary?: boolean;
   compact?: boolean;
 };
 
-export function MagneticCta({ children, primary, compact, href }: Props) {
-  const ref = useRef<HTMLAnchorElement>(null);
+/* Two modes:
+   1. Link mode  — pass `href`. Renders an internal locale-aware Link.
+   2. Action mode — pass `onClick`. Renders a <button> that fires the handler
+      (e.g. open Cal.com modal). No navigation, no href.
+   Discriminated union ensures the caller picks exactly one. */
+type Props = CommonProps & (
+  | { href: string; onClick?: never }
+  | { href?: never; onClick: () => void | Promise<void> }
+);
+
+export function MagneticCta(props: Props) {
+  const { children, primary, compact } = props;
+  const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 220, damping: 18, mass: 0.6 });
@@ -36,6 +46,25 @@ export function MagneticCta({ children, primary, compact, href }: Props) {
   }
 
   const padding = compact ? 'px-5 py-2.5 text-[13.5px]' : 'px-7 py-3.5 text-[14.5px]';
+  const baseClass = `tactile relative inline-flex items-center gap-2.5 rounded-full border ${padding} ${
+    primary
+      ? 'border-accent bg-accent text-bg'
+      : 'border-border bg-transparent text-ink hover:border-ink'
+  }`;
+
+  const inner = (
+    <>
+      <span className="relative z-10">{children}</span>
+      <motion.span
+        animate={{ x: hover ? 3 : 0, rotate: hover ? -8 : 0 }}
+        transition={SPRING}
+        className="relative z-10 inline-flex"
+        aria-hidden
+      >
+        <ArrowUpRight size={16} strokeWidth={1.75} />
+      </motion.span>
+    </>
+  );
 
   return (
     <motion.div
@@ -45,25 +74,26 @@ export function MagneticCta({ children, primary, compact, href }: Props) {
       onMouseLeave={onLeave}
       onMouseMove={onMove}
     >
-      <Link
-        ref={ref}
-        href={href}
-        className={`tactile relative inline-flex items-center gap-2.5 rounded-full border ${padding} ${
-          primary
-            ? 'border-accent bg-accent text-bg'
-            : 'border-border bg-transparent text-ink hover:border-ink'
-        }`}
-      >
-        <span className="relative z-10">{children}</span>
-        <motion.span
-          animate={{ x: hover ? 3 : 0, rotate: hover ? -8 : 0 }}
-          transition={SPRING}
-          className="relative z-10 inline-flex"
-          aria-hidden
+      {'onClick' in props && props.onClick ? (
+        <button
+          ref={ref as React.RefObject<HTMLButtonElement>}
+          type="button"
+          onClick={() => {
+            void props.onClick();
+          }}
+          className={baseClass}
         >
-          <ArrowUpRight size={16} strokeWidth={1.75} />
-        </motion.span>
-      </Link>
+          {inner}
+        </button>
+      ) : (
+        <Link
+          ref={ref as React.RefObject<HTMLAnchorElement>}
+          href={props.href!}
+          className={baseClass}
+        >
+          {inner}
+        </Link>
+      )}
     </motion.div>
   );
 }

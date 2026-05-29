@@ -5,6 +5,7 @@ import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
 import { KineticList, type KineticItem } from '@/components/sections/kinetic-list';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 import { INDUSTRIES_OFFERING } from '@/lib/offerings-data';
 
 const KINETIC_ITEMS: ReadonlyArray<KineticItem> = INDUSTRIES_OFFERING.items.map((it) => ({
@@ -16,6 +17,11 @@ const KINETIC_ITEMS: ReadonlyArray<KineticItem> = INDUSTRIES_OFFERING.items.map(
 
 export function OdvetviBody() {
   const t = useTranslations('odvetvi');
+  const openCal = useCalModal({
+    eventSlug: 'free-scoping-call',
+    bookingType: 'scoping_call',
+    sourcePage: '/cs/odvetvi',
+  });
 
   return (
     <>
@@ -52,7 +58,7 @@ export function OdvetviBody() {
             <MagneticCta primary href="/spoluprace#audit">
               {t('ctaButton')}
             </MagneticCta>
-            <MagneticCta href="/kontakt">Domluvit konzultaci</MagneticCta>
+            <MagneticCta onClick={openCal}>Domluvit konzultaci</MagneticCta>
           </div>
         </div>
       </section>

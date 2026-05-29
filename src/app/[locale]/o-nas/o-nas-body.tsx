@@ -5,6 +5,7 @@ import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
 import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 import { motion, type Variants } from 'framer-motion';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
@@ -26,6 +27,11 @@ const PROCESS_STEPS = [
 export function ONasBody() {
   const t = useTranslations('oNas');
   const rawValues = t.raw('sections.values.items') as ReadonlyArray<RawValue>;
+  const openCal = useCalModal({
+    eventSlug: 'free-scoping-call',
+    bookingType: 'scoping_call',
+    sourcePage: '/cs/o-nas',
+  });
 
   const valueItems: ReadonlyArray<ValueItem> = rawValues.map((v) => ({
     label: v.label,
@@ -151,7 +157,7 @@ export function ONasBody() {
             <MagneticCta primary href="/spoluprace#audit">
               {t('cta.button')}
             </MagneticCta>
-            <MagneticCta href="/kontakt">Domluvit konzultaci</MagneticCta>
+            <MagneticCta onClick={openCal}>Domluvit konzultaci</MagneticCta>
           </div>
         </div>
       </section>

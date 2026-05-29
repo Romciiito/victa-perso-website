@@ -19,6 +19,7 @@ import {
 import { Link } from '@/i18n/navigation';
 import { PageHero } from '@/components/sections/page-hero';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 
 /* ============================================================
    Industry detail body · D-008 taste-skill
@@ -68,6 +69,11 @@ function paragraphs(text: string) {
 
 export function IndustryBody({ item }: { item: IndustryItem }) {
   const Icon = ICON_MAP[item.icon] ?? Briefcase;
+  const openCal = useCalModal({
+    eventSlug: 'free-scoping-call',
+    bookingType: 'scoping_call',
+    sourcePage: `/cs/odvetvi/${item.slug}`,
+  });
 
   return (
     <>
@@ -78,7 +84,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
         sub={item.body}
         ctas={[
           { label: 'Rezervovat audit', href: '/spoluprace#audit', primary: true },
-          { label: 'Domluvit konzultaci', href: '/kontakt' },
+          { label: 'Domluvit konzultaci', onClick: openCal },
         ]}
       />
 
@@ -234,7 +240,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
             <MagneticCta primary href="/spoluprace#audit">
               Rezervovat audit
             </MagneticCta>
-            <MagneticCta href="/kontakt">Domluvit konzultaci</MagneticCta>
+            <MagneticCta onClick={openCal}>Domluvit konzultaci</MagneticCta>
           </div>
         </div>
 

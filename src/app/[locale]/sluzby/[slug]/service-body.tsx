@@ -6,6 +6,7 @@ import { ArrowLeft, ChevronDown } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { PageHero } from '@/components/sections/page-hero';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 
 /* ============================================================
    Service detail body · D-008 taste-skill
@@ -41,6 +42,11 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
   // Strip "Hodí se pro: " prefix from fit if present.
   const fit = item.fit ? item.fit.replace(/^Hodí se pro:\s*/i, '') : null;
   const hasFaq = Array.isArray(item.faq) && item.faq.length > 0;
+  const openCal = useCalModal({
+    eventSlug: 'free-scoping-call',
+    bookingType: 'scoping_call',
+    sourcePage: `/cs/sluzby/${item.slug}`,
+  });
 
   return (
     <>
@@ -51,7 +57,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
         sub={item.desc}
         ctas={[
           { label: 'Rezervovat audit', href: '/spoluprace#audit', primary: true },
-          { label: 'Domluvit konzultaci', href: '/kontakt' },
+          { label: 'Domluvit konzultaci', onClick: openCal },
         ]}
       />
 
@@ -143,7 +149,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
             <MagneticCta primary href="/spoluprace#audit">
               Rezervovat audit
             </MagneticCta>
-            <MagneticCta href="/kontakt">Domluvit konzultaci</MagneticCta>
+            <MagneticCta onClick={openCal}>Domluvit konzultaci</MagneticCta>
           </div>
         </div>
 

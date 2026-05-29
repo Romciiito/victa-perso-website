@@ -7,6 +7,7 @@ import { SectionHeader } from '@/components/sections/section-header';
 import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
 import { StickyTierStack, type TierData } from '@/components/sections/sticky-tier-stack';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 
 /* ---- static marquee strings ---------------------------------------- */
 const MARQUEE_ITEMS = [
@@ -37,6 +38,11 @@ type FaqItem = { q: string; a: string };
 export function SpolupraceBody() {
   const t = useTranslations('spoluprace');
   const tRaw = (k: string) => t.raw(k) as unknown;
+  const openCal = useCalModal({
+    eventSlug: 'free-scoping-call',
+    bookingType: 'scoping_call',
+    sourcePage: '/cs/spoluprace',
+  });
 
   /* paths */
   const pathAudit = tRaw('paths.audit') as {
@@ -194,7 +200,7 @@ export function SpolupraceBody() {
                 {t('scoping.body')}
               </p>
               <div className="mt-8">
-                <MagneticCta primary href="/kontakt">
+                <MagneticCta primary onClick={openCal}>
                   {t('scoping.cta')}
                 </MagneticCta>
               </div>
@@ -270,7 +276,7 @@ export function SpolupraceBody() {
             </h2>
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
-            <MagneticCta primary href="/kontakt">
+            <MagneticCta primary onClick={openCal}>
               Domluvit hovor →
             </MagneticCta>
             <MagneticCta href="/sluzby">Prohlédnout služby</MagneticCta>

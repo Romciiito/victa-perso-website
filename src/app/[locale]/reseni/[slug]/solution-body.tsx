@@ -5,6 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { PageHero } from '@/components/sections/page-hero';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 
 /* ============================================================
    Solution detail body · D-008 taste-skill (lean per content)
@@ -36,6 +37,11 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
   // The audience field reads "Hodí se pro: výrobní firmy, ..." — strip the
   // prefix so the section can render its own heading and keep the list clean.
   const audience = item.audience.replace(/^Hodí se pro:\s*/i, '');
+  const openCal = useCalModal({
+    eventSlug: 'free-scoping-call',
+    bookingType: 'scoping_call',
+    sourcePage: `/cs/reseni/${item.slug}`,
+  });
 
   return (
     <>
@@ -46,7 +52,7 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
         sub={item.body}
         ctas={[
           { label: 'Rezervovat audit', href: '/spoluprace#audit', primary: true },
-          { label: 'Domluvit konzultaci', href: '/kontakt' },
+          { label: 'Domluvit konzultaci', onClick: openCal },
         ]}
       />
 
@@ -106,7 +112,7 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
             <MagneticCta primary href="/spoluprace#audit">
               Rezervovat audit
             </MagneticCta>
-            <MagneticCta href="/kontakt">Domluvit konzultaci</MagneticCta>
+            <MagneticCta onClick={openCal}>Domluvit konzultaci</MagneticCta>
           </div>
         </div>
 

@@ -17,6 +17,7 @@ import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
 import { BentoGrid, type BentoItem } from '@/components/sections/bento-grid';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 
 /* ------------------------------------------------------------------ */
 /* Per-solution static metadata (icons + anchor ids + bento subtitles) */
@@ -127,6 +128,11 @@ export function ReseniBody() {
     body: string;
     audience: string;
   }>;
+  const openCal = useCalModal({
+    eventSlug: 'free-scoping-call',
+    bookingType: 'scoping_call',
+    sourcePage: '/cs/reseni',
+  });
 
   return (
     <>
@@ -177,7 +183,7 @@ export function ReseniBody() {
             <MagneticCta primary href="/spoluprace#audit">
               Spustit projekt →
             </MagneticCta>
-            <MagneticCta href="/kontakt">{t('ctaButton')}</MagneticCta>
+            <MagneticCta onClick={openCal}>{t('ctaButton')}</MagneticCta>
           </div>
         </div>
       </section>

@@ -11,7 +11,9 @@ const REVEAL: Variants = {
 };
 
 type AnchorLink = { label: string; href: string };
-type Cta = { label: string; href: string; primary?: boolean };
+type Cta =
+  | { label: string; href: string; onClick?: never; primary?: boolean }
+  | { label: string; href?: never; onClick: () => void | Promise<void>; primary?: boolean };
 
 type Props = {
   status?: string;
@@ -93,11 +95,17 @@ export function PageHero({ status, eyebrow, headline, sub, ctas, anchors, anchor
               variants={REVEAL}
               className="mt-10 flex flex-wrap items-center gap-3"
             >
-              {ctas.map((cta) => (
-                <MagneticCta key={cta.href} href={cta.href} primary={cta.primary}>
-                  {cta.label}
-                </MagneticCta>
-              ))}
+              {ctas.map((cta, i) =>
+                'onClick' in cta && cta.onClick ? (
+                  <MagneticCta key={`${cta.label}-${i}`} onClick={cta.onClick} primary={cta.primary}>
+                    {cta.label}
+                  </MagneticCta>
+                ) : (
+                  <MagneticCta key={cta.href} href={cta.href!} primary={cta.primary}>
+                    {cta.label}
+                  </MagneticCta>
+                ),
+              )}
             </motion.div>
           )}
 

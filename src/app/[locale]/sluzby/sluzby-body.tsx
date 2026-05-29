@@ -23,6 +23,7 @@ import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
 import { BentoGrid, type BentoItem } from '@/components/sections/bento-grid';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 
 type ServiceItem = { name: string; desc: string; slug?: string };
 type Category = { label: string; intro: string; items: ReadonlyArray<ServiceItem> };
@@ -82,6 +83,11 @@ const MARKETING_ICONS: ReadonlyArray<LucideIcon> = [
 export function SluzbyBody() {
   const t = useTranslations('sluzby');
   const tRaw = (k: string) => t.raw(k) as unknown;
+  const openCal = useCalModal({
+    eventSlug: 'free-scoping-call',
+    bookingType: 'scoping_call',
+    sourcePage: '/cs/sluzby',
+  });
 
   const itDev = tRaw('categories.itDev') as Category;
   const aiData = tRaw('categories.aiData') as Category;
@@ -160,7 +166,7 @@ export function SluzbyBody() {
             <MagneticCta primary href="/spoluprace#audit">
               {t('ctaButton')}
             </MagneticCta>
-            <MagneticCta href="/kontakt">Domluvit konzultaci</MagneticCta>
+            <MagneticCta onClick={openCal}>Domluvit konzultaci</MagneticCta>
           </div>
         </div>
       </section>

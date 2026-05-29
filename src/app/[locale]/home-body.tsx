@@ -9,6 +9,7 @@ import {
 } from 'framer-motion';
 import { useTranslations } from 'next-intl';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 import { SectionHeader } from '@/components/sections/section-header';
 import { SectionMarquee } from '@/components/sections/section-marquee';
 import { BentoGrid, type BentoItem } from '@/components/sections/bento-grid';
@@ -74,6 +75,11 @@ function Hero() {
     offset: ['start start', 'end start'],
   });
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '-18%']);
+  const openCal = useCalModal({
+    eventSlug: 'free-scoping-call',
+    bookingType: 'scoping_call',
+    sourcePage: '/cs',
+  });
 
   return (
     <section
@@ -143,7 +149,7 @@ function Hero() {
             <MagneticCta primary href="/spoluprace#audit">
               {t('ctaPrimary')}
             </MagneticCta>
-            <MagneticCta href="/kontakt">{t('ctaGhost')}</MagneticCta>
+            <MagneticCta onClick={openCal}>{t('ctaGhost')}</MagneticCta>
           </motion.div>
         </motion.div>
       </div>
