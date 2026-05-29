@@ -30,6 +30,7 @@ export function KontaktBody() {
       icon: Phone,
       label: t('channels.phone.label'),
       value: t('channels.phone.value'),
+      href: `tel:${t('channels.phone.value').replace(/\s+/g, '')}`,
     },
     {
       icon: MapPin,
