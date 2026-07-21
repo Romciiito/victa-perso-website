@@ -23,7 +23,9 @@ export const newsletterSchema = z.object({
   gdpr_consent: z.literal(true, {
     message: 'Pro přihlášení k newsletteru je nutný souhlas se zpracováním.',
   }),
-  honeypot: z.string().max(0).optional().or(z.literal('')),
+  // Must validate even when filled — the route silent-accepts bot fills
+  // (same rationale as contact-schema.ts).
+  honeypot: z.string().max(200).optional().or(z.literal('')),
   turnstile_token: z.string().min(1, { message: 'Bot kontrola se nepodařila — zkuste znovu.' }),
   utm_source: z.string().max(80).optional(),
   utm_medium: z.string().max(80).optional(),

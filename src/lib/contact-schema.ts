@@ -41,7 +41,12 @@ export const contactSchema = z.object({
   gdpr_consent: z.literal(true, {
     message: 'Pro odeslání souhlasíte se zpracováním osobních údajů.',
   }),
-  honeypot: z.string().max(0).optional().or(z.literal('')),
+  // Honeypot must VALIDATE even when filled — the route silently accepts
+  // non-empty honeypots (bot thinks it succeeded). `.max(0)` here used to
+  // reject at the Zod layer with a field error naming the honeypot, which
+  // both leaked the detection to bots and made the silent-200 branch
+  // unreachable.
+  honeypot: z.string().max(200).optional().or(z.literal('')),
   turnstile_token: z.string().min(1, { message: 'Bot kontrola se nepodařila — zkuste znovu.' }),
   locale: z.enum(['cs', 'en']).default('cs'),
 });

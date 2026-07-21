@@ -61,8 +61,10 @@ describe('contactSchema', () => {
     expect(contactSchema.safeParse({ ...validContact, gdpr_consent: false }).success).toBe(false);
   });
 
-  it('rejects a filled honeypot', () => {
-    expect(contactSchema.safeParse({ ...validContact, honeypot: 'bot' }).success).toBe(false);
+  it('accepts a filled honeypot at the schema layer (route silent-accepts it)', () => {
+    const r = contactSchema.safeParse({ ...validContact, honeypot: 'bot' });
+    expect(r.success).toBe(true);
+    if (r.success) expect(r.data.honeypot).toBe('bot');
   });
 
   it('requires message of at least 20 chars', () => {
