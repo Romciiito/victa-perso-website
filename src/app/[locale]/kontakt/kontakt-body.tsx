@@ -9,6 +9,8 @@ import { SectionHeader } from '@/components/sections/section-header';
 import { ContactChannels, type ChannelItem } from '@/components/sections/contact-channels';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
 import { ContactForm } from '@/components/forms/contact-form';
+import { NewsletterSignup } from '@/components/forms/newsletter-signup';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
 const REVEAL: Variants = {
@@ -19,28 +21,45 @@ const REVEAL: Variants = {
 export function KontaktBody() {
   const t = useTranslations('kontakt');
 
+  // Booking is the preferred path — but this page hosts the contact form
+  // itself, so the not-provisioned fallback scrolls to #form instead of
+  // looping back to /kontakt (the pre-v2 CTA loop).
+  const openCal = useCalModal({
+    bookingType: 'scoping_call',
+    sourcePage: '/cs/kontakt',
+    fallbackHref: '#form',
+  });
+
+  const scrollToForm = () => {
+    document.getElementById('form')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const channels: ReadonlyArray<ChannelItem> = [
     {
       icon: Mail,
       label: t('channels.email.label'),
       value: t('channels.email.value'),
       href: `mailto:${t('channels.email.value')}`,
+      note: t('channels.email.note'),
     },
     {
       icon: Phone,
       label: t('channels.phone.label'),
       value: t('channels.phone.value'),
       href: `tel:${t('channels.phone.value').replace(/\s+/g, '')}`,
+      note: t('channels.phone.note'),
     },
     {
       icon: MapPin,
       label: t('channels.address.label'),
       value: t('channels.address.value'),
+      note: t('channels.address.note'),
     },
     {
       icon: Globe,
       label: t('channels.social.label'),
       value: t('channels.social.value'),
+      note: t('channels.social.note'),
     },
   ];
 
@@ -52,12 +71,14 @@ export function KontaktBody() {
         headline={t('hero.headline')}
         sub={t('hero.subhead')}
         ctas={[
-          { label: t('primary.cta'), href: '/spoluprace#audit', primary: true },
+          { label: t('primary.cta'), onClick: openCal, primary: true },
+          { label: t('hero.formCta'), onClick: scrollToForm },
         ]}
         anchors={[
           { label: 'Preferovaná cesta', href: '#primary' },
           { label: 'Přímé kanály', href: '#channels' },
           { label: 'Formulář', href: '#form' },
+          { label: 'Newsletter', href: '#newsletter' },
         ]}
       />
 
@@ -79,7 +100,7 @@ export function KontaktBody() {
             variants={REVEAL}
             className="flex flex-col items-start justify-center gap-3 md:items-end"
           >
-            <MagneticCta primary href="/spoluprace#audit">
+            <MagneticCta primary onClick={openCal}>
               {t('primary.cta')}
             </MagneticCta>
           </motion.div>
@@ -133,7 +154,27 @@ export function KontaktBody() {
         </div>
       </section>
 
-      {/* ---- 04 · Ochrana osobních údajů ---- */}
+      {/* ---- 04 · Newsletter ---- */}
+      <section id="newsletter" className="relative border-t border-border px-6 py-20 md:px-10 md:py-24">
+        <div className="mx-auto max-w-[920px]">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-10%' }}
+            transition={SPRING}
+            variants={REVEAL}
+          >
+            <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
+              04 · newsletter
+            </span>
+            <div className="mt-6 max-w-[560px]">
+              <NewsletterSignup locale="cs" formLocation="kontakt" />
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ---- 05 · Ochrana osobních údajů ---- */}
       <section id="privacy" className="relative border-t border-border bg-surface px-6 py-16 md:px-10 md:py-20">
         <div className="mx-auto max-w-[920px]">
           <motion.div

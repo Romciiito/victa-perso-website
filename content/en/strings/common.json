@@ -25,6 +25,9 @@
   },
   "footer": {
     "tagline": "Listening first. Before we propose anything, we want to understand your business.",
+    "bookCall": "Book a call →",
+    "newsletterHeading": "Newsletter",
+    "newsletterIntro": "Once every few weeks. No spam, just practical insights.",
     "status": "STATUS · v 0.1.0 · region eu-central-1",
     "servicesHeading": "Services",
     "companyHeading": "Company",

@@ -25,6 +25,9 @@
   },
   "footer": {
     "tagline": "Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání.",
+    "bookCall": "Domluvit konzultaci →",
+    "newsletterHeading": "Newsletter",
+    "newsletterIntro": "Jednou za pár týdnů. Bez spamu, jen praktické postřehy.",
     "status": "VICTA DIGITAL s.r.o. · 2026",
     "servicesHeading": "Služby",
     "companyHeading": "Společnost",
@@ -52,16 +55,16 @@
   },
   "home": {
     "hero": {
-      "status": "VICTA DIGITAL · česká digitální agentura",
-      "headline": "Začneme tím, že posloucháme.",
-      "headlineLead": "Začneme tím, že",
-      "headlineAccent": "posloucháme.",
+      "status": "VICTA DIGITAL · Vývoj & AI Automatizace",
+      "headline": "Vývoj na míru & inteligentní AI automatizace.",
+      "headlineLead": "Vývoj na míru &",
+      "headlineAccent": "inteligentní AI.",
       "tagsWeb": "Weby",
       "tagsEshop": "E-shopy",
       "tagsMarketing": "Marketing",
       "tagsSprava": "Správa",
-      "tagsAi": "AI",
-      "sub": "Než cokoliv navrhneme, chceme rozumět vašemu podnikání. To je celé.",
+      "tagsAi": "AI procesy",
+      "sub": "Stavíme rychlé weby, e-shopy a automatické AI procesy pro české firmy. Bez zbytečné omáčky, s měřitelným přínosem.",
       "leadAuditLabel": "Audit",
       "leadAuditHeadline": "Komplexní podnikový audit",
       "leadAuditMeta": "2 týdny, písemný report, follow-up call.",
@@ -637,7 +640,7 @@
       }
     },
     "ctaLine": "Chcete služby provázat? Začneme auditem.",
-    "ctaButton": "Vybrat audit →"
+    "ctaButton": "Rezervovat audit →"
   },
   "reseni": {
     "hero": {
@@ -699,7 +702,7 @@
     "intro": "Nestavíme generické weby a AI šablony. Než cokoli navrhneme, díváme se na to, jak váš obor reálně funguje — jaké jsou typické integrace, regulační omezení, sezónnost a unit economics. Tady je šest oborů, kde máme zkušenost.",
     "sectionTitle": "Kde působíme.",
     "ctaLine": "Připraveni začít ve vašem odvětví?",
-    "ctaButton": "Získat AI audit →",
+    "ctaButton": "Rezervovat audit →",
     "items": [
       {
         "key": "ecommerce",
@@ -983,14 +986,15 @@
     "cta": {
       "headline": "Pojďme se poznat.",
       "body": "Domluvte si bezplatnou konzultaci nebo placený audit.",
-      "button": "Spolupráce →"
+      "button": "Rezervovat audit →"
     }
   },
   "kontakt": {
     "hero": {
       "status": "/cs/kontakt",
       "headline": "Kontakt",
-      "subhead": "Pro rychlou odpověď použijte rezervaci hovoru. Nebo nás napište přímo."
+      "subhead": "Pro rychlou odpověď použijte rezervaci hovoru. Nebo nás napište přímo.",
+      "formCta": "Napište nám →"
     },
     "primary": {
       "label": "PREFEROVANÁ CESTA",
@@ -1041,9 +1045,8 @@
     },
     "newsletter": {
       "label": "NEWSLETTER",
-      "headline": "Chcete být upozornění?",
-      "body": "Pošlete nám e-mail na hello@victaagency.com a zařadíme vás do seznamu, kterému dáme vědět, jakmile blog ožije. Žádný spam, žádné automatické sekvence — jen jeden e-mail, až tu něco stojí za přečtení.",
-      "cta": "Napsat na hello@victaagency.com"
+      "headline": "Chcete být upozorněni?",
+      "body": "Nechte nám e-mail ve formuláři níže a dáme vám vědět, jakmile blog ožije. Žádný spam, žádné automatické sekvence — jen jeden e-mail, až tu něco stojí za přečtení."
     }
   },
   "legal": {

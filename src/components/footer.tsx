@@ -1,5 +1,7 @@
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
+import { NewsletterSignup } from '@/components/forms/newsletter-signup';
+import { site } from '@/config/site';
 
 type FooterLink = { href: string; key: string };
 
@@ -26,6 +28,7 @@ const LEGAL: ReadonlyArray<FooterLink> = [
 
 export function Footer() {
   const t = useTranslations('footer');
+  const locale = useLocale() === 'en' ? ('en' as const) : ('cs' as const);
 
   return (
     <footer
@@ -51,6 +54,34 @@ export function Footer() {
                 {t('status')}
               </span>
             </div>
+            {/* Direct contact channels — every page's floor has a working path to a human. */}
+            <ul className="mt-5 flex flex-col gap-2">
+              <li>
+                <a
+                  href={`mailto:${site.contact.email}`}
+                  className="text-sm text-secondary transition-colors duration-150 hover:text-ink"
+                >
+                  {site.contact.email}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={`tel:${site.contact.phone.replace(/\s+/g, '')}`}
+                  className="text-sm text-secondary transition-colors duration-150 hover:text-ink"
+                >
+                  {site.contact.phone}
+                </a>
+              </li>
+              <li>
+                <Link
+                  href="/kontakt"
+                  className="text-sm transition-colors duration-150"
+                  style={{ color: 'var(--accent)' }}
+                >
+                  {t('bookCall')}
+                </Link>
+              </li>
+            </ul>
           </div>
 
           {/* Services */}
@@ -111,19 +142,31 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Newsletter — sitewide soft-conversion entry point (NL-01) */}
+        <div className="mt-12 grid gap-6 border-t border-border-soft pt-10 md:grid-cols-[1.4fr_2fr] md:gap-12">
+          <div>
+            <h4 className="mb-2 font-mono text-xs uppercase tracking-[0.12em] text-tertiary">
+              {t('newsletterHeading')}
+            </h4>
+            <p className="max-w-[320px] text-sm leading-[1.6] text-secondary">
+              {t('newsletterIntro')}
+            </p>
+          </div>
+          <div className="max-w-[480px]">
+            <NewsletterSignup locale={locale} formLocation="footer" variant="inline" />
+          </div>
+        </div>
+
         {/* Bottom bar */}
         <div className="mt-12 border-t border-border-soft pt-6">
-          <p className="flex flex-wrap justify-between gap-4 font-mono text-xs text-tertiary">
-            <span className="flex flex-wrap items-center gap-x-2 gap-y-1">
-              <span>{t('bottom.copyright')}</span>
-              <span aria-hidden>·</span>
-              <span>{t('bottom.ico')}</span>
-              <span aria-hidden>·</span>
-              <span>{t('bottom.city')}</span>
-              <span aria-hidden>·</span>
-              <span>{t('bottom.country')}</span>
-            </span>
-            <span>v 0.1.0 · 2026-05-07</span>
+          <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-xs text-tertiary">
+            <span>{t('bottom.copyright')}</span>
+            <span aria-hidden>·</span>
+            <span>{t('bottom.ico')}</span>
+            <span aria-hidden>·</span>
+            <span>{t('bottom.city')}</span>
+            <span aria-hidden>·</span>
+            <span>{t('bottom.country')}</span>
           </p>
         </div>
       </div>

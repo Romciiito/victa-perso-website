@@ -5,6 +5,7 @@ import { motion, type Variants } from 'framer-motion';
 import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
 import { NewsletterSignup } from '@/components/forms/newsletter-signup';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
 const REVEAL: Variants = {
@@ -14,6 +15,10 @@ const REVEAL: Variants = {
 
 export function BlogBody() {
   const t = useTranslations('blog');
+  const openCal = useCalModal({
+    bookingType: 'scoping_call',
+    sourcePage: '/cs/blog',
+  });
 
   return (
     <>
@@ -22,7 +27,10 @@ export function BlogBody() {
         status={t('hero.status')}
         headline={t('hero.headline')}
         sub={t('hero.subhead')}
-        ctas={[{ label: 'Přihlásit se k odběru', href: '#newsletter', primary: true }]}
+        ctas={[
+          { label: 'Přihlásit se k odběru', href: '#newsletter', primary: true },
+          { label: 'Domluvit konzultaci', onClick: openCal },
+        ]}
         anchors={[
           { label: 'Připravujeme', href: '#coming-soon' },
           { label: 'Newsletter', href: '#newsletter' },

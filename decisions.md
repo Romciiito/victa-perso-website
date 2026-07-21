@@ -147,3 +147,31 @@ Read by the orchestrator on startup to give all agents cross-session continuity.
 
 **Re-decision path**: If Roman wants to re-attempt a taste-skill / soft-skill direction later, open a new D-### entry and a fresh feature branch — do not resurrect the D-008 commits, since they conflict with restored D-007 components.
 
+
+## D-009 · D-008 REVIVED — retroactive record (2026-07-20, event 2026-05-26)
+
+**Decision**: The D-008 taste-skill design system is the ACTIVE production design. Commit `f114e34` (2026-05-26, branch `claude/d008-revival-may11`) revived D-008 wholesale per Roman's instruction dated 2026-05-11 — the instruction predated the 2026-05-25 revert but was executed after it. All subsequent work (content restoration, detail routes `/sluzby|reseni|odvetvi/[slug]`, booking wiring, contact-flow v2) is built on revived D-008, and production victaagency.com deploys from this branch.
+
+**Why this entry exists**: The D-008 entry above instructed "do not resurrect the D-008 commits" and no decision record was written when the revival happened anyway — so this file misrepresented the live design system for ~8 weeks. Recorded retroactively during contact-flow v2 (2026-07-20). D-007 is NOT the active design; treat the "Scope of revert" list above as historical only.
+
+
+## D-010 · Booking embed = embed.js modal; Cal.com slugs canonical in code (2026-07-20)
+
+**Decision**: Booking uses the raw Cal.com `embed.js` + `window.Cal('modal')` API via the single `useCalModal` hook — NOT `@calcom/atoms` as older docs/workplan §2.2 specified. Resolves spec.md OQ-07 (chosen: modal, shipped in commit `0428f52`).
+
+**Slug convention**: `src/config/booking.ts` (`CAL_EVENTS`) is the single source of truth: `tier-1-audit`, `tier-2-audit`, `tier-3-audit`, `free-scoping-call`. Frontend CTAs, the `/api/booking-webhook` tier mapping, and `docs/setup/calcom-event-types.md` all derive from it (pre-v2 they disagreed three ways and paid tiers had no booking path). Paid tier cards on `/spoluprace` now open per-tier Cal.com events with contact-form fallback. CSP `script-src` includes `https://app.cal.com` (the embed script; `frame-src` already allowed it).
+
+**Cleanup**: `CalBookingWidget`, `BookingCta` (parallel dead implementations) and the orphaned `Button` component were deleted.
+
+
+## D-011 · Contact-flow v2: resilience policies + conversion IA (2026-07-20)
+
+**Context**: Production forms were non-functional (Turnstile token never reached react-hook-form state → every submit failed silently; optional selects rejected their own default value). Full analysis in `docs/contact-flow-v2.md`.
+
+**Decisions**:
+1. **Turnstile provisioning-aware skip**: when `TURNSTILE_SECRET_KEY` / `NEXT_PUBLIC_TURNSTILE_SITE_KEY` are absent or not real Cloudflare keys (real keys start `0x`–`3x`), verification is skipped (client supplies sentinel token, server logs a warning) so forms work before provisioning; with real keys both sides are fail-closed as before. Honeypot + rate limiting always active.
+2. **Partial-failure delivery**: a form submission succeeds if at least one sink (Resend email OR Supabase row) persisted it; partial failures raise a Sentry warning. Hard 500 only when both fail.
+3. **Unified CTA taxonomy**: "Rezervovat audit" (paid tiers / spoluprace), "Domluvit konzultaci" (free scoping call — always a real booking trigger, never a plain anchor), newsletter as the low-intent path (footer sitewide + /kontakt + /blog). The /kontakt hero no longer links to /spoluprace#audit (loop removed); its booking CTA falls back to the on-page form (`#form`).
+4. **routes.ts slug sync**: sitemap/robots/llms.txt slug arrays now mirror `content/cs/strings/common.json` (they had a third, diverged slug set → sitemap listed 404s).
+5. **GA4**: `booking_initiated` fires only on real modal opens; unprovisioned fallback tracks `booking_fallback_contact`.
+

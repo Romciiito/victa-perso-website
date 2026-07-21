@@ -204,7 +204,7 @@ export function Nav() {
               href="/spoluprace#audit"
               className="tactile hidden items-center gap-2 rounded-full border border-accent bg-accent px-5 py-2 text-[13px] font-medium text-bg md:inline-flex"
             >
-              Spustit audit
+              Rezervovat audit
               <ArrowUpRight size={14} strokeWidth={1.75} />
             </Link>
             <button
@@ -516,7 +516,7 @@ function MobileDrawer({
                 onClick={onClose}
                 className="flex items-center justify-center gap-2 rounded-full border border-accent bg-accent px-5 py-3 text-[14px] text-bg"
               >
-                Spustit audit
+                Rezervovat audit
                 <ArrowUpRight size={15} strokeWidth={1.75} />
               </Link>
             </li>

@@ -14,6 +14,8 @@ export type ChannelItem = {
   label: string;
   value: string;
   href?: string;
+  /** Trust-signal detail under the value — response time, office hours, IČO… */
+  note?: string;
 };
 
 type Props = {
@@ -37,7 +39,7 @@ export function ContactChannels({ channels }: Props) {
   );
 }
 
-function ChannelRow({ icon: Icon, label, value, href }: ChannelItem) {
+function ChannelRow({ icon: Icon, label, value, href, note }: ChannelItem) {
   const inner = (
     <div className="flex items-center gap-5 py-5">
       <div
@@ -46,11 +48,18 @@ function ChannelRow({ icon: Icon, label, value, href }: ChannelItem) {
       >
         <Icon size={16} strokeWidth={1.5} />
       </div>
-      <div className="flex min-w-0 flex-1 items-center justify-between gap-4">
+      <div className="flex min-w-0 flex-1 flex-col gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
         <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-tertiary">
           {label}
         </span>
-        <span className="truncate text-[15px] text-ink">{value}</span>
+        <span className="flex min-w-0 flex-col sm:items-end">
+          <span className="truncate text-[15px] text-ink">{value}</span>
+          {note ? (
+            <span className="mt-1 text-[12.5px] leading-[1.5] text-tertiary sm:text-right">
+              {note}
+            </span>
+          ) : null}
+        </span>
       </div>
     </div>
   );
