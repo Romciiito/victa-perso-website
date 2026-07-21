@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useCallback, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { newsletterSchema, type NewsletterValues, consentTextFor } from '@/lib/newsletter-schema';
@@ -26,13 +26,13 @@ interface Props {
 export function NewsletterSignup({ locale, formLocation, variant = 'default' }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [isPending, startTransition] = useTransition();
-  const [turnstileToken, setTurnstileToken] = useState('');
   const [responseMsg, setResponseMsg] = useState('');
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<NewsletterValues>({
     resolver: zodResolver(newsletterSchema),
@@ -46,6 +46,18 @@ export function NewsletterSignup({ locale, formLocation, variant = 'default' }: 
     },
   });
 
+  // Token must live in RHF state — validation runs against RHF values before
+  // the submit callback, so a useState-only token silently blocks every submit
+  // (same P0 bug as the contact form).
+  const handleTurnstileToken = useCallback(
+    (token: string) => setValue('turnstile_token', token, { shouldValidate: true }),
+    [setValue],
+  );
+  const handleTurnstileExpire = useCallback(
+    () => setValue('turnstile_token', ''),
+    [setValue],
+  );
+
   const onSubmit = handleSubmit((values) => {
     setResponseMsg('');
     setStatus('submitting');
@@ -54,7 +66,7 @@ export function NewsletterSignup({ locale, formLocation, variant = 'default' }: 
         const res = await fetch('/api/newsletter', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...values, turnstile_token: turnstileToken, locale, form_location: formLocation }),
+          body: JSON.stringify({ ...values, locale, form_location: formLocation }),
         });
         const json = (await res.json().catch(() => ({}))) as { ok?: boolean; message?: string };
         if (res.status === 429) {
@@ -208,7 +220,16 @@ export function NewsletterSignup({ locale, formLocation, variant = 'default' }: 
         </p>
       ) : null}
 
-      <TurnstileWidget onToken={setTurnstileToken} action={`newsletter-${formLocation}`} />
+      <TurnstileWidget
+        onToken={handleTurnstileToken}
+        onExpire={handleTurnstileExpire}
+        action={`newsletter-${formLocation}`}
+      />
+      {errors.turnstile_token?.message ? (
+        <p role="alert" className="text-sm" style={{ color: 'var(--error)' }}>
+          {errors.turnstile_token.message}
+        </p>
+      ) : null}
 
       <button
         type="submit"

@@ -1,5 +1,6 @@
 import 'server-only';
 import { NextResponse, type NextRequest } from 'next/server';
+import * as Sentry from '@sentry/nextjs';
 import { Resend } from 'resend';
 import { contactSchema } from '@/lib/contact-schema';
 import { sanitizeFormString } from '@/lib/sanitize';
@@ -155,7 +156,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   if (dbErr) {
     // eslint-disable-next-line no-console
     console.error('[contact] supabase insert error:', dbErr.message);
-    return NextResponse.json({ error: 'storage' }, { status: 500 });
+    // Partial-failure policy (D-011): the submission is "delivered" if at least one
+    // sink (email OR database) persisted it. Only hard-fail when BOTH failed —
+    // otherwise a Supabase outage would discard a lead whose email already reached
+    // the inbox, and the visitor would needlessly retry or give up.
+    if (!resendId) {
+      return NextResponse.json({ error: 'storage' }, { status: 500 });
+    }
+    Sentry.captureMessage('contact: partial failure — email sent, DB insert failed', {
+      level: 'warning',
+      extra: { resend_email_id: resendId, db_error: dbErr.message },
+    });
   }
 
   return NextResponse.json(

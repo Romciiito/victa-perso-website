@@ -24,8 +24,20 @@ export const contactSchema = z.object({
     .trim()
     .min(20, { message: 'Zpráva musí mít alespoň 20 znaků.' })
     .max(2000),
-  budget_tier: z.enum(['under_5k', '5k-25k', '25k-100k', '100k+']).optional(),
-  service_interest: z.enum(['comprehensive', 'web', 'marketing', 'ai', 'other']).optional(),
+  // `.or(z.literal(''))` — an untouched <select> submits its `<option value="">`
+  // placeholder; without this branch Zod rejects the form's own default value
+  // (same pattern as company/phone above). The transform folds '' back to
+  // undefined so the server/DB layer only ever sees a real enum or null.
+  budget_tier: z
+    .enum(['under_5k', '5k-25k', '25k-100k', '100k+'])
+    .optional()
+    .or(z.literal(''))
+    .transform((v) => (v === '' ? undefined : v)),
+  service_interest: z
+    .enum(['comprehensive', 'web', 'marketing', 'ai', 'other'])
+    .optional()
+    .or(z.literal(''))
+    .transform((v) => (v === '' ? undefined : v)),
   gdpr_consent: z.literal(true, {
     message: 'Pro odeslání souhlasíte se zpracováním osobních údajů.',
   }),

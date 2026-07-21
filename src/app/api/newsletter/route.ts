@@ -1,5 +1,6 @@
 import 'server-only';
 import { NextResponse, type NextRequest } from 'next/server';
+import * as Sentry from '@sentry/nextjs';
 import { Resend } from 'resend';
 import { newsletterSchema, consentTextFor } from '@/lib/newsletter-schema';
 import { isValidEmail } from '@/lib/sanitize';
@@ -192,7 +193,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     }
     // eslint-disable-next-line no-console
     console.error('[newsletter] supabase insert error:', dbErr.message);
-    return NextResponse.json({ error: 'storage' }, { status: 500 });
+    // Partial-failure policy (D-011): if the Resend audience add succeeded, the
+    // subscription is real — don't discard it because the consent-proof row failed.
+    // The static consent text lives versioned in code and Resend records the opt-in
+    // timestamp, so the compliance gap is bounded; Sentry flags it for manual repair.
+    if (!resendAudienceId) {
+      return NextResponse.json({ error: 'storage' }, { status: 500 });
+    }
+    Sentry.captureMessage('newsletter: partial failure — Resend contact created, DB insert failed', {
+      level: 'warning',
+      extra: { db_error: dbErr.message },
+    });
   }
 
   // Welcome email — best-effort.

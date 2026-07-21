@@ -39,13 +39,31 @@ interface Props {
  * reuse the loaded script. The token is short-lived (~5 min) and verified server-side
  * via `verifyTurnstileToken` (REQ-I-021, security-model.md §4.3).
  */
+/**
+ * Sentinel token supplied when Turnstile is not provisioned. Real Cloudflare
+ * sitekeys (including the official test keys) always start with 0x–3x; anything
+ * else is a placeholder. The server side mirrors this: `verifyTurnstileToken`
+ * skips verification only when TURNSTILE_SECRET_KEY is absent/placeholder, so
+ * forms stay submittable before provisioning without weakening a provisioned env.
+ */
+const BYPASS_TOKEN = 'turnstile-not-configured';
+
+function sitekeyIsConfigured(key: string | undefined): key is string {
+  return Boolean(key) && /^[0-3]x/.test(key as string);
+}
+
 export function TurnstileWidget({ onToken, onExpire, appearance = 'interaction-only', action }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
   const sitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
+  const configured = sitekeyIsConfigured(sitekey);
 
   useEffect(() => {
-    if (!sitekey || sitekey.startsWith('your-')) return;
+    if (!sitekey || !/^[0-3]x/.test(sitekey)) {
+      // Not provisioned — supply the sentinel so client-side validation passes.
+      onToken(BYPASS_TOKEN);
+      return;
+    }
 
     let cancelled = false;
     const SCRIPT_ID = 'cf-turnstile';
@@ -105,10 +123,9 @@ export function TurnstileWidget({ onToken, onExpire, appearance = 'interaction-o
     };
   }, [sitekey, onToken, onExpire, appearance, action]);
 
-  if (!sitekey || sitekey.startsWith('your-')) {
-    // Dev / preview mode — Turnstile not provisioned. Return a transparent placeholder
-    // that auto-supplies a sentinel token so forms remain submittable in local dev.
-    // Server route will reject this token, so dev requires a real sitekey for end-to-end.
+  if (!configured) {
+    // Turnstile not provisioned — the effect above supplied the sentinel token,
+    // so the form stays submittable; nothing to render.
     return null;
   }
 

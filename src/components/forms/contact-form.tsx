@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useCallback, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { contactSchema, type ContactFormValues } from '@/lib/contact-schema';
@@ -26,13 +26,13 @@ interface Props {
 export function ContactForm({ locale }: Props) {
   const [status, setStatus] = useState<Status>('idle');
   const [isPending, startTransition] = useTransition();
-  const [turnstileToken, setTurnstileToken] = useState('');
   const [submitError, setSubmitError] = useState<string>('');
 
   const {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactSchema),
@@ -49,6 +49,19 @@ export function ContactForm({ locale }: Props) {
     },
   });
 
+  // The Turnstile token must live inside react-hook-form state — handleSubmit
+  // runs the Zod resolver against RHF's own values BEFORE the callback body,
+  // so a token held only in useState never reaches validation and every submit
+  // fails silently (the original P0 bug on this form).
+  const handleTurnstileToken = useCallback(
+    (token: string) => setValue('turnstile_token', token, { shouldValidate: true }),
+    [setValue],
+  );
+  const handleTurnstileExpire = useCallback(
+    () => setValue('turnstile_token', ''),
+    [setValue],
+  );
+
   const onSubmit = handleSubmit((values) => {
     setSubmitError('');
     setStatus('submitting');
@@ -57,7 +70,7 @@ export function ContactForm({ locale }: Props) {
         const res = await fetch('/api/contact', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ ...values, turnstile_token: turnstileToken, locale }),
+          body: JSON.stringify({ ...values, locale }),
         });
         if (res.status === 429) {
           setStatus('rate-limited');
@@ -271,6 +284,11 @@ export function ContactForm({ locale }: Props) {
             <option value="25k-100k">{labels.budgetOptions['25k-100k']}</option>
             <option value="100k+">{labels.budgetOptions['100k+']}</option>
           </select>
+          {errors.budget_tier?.message ? (
+            <p role="alert" className="mt-1.5 text-sm" style={{ color: 'var(--error)' }}>
+              {errors.budget_tier.message}
+            </p>
+          ) : null}
         </div>
       </div>
 
@@ -291,6 +309,11 @@ export function ContactForm({ locale }: Props) {
           <option value="ai">{labels.serviceOptions.ai}</option>
           <option value="other">{labels.serviceOptions.other}</option>
         </select>
+        {errors.service_interest?.message ? (
+          <p role="alert" className="mt-1.5 text-sm" style={{ color: 'var(--error)' }}>
+            {errors.service_interest.message}
+          </p>
+        ) : null}
       </div>
 
       <div>
@@ -342,7 +365,16 @@ export function ContactForm({ locale }: Props) {
         ) : null}
       </div>
 
-      <TurnstileWidget onToken={setTurnstileToken} action="contact" />
+      <TurnstileWidget
+        onToken={handleTurnstileToken}
+        onExpire={handleTurnstileExpire}
+        action="contact"
+      />
+      {errors.turnstile_token?.message ? (
+        <p role="alert" className="text-sm" style={{ color: 'var(--error)' }}>
+          {errors.turnstile_token.message}
+        </p>
+      ) : null}
 
       <button
         type="submit"
