@@ -1,4 +1,6 @@
 import 'server-only';
+import * as Sentry from '@sentry/nextjs';
+import { TURNSTILE_BYPASS_TOKEN, turnstileKeyLooksReal } from './turnstile-shared';
 
 /**
  * Cloudflare Turnstile server-side token verification.
@@ -27,13 +29,44 @@ export interface TurnstileVerifyResult {
 }
 
 export async function verifyTurnstileToken(token: string, ip?: string): Promise<TurnstileVerifyResult> {
-  const secret = process.env.TURNSTILE_SECRET_KEY;
-  if (!secret || !/^[0-3]x/.test(secret)) {
+  const secret = process.env.TURNSTILE_SECRET_KEY?.trim();
+  const secretConfigured = turnstileKeyLooksReal(secret);
+  const siteKeyConfigured = turnstileKeyLooksReal(process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY);
+
+  if (!secretConfigured) {
+    if (siteKeyConfigured) {
+      // Partial provisioning: real users are being shown (and solving) the real
+      // widget, but we cannot verify their tokens. Silently accepting here would
+      // turn the visible CAPTCHA into theatre — fail CLOSED and alert loudly.
+      // eslint-disable-next-line no-console
+      console.error(
+        '[turnstile] PARTIAL PROVISIONING: NEXT_PUBLIC_TURNSTILE_SITE_KEY is real but TURNSTILE_SECRET_KEY is missing/malformed — failing closed. Fix the secret in env.',
+      );
+      Sentry.captureMessage('turnstile: partial provisioning — site key real, secret missing/malformed', {
+        level: 'error',
+      });
+      return { success: false, errorCodes: ['partial-provisioning'] };
+    }
+    // Neither key provisioned — the intended dev/preview skip (D-011).
     // eslint-disable-next-line no-console
     console.warn(
-      '[turnstile] TURNSTILE_SECRET_KEY missing/placeholder — verification SKIPPED (honeypot + rate limit remain active). Provision a real key before launch traffic.',
+      '[turnstile] not provisioned — verification SKIPPED (honeypot + rate limit remain active). Provision real keys before launch traffic.',
     );
     return { success: true, errorCodes: ['not-configured'] };
+  }
+
+  if (token === TURNSTILE_BYPASS_TOKEN) {
+    // The client thinks Turnstile is off while the server has a real secret —
+    // the inverse provisioning asymmetry. Every visitor would hit this, so
+    // surface it in monitoring instead of a generic Cloudflare rejection.
+    // eslint-disable-next-line no-console
+    console.error(
+      '[turnstile] client sent the not-configured sentinel while TURNSTILE_SECRET_KEY is real — check NEXT_PUBLIC_TURNSTILE_SITE_KEY in env.',
+    );
+    Sentry.captureMessage('turnstile: client not provisioned while server secret is real', {
+      level: 'error',
+    });
+    return { success: false, errorCodes: ['client-not-provisioned'] };
   }
   if (!token || typeof token !== 'string' || token.length < 10) {
     return { success: false, errorCodes: ['missing-token'] };

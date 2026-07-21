@@ -1,6 +1,5 @@
 import 'server-only';
 import { NextResponse, type NextRequest } from 'next/server';
-import * as Sentry from '@sentry/nextjs';
 import { Resend } from 'resend';
 import { newsletterSchema, consentTextFor } from '@/lib/newsletter-schema';
 import { isValidEmail } from '@/lib/sanitize';
@@ -147,7 +146,39 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     },
   });
 
-  // Add to Resend audience (best-effort — failure does not block the local DB insert).
+  // GDPR proof-of-consent record FIRST (REQ-F-055) — this write is the
+  // AUTHORITATIVE gate for the newsletter (review 2026-07-21, amends D-011):
+  // if we cannot persist consented_at/consent_text/ip_hash, we must not
+  // enroll the address in the Resend audience or send any marketing email.
+  // (The contact form keeps the lenient partial-failure policy — its email
+  // is an inquiry, not a marketing subscription needing consent proof.)
+  const consentText = consentTextFor(data.locale);
+  const { error: dbErr } = await supabaseAdmin.from('newsletter_subscribers').insert({
+    lead_id: lead?.id ?? null,
+    email: data.email.toLowerCase(),
+    resend_audience_id: null,
+    source_url: req.headers.get('referer'),
+    utm_source: data.utm_source ?? null,
+    utm_medium: data.utm_medium ?? null,
+    utm_campaign: data.utm_campaign ?? null,
+    locale: data.locale,
+    ip_hash: ipHash,
+    consented_at: new Date().toISOString(),
+    consent_text: consentText,
+  });
+  if (dbErr) {
+    // Unique-constraint violation on email → silent dedupe (REQ-F-053 — don't leak that the
+    // email already exists). No re-enrollment, no duplicate welcome email.
+    const code = (dbErr as { code?: string }).code;
+    if (code === '23505') {
+      return NextResponse.json({ ok: true, message: successMsg }, { status: 200 });
+    }
+    // eslint-disable-next-line no-console
+    console.error('[newsletter] supabase insert error:', dbErr.message);
+    return NextResponse.json({ error: 'storage' }, { status: 500 });
+  }
+
+  // Add to Resend audience — best-effort, only AFTER the consent record exists.
   let resendAudienceId: string | null = null;
   const resendKey = process.env.RESEND_API_KEY_NEWSLETTER;
   const audienceId = process.env.RESEND_AUDIENCE_ID;
@@ -160,6 +191,15 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         audienceId,
       });
       resendAudienceId = r.data?.id ?? audienceId;
+      // Backfill the audience id onto the consent row — best-effort.
+      const { error: updErr } = await supabaseAdmin
+        .from('newsletter_subscribers')
+        .update({ resend_audience_id: resendAudienceId })
+        .eq('email', data.email.toLowerCase());
+      if (updErr) {
+        // eslint-disable-next-line no-console
+        console.warn('[newsletter] audience-id backfill failed:', updErr.message);
+      }
     } catch (err) {
       // eslint-disable-next-line no-console
       console.warn('[newsletter] resend audience add error:', (err as Error).message);
@@ -167,43 +207,6 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   } else {
     // eslint-disable-next-line no-console
     console.warn('[newsletter] RESEND_API_KEY_NEWSLETTER or RESEND_AUDIENCE_ID missing');
-  }
-
-  // Insert subscriber row — GDPR proof-of-consent record (REQ-F-055).
-  const consentText = consentTextFor(data.locale);
-  const { error: dbErr } = await supabaseAdmin.from('newsletter_subscribers').insert({
-    lead_id: lead?.id ?? null,
-    email: data.email.toLowerCase(),
-    resend_audience_id: resendAudienceId,
-    source_url: req.headers.get('referer'),
-    utm_source: data.utm_source ?? null,
-    utm_medium: data.utm_medium ?? null,
-    utm_campaign: data.utm_campaign ?? null,
-    locale: data.locale,
-    ip_hash: ipHash,
-    consented_at: new Date().toISOString(),
-    consent_text: consentText,
-  });
-  if (dbErr) {
-    // Unique-constraint violation on email → silent dedupe (REQ-F-053 — don't leak that the
-    // email already exists). Postgres error code 23505 for unique_violation.
-    const code = (dbErr as { code?: string }).code;
-    if (code === '23505') {
-      return NextResponse.json({ ok: true, message: successMsg }, { status: 200 });
-    }
-    // eslint-disable-next-line no-console
-    console.error('[newsletter] supabase insert error:', dbErr.message);
-    // Partial-failure policy (D-011): if the Resend audience add succeeded, the
-    // subscription is real — don't discard it because the consent-proof row failed.
-    // The static consent text lives versioned in code and Resend records the opt-in
-    // timestamp, so the compliance gap is bounded; Sentry flags it for manual repair.
-    if (!resendAudienceId) {
-      return NextResponse.json({ error: 'storage' }, { status: 500 });
-    }
-    Sentry.captureMessage('newsletter: partial failure — Resend contact created, DB insert failed', {
-      level: 'warning',
-      extra: { db_error: dbErr.message },
-    });
   }
 
   // Welcome email — best-effort.

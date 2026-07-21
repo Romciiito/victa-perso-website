@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { TURNSTILE_BYPASS_TOKEN, turnstileKeyLooksReal } from '@/lib/turnstile-shared';
 
 declare global {
   interface Window {
@@ -40,28 +41,22 @@ interface Props {
  * via `verifyTurnstileToken` (REQ-I-021, security-model.md §4.3).
  */
 /**
- * Sentinel token supplied when Turnstile is not provisioned. Real Cloudflare
- * sitekeys (including the official test keys) always start with 0x–3x; anything
- * else is a placeholder. The server side mirrors this: `verifyTurnstileToken`
- * skips verification only when TURNSTILE_SECRET_KEY is absent/placeholder, so
- * forms stay submittable before provisioning without weakening a provisioned env.
+ * Provisioning detection + bypass sentinel are shared with the server verifier
+ * via `@/lib/turnstile-shared` — one source of truth, so client and server can
+ * never drift on what counts as a real Cloudflare key. When not provisioned,
+ * the widget supplies the sentinel token so client-side validation passes;
+ * the server accepts it ONLY when its own secret is also unprovisioned.
  */
-const BYPASS_TOKEN = 'turnstile-not-configured';
-
-function sitekeyIsConfigured(key: string | undefined): key is string {
-  return Boolean(key) && /^[0-3]x/.test(key as string);
-}
-
 export function TurnstileWidget({ onToken, onExpire, appearance = 'interaction-only', action }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const widgetIdRef = useRef<string | null>(null);
-  const sitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
-  const configured = sitekeyIsConfigured(sitekey);
+  const sitekey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim();
+  const configured = turnstileKeyLooksReal(sitekey);
 
   useEffect(() => {
-    if (!sitekey || !/^[0-3]x/.test(sitekey)) {
+    if (!sitekey || !turnstileKeyLooksReal(sitekey)) {
       // Not provisioned — supply the sentinel so client-side validation passes.
-      onToken(BYPASS_TOKEN);
+      onToken(TURNSTILE_BYPASS_TOKEN);
       return;
     }
 

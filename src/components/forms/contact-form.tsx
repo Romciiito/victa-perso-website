@@ -274,6 +274,8 @@ export function ContactForm({ locale }: Props) {
           </label>
           <select
             id="budget_tier"
+            aria-invalid={!!errors.budget_tier}
+            aria-describedby={errors.budget_tier ? 'budget_tier-error' : undefined}
             {...register('budget_tier')}
             className="w-full rounded-md border px-3 py-2.5 text-base"
             style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)', color: 'var(--ink)' }}
@@ -285,7 +287,7 @@ export function ContactForm({ locale }: Props) {
             <option value="100k+">{labels.budgetOptions['100k+']}</option>
           </select>
           {errors.budget_tier?.message ? (
-            <p role="alert" className="mt-1.5 text-sm" style={{ color: 'var(--error)' }}>
+            <p id="budget_tier-error" role="alert" className="mt-1.5 text-sm" style={{ color: 'var(--error)' }}>
               {errors.budget_tier.message}
             </p>
           ) : null}
@@ -298,6 +300,8 @@ export function ContactForm({ locale }: Props) {
         </label>
         <select
           id="service_interest"
+          aria-invalid={!!errors.service_interest}
+          aria-describedby={errors.service_interest ? 'service_interest-error' : undefined}
           {...register('service_interest')}
           className="w-full rounded-md border px-3 py-2.5 text-base"
           style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)', color: 'var(--ink)' }}
@@ -310,7 +314,7 @@ export function ContactForm({ locale }: Props) {
           <option value="other">{labels.serviceOptions.other}</option>
         </select>
         {errors.service_interest?.message ? (
-          <p role="alert" className="mt-1.5 text-sm" style={{ color: 'var(--error)' }}>
+          <p id="service_interest-error" role="alert" className="mt-1.5 text-sm" style={{ color: 'var(--error)' }}>
             {errors.service_interest.message}
           </p>
         ) : null}
