@@ -129,7 +129,6 @@ export function ReseniBody() {
     audience: string;
   }>;
   const openCal = useCalModal({
-    eventSlug: 'free-scoping-call',
     bookingType: 'scoping_call',
     sourcePage: '/cs/reseni',
   });
@@ -181,7 +180,7 @@ export function ReseniBody() {
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary href="/spoluprace#audit">
-              Spustit projekt →
+              Rezervovat audit →
             </MagneticCta>
             <MagneticCta onClick={openCal}>{t('ctaButton')}</MagneticCta>
           </div>

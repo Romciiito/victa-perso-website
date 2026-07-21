@@ -18,7 +18,6 @@ const KINETIC_ITEMS: ReadonlyArray<KineticItem> = INDUSTRIES_OFFERING.items.map(
 export function OdvetviBody() {
   const t = useTranslations('odvetvi');
   const openCal = useCalModal({
-    eventSlug: 'free-scoping-call',
     bookingType: 'scoping_call',
     sourcePage: '/cs/odvetvi',
   });

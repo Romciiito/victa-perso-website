@@ -84,7 +84,6 @@ export function SluzbyBody() {
   const t = useTranslations('sluzby');
   const tRaw = (k: string) => t.raw(k) as unknown;
   const openCal = useCalModal({
-    eventSlug: 'free-scoping-call',
     bookingType: 'scoping_call',
     sourcePage: '/cs/sluzby',
   });

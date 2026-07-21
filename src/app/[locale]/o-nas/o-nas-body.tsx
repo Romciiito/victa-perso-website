@@ -28,7 +28,6 @@ export function ONasBody() {
   const t = useTranslations('oNas');
   const rawValues = t.raw('sections.values.items') as ReadonlyArray<RawValue>;
   const openCal = useCalModal({
-    eventSlug: 'free-scoping-call',
     bookingType: 'scoping_call',
     sourcePage: '/cs/o-nas',
   });

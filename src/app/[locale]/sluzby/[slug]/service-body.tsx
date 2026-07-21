@@ -43,7 +43,6 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
   const fit = item.fit ? item.fit.replace(/^Hodí se pro:\s*/i, '') : null;
   const hasFaq = Array.isArray(item.faq) && item.faq.length > 0;
   const openCal = useCalModal({
-    eventSlug: 'free-scoping-call',
     bookingType: 'scoping_call',
     sourcePage: `/cs/sluzby/${item.slug}`,
   });

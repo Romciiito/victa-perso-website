@@ -14,7 +14,10 @@ export type TierData = {
   body: string;
   deliverables: ReadonlyArray<string>;
   cta: string;
-  ctaHref: string;
+  /** Navigation target. Ignored when `ctaOnClick` is provided. */
+  ctaHref?: string;
+  /** Action trigger (e.g. Cal.com modal) — takes precedence over `ctaHref`. */
+  ctaOnClick?: () => void;
   primary?: boolean;
 };
 
@@ -104,9 +107,15 @@ function StickyTier({ tier, index }: { tier: TierData; index: number }) {
               )}
             </div>
           )}
-          <MagneticCta primary={tier.primary} compact href={tier.ctaHref}>
-            {tier.cta}
-          </MagneticCta>
+          {tier.ctaOnClick ? (
+            <MagneticCta primary={tier.primary} compact onClick={tier.ctaOnClick}>
+              {tier.cta}
+            </MagneticCta>
+          ) : (
+            <MagneticCta primary={tier.primary} compact href={tier.ctaHref ?? '/kontakt'}>
+              {tier.cta}
+            </MagneticCta>
+          )}
         </div>
       </div>
     </motion.div>

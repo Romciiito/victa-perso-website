@@ -4,6 +4,7 @@ import { createHmac, timingSafeEqual } from 'node:crypto';
 import { supabaseAdmin } from '@/lib/supabase';
 import { upsertLead } from '@/lib/leads';
 import { wasWebhookProcessed } from '@/lib/rate-limit';
+import { tierFromEventSlug } from '@/config/booking';
 
 /**
  * Cal.com webhook receiver — `BOOKING_CREATED`, `BOOKING_RESCHEDULED`, `BOOKING_CANCELLED`,
@@ -54,21 +55,6 @@ function verifySignature(rawBody: string, signature: string, secret: string): bo
   }
   if (sigBuf.length !== expBuf.length) return false;
   return timingSafeEqual(sigBuf, expBuf);
-}
-
-function tierFromEventSlug(slug?: string): 'tier_1' | 'tier_2' | 'tier_3' | 'free_scoping' | null {
-  switch (slug) {
-    case 'tier-1-audit':
-      return 'tier_1';
-    case 'tier-2-audit':
-      return 'tier_2';
-    case 'tier-3-audit':
-      return 'tier_3';
-    case 'free-scoping-call':
-      return 'free_scoping';
-    default:
-      return null;
-  }
 }
 
 function mapEventType(

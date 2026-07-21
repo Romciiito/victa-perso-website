@@ -70,7 +70,6 @@ function paragraphs(text: string) {
 export function IndustryBody({ item }: { item: IndustryItem }) {
   const Icon = ICON_MAP[item.icon] ?? Briefcase;
   const openCal = useCalModal({
-    eventSlug: 'free-scoping-call',
     bookingType: 'scoping_call',
     sourcePage: `/cs/odvetvi/${item.slug}`,
   });

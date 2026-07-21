@@ -39,9 +39,25 @@ export function SpolupraceBody() {
   const t = useTranslations('spoluprace');
   const tRaw = (k: string) => t.raw(k) as unknown;
   const openCal = useCalModal({
-    eventSlug: 'free-scoping-call',
     bookingType: 'scoping_call',
     sourcePage: '/cs/spoluprace',
+  });
+  // Per-tier paid-audit bookings (D-010) — each tier opens its own Cal.com
+  // event type; before Cal.com is provisioned they fall back to the contact form.
+  const openCalTier1 = useCalModal({
+    bookingType: 'audit_t1',
+    sourcePage: '/cs/spoluprace',
+    fallbackHref: '/kontakt#form',
+  });
+  const openCalTier2 = useCalModal({
+    bookingType: 'audit_t2',
+    sourcePage: '/cs/spoluprace',
+    fallbackHref: '/kontakt#form',
+  });
+  const openCalTier3 = useCalModal({
+    bookingType: 'audit_t3',
+    sourcePage: '/cs/spoluprace',
+    fallbackHref: '/kontakt#form',
   });
 
   /* paths */
@@ -83,7 +99,7 @@ export function SpolupraceBody() {
       body: tier1.ideal,
       deliverables: tier1.deliverables,
       cta: tier1.cta,
-      ctaHref: '/kontakt',
+      ctaOnClick: openCalTier1,
       primary: true,
     },
     {
@@ -94,7 +110,7 @@ export function SpolupraceBody() {
       body: tier2.ideal,
       deliverables: tier2.deliverables,
       cta: tier2.cta,
-      ctaHref: '/kontakt',
+      ctaOnClick: openCalTier2,
     },
     {
       tier: tier3.tier,
@@ -104,7 +120,7 @@ export function SpolupraceBody() {
       body: tier3.ideal,
       deliverables: tier3.deliverables,
       cta: tier3.cta,
-      ctaHref: '/kontakt',
+      ctaOnClick: openCalTier3,
     },
   ];
 

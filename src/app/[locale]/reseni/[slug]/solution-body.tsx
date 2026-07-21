@@ -38,7 +38,6 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
   // prefix so the section can render its own heading and keep the list clean.
   const audience = item.audience.replace(/^Hodí se pro:\s*/i, '');
   const openCal = useCalModal({
-    eventSlug: 'free-scoping-call',
     bookingType: 'scoping_call',
     sourcePage: `/cs/reseni/${item.slug}`,
   });

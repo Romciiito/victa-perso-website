@@ -25,12 +25,14 @@ Cal.com is the booking system for VICTA's audit and scoping flows. **Free Cloud 
 
 Create 4 event types in Cal.com. For each: Event Types → New → Solo → fill in the fields below exactly. After creation, the slug becomes part of the booking URL: `cal.com/victa/{slug}`.
 
+> **⚠️ Canonical slugs (D-010)**: the slugs below are generated from `src/config/booking.ts` (`CAL_EVENTS`) — the single source of truth shared by the frontend CTAs and the `/api/booking-webhook` tier mapping. If a slug must ever change, change it in that file first and update Cal.com to match; never invent slugs here.
+
 ### Event 1 — Tier 1 audit (komplexní podnikový audit)
 
 | Field | Value |
 |-------|-------|
 | Title | `Tier 1 — Komplexní podnikový audit` |
-| Slug (URL) | `audit-tier-1` |
+| Slug (URL) | `tier-1-audit` |
 | Description (Czech) | (paste below) |
 | Length | `60` minutes |
 | Booking frequency | Single |
@@ -69,7 +71,7 @@ Audit se platí na základě faktury — pokud zrušíte před vystavením faktu
 | Field | Value |
 |-------|-------|
 | Title | `Tier 2 — Doménový audit` |
-| Slug | `audit-tier-2` |
+| Slug | `tier-2-audit` |
 | Length | `45` minutes |
 | Buffer before / after | `15` min each |
 | Minimum notice | `1` day |
@@ -90,7 +92,7 @@ Konzultační hovor pro Tier 2 audit zaměřený na jednu oblast (marketing stra
 | Field | Value |
 |-------|-------|
 | Title | `Tier 3 — Strategická session` |
-| Slug | `audit-tier-3` |
+| Slug | `tier-3-audit` |
 | Length | `30` minutes |
 | Buffer before / after | `10` min each |
 | Minimum notice | `1` day |
@@ -111,7 +113,7 @@ Konzultační hovor pro Tier 3 strategickou session — jednorázová analýza k
 | Field | Value |
 |-------|-------|
 | Title | `Bezplatná konzultace — modulární služby` |
-| Slug | `scoping-call` |
+| Slug | `free-scoping-call` |
 | Length | `30` minutes |
 | Buffer before / after | `10` min each |
 | Minimum notice | `1` day |
@@ -177,7 +179,7 @@ pnpm add @calcom/atoms
 import { Booker } from "@calcom/atoms";
 import { useTheme } from "next-themes";
 
-export function AuditBooker({ slug }: { slug: "audit-tier-1" | "audit-tier-2" | "audit-tier-3" | "scoping-call" }) {
+export function AuditBooker({ slug }: { slug: "tier-1-audit" | "tier-2-audit" | "tier-3-audit" | "free-scoping-call" }) {
   const { resolvedTheme } = useTheme();
 
   return (
@@ -285,13 +287,13 @@ When CSP enforcement promotes from report-only (Phase 5), these stay. Confirm no
 
 ### Pre-Phase-2 (after event types created, before webhook handler exists)
 
-- [ ] Visit `https://cal.com/victa/audit-tier-1` in private window → page loads → Czech UI strings render → all 6 booking questions visible → can step through to time selection
-- [ ] Same for `audit-tier-2`, `audit-tier-3`, `scoping-call`
+- [ ] Visit `https://cal.com/victa/tier-1-audit` in private window → page loads → Czech UI strings render → all 6 booking questions visible → can step through to time selection
+- [ ] Same for `tier-2-audit`, `tier-3-audit`, `free-scoping-call`
 - [ ] Cal.com → Webhooks → "Send test webhook" → expected: HTTP 404 from `/api/booking-webhook` (route doesn't exist yet); Cal.com queues retries — that's fine
 
 ### Post-Phase-2 (after webhook handler implemented)
 
-- [ ] Make a real test booking (Roman's own email) on `audit-tier-3` (cheap-to-cancel) → confirm:
+- [ ] Make a real test booking (Roman's own email) on `tier-3-audit` (cheap-to-cancel) → confirm:
   - Confirmation email arrives in Czech with the correct flow text
   - Webhook fires → HTTP 200 from `/api/booking-webhook` → Cal.com Webhook log shows green
   - Supabase `booking_events` table has new row with `webhook_signature_verified = true`, `audit_tier = 'tier_3'`, `event_type = 'BOOKING_CREATED'`
