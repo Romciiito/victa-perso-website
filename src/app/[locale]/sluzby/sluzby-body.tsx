@@ -24,6 +24,7 @@ import { SectionHeader } from '@/components/sections/section-header';
 import { BentoGrid, type BentoItem } from '@/components/sections/bento-grid';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
 import { useCalModal } from '@/components/booking/use-cal-modal';
+import { Link } from '@/i18n/navigation';
 
 type ServiceItem = { name: string; desc: string; slug?: string };
 type Category = { label: string; intro: string; items: ReadonlyArray<ServiceItem> };
@@ -162,10 +163,15 @@ export function SluzbyBody() {
             </h2>
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
-            <MagneticCta primary href="/spoluprace#audit">
-              {t('ctaButton')}
+            <MagneticCta primary onClick={openCal}>
+              Chci konzultaci
             </MagneticCta>
-            <MagneticCta onClick={openCal}>Domluvit konzultaci</MagneticCta>
+            <Link
+              href="/spoluprace"
+              className="tactile text-[14px] text-secondary underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-ink hover:decoration-ink"
+            >
+              {t('ctaButton')}
+            </Link>
           </div>
         </div>
       </section>

@@ -25,7 +25,7 @@
   },
   "footer": {
     "tagline": "Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání.",
-    "bookCall": "Domluvit konzultaci →",
+    "bookCall": "Chci konzultaci →",
     "newsletterHeading": "Newsletter",
     "newsletterIntro": "Jednou za pár týdnů. Bez spamu, jen praktické postřehy.",
     "status": "VICTA DIGITAL s.r.o. · Hradec Králové",
@@ -74,8 +74,8 @@
       "leadConsultHeadline": "30 minut",
       "leadConsultMeta": "Bezplatně, pro modulární projekty. Beze závazku.",
       "leadConsultBody": "pro modulární projekty",
-      "ctaPrimary": "Rezervovat audit",
-      "ctaGhost": "Domluvit konzultaci",
+      "ctaPrimary": "Chci konzultaci",
+      "ctaGhost": "Jak spolupracujeme →",
       "visualTag": "VICTA Process",
       "visualTitle": "Audit → strategie → vývoj → provoz."
     },
@@ -188,54 +188,25 @@
         ]
       }
     },
-    "audit": {
-      "heading": "Audit",
-      "subhead": "Než vám něco prodáme, chceme vidět, kde skutečně jste. Tři úrovně hloubky — vyberte podle rozsahu, který má smysl.",
-      "includesLabel": "Zahrnuje",
-      "tier1": {
-        "tier": "Tier 1",
-        "badge": "Nejúplnější",
-        "name": "Komplexní podnikový audit",
-        "price": "20 000 – 90 000 Kč",
-        "priceEur": "€800 – €3 600",
-        "deliverables": [
-          "Hloubkový technický audit",
-          "Audit obchodních procesů",
-          "Audit marketingu a obsahu",
-          "Návrh integrace AI",
-          "90min prezentace zjištění"
-        ],
-        "cta": "Rezervovat audit →"
-      },
-      "tier2": {
-        "tier": "Tier 2",
-        "name": "Doménový audit",
-        "price": "10 000 – 55 000 Kč",
-        "priceEur": "€400 – €2 200",
-        "deliverables": [
-          "Jedna doména: tech, obchod, marketing nebo AI",
-          "Hloubková analýza",
-          "Konkrétní doporučení",
-          "60min prezentace zjištění"
-        ],
-        "cta": "Domluvit audit →"
-      },
-      "tier3": {
-        "tier": "Tier 3",
-        "name": "Strategická session",
-        "price": "4 000 – 25 000 Kč",
-        "priceEur": "€160 – €1 000",
-        "deliverables": [
-          "1–3hodinová session",
-          "Specifický problém nebo otázka",
-          "Strukturovaný výstup",
-          "Bez dlouhého reportu"
-        ],
-        "cta": "Rezervovat session →"
-      },
-      "scopingPrefix": "Pro modulární projekty máme ",
-      "scopingLink": "bezplatnou 30min scoping call",
-      "scopingSuffix": "."
+    "proof": {
+      "eyebrow": "04 · jak pracujeme",
+      "headline": "Proces, který stojí na výstupech, ne na slibech.",
+      "lead": "Každá fáze má jasný výstup, termín a garanci. Žádný krok, který byste museli brát na víru.",
+      "cards": [
+        {
+          "title": "Audit se nikdy nevyhodí",
+          "body": "Cenu auditu odečteme z rozpočtu projektu, pokud po něm pokračujete s námi."
+        },
+        {
+          "title": "Malý tým, žádná režie",
+          "body": "Rozhodují lidé, kteří na projektu skutečně pracují — ne účtované vrstvy managementu."
+        },
+        {
+          "title": "Po launchi nezmizíme",
+          "body": "Měsíční reporting a přímý kontakt, dokud systém neběží tak, jak má."
+        }
+      ],
+      "cta": "Chci konzultaci"
     }
   },
   "spoluprace": {
@@ -259,7 +230,7 @@
         "headline": "Konkrétní jednorázová zakázka",
         "body": "Když máte konkrétní zadání — chatbot, jedna integrace, audit jedné kampaně. Žádný audit potřeba. 30 minut hovoru, zjistíme, jestli se hodíme, a pošleme nabídku.",
         "fit": "Hodí se pro: jednorázové vývojářské zakázky, AI chatboty, integrace, samostatné kampaně.",
-        "cta": "Domluvit hovor →"
+        "cta": "Bezplatná konzultace →"
       }
     },
     "tiers": {
@@ -356,7 +327,7 @@
         "Domluvíme rozsah a orientační cenu",
         "Pokud sedneme, do 2 dnů pošleme oficiální nabídku"
       ],
-      "cta": "Domluvit hovor (30 min, zdarma)"
+      "cta": "Chci konzultaci"
     },
     "faq": {
       "heading": "Často kladené otázky",
@@ -639,8 +610,8 @@
         ]
       }
     },
-    "ctaLine": "Chcete služby provázat? Začneme auditem.",
-    "ctaButton": "Rezervovat audit →"
+    "ctaLine": "Chcete služby provázat? Začněte bezplatnou konzultací.",
+    "ctaButton": "Nebo rovnou placený audit →"
   },
   "reseni": {
     "hero": {
@@ -691,7 +662,7 @@
       }
     ],
     "ctaLine": "Není vidět scénář, který sedí? Domluvte si bezplatnou konzultaci, navrhneme řešení na míru.",
-    "ctaButton": "Domluvit konzultaci →"
+    "ctaButton": "Nebo rovnou placený audit →"
   },
   "odvetvi": {
     "hero": {
@@ -702,7 +673,7 @@
     "intro": "Nestavíme generické weby a AI šablony. Než cokoli navrhneme, díváme se na to, jak váš obor reálně funguje — jaké jsou typické integrace, regulační omezení, sezónnost a unit economics. Tady je osm oborů, kde máme zkušenost.",
     "sectionTitle": "Kde působíme.",
     "ctaLine": "Připraveni začít ve vašem odvětví?",
-    "ctaButton": "Rezervovat audit →",
+    "ctaButton": "Nebo rovnou placený audit →",
     "items": [
       {
         "key": "ecommerce",
@@ -986,7 +957,7 @@
     "cta": {
       "headline": "Pojďme se poznat.",
       "body": "Domluvte si bezplatnou konzultaci nebo placený audit.",
-      "button": "Rezervovat audit →"
+      "button": "Nebo rovnou placený audit →"
     }
   },
   "kontakt": {
@@ -1000,7 +971,7 @@
       "label": "PREFEROVANÁ CESTA",
       "headline": "Domluvit si hovor",
       "body": "Pro nové poptávky je nejrychlejší cesta rezervovat si bezplatnou 30 min konzultaci, nebo si vybrat tier auditu. Vrátíme se vám do 2 pracovních dnů.",
-      "cta": "Domluvit konzultaci →"
+      "cta": "Chci konzultaci"
     },
     "channels": {
       "heading": "Přímé kanály",

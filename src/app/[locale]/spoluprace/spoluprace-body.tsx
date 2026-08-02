@@ -131,6 +131,10 @@ export function SpolupraceBody() {
         status={t('hero.status')}
         headline={t('hero.headline')}
         sub={t('hero.subhead')}
+        ctas={[
+          { label: 'Chci konzultaci', onClick: openCal, primary: true },
+          { label: 'Prohlédnout audit tiery ↓', href: '#audit' },
+        ]}
         anchors={[
           { label: 'Dvě cesty', href: '#cesty' },
           { label: 'Audit', href: '#audit' },
@@ -293,7 +297,7 @@ export function SpolupraceBody() {
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary onClick={openCal}>
-              Domluvit hovor →
+              Chci konzultaci
             </MagneticCta>
             <MagneticCta href="/sluzby">Prohlédnout služby</MagneticCta>
           </div>

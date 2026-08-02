@@ -15,7 +15,7 @@ import { SectionMarquee } from '@/components/sections/section-marquee';
 import { BentoGrid, type BentoItem } from '@/components/sections/bento-grid';
 import { HorizontalScroller } from '@/components/sections/horizontal-scroller';
 import { KineticList } from '@/components/sections/kinetic-list';
-import { StickyTierStack, type TierData } from '@/components/sections/sticky-tier-stack';
+import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
 import { Link } from '@/i18n/navigation';
 import {
   SERVICES_OFFERING,
@@ -38,14 +38,13 @@ const REVEAL: Variants = {
   visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
 };
 
-const NBSP = ' ';
-
 export function HomeBody() {
   return (
     <>
       <Hero />
       <SectionMarquee
         items={[
+          'CHCI RŮST',
           'TRANSPARENTNOST',
           'PARTNERSTVÍ',
           'AI-NATIVE',
@@ -58,7 +57,7 @@ export function HomeBody() {
       <ServicesBento />
       <SolutionsSection />
       <IndustriesSection />
-      <AuditSection />
+      <ProofSection />
     </>
   );
 }
@@ -146,10 +145,15 @@ function Hero() {
             variants={REVEAL}
             className="mt-10 flex flex-wrap items-center gap-3"
           >
-            <MagneticCta primary href="/spoluprace#audit">
+            <MagneticCta primary size="hero" onClick={openCal}>
               {t('ctaPrimary')}
             </MagneticCta>
-            <MagneticCta onClick={openCal}>{t('ctaGhost')}</MagneticCta>
+            <Link
+              href="/spoluprace"
+              className="tactile text-[14.5px] text-secondary underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-ink hover:decoration-ink"
+            >
+              {t('ctaGhost')}
+            </Link>
           </motion.div>
         </motion.div>
       </div>
@@ -245,90 +249,39 @@ function IndustriesSection() {
 }
 
 /* ------------------------------------------------------------ */
-/*  Audit sticky stack                                           */
+/*  Proof section — replaces the audit-tier stack (D-012, wave 1) */
+/*  conversion-flow-v3.md §3 + copy-rewrites.md §2: the audit     */
+/*  product moves entirely to /spoluprace; the homepage closes    */
+/*  on evidence (process guarantees), not a pricing table.        */
 /* ------------------------------------------------------------ */
 
-function AuditSection() {
-  const t = useTranslations('home.audit');
+function ProofSection() {
+  const t = useTranslations('home.proof');
+  const cards = t.raw('cards') as ReadonlyArray<{ title: string; body: string }>;
+  const openCal = useCalModal({
+    bookingType: 'scoping_call',
+    sourcePage: '/cs',
+  });
 
-  const tiers: ReadonlyArray<TierData> = [
-    {
-      tier: t('tier1.tier'),
-      flag: t('tier1.badge'),
-      name: t('tier1.name'),
-      price: t('tier1.price'),
-      priceEur: t('tier1.priceEur'),
-      body: `Plný rozsah napříč technologií, byznysem a${NBSP}marketingem. Výstup: prezentace zjištění a${NBSP}konkrétní návrh integrace AI.`,
-      deliverables: [
-        t('tier1.deliverables.0'),
-        t('tier1.deliverables.1'),
-        t('tier1.deliverables.2'),
-        t('tier1.deliverables.3'),
-        t('tier1.deliverables.4'),
-      ],
-      cta: t('tier1.cta'),
-      ctaHref: '/spoluprace#audit',
-      primary: true,
-    },
-    {
-      tier: t('tier2.tier'),
-      flag: '',
-      name: t('tier2.name'),
-      price: t('tier2.price'),
-      priceEur: t('tier2.priceEur'),
-      body: `Hloubková analýza jedné domény. Tech, obchod, marketing nebo AI${NBSP}— jeden směr, plný detail.`,
-      deliverables: [
-        t('tier2.deliverables.0'),
-        t('tier2.deliverables.1'),
-        t('tier2.deliverables.2'),
-        t('tier2.deliverables.3'),
-      ],
-      cta: t('tier2.cta'),
-      ctaHref: '/spoluprace#audit',
-      primary: false,
-    },
-    {
-      tier: t('tier3.tier'),
-      flag: '',
-      name: t('tier3.name'),
-      price: t('tier3.price'),
-      priceEur: t('tier3.priceEur'),
-      body: `Krátká, fokusovaná session. Specifický problém, strukturovaný výstup, žádný dlouhý report.`,
-      deliverables: [
-        t('tier3.deliverables.0'),
-        t('tier3.deliverables.1'),
-        t('tier3.deliverables.2'),
-        t('tier3.deliverables.3'),
-      ],
-      cta: t('tier3.cta'),
-      ctaHref: '/spoluprace#audit',
-      primary: false,
-    },
-  ];
+  const cardItems: ReadonlyArray<ValueItem> = cards.map((card) => ({
+    label: card.title,
+    body: card.body,
+  }));
 
   return (
-    <section id="audit" className="relative px-6 py-24 md:px-10 md:py-32">
+    <section id="proof" className="relative px-6 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeader
-          eyebrow="04 · audit"
-          title={`${t('heading')}.`}
-          lead={t('subhead')}
+          eyebrow={t('eyebrow')}
+          title={`${t('headline')}`}
+          lead={t('lead')}
         />
-        <StickyTierStack
-          tiers={tiers}
-          scopingNote={
-            <>
-              {t('scopingPrefix')}
-              <Link
-                href="/spoluprace#audit"
-                className="border-b border-accent pb-0.5 text-accent hover:border-ink hover:text-ink"
-              >
-                {t('scopingLink')}
-              </Link>
-              {t('scopingSuffix')}
-            </>
-          }
-        />
+        <ValuesGrid items={cardItems} columns={3} />
+        <div className="mt-14">
+          <MagneticCta primary onClick={openCal}>
+            {t('cta')}
+          </MagneticCta>
+        </div>
       </div>
     </section>
   );

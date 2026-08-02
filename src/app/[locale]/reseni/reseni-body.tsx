@@ -18,6 +18,7 @@ import { SectionHeader } from '@/components/sections/section-header';
 import { BentoGrid, type BentoItem } from '@/components/sections/bento-grid';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
 import { useCalModal } from '@/components/booking/use-cal-modal';
+import { Link } from '@/i18n/navigation';
 
 /* ------------------------------------------------------------------ */
 /* Per-solution static metadata (icons + anchor ids + bento subtitles) */
@@ -179,10 +180,15 @@ export function ReseniBody() {
             </h2>
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
-            <MagneticCta primary href="/spoluprace#audit">
-              Rezervovat audit →
+            <MagneticCta primary onClick={openCal}>
+              Chci konzultaci
             </MagneticCta>
-            <MagneticCta onClick={openCal}>{t('ctaButton')}</MagneticCta>
+            <Link
+              href="/spoluprace"
+              className="tactile text-[14px] text-secondary underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-ink hover:decoration-ink"
+            >
+              {t('ctaButton')}
+            </Link>
           </div>
         </div>
       </section>

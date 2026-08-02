@@ -67,6 +67,14 @@ Na **8 z 11 šablon** je vizuálně nejsilnější tlačítko odkaz na placený 
 
 **Fallback do provisioningu:** default fallbackHref v use-cal-modal.ts změnit na `'/kontakt#form'` (jedna změna opraví 8 šablon).
 
+## 4b. Implementační poznámky Vlny 1 (schválené odchylky od textů §3)
+
+- Sekundární text hubů a detailů je **„Nebo rovnou placený audit →"** (místo „Nebo srovnejte s placeným auditem →") — kratší a bez NBSP pasti.
+- `spoluprace.paths.scoping.cta` (karta Cesty 2, scroll-anchor na #jak-zacit, ne booking trigger) = **„Bezplatná konzultace →"** — neopakuje doslova primární formulaci, protože nejde o booking akci.
+- CTA band nadpis na detailech (služby/řešení/odvětví) = **„Nejdřív bezplatný hovor."** — sladěno s primární akcí (původní „Audit ukáže, kde začít." sliboval audit nad tlačítkem konzultace).
+- „CHCI RŮST" slogan v1: první položka homepage marquee; výraznější umístění (hero kicker) může přijít s přepisem hero ve Vlně 2.
+- `MagneticCta size="hero"` je zapojen na homepage hero; PageHero na vnitřních stránkách zatím propaguje default velikost — pokud má „výrazně větší" platit sitewide, doplnit `ctaSize` prop do PageHero (kandidát Vlna 3).
+
 ## 5. Sekvence nasazení
 
 1. Provisioning (§13, blokuje vše) **souběžně s** CTA hierarchií (P0 — není blokovaná provisioningem, jde opravit hned). *Předpoklad: origin allowlist opraven PŘED oživením endpointů a Turnstile klíče ve stejném deployi jako Supabase/Resend — viz §2 bod 7.*

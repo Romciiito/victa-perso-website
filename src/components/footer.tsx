@@ -1,6 +1,7 @@
 import { useLocale, useTranslations } from 'next-intl';
 import { Link } from '@/i18n/navigation';
 import { NewsletterSignup } from '@/components/forms/newsletter-signup';
+import { FooterBookCta } from '@/components/footer-book-cta';
 import { site } from '@/config/site';
 
 type FooterLink = { href: string; key: string };
@@ -73,13 +74,7 @@ export function Footer() {
                 </a>
               </li>
               <li>
-                <Link
-                  href="/kontakt"
-                  className="text-sm transition-colors duration-150"
-                  style={{ color: 'var(--accent)' }}
-                >
-                  {t('bookCall')}
-                </Link>
+                <FooterBookCta label={t('bookCall')} />
               </li>
             </ul>
           </div>

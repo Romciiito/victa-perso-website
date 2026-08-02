@@ -100,7 +100,7 @@ export function useCalModal(config: CalModalConfig): () => Promise<void> {
   }, [isConfigured]);
 
   const goToFallback = () => {
-    const fallback = config.fallbackHref ?? '/kontakt';
+    const fallback = config.fallbackHref ?? '/kontakt#form';
     if (fallback.startsWith('#')) {
       document.getElementById(fallback.slice(1))?.scrollIntoView({ behavior: 'smooth' });
       return;

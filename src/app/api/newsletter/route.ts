@@ -86,7 +86,7 @@ function welcomeEmailHtml(locale: 'cs' | 'en'): string {
       <p style="line-height:1.55;">${cta}</p>
       <p style="margin-top:32px;">
         <a href="${ctaUrl}" style="display:inline-block; background:#3730A3; color:#fff; padding:12px 18px; border-radius:6px; text-decoration:none;">
-          ${locale === 'cs' ? 'Domluvit konzultaci' : 'Book a call'}
+          ${locale === 'cs' ? 'Chci konzultaci' : 'Book a call'}
         </a>
       </p>
       <hr style="border:0; border-top:1px solid #D4D4D8; margin:32px 0;" />

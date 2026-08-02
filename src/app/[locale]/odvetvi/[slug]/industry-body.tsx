@@ -81,10 +81,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
         eyebrow="odvětví"
         headline={`${item.name}.`}
         sub={item.body}
-        ctas={[
-          { label: 'Rezervovat audit', href: '/spoluprace#audit', primary: true },
-          { label: 'Domluvit konzultaci', onClick: openCal },
-        ]}
+        ctas={[{ label: 'Chci konzultaci', onClick: openCal, primary: true }]}
       />
 
       {/* 01 · problem */}
@@ -227,19 +224,24 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
               další krok
             </span>
             <h2 className="display mt-5 max-w-[14ch] text-[clamp(36px,5vw,68px)] text-ink">
-              Audit ukáže, kde začít.
+              Nejdřív bezplatný hovor.
             </h2>
             <p className="mt-6 max-w-[52ch] text-[17px] leading-[1.55] text-secondary">
-              Dvoutýdenní diagnostika napříč tech, byznysem a marketingem.
-              Výstup: prezentace zjištění a konkrétní návrh řešení pro vaše
-              odvětví.
+              30 minut, bez závazku. Probereme, co ve vašem odvětví řešíte,
+              a doporučíme další krok — u větších projektů
+              i placený audit celého stacku.
             </p>
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
-            <MagneticCta primary href="/spoluprace#audit">
-              Rezervovat audit
+            <MagneticCta primary onClick={openCal}>
+              Chci konzultaci
             </MagneticCta>
-            <MagneticCta onClick={openCal}>Domluvit konzultaci</MagneticCta>
+            <Link
+              href="/spoluprace"
+              className="tactile text-[14px] text-secondary underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-ink hover:decoration-ink"
+            >
+              Nebo rovnou placený audit →
+            </Link>
           </div>
         </div>
 

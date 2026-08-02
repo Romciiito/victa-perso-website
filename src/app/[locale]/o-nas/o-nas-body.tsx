@@ -6,6 +6,7 @@ import { SectionHeader } from '@/components/sections/section-header';
 import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
 import { useCalModal } from '@/components/booking/use-cal-modal';
+import { Link } from '@/i18n/navigation';
 import { motion, type Variants } from 'framer-motion';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
@@ -153,10 +154,15 @@ export function ONasBody() {
             </p>
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
-            <MagneticCta primary href="/spoluprace#audit">
-              {t('cta.button')}
+            <MagneticCta primary onClick={openCal}>
+              Chci konzultaci
             </MagneticCta>
-            <MagneticCta onClick={openCal}>Domluvit konzultaci</MagneticCta>
+            <Link
+              href="/spoluprace"
+              className="tactile text-[14px] text-secondary underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-ink hover:decoration-ink"
+            >
+              {t('cta.button')}
+            </Link>
           </div>
         </div>
       </section>

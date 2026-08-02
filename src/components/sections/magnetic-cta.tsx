@@ -11,6 +11,8 @@ type CommonProps = {
   children: React.ReactNode;
   primary?: boolean;
   compact?: boolean;
+  /** 'hero' — ~1.4× default size. Reserve exclusively for the primary booking CTA in hero sections. */
+  size?: 'hero';
 };
 
 /* Two modes:
@@ -24,7 +26,7 @@ type Props = CommonProps & (
 );
 
 export function MagneticCta(props: Props) {
-  const { children, primary, compact } = props;
+  const { children, primary, compact, size } = props;
   const ref = useRef<HTMLAnchorElement | HTMLButtonElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -45,13 +47,20 @@ export function MagneticCta(props: Props) {
     setHover(false);
   }
 
-  const padding = compact ? 'px-5 py-2.5 text-[13.5px]' : 'px-7 py-3.5 text-[14.5px]';
-  const baseClass = `tactile relative inline-flex items-center gap-2.5 rounded-full border ${padding} ${
+  const padding =
+    size === 'hero'
+      ? 'px-10 py-5 text-[20px]'
+      : compact
+        ? 'px-5 py-2.5 text-[13.5px]'
+        : 'px-7 py-3.5 text-[14.5px]';
+  const gap = size === 'hero' ? 'gap-3.5' : 'gap-2.5';
+  const baseClass = `tactile relative inline-flex items-center ${gap} rounded-full border ${padding} ${
     primary
       ? 'border-accent bg-accent text-bg'
       : 'border-border bg-transparent text-ink hover:border-ink'
   }`;
 
+  const arrowSize = size === 'hero' ? 20 : 16;
   const inner = (
     <>
       <span className="relative z-10">{children}</span>
@@ -61,7 +70,7 @@ export function MagneticCta(props: Props) {
         className="relative z-10 inline-flex"
         aria-hidden
       >
-        <ArrowUpRight size={16} strokeWidth={1.75} />
+        <ArrowUpRight size={arrowSize} strokeWidth={1.75} />
       </motion.span>
     </>
   );

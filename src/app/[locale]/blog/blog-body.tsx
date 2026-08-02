@@ -28,8 +28,8 @@ export function BlogBody() {
         headline={t('hero.headline')}
         sub={t('hero.subhead')}
         ctas={[
-          { label: 'Přihlásit se k odběru', href: '#newsletter', primary: true },
-          { label: 'Domluvit konzultaci', onClick: openCal },
+          { label: 'Chci konzultaci', onClick: openCal, primary: true },
+          { label: 'Přihlásit se k odběru', href: '#newsletter' },
         ]}
         anchors={[
           { label: 'Připravujeme', href: '#coming-soon' },

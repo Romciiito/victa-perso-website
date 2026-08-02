@@ -1,11 +1,12 @@
 'use client';
 
 import { useEffect, useId, useRef, useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { Link, usePathname } from '@/i18n/navigation';
 import { LocaleSwitcher } from './locale-switcher';
+import { useCalModal } from '@/components/booking/use-cal-modal';
 import {
   OFFERING_MAP,
   type OfferingData,
@@ -45,6 +46,13 @@ const HOVER_CLOSE_GRACE_MS = 120;
 export function Nav() {
   const t = useTranslations('nav');
   const pathname = usePathname();
+  const locale = useLocale();
+  // usePathname z next-intl vrací cestu BEZ locale prefixu — GA4 source_page
+  // taxonomie ale všude jinde používá '/cs/...' (KPI atribuce, vision §2).
+  const openCal = useCalModal({
+    bookingType: 'scoping_call',
+    sourcePage: `/${locale}${pathname === '/' ? '' : pathname}`,
+  });
   const [openDropdown, setOpenDropdown] = useState<OfferingKey | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [mobileExpanded, setMobileExpanded] = useState<OfferingKey | null>(null);
@@ -200,13 +208,16 @@ export function Nav() {
           {/* Right — locale + CTA + mobile hamburger */}
           <div className="flex items-center gap-2 md:gap-3">
             <LocaleSwitcher />
-            <Link
-              href="/spoluprace#audit"
+            <button
+              type="button"
+              onClick={() => {
+                void openCal();
+              }}
               className="tactile hidden items-center gap-2 rounded-full border border-accent bg-accent px-5 py-2 text-[13px] font-medium text-bg md:inline-flex"
             >
-              Rezervovat audit
+              Chci konzultaci
               <ArrowUpRight size={14} strokeWidth={1.75} />
-            </Link>
+            </button>
             <button
               type="button"
               aria-label={mobileOpen ? t('close') : t('open')}
@@ -236,6 +247,7 @@ export function Nav() {
           setMobileOpen(false);
           setMobileExpanded(null);
         }}
+        onBookCta={openCal}
       />
     </header>
   );
@@ -401,12 +413,14 @@ function MobileDrawer({
   expanded,
   onToggle,
   onClose,
+  onBookCta,
 }: {
   id: string;
   open: boolean;
   expanded: OfferingKey | null;
   onToggle: (k: OfferingKey) => void;
   onClose: () => void;
+  onBookCta: () => void | Promise<void>;
 }) {
   const t = useTranslations('nav');
 
@@ -511,14 +525,17 @@ function MobileDrawer({
             })}
 
             <li className="mt-3">
-              <Link
-                href="/spoluprace#audit"
-                onClick={onClose}
-                className="flex items-center justify-center gap-2 rounded-full border border-accent bg-accent px-5 py-3 text-[14px] text-bg"
+              <button
+                type="button"
+                onClick={() => {
+                  onClose();
+                  void onBookCta();
+                }}
+                className="flex w-full items-center justify-center gap-2 rounded-full border border-accent bg-accent px-5 py-3 text-[14px] text-bg"
               >
-                Rezervovat audit
+                Chci konzultaci
                 <ArrowUpRight size={15} strokeWidth={1.75} />
-              </Link>
+              </button>
             </li>
           </ul>
         </motion.nav>

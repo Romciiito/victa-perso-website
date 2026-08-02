@@ -17,11 +17,17 @@ export type ValueItem = {
 
 type Props = {
   items: ReadonlyArray<ValueItem>;
+  /** Počet sloupců na desktopu — gap-px mřížka jinak vykreslí prázdnou buňku, když počet položek nesedí. */
+  columns?: 3 | 4;
 };
 
-export function ValuesGrid({ items }: Props) {
+export function ValuesGrid({ items, columns = 4 }: Props) {
+  const gridCols =
+    columns === 3
+      ? 'mt-14 grid grid-cols-1 gap-px border border-border bg-border md:grid-cols-3'
+      : 'mt-14 grid grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-4';
   return (
-    <div className="mt-14 grid grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+    <div className={gridCols}>
       {items.map((item, i) => (
         <ValueCell key={item.label} {...item} index={i} />
       ))}
