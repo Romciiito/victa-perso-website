@@ -38,7 +38,6 @@ export async function verifyTurnstileToken(token: string, ip?: string): Promise<
       // Partial provisioning: real users are being shown (and solving) the real
       // widget, but we cannot verify their tokens. Silently accepting here would
       // turn the visible CAPTCHA into theatre — fail CLOSED and alert loudly.
-      // eslint-disable-next-line no-console
       console.error(
         '[turnstile] PARTIAL PROVISIONING: NEXT_PUBLIC_TURNSTILE_SITE_KEY is real but TURNSTILE_SECRET_KEY is missing/malformed — failing closed. Fix the secret in env.',
       );
@@ -48,7 +47,6 @@ export async function verifyTurnstileToken(token: string, ip?: string): Promise<
       return { success: false, errorCodes: ['partial-provisioning'] };
     }
     // Neither key provisioned — the intended dev/preview skip (D-011).
-    // eslint-disable-next-line no-console
     console.warn(
       '[turnstile] not provisioned — verification SKIPPED (honeypot + rate limit remain active). Provision real keys before launch traffic.',
     );
@@ -59,7 +57,6 @@ export async function verifyTurnstileToken(token: string, ip?: string): Promise<
     // The client thinks Turnstile is off while the server has a real secret —
     // the inverse provisioning asymmetry. Every visitor would hit this, so
     // surface it in monitoring instead of a generic Cloudflare rejection.
-    // eslint-disable-next-line no-console
     console.error(
       '[turnstile] client sent the not-configured sentinel while TURNSTILE_SECRET_KEY is real — check NEXT_PUBLIC_TURNSTILE_SITE_KEY in env.',
     );
@@ -88,7 +85,6 @@ export async function verifyTurnstileToken(token: string, ip?: string): Promise<
     const json = (await res.json()) as { success: boolean; 'error-codes'?: string[] };
     return { success: json.success === true, errorCodes: json['error-codes'] ?? [] };
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error('[turnstile] verify error:', (err as Error).message);
     return { success: false, errorCodes: ['network-error'] };
   }

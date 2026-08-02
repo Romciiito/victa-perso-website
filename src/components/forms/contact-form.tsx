@@ -3,6 +3,7 @@
 import { useCallback, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Sentry from '@sentry/nextjs';
 import { contactSchema, type ContactFormValues } from '@/lib/contact-schema';
 import { TurnstileWidget } from './turnstile-widget';
 import { trackEvent } from '@/lib/ga4';
@@ -94,12 +95,18 @@ export function ContactForm({ locale }: Props) {
         trackEvent('contact_form_submit', { form_location: 'contact_page' });
         reset();
       } catch (err) {
+        // P2-04: never surface the raw `err.message` in the UI — it's an
+        // English/technical browser fetch error (e.g. "Failed to fetch"),
+        // not something a Czech visitor should see. The technical detail
+        // still goes to Sentry/console for debugging.
         setStatus('error');
         setSubmitError(
           locale === 'cs'
-            ? `Síťová chyba: ${(err as Error).message}`
-            : `Network error: ${(err as Error).message}`,
+            ? 'Síťová chyba. Zkuste to znovu, nebo nám napište na hello@victaagency.com.'
+            : 'Network error. Please try again, or write to us at hello@victaagency.com.',
         );
+        console.error('[contact-form] submit failed:', err);
+        Sentry.captureException(err);
       }
     });
   });
@@ -118,7 +125,7 @@ export function ContactForm({ locale }: Props) {
             'Souhlasím se zpracováním osobních údajů v souladu se Zásadami ochrany soukromí.',
           submit: 'Odeslat zprávu',
           submitting: 'Odesílám…',
-          success: 'Zpráva odeslána. Ozveme se do 24 hodin v pracovní dny.',
+          success: 'Zpráva odeslána. Ozveme se do 1 pracovního dne.',
           required: 'Povinné pole',
           budgetOptions: {
             none: '— vyberte —',

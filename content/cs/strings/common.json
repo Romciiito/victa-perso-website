@@ -299,7 +299,7 @@
         {
           "num": "02",
           "title": "Dostanete fakturu",
-          "body": "Do 1 pracovního dne dostanete fakturu emailem. Standardní česká faktura — IČO, DIČ, vše jak má být."
+          "body": "Do 1 pracovního dne dostanete fakturu emailem. Standardní česká faktura — IČO, DIČ, vše jak má být."
         },
         {
           "num": "03",
@@ -1126,7 +1126,7 @@
     "primary": {
       "label": "PREFEROVANÁ CESTA",
       "headline": "Domluvit si hovor",
-      "body": "Pro nové poptávky je nejrychlejší cesta rezervovat si bezplatnou 30minutovou konzultaci. Ozveme se do 1 pracovního dne.",
+      "body": "Pro nové poptávky je nejrychlejší cesta rezervovat si bezplatnou 30minutovou konzultaci. Ozveme se do 1 pracovního dne.",
       "cta": "Chci konzultaci"
     },
     "channels": {
@@ -1134,7 +1134,7 @@
       "email": {
         "label": "EMAIL",
         "value": "hello@victaagency.com",
-        "note": "Odpovídáme do 1 pracovního dne."
+        "note": "Odpovídáme do 1 pracovního dne."
       },
       "phone": {
         "label": "TELEFON",

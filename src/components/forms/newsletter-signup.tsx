@@ -3,6 +3,7 @@
 import { useCallback, useState, useTransition } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import * as Sentry from '@sentry/nextjs';
 import { newsletterSchema, type NewsletterValues, consentTextFor } from '@/lib/newsletter-schema';
 import { TurnstileWidget } from './turnstile-widget';
 import { trackEvent } from '@/lib/ga4';
@@ -92,12 +93,16 @@ export function NewsletterSignup({ locale, formLocation, variant = 'default' }: 
         trackEvent('newsletter_signup', { form_location: formLocation });
         reset();
       } catch (err) {
+        // P2-04: never surface the raw `err.message` in the UI — see the
+        // identical fix + rationale in contact-form.tsx.
         setStatus('error');
         setResponseMsg(
           locale === 'cs'
-            ? `Síťová chyba: ${(err as Error).message}`
-            : `Network error: ${(err as Error).message}`,
+            ? 'Síťová chyba. Zkuste to znovu, nebo nám napište na hello@victaagency.com.'
+            : 'Network error. Please try again, or write to us at hello@victaagency.com.',
         );
+        console.error('[newsletter-signup] submit failed:', err);
+        Sentry.captureException(err);
       }
     });
   });

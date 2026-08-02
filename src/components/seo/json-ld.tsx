@@ -15,7 +15,6 @@ export function JsonLd({ data }: { data: JsonLdNode | readonly JsonLdNode[] }) {
         <script
           key={i}
           type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(node) }}
         />
       ))}

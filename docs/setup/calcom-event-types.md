@@ -50,14 +50,17 @@ První konzultační hovor pro Tier 1 audit (komplexní analýza firmy: web, e-s
 
 **Booking questions** (Event → Advanced → Booking Questions). Add the following custom fields, in order:
 
-| # | Label (Czech) | Type | Required | Placeholder |
-|---|---------------|------|----------|-------------|
+| # | Label (Czech) | Type | Required | Placeholder / Options |
+|---|---------------|------|----------|------------------------|
 | 1 | `Jméno a příjmení` | Short text | Yes | `Jana Nováková` |
 | 2 | `E-mail` | Email | Yes | `jana@firma.cz` |
 | 3 | `Firma` | Short text | Yes | `Název vaší firmy s.r.o.` |
 | 4 | `Telefon` | Phone | No | `+420 ...` |
 | 5 | `Webová stránka firmy` | URL | No | `https://...` |
 | 6 | `Krátký popis vašeho byznysu / situace` | Long text | Yes | `Pro lepší přípravu — co řešíte, kde tlačí bota?` |
+| 7 | `Orientační rozpočet` | Select | No | `do 5 000 €` / `5 000 – 25 000 €` / `25 000 – 100 000 €` / `nad 100 000 €` |
+
+> **Field 7 (P1-09)**: paste the four option labels **exactly as written above** (including the en dash `–`, not a hyphen, and the `€` sign) — `/api/booking-webhook`'s `extractBudgetTier()` (`src/app/api/booking-webhook/route.ts`) matches them against the same enum `contact-schema.ts`'s `budget_tier` field uses (`under_5k` / `5k-25k` / `25k-100k` / `100k+`), so a booking-sourced lead and a contact-form-sourced lead end up comparable in the `leads` table — the primary KPI (vision.md §2) is measured across both channels. If the pasted label doesn't match byte-for-byte, the webhook still stores the raw text rather than dropping it, but it won't roll up into the same enum bucket as contact-form submissions — worth a quick visual diff against this table after creating the field. Field 3 (`Firma`) already exists on every tier event and doubles as the "company" custom field the same P1-09 fix reads (`extractCompany()`) — no new field needed for that half of P1-09.
 
 **Reschedule policy**: Allow rescheduling until **24 hours before** event. Settings within event → Limits → Allow reschedule.
 
@@ -83,7 +86,7 @@ Audit se platí na základě faktury — pokud zrušíte před vystavením faktu
 Konzultační hovor pro Tier 2 audit zaměřený na jednu oblast (marketing strategy / e-commerce strategy / AI strategy / atd.). Po hovoru faktura 10 000 – 55 000 Kč. Po platbě audit (2 sezení, pár dní – 2 týdny, výstup stejný jako Tier 1 — PDF report + schémata + osobní prezentace).
 ```
 
-**Booking questions**: Same 6 fields as Tier 1 (Cal.com lets you duplicate the question set when creating from existing event).
+**Booking questions**: Same 7 fields as Tier 1, including field 7 (`Orientační rozpočet`) — Cal.com lets you duplicate the question set when creating from existing event.
 
 **Reschedule + cancellation**: Same policies as Tier 1.
 
@@ -104,7 +107,7 @@ Konzultační hovor pro Tier 2 audit zaměřený na jednu oblast (marketing stra
 Konzultační hovor pro Tier 3 strategickou session — jednorázová analýza konkrétního problému. Po hovoru faktura 4 000 – 25 000 Kč. Po platbě 90minutová session + analýza (pár dní – 2 týdny, výstup: krátký plán s konkrétními kroky).
 ```
 
-**Booking questions**: Same 6 fields as Tier 1/2.
+**Booking questions**: Same 7 fields as Tier 1/2, including field 7 (`Orientační rozpočet`).
 
 **Reschedule + cancellation**: Same policies as Tier 1.
 
@@ -287,7 +290,7 @@ When CSP enforcement promotes from report-only (Phase 5), these stay. Confirm no
 
 ### Pre-Phase-2 (after event types created, before webhook handler exists)
 
-- [ ] Visit `https://cal.com/victa/tier-1-audit` in private window → page loads → Czech UI strings render → all 6 booking questions visible → can step through to time selection
+- [ ] Visit `https://cal.com/victa/tier-1-audit` in private window → page loads → Czech UI strings render → all 7 booking questions visible (including `Orientační rozpočet`, P1-09) → can step through to time selection
 - [ ] Same for `tier-2-audit`, `tier-3-audit`, `free-scoping-call`
 - [ ] Cal.com → Webhooks → "Send test webhook" → expected: HTTP 404 from `/api/booking-webhook` (route doesn't exist yet); Cal.com queues retries — that's fine
 

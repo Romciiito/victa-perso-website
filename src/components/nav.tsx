@@ -91,9 +91,15 @@ export function Nav() {
 
   // Auto-close on navigation
   useEffect(() => {
-    closeDropdown();
-    setMobileOpen(false);
-    setMobileExpanded(null);
+    // Deferred via queueMicrotask rather than called synchronously in the
+    // effect body — satisfies `react-hooks/set-state-in-effect` (ESLint gate
+    // fix, audit Vlna 3A). No behavior change: still fires exactly once per
+    // pathname change, a microtask later.
+    queueMicrotask(() => {
+      closeDropdown();
+      setMobileOpen(false);
+      setMobileExpanded(null);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 

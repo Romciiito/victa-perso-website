@@ -1,13 +1,15 @@
 import { z } from 'zod';
 
 /**
- * Czech consent text shown next to the checkbox at signup. The exact text shipped at submit
- * is persisted to `newsletter_subscribers.consent_text` for GDPR proof-of-consent (REQ-F-055).
+ * Czech consent text shown next to the checkbox at signup. The exact text shipped at
+ * confirmation time is persisted to `newsletter_subscribers.consent_text` for GDPR
+ * proof-of-consent (REQ-F-055).
  *
- * NOTE (RB-17): Czech advokát review pending whether single opt-in with this consent record
- * is sufficient for CZ/SK marketing law (zákon č. 480/2004 Sb. + GDPR). If double opt-in is
- * required, add `confirmation_token` + `confirmed_at` columns via migration 002 + a confirm
- * route. Code is structured so the upgrade is contained.
+ * RB-17 — CLOSED (2026-08-02, D-014): double opt-in is now implemented. The checkbox
+ * here only expresses intent; `POST /api/newsletter` sends a signed confirmation link
+ * (`src/lib/newsletter-confirm-token.ts`) and `GET /api/newsletter/confirm` is the only
+ * place that writes this consent text + `consented_at` + `ip_hash` to Supabase — at the
+ * moment the visitor clicks the link, which is what proves they control the inbox.
  */
 export const NEWSLETTER_CONSENT_TEXT_CS =
   'Souhlasím se zpracováním e-mailové adresy pro odběr newsletteru VICTA. Souhlas mohu kdykoli odvolat.';
