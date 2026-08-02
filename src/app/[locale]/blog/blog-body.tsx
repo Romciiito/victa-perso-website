@@ -30,7 +30,7 @@ export function BlogBody() {
         sub={t('hero.subhead')}
         ctas={[
           { label: tCta('primaryCta'), onClick: openCal, primary: true },
-          { label: 'Přihlásit se k odběru', href: '#newsletter' },
+          { label: 'Přihlásit se k odběru', href: '#newsletter' },
         ]}
         anchors={[
           { label: 'Připravujeme', href: '#coming-soon' },

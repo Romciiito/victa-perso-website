@@ -370,8 +370,8 @@
   "sluzby": {
     "hero": {
       "status": "/cs/sluzby",
-      "headline": "Služby",
-      "subhead": "Tři kompetence — kód, AI a marketing — pod jednou střechou. 18 služeb napříč celým digitálním stackem."
+      "headline": "Vývoj, AI a marketing pod jednou střechou",
+      "subhead": "Tři kompetence — kód, AI a marketing — jeden tým. 18 služeb napříč celým digitálním stackem."
     },
     "categories": {
       "itDev": {
@@ -380,12 +380,12 @@
         "items": [
           {
             "name": "Weby na míru",
-            "desc": "Marketingové weby, korporátní stránky a landing pages pro firmy, které nechtějí šablonu — chtějí web, který slouží jako obchodní nástroj. Stavíme na Next.js nebo Astro, nasazujeme na Vercel. Výkon PageSpeed 95+/100, přístupnost WCAG 2.1 AA a AEO-ready strukturovaná data jsou součástí každého projektu.",
+            "desc": "Šablonový web dnes stojí firmu poptávky dřív, než si to majitel stihne uvědomit — pomalé načítání vyhání návštěvníka během pár vteřin a AI vyhledávače weby bez strukturovaných dat prostě neuvidí. Stavíme marketingové weby, korporátní prezentace a landing pages jako obchodní nástroj, ne vizitku: Next.js nebo Astro, nasazení na Vercel, bez rizikového pluginového balastu. Výsledek — rychlost a přístupnost dle WCAG 2.1 AA jako standard, ne příplatek: méně opuštěných návštěv, čitelnost pro AI asistenty a prezentace, která konečně odpovídá velikosti firmy.",
             "fit": "Hodí se pro: střední firmy 50–300 zaměstnanců, které přerostly šablonový web a potřebují prezentaci odpovídající velikosti firmy.",
             "faq": [
               {
                 "q": "Proč Next.js nebo Astro, ne WordPress?",
-                "a": "Rychlost a bezpečnost. Staticky generované nebo server-renderované stránky neobsahují rizikový plugin stack. PageSpeed 95+ je standard, ne výjimka. WordPress nabídneme jen tam, kde to klient explicitně potřebuje — například pro složitou redakci obsahu."
+                "a": "Rychlost a bezpečnost. Staticky generované nebo server-renderované stránky neobsahují rizikový plugin stack. Rychlost je u nás standard, ne výjimka. WordPress nabídneme jen tam, kde to klient explicitně potřebuje — například pro složitou redakci obsahu."
               },
               {
                 "q": "Jak dlouho trvá vývoj webu na míru?",
@@ -397,7 +397,7 @@
           },
           {
             "name": "E-shopy na míru",
-            "desc": "Shopify Plus nebo Medusa.js pro e-shopy, které přerostly krabicové řešení — nebo které od začátku potřebují headless architekturu. Napojíme vás na Pohodu nebo Helios pro účetnictví a sklad, na Zásilkovnu, PPL a Českou poštu pro expedici. Platební brány, ERP, CRM — vše API-first, monitorované, zdokumentované.",
+            "desc": "Krabicová platforma e-shopu drží jen do chvíle, kdy firma přeroste její limity — vlastní sklad, ceník nebo integrace, které šablona nezvládne. Stavíme na Shopify Plus nebo Medusa.js s napojením na Pohodu, Helios, Zásilkovnu i platební brány — API-first, monitorované, zdokumentované.",
             "fit": "Hodí se pro: e-shopy s vlastním skladem, ERP nebo specifickými požadavky na integraci, které krabicová platforma nezvládne bez kompromisů.",
             "faq": [
               {
@@ -414,7 +414,7 @@
           },
           {
             "name": "Prezentační weby a microsite",
-            "desc": "Rychlý web pro produktový launch, kampaňová landing page nebo microsite pro novou službu — od briefu k launchi 2–4 týdny. Stavíme na Next.js nebo Astro, vždy SEO a AEO připravené. Marketingová oddělení nás volí pro kampaňové microsite, kde hlavní web je příliš pomalý na schválení.",
+            "desc": "Rychlý web pro produktový launch nebo kampaňovou microsite — od briefu k launchi 2–4 týdny, s vlastní URL, designem a analytics nezávisle na IT. Stavíme na Next.js nebo Astro, vždy SEO a AEO připravené, tam, kde je hlavní web na schválení příliš pomalý.",
             "fit": "Hodí se pro: malé firmy a startupy s jasným záměrem, živnostníky a OSVČ, marketingová oddělení větších firem pro kampaňové nebo produktové microsite.",
             "faq": [
               {
@@ -423,7 +423,7 @@
               },
               {
                 "q": "Je prezentační web vhodný i pro větší kampaně?",
-                "a": "Microsite jsou ideální pro kampaně, které nechcete protlačovat přes schvalovací kolečko hlavního webu. Dostanete samostatnou URL, vlastní design a analytics — a můžete ji spustit nezávisle na IT oddělení."
+                "a": "Ano — k tomu jsou microsite ideální: samostatný projekt mimo schvalovací kolečko hlavního webu, takže marketing spustí kampaň v termínu kampaně, ne v termínu IT backlogu."
               },
               {
                 "q": "Liší se prezentační web od webu na míru?",
@@ -435,7 +435,7 @@
           },
           {
             "name": "Správa webů a e-shopů",
-            "desc": "Nestavíme statické weby — a nezmizíme po předání. Správa zahrnuje průběžné SEO, GEO a AEO aktualizace, technickou údržbu, bezpečnostní záplaty a monitoring výkonu. Měsíční retainer, pravidelný reporting a přímá konzultační dostupnost — parťák, ne tiketing systém.",
+            "desc": "Web bez správy chátrá potichu — technický dluh roste, výkon padá, dokud nepřijde incident, kterého si první všimne zákazník. Správa zahrnuje SEO, GEO a AEO aktualizace, technickou údržbu, bezpečnostní záplaty a monitoring výkonu s měsíčním reportingem.",
             "fit": "Hodí se pro: firmy po dokončení projektu, které nechtějí web nechat zaniknout, i pro nové klienty hledající dlouhodobého digitálního partnera bez interního IT.",
             "faq": [
               {
@@ -456,12 +456,20 @@
           },
           {
             "name": "Integrace systémů",
-            "desc": "Sklad, účetnictví, ERP, CRM, payment gateways, doprava. API-first, monitorované, dokumentované.",
+            "desc": "Účetní ručně přepisuje objednávky z e-shopu do Pohody, sklad vede jiná čísla než CRM — nikdo si není jistý, která verze dat platí. Propojíme sklad, účetnictví, ERP, CRM, platební brány i dopravu do jednoho API-first toku, monitorovaného a zdokumentovaného.",
             "fit": "Hodí se pro: firmy, které používají více systémů a data přenášejí ručně — nebo jejichž systémy spolu nemluví, i když by měly.",
             "faq": [
               {
                 "q": "Jak zajistíte, že integrace nespadne bez varování?",
                 "a": "Každá integrace, kterou stavíme, má monitoring a alerting. Selhaná synchronizace nebo timeout API se okamžitě hlásí — buď opravíme sami v rámci správy, nebo vás kontaktujeme s konkrétním popisem situace."
+              },
+              {
+                "q": "Kolik integrace stojí?",
+                "a": "Záleží na počtu systémů a kvalitě jejich API — propojení dvou cloudových nástrojů je otázka dnů, integrace staršího ERP bez dokumentace týdnů. Rozsah a cenu potvrdíme po technické analýze vašich systémů, ne odhadem od stolu."
+              },
+              {
+                "q": "Co když náš systém nemá API?",
+                "a": "Řešíme i to — přes databázové napojení, export/import souborů nebo RPA vrstvu, která nahradí ruční přepis tam, kde rozhraní chybí. Není to vždy stejně elegantní jako API, ale funguje spolehlivě a s monitoringem jako standardní integrace."
               }
             ],
             "slug": "integrace-systemu",
@@ -469,12 +477,12 @@
           },
           {
             "name": "Webové aplikace a custom vývoj",
-            "desc": "Webové aplikace, dashboardy, admin panely a interní nástroje tam, kde SaaS nestačí. Pracujeme na Next.js a Node.js frontendech i Python backendech, napojujeme třetí strany přes dokumentovaná API. Výsledek je aplikace postavená na váš proces — ne vaše procesy ohnuté pod cizí UX.",
+            "desc": "Pokud tým tráví víc než 20 % pracovního času obcházením limitů nástroje, SaaS přestal stačit. Stavíme webové aplikace, dashboardy, admin panely a interní nástroje tam, kde krabicové řešení nesedí — Next.js, Node.js, Python backend, API napojení třetích stran.",
             "fit": "Hodí se pro: firmy s unikátním interním workflow, pro které neexistuje hotové SaaS řešení, nebo které chtějí nahradit složitou kombinaci nástrojů jednou vlastní aplikací.",
             "faq": [
               {
-                "q": "Jak poznám, jestli potřebuji custom aplikaci nebo stačí SaaS?",
-                "a": "Pokud trávíte více než 20 % pracovního času obcházením limitů nástroje, který používáte, je custom řešení zpravidla levnější za 18–24 měsíců. Na konzultaci vám řekneme upřímný názor — bez záměru prodat projekt za každou cenu."
+                "q": "Jak poznám, jestli potřebuji custom aplikaci, nebo stačí SaaS?",
+                "a": "Nejčastější signál je přesně tenhle: čím víc tým obchází limity nástroje ručně, tím jasnější je zadání pro custom řešení. Na konzultaci probereme váš konkrétní proces a řekneme upřímný názor — i kdyby to znamenalo doporučit vám zůstat u SaaS."
               },
               {
                 "q": "Jak se staráte o aplikaci po spuštění?",
@@ -492,13 +500,28 @@
         "items": [
           {
             "name": "AI chatboti",
-            "desc": "RAG, knowledge-aware asistenti, zákaznická podpora 24/7. Claude, GPT a další modely abstrahované přes Vercel AI Gateway.",
+            "desc": "Zákazníci čekají hodiny na odpověď, kterou váš tým psal už stokrát — a mimo pracovní dobu se dotazy jen hromadí. Stavíme AI chatboty napojené na vaši znalostní bázi (RAG) — ne obecný scripted bot, ale asistenta, který zná váš ceník, dokumentaci a historii objednávek. Modely Claude, GPT a další běží abstrahované přes Vercel AI Gateway, takže model přepneme bez přepisu kódu a bez závislosti na jednom vendorovi. Výsledek: opakující se dotazy vyřízené okamžitě a 24/7, tým se soustředí na případy, které si to skutečně žádají.",
+            "fit": "firmy se zákaznickou podporou zahlcenou opakujícími se dotazy, e-shopy s vysokým objemem dotazů na objednávky a dodání, B2B firmy se složitou dokumentací, kde support tráví čas hledáním odpovědi místo jejího řešení.",
+            "faq": [
+              {
+                "q": "Jak dlouho trvá nasazení chatbota?",
+                "a": "Základní verze napojená na FAQ a dokumentaci: 2–4 týdny od předání podkladů. Napojení na objednávkový systém nebo CRM prodlužuje harmonogram podle složitosti integrace — rozsah upřesníme po konzultaci."
+              },
+              {
+                "q": "Co když chatbot odpoví špatně nebo mimo rozsah?",
+                "a": "Chatbot odpovídá jen z podkladů, které mu dáme k dispozici — mimo ně se nepředstírá vševědoucí a předá dotaz na člověka. Rate-limity a monitoring hlídají zneužití i výpadky."
+              },
+              {
+                "q": "Uvidíme, na co se lidé ptají?",
+                "a": "Logujeme jen technické metriky (počet zpráv, dobu odezvy), nikdy obsah konverzace — GDPR i interní bezpečnostní politika to vylučují."
+              }
+            ],
             "slug": "ai-chatboti",
             "categorySlug": "aiData"
           },
           {
             "name": "Automatizace procesů",
-            "desc": "Začínáme tím, že rozumíme, jak proces funguje — teprve potom navrhujeme řešení. Nástrojů je mnoho: od jednoduchých workflow v Zapier až po komplexní remodelaci s vlastními webovými aplikacemi na míru. AI je jeden z nástrojů, ne podmínka.",
+            "desc": "Tým tráví hodiny týdně kopírováním dat mezi systémy — práce, která nikoho nebaví a dřív nebo později skončí chybou. Nejdřív rozumíme, jak proces reálně funguje, teprve potom navrhujeme řešení: od workflow v Zapier po remodelaci s vlastní aplikací.",
             "fit": "Hodí se pro: firmy s opakujícími se manuálními procesy, týmy, které tráví čas přepisováním dat mezi systémy, nebo organizace, které potřebují přepracovat celý procesní tok.",
             "offerings": [
               "Jednoduché workflow automatizace (Zapier, n8n, Make)",
@@ -524,19 +547,64 @@
           },
           {
             "name": "AI konzultace + audit + strategie",
-            "desc": "AI roadmap pro firmu, governance, výběr modelů, security review, return-on-investment analýza.",
+            "desc": "Vedení tlačí na AI, ale nikdo neumí spočítat, jestli se to vyplatí — hrozí utopený pilotní projekt v šuplíku. Postavíme AI roadmapu na míru: governance, výběr modelů, security review a analýzu návratnosti, než padne první koruna do vývoje.",
+            "fit": "vedení firem, které zvažuje AI investici, ale potřebuje nezávislý pohled na to, kde se reálně vyplatí — a kde ne.",
+            "faq": [
+              {
+                "q": "Jak dlouho trvá AI audit?",
+                "a": "Základní audit se závěrečnou roadmapou: 2–3 týdny od úvodní konzultace a předání podkladů o vašich procesech. Komplexnější audit napříč více odděleními trvá déle — rozsah potvrdíme po prvním rozhovoru."
+              },
+              {
+                "q": "Řeknete nám i to, že AI zrovna nedává smysl?",
+                "a": "Ano — pokud analýza ukáže, že se konkrétní AI use case nevyplatí nebo je předčasný, řekneme to. Cílem auditu je rozhodnutí podložené čísly z vaší firmy, ne prodat vám projekt za každou cenu."
+              },
+              {
+                "q": "Potřebujeme mít už vybraný AI model nebo dodavatele?",
+                "a": "Ne. Audit je nezávislý na konkrétním modelu nebo vendorovi — právě proto ho děláme před výběrem, ne po něm. Modely doporučíme podle vašeho use case, ne podle toho, co zrovna prodáváme."
+              }
+            ],
             "slug": "ai-konzultace-audit-strategie",
             "categorySlug": "aiData"
           },
           {
             "name": "Datová platforma + integrace",
-            "desc": "BI dashboardy, ETL/ELT, datový sklad, dashboarding přes Metabase nebo Looker Studio.",
+            "desc": "Rozhoduje se podle excelu, který má každé oddělení jiný — čísla si neodpovídají a nikdo neví, které jsou správné. Postavíme datovou platformu, která sbírá data z vašich systémů na jedno místo: ETL/ELT, datový sklad, BI dashboardy přes Metabase nebo Looker Studio.",
+            "fit": "firmy, kde data leží roztříštěná ve více systémech a odděleních a rozhodnutí se dnes dělají na základě neshodujících se čísel.",
+            "faq": [
+              {
+                "q": "Jak dlouho trvá zavedení datové platformy?",
+                "a": "Základní BI dashboard nad jedním až dvěma zdroji dat: 3–5 týdnů od předání přístupů. Komplexnější datový sklad napříč více systémy trvá déle — rozsah a termín potvrdíme po analýze vašich zdrojů dat."
+              },
+              {
+                "q": "Musíme opustit Excel úplně?",
+                "a": "Ne nutně — Excel často zůstává jako nástroj pro ad-hoc analýzu. Cílem je, aby zdrojem pravdy byla platforma, ne sešit, který si každý upravuje po svém."
+              },
+              {
+                "q": "Jaké systémy umíte napojit?",
+                "a": "Běžné ERP, CRM, e-shopové platformy i cloudové nástroje s API nebo exportem dat. Konkrétní seznam vašich systémů probereme na úvodní konzultaci a potvrdíme, co je technicky reálné."
+              }
+            ],
             "slug": "datova-platforma-integrace",
             "categorySlug": "aiData"
           },
           {
             "name": "MLOps / Provoz AI systémů",
-            "desc": "Monitoring, evals, prompt management, cost control, A/B testování modelů. AI v produkci, ne jen v experimentu.",
+            "desc": "AI funguje skvěle v demu — v produkci pak nikdo nehlídá náklady ani kvalitu a model tiše degraduje, dokud si nestěžují zákazníci. Postavíme provoz kolem AI systému: monitoring, evals, prompt management, cost control, A/B testování modelů.",
+            "fit": "firmy, které mají AI funkci nasazenou nebo blízko nasazení a potřebují ji provozovat spolehlivě, ne ji jen jednou spustit.",
+            "faq": [
+              {
+                "q": "Co znamená „degradace modelu“ v praxi?",
+                "a": "Kvalita odpovědí modelu se v čase mění — dodavatel model potichu aktualizuje, vstupní data se posouvají, přibývají edge case. Bez evals a monitoringu si toho všimnete až podle stížností zákazníků, ne podle dat."
+              },
+              {
+                "q": "Kolik stojí provoz AI systému měsíčně?",
+                "a": "Záleží na objemu provozu a zvoleném modelu — u vysokého objemu žádostí je cost control (cachování, routing na levnější model tam, kde stačí) velká část práce. Konkrétní odhad dáme po analýze vašeho use case."
+              },
+              {
+                "q": "Musíte navrhovat i samotný AI systém, nebo ho provozujete i pro cizí implementace?",
+                "a": "Obojí. Pokud AI systém navrhla jiná firma nebo interní tým, přebíráme ho po technické analýze — cílem je stabilní provoz, ne přepsání od nuly jen proto, že jsme ho nestavěli my."
+              }
+            ],
             "slug": "mlops-provoz-ai-systemu",
             "categorySlug": "aiData"
           }
@@ -548,37 +616,96 @@
         "items": [
           {
             "name": "SEO",
-            "desc": "Technické SEO, content strategie, link building, lokální SEO. Měříme přes Search Console a vlastní dashboardy.",
+            "desc": "Firma je pro klíčové dotazy, kterými ji hledají vlastní zákazníci, na Googlu neviditelná — konkurence obsazuje první stránku výsledků, zatímco vy platíte za PPC nebo spoléháte na doporučení. Řešíme technické SEO (rychlost, indexace, strukturovaná data), content strategii cílenou na dotazy, které rozhodovatelé skutečně zadávají, link building a lokální SEO tam, kde dává smysl. Měříme přes Search Console a vlastní dashboardy — žádné reporty bez čísel, žádné černé skříňky.",
+            "fit": "firmy závislé na PPC, které chtějí snížit náklad na akvizici, i firmy, které v organickém vyhledávání propadají konkurenci navzdory lepšímu produktu.",
+            "faq": [
+              {
+                "q": "Garantujete pozici na Googlu?",
+                "a": "Ne — a nikdo upřímný vám to garantovat nemůže, algoritmus nekontrolujeme my ani nikdo jiný. Co garantujeme: měřitelný proces, transparentní reporting a technické základy, bez kterých se pozice hnout nemůže."
+              },
+              {
+                "q": "Jak dlouho trvá, než SEO ukáže výsledky?",
+                "a": "První technické opravy se projeví v týdnech (indexace, rychlost). Reálný posun v pozicích u konkurenčních dotazů obvykle trvá 3–6 měsíců — kdo slibuje jinak, něco zamlčuje."
+              },
+              {
+                "q": "Jak konkrétně měříte úspěch?",
+                "a": "Search Console pro pozice/prokliky/impressions, vlastní dashboard pro návštěvnost podle klíčových skupin dotazů. Měsíční report ukazuje trend, ne izolovaná čísla bez kontextu."
+              }
+            ],
             "slug": "seo",
             "categorySlug": "marketing"
           },
           {
             "name": "AEO (Answer Engine Optimization)",
-            "desc": "Optimalizace pro ChatGPT, Claude, Gemini, Perplexity. FAQ schema, evidence panely, citation hygiene.",
+            "desc": "Zákazníci se dnes ptají ChatGPT nebo Perplexity dřív než Googlu — kdo tam není citovaný jako zdroj, pro ně prakticky neexistuje. Připravíme obsah, aby ho AI vyhledávače uměly najít a citovat: strukturovaná data, FAQ schema, evidence panely, citation hygiene.",
+            "fit": "firmy, které chtějí být vidět i mimo klasický Google výsledek — v odpovědích AI asistentů, kam se přesouvá čím dál víc vyhledávání.",
+            "faq": [
+              {
+                "q": "Jak se liší AEO od klasického SEO?",
+                "a": "SEO cílí na pozici ve výsledcích vyhledávání, AEO na to, aby vás AI asistent citoval jako zdroj přímo v odpovědi. Technické základy — strukturovaná data, rychlost, kvalitní obsah — jsou společné, AEO nad nimi staví vrstvu formátu a citovatelnosti."
+              },
+              {
+                "q": "Jak poznáme, že nás AI asistenti citují?",
+                "a": "Sledujeme zmínky a citace napříč ChatGPT, Claude, Gemini a Perplexity a reportujeme trend podobně jako u SEO pozic. Obor je nový a metriky se teprve ustalují — jsme transparentní v tom, co už měřit umíme a co ještě ne."
+              }
+            ],
             "slug": "aeo-answer-engine-optimization",
             "categorySlug": "marketing"
           },
           {
             "name": "PPC kampaně",
-            "desc": "Google Ads, Meta Ads, LinkedIn Ads, TikTok Ads. Plné tracking nastavení, ne „jen spustit kampaň“.",
+            "desc": "Rozpočet na kampaně mizí měsíc co měsíc a report ukazuje prokliky, ne tržby. Stavíme a řídíme kampaně na Google Ads, Meta Ads, LinkedIn Ads i TikTok Ads s plným trackingem konverzí od kliku po tržbu — reporting ukazuje revenue a ROAS, ne jen impressions.",
+            "fit": "firmy, které dnes PPC řeší, ale reporting nevidí dál než k prokliku, i firmy, které s placenou akvizicí teprve začínají a chtějí ji od začátku měřit správně.",
+            "faq": [
+              {
+                "q": "Jak měříte úspěch kampaní?",
+                "a": "Primárně revenue a ROAS napojené na skutečné tržby, ne jen na prokliky nebo impressions. Tracking konverzí nastavujeme jako první krok, dřív než rozjedeme rozpočet — bez toho čísla nic neříkají."
+              },
+              {
+                "q": "Jaký je minimální rozpočet na kampaně?",
+                "a": "Záleží na kanálu a konkurenci ve vašem oboru — na úvodní konzultaci probereme váš cíl a navrhneme rozpočet, který dává smysl testovat, ne nejnižší číslo, které vám prodá kampaň."
+              }
+            ],
             "slug": "ppc-kampane",
             "categorySlug": "marketing"
           },
           {
             "name": "Social media management",
-            "desc": "Instagram, Facebook, LinkedIn, TikTok. Strategie, kreativy, plánování, community management.",
+            "desc": "Firemní profily fungují jako billboard bez publika — obsah se plánuje, protože „se má postovat“, ale nikdo neměří, jestli z toho jde poptávka. Vedeme sociální sítě jako součást akvizičního mixu: strategii, kreativy, plánování a community management napříč kanály.",
+            "fit": "firmy, kde sociální sítě dnes běží, ale nikdo neumí říct, jestli přivádí poptávky, nebo jen sledovanost.",
+            "faq": [
+              {
+                "q": "Jak poznáme, že sociální sítě fungují?",
+                "a": "Napojíme je na stejný tracking jako zbytek marketingu — sledujeme, kolik poptávek nebo kliků na web z jednotlivých sítí reálně přijde, ne jen lajky a sledující. Report dostanete měsíčně vedle ostatních kanálů, ne odděleně."
+              },
+              {
+                "q": "Musíme mít profily na všech sítích?",
+                "a": "Ne — doporučíme kanály podle toho, kde je vaše cílová skupina, ne podle toho, co je zrovna trend. Menší počet sítí vedených dobře funguje líp než rozprostřená pozornost na pěti profilech najednou."
+              }
+            ],
             "slug": "social-media-management",
             "categorySlug": "marketing"
           },
           {
             "name": "Tvorba kreativ",
-            "desc": "Grafika, Reels, video, banners, animace. Vlastní studio, ne stock fotky.",
+            "desc": "Stock fotky, které používá i konkurence, znamenají jediné — nikdo si vás mezi nimi nezapamatuje. Vlastní studio nám umožňuje točit a navrhovat na míru: grafiku, Reels a video, bannery, animace, v jednotném vizuálním stylu napříč kanály.",
+            "fit": "firmy, kterým dnešní vizuální obsah splývá s konkurencí, nebo které potřebují pravidelný přísun kreativ pro kampaně a sociální sítě.",
+            "faq": [
+              {
+                "q": "Potřebujeme dodat vlastní fotky nebo produkty na natáčení?",
+                "a": "Ideálně ano, pokud jde o produktovou tvorbu — nejlepší výsledky vznikají z reálných produktů a prostředí vaší firmy, ne z generických stock podkladů. Co konkrétně budeme potřebovat, probereme před prvním natáčením."
+              },
+              {
+                "q": "Jak rychle dodáte první sadu kreativ?",
+                "a": "Základní sada pro sociální sítě: 2–3 týdny od briefu a schváleného konceptu. Větší produkce (video, kampaňová sada) trvá déle — harmonogram potvrdíme po upřesnění rozsahu."
+              }
+            ],
             "slug": "tvorba-kreativ",
             "categorySlug": "marketing"
           },
           {
             "name": "E-commerce management",
-            "desc": "Obchodní a marketingová vrstva e-shopu po launchi — ne technická údržba. CRO a A/B testy funnelu, customer journey od kliku po win-back, e-mail, SMS a push. Pricing strategie, bundles, upsell a cross-sell. Feedy a vyhledávače Heureka, Zboží.cz a Glami, propojení s analytikou. Retence přes RFM segmentaci a věrnostní programy.",
+            "desc": "Tržby stagnují, i když technický stack funguje bez problémů — e-shop přestal růst sám od sebe. Řešíme obchodní a marketingovou vrstvu po launchi: CRO a A/B testy funnelu, customer journey od kliku po win-back, pricing, feedy Heureka a Zboží.cz, retenci přes RFM segmentaci.",
             "fit": "Hodí se pro: e-shopy s tržbami od 1 mil. Kč ročně, které mají spuštěný tech stack a chtějí z něj dostat víc — bez dalšího vývojáře, ale s někým, kdo hlídá byznys.",
             "faq": [
               {
@@ -599,7 +726,18 @@
           },
           {
             "name": "Marketing strategy + plan",
-            "desc": "Pozicování, message-market fit, customer journey, content calendar, channel mix.",
+            "desc": "Marketing bez strategie znamená náhodné kampaně na náhodných kanálech — rozpočet se rozplyne mezi PPC, sociální sítě a e-mail bez společného cíle. Postavíme strategii: pozicování, message-market fit, customer journey, content calendar a channel mix podložený daty.",
+            "fit": "firmy, které dnes běží více marketingových kanálů bez společné strategie, i firmy, které marketing teprve rozjíždí a chtějí začít s jasným plánem, ne náhodnými kampaněmi.",
+            "faq": [
+              {
+                "q": "Jak dlouho trvá zpracování marketingové strategie?",
+                "a": "Základní strategický plán s doporučeným channel mixem: 3–4 týdny od úvodní analýzy a workshopu s vaším týmem. Komplexnější strategie napříč více produkty nebo trhy trvá déle."
+              },
+              {
+                "q": "Strategii nám jen předáte, nebo ji i realizujete?",
+                "a": "Obojí je možné. Strategii můžeme předat vašemu internímu týmu k realizaci, nebo ji rovnou realizovat sami přes naše ostatní služby — SEO, PPC, sociální sítě, kreativu. Rozhodnutí je na vás."
+              }
+            ],
             "slug": "marketing-strategy-plan",
             "categorySlug": "marketing"
           }
@@ -612,8 +750,8 @@
   "reseni": {
     "hero": {
       "status": "/cs/reseni",
-      "headline": "Řešení",
-      "subhead": "Pět připravených balíčků pro typické scénáře. Místo toho, abyste z 18 služeb skládali sami, vyberte si scénář, který sedí na váš problém."
+      "headline": "AI agenti a asistenti pro firmy",
+      "subhead": "Pět připravených balíčků — od znalostního asistenta po autonomní agenty. Místo skládání z 18 služeb vyberte scénář, který sedí na váš problém."
     },
     "items": [
       {
@@ -663,8 +801,8 @@
   "odvetvi": {
     "hero": {
       "status": "/cs/odvetvi",
-      "headline": "Odvětví",
-      "subhead": "Osm oborů, kterým rozumíme do hloubky. Mluvíme řečí vašeho byznysu — od první schůzky."
+      "headline": "Odvětví, kterým rozumíme",
+      "subhead": "Osm oborů, ve kterých jsme doma. Mluvíme řečí vašeho byznysu — od první schůzky."
     },
     "intro": "Nestavíme generické weby a AI šablony. Než cokoli navrhneme, díváme se na to, jak váš obor reálně funguje — jaké jsou typické integrace, procesy a sezónnost. Tady je osm oborů, kterým rozumíme.",
     "sectionTitle": "Kde působíme.",
@@ -878,7 +1016,7 @@
         "key": "zakaznicka-podpora",
         "icon": "Headphones",
         "name": "Zákaznická podpora",
-        "body": "Firmy s 1 000+ ticketů měsíčně ztrácejí čas na opakujících se dotazech. Nasadíme AI, která automaticky vyřídí 70 % běžných dotazů, zatímco agenti řeší situace, kde záleží na lidském úsudku. Zendesk, Intercom, Freshdesk a Front zůstávají — jen pracují chytřeji.",
+        "body": "Firmy s 1 000+ ticketů měsíčně ztrácejí čas na opakujících se dotazech. Nasadíme AI, která automaticky vyřídí většinu běžných dotazů — konkrétní podíl si ověříme na vašich datech v pilotu — zatímco agenti řeší situace, kde záleží na lidském úsudku. Zendesk, Intercom, Freshdesk a Front zůstávají — jen pracují chytřeji.",
         "slug": "zakaznicka-podpora",
         "sections": {
           "problem": "Kontaktní centra a support týmy s 1 000+ tickety měsíčně řeší stále stejné dotazy: kde je objednávka, jak vrátit zboží, jak změnit fakturační údaje. Agenti tráví většinu času na rutinních případech místo těch skutečně složitých — což je naopak.\n\nKnowledge base existuje, ale je rozptýlená v Zendesku, Confluence a sdíleném disku. Trénink nového agenta trvá týdny a fluktuace je vysoká. AI chatboty z roku 2019 mají špatnou reputaci — deflektují zákazníky bez vyřešení a generují negativní reviews. Současně CFO tlačí na snížení nákladů na support.",
@@ -890,11 +1028,11 @@
             },
             {
               "title": "Knowledge base a AI pilot",
-              "body": "týdny: refresh knowledge base, integrace LLM s Zendeskem/Intercomem, eskalační logika. Pilot na 30 % traffic v jednom jazyce."
+              "body": "6–8 týdnů: refresh knowledge base, integrace LLM s Zendeskem/Intercomem, eskalační logika. Pilot na 30 % traffic v jednom jazyce."
             },
             {
               "title": "Rollout a agent tooling",
-              "body": "4-6 týdnů: rozšíření na 100 % traffic, AI návrhy odpovědí pro agenty, automatická klasifikace ticketů. Trénink týmu."
+              "body": "4–6 týdnů: rozšíření na 100 % traffic, AI návrhy odpovědí pro agenty, automatická klasifikace ticketů. Trénink týmu."
             },
             {
               "title": "Provoz a iterace",

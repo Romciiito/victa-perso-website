@@ -119,7 +119,9 @@ function lintLine(file, lineIdx, line) {
   // (`2 500`) but flag `2 Kč`, `5 %`, `10 km` etc. — match `<digit> <unit>`.
   // Czech numbers use space-as-thousands-separator, so the rule fires only when the
   // last group before the unit is the numeric literal.
-  const unitRe = /(\d+(?: \d{3})*) (Kč|EUR|€|%|km|h|min|m²|kg|MB|GB)\b/g;
+  // Pozn.: dřívější \b po jednotce nikdy nesedlo za %, € ani m² (non-word znak
+  // + mezera = žádná word boundary) — linter byl vůči nim slepý (audit Vlna 2b).
+  const unitRe = /(\d+(?: \d{3})*) (Kč|EUR|€|%|km|h|min|m²|kg|MB|GB)(?![\w])/g;
   let umm;
   while ((umm = unitRe.exec(line)) !== null) {
     violations.push({

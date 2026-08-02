@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { EnglishStub } from '@/components/en-stub';
 import { site } from '@/config/site';
+import { metaDescription } from '@/lib/meta';
 import { SolutionBody, type SolutionItem } from './solution-body';
 import data from '../../../../../content/cs/strings/common.json';
 
@@ -43,7 +44,7 @@ export async function generateMetadata({ params }: Props) {
   const intentTitle = TITLE_INTENT[slug] ?? item.name;
   return {
     title: `${intentTitle} — VICTA`,
-    description: item.body,
+    description: metaDescription(item.body),
     alternates: { canonical: `${site.url}/${locale}/reseni/${slug}` },
   };
 }
