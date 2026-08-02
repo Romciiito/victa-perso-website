@@ -16,6 +16,16 @@ Marketing website for VICTA — Czech/Slovak full-service digital agency targeti
 
 ---
 
+## Ultracode Agentic Team (model tiering)
+
+When orchestrating multi-agent work (Workflow tool or subagents), assign models by role:
+
+- **Orchestrator** — Fable 5 at `xhigh` effort: runs the main loop only — decomposition, dispatch, synthesis, final decisions. Never delegate orchestration downward.
+- **Review Gate** — Opus at `xhigh` effort (`model: 'opus', effort: 'xhigh'`): adversarial verification and PASS/FAIL verdicts on every substantive deliverable; on FAIL, the work goes back into the loop for rework — never merge past a failed gate.
+- **Research / Explore / Discovery** — Sonnet 5 at `high` effort (`model: 'sonnet', effort: 'high'`): web/e-research, codebase exploration, discovery sweeps, scouting before implementation.
+
+---
+
 ## Pointer Table
 
 | Doc | Read when you're about to... |
