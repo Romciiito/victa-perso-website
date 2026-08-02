@@ -3,6 +3,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { EnglishStub } from '@/components/en-stub';
 import { site } from '@/config/site';
 import { metaDescription } from '@/lib/meta';
+import { JsonLd } from '@/components/seo/json-ld';
+import { buildServiceSchema, buildBreadcrumbSchema, buildFaqSchema } from '@/lib/schema';
 import { ServiceBody, type ServiceDetailItem } from './service-body';
 import data from '../../../../../content/cs/strings/common.json';
 
@@ -89,5 +91,20 @@ export default async function ServiceDetailPage({ params }: Props) {
     );
   }
 
-  return <ServiceBody item={item} />;
+  return (
+    <>
+      <JsonLd
+        data={[
+          buildServiceSchema({ slug, name: item.name, description: item.desc }, 'cs'),
+          buildBreadcrumbSchema([
+            { name: 'Domů', url: `${site.url}/cs` },
+            { name: 'Služby', url: `${site.url}/cs/sluzby` },
+            { name: item.name, url: `${site.url}/cs/sluzby/${slug}` },
+          ]),
+          ...(item.faq && item.faq.length > 0 ? [buildFaqSchema(item.faq)] : []),
+        ]}
+      />
+      <ServiceBody item={item} />
+    </>
+  );
 }

@@ -2,7 +2,7 @@
 
 import { useEffect, useId, useRef, useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { motion, AnimatePresence } from 'framer-motion';
+import { m, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, ChevronDown, Menu, X } from 'lucide-react';
 import { Link, usePathname } from '@/i18n/navigation';
 import { LocaleSwitcher } from './locale-switcher';
@@ -180,14 +180,14 @@ export function Nav() {
                   }`}
                 >
                   <span>{t(item.key)}</span>
-                  <motion.span
+                  <m.span
                     animate={{ rotate: isOpen ? 180 : 0 }}
                     transition={SPRING}
                     aria-hidden
                     className="inline-flex"
                   >
                     <ChevronDown size={13} strokeWidth={1.75} />
-                  </motion.span>
+                  </m.span>
                 </button>
               );
             })}
@@ -277,7 +277,7 @@ function MegaMenuPanel({
   return (
     <AnimatePresence mode="wait">
       {data && (
-        <motion.div
+        <m.div
           key={openKey}
           id={panelId}
           role="region"
@@ -288,7 +288,7 @@ function MegaMenuPanel({
           className="absolute inset-x-0 top-full z-40 border-t border-b border-border-soft bg-[color-mix(in_oklab,var(--surface)_95%,transparent)] shadow-card backdrop-blur-xl"
         >
           <div className="mx-auto grid max-w-[1400px] grid-cols-12 gap-10 px-6 py-12 md:px-10 md:py-14">
-            <motion.div
+            <m.div
               initial={{ opacity: 0, x: -12 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ ...SPRING, delay: 0.04 }}
@@ -311,7 +311,7 @@ function MegaMenuPanel({
                 {data.sidebarCtaLabel}
                 <ArrowUpRight size={14} strokeWidth={1.75} />
               </Link>
-            </motion.div>
+            </m.div>
 
             <ul className="col-span-12 grid grid-cols-1 gap-1 md:col-span-8 md:grid-cols-2">
               {data.items.map((item, i) => (
@@ -327,7 +327,7 @@ function MegaMenuPanel({
               ))}
             </ul>
           </div>
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );
@@ -361,7 +361,7 @@ function MegaItem({
   }
 
   return (
-    <motion.li
+    <m.li
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ ...SPRING, delay: 0.06 + index * 0.03 }}
@@ -375,7 +375,7 @@ function MegaItem({
         onMouseLeave={() => setHover(false)}
         className="spotlight tactile group relative grid grid-cols-[auto_1fr_auto] items-start gap-4 rounded-[12px] p-4 hover:bg-[color-mix(in_oklab,var(--bg)_60%,transparent)]"
       >
-        <motion.div
+        <m.div
           animate={{
             borderColor: hover ? 'var(--accent)' : 'var(--border)',
             color: hover ? 'var(--accent)' : 'var(--ink)',
@@ -385,7 +385,7 @@ function MegaItem({
           className="grid size-9 place-items-center rounded-md border"
         >
           <Icon size={17} strokeWidth={1.5} />
-        </motion.div>
+        </m.div>
 
         <div className="min-w-0">
           <div className="display text-[15.5px] font-medium leading-tight text-ink">
@@ -396,16 +396,16 @@ function MegaItem({
           </div>
         </div>
 
-        <motion.span
+        <m.span
           animate={{ x: hover ? 4 : 0, opacity: hover ? 1 : 0.35 }}
           transition={SPRING}
           aria-hidden
           className="self-center text-tertiary group-hover:text-accent"
         >
           <ArrowUpRight size={16} strokeWidth={1.5} />
-        </motion.span>
+        </m.span>
       </Link>
-    </motion.li>
+    </m.li>
   );
 }
 
@@ -433,7 +433,7 @@ function MobileDrawer({
   return (
     <AnimatePresence>
       {open && (
-        <motion.nav
+        <m.nav
           id={id}
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -469,18 +469,18 @@ function MobileDrawer({
                     className="flex w-full items-center justify-between rounded-md px-3 py-3.5 text-[16px] text-ink"
                   >
                     <span>{t(item.key)}</span>
-                    <motion.span
+                    <m.span
                       animate={{ rotate: isExpanded ? 180 : 0 }}
                       transition={SPRING}
                       aria-hidden
                       className="inline-flex text-tertiary"
                     >
                       <ChevronDown size={16} strokeWidth={1.75} />
-                    </motion.span>
+                    </m.span>
                   </button>
                   <AnimatePresence>
                     {isExpanded && (
-                      <motion.ul
+                      <m.ul
                         initial={{ height: 0, opacity: 0 }}
                         animate={{ height: 'auto', opacity: 1 }}
                         exit={{ height: 0, opacity: 0 }}
@@ -523,7 +523,7 @@ function MobileDrawer({
                             {data.sidebarCtaLabel}
                           </Link>
                         </li>
-                      </motion.ul>
+                      </m.ul>
                     )}
                   </AnimatePresence>
                 </li>
@@ -544,7 +544,7 @@ function MobileDrawer({
               </button>
             </li>
           </ul>
-        </motion.nav>
+        </m.nav>
       )}
     </AnimatePresence>
   );

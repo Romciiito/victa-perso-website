@@ -3,6 +3,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { site } from '@/config/site';
 import { metaDescription } from '@/lib/meta';
 import { EnglishStub } from '@/components/en-stub';
+import { JsonLd } from '@/components/seo/json-ld';
+import { buildBreadcrumbSchema } from '@/lib/schema';
 import { IndustryBody, type IndustryItem } from './industry-body';
 import data from '../../../../../content/cs/strings/common.json';
 
@@ -52,5 +54,16 @@ export default async function IndustryDetailPage({ params }: Props) {
     );
   }
 
-  return <IndustryBody item={item} />;
+  return (
+    <>
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: 'Domů', url: `${site.url}/cs` },
+          { name: 'Odvětví', url: `${site.url}/cs/odvetvi` },
+          { name: item.name, url: `${site.url}/cs/odvetvi/${slug}` },
+        ])}
+      />
+      <IndustryBody item={item} />
+    </>
+  );
 }

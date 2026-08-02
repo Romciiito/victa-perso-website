@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type Variants } from 'framer-motion';
+import { m, type Variants } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
@@ -42,7 +42,7 @@ function ValueCell({
   index,
 }: ValueItem & { index: number }) {
   return (
-    <motion.div
+    <m.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-10%' }}
@@ -64,6 +64,6 @@ function ValueCell({
         </p>
         <p className="mt-3 text-[15px] leading-[1.6] text-secondary">{body}</p>
       </div>
-    </motion.div>
+    </m.div>
   );
 }

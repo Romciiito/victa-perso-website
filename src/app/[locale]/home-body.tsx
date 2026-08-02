@@ -100,15 +100,11 @@ function Hero() {
             </span>
           </motion.div>
 
-          <motion.h1
-            initial="hidden"
-            animate="visible"
-            transition={{ ...SPRING, delay: 0.18 }}
-            variants={REVEAL}
-            className="display max-w-[16ch] text-[clamp(56px,8vw,128px)] text-ink"
-          >
+          {/* H1 renders statically — no opacity/blur/scale animation (audit P0-21,
+              LCP fix). Only accompanying elements below keep the entrance reveal. */}
+          <h1 className="display max-w-[16ch] text-[clamp(56px,8vw,128px)] text-ink">
             {t('headline')}
-          </motion.h1>
+          </h1>
 
           <motion.div
             initial="hidden"
