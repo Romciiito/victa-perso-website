@@ -2,13 +2,14 @@
  * Canonical page slugs used by sitemap.ts, robots.ts, and llms.txt.
  * URL structure is locked at launch (architecture.md §4.2 + REQ-NF-031).
  *
- * ⚠️ These arrays MUST mirror the slugs in content/cs/strings/common.json
+ * ⚠️ These arrays MUST mirror the slugs in content/{cs,en}/strings/common.json
  * (`sluzby.categories.*.items`, `reseni.items`, `odvetvi.items`) — that JSON
  * is what the [slug] detail routes actually render. Before contact-flow v2
  * this file carried an older, diverged slug set, so the sitemap listed 404
  * URLs and missed the real pages.
  *
- * Total: 43 pages — 41 Czech (10 top-level + 18 + 5 + 8) + 1 EN stub + 1 utility 404.
+ * Total: 83 pages — 41 Czech + 41 English (full content parity as of Vlna
+ * 2b-EN, vision §10 — same 41 slugs in both locales) + 1 shared utility 404.
  */
 
 /** 18 service slugs (content/cs/strings/common.json `sluzby.categories`). */
@@ -81,8 +82,14 @@ export function allCsPaths(): readonly string[] {
   ];
 }
 
-/** EN-locale paths shipped at launch (just the stub per intent.md §7.7). */
-export const enPaths: readonly string[] = ['/'];
+/**
+ * EN-locale paths shipped at launch. EN reached full content parity with CS
+ * in Vlna 2b-EN (vision §10) — every canonical CS path now has a real EN
+ * counterpart at the same slug (URL structure is locale-independent, per
+ * §4.2), so `enPaths` mirrors `allCsPaths()` 1:1 rather than the pre-parity
+ * single-route stub.
+ */
+export const enPaths: readonly string[] = allCsPaths();
 
 export type ServiceSlug = (typeof serviceSlugs)[number];
 export type SolutionSlug = (typeof solutionSlugs)[number];

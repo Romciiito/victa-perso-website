@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   Boxes,
   BarChart3,
@@ -26,79 +26,36 @@ import { Link } from '@/i18n/navigation';
 
 type SolutionMeta = {
   id: string;
-  eyebrow: string;
   primaryIcon: LucideIcon;
   secondaryIcon: LucideIcon;
-  /** Short bento card title for the second (audience) card */
-  bentoTitle: string;
-  /** Short bento subtitle for the primary (feature) card */
-  bentoBody: string;
   /** bg-surface alternation for visual rhythm */
   alt: boolean;
 };
 
-/* `id` MUST match the real /reseni/[slug] route slugs (content/cs/strings/common.json
+type SolutionMetaText = { eyebrow: string; bentoTitle: string; bentoBody: string };
+
+/* `id` MUST match the real /reseni/[slug] route slugs (content/{locale}/strings/common.json
    `reseni.items[].slug`) — used both as the on-page anchor id and, via makeBento(),
    as the mega-menu/homepage href fragment. Previously drifted from the actual slugs
-   (audit P2-11); ids below are now 1:1 with routes.ts `solutionSlugs`. */
+   (audit P2-11); ids below are now 1:1 with routes.ts `solutionSlugs`.
+   Icons are locale-independent; eyebrow/bentoTitle/bentoBody come from
+   `reseni.meta[]` in content/{locale}/strings/common.json (same order) —
+   Vlna 2b-EN parity fix (this array used to hold hardcoded Czech text). */
 const SOLUTION_META: ReadonlyArray<SolutionMeta> = [
-  {
-    id: 'znalostni-asistent',
-    eyebrow: '01 · GenAI a RAG',
-    primaryIcon: MessageSquare,
-    secondaryIcon: Layers,
-    bentoTitle: 'Znalostní báze na míru',
-    bentoBody:
-      'RAG pipeline nad vaší dokumentací — Slack, intranet nebo firemní wiki. Odpovědi vždy přesné na vaše data.',
-    alt: false,
-  },
-  {
-    id: 'agenti',
-    eyebrow: '02 · autonomní agenti',
-    primaryIcon: Boxes,
-    secondaryIcon: Cpu,
-    bentoTitle: 'Back-office automatizace',
-    bentoBody:
-      'E-maily, reporty, rezervace, kontrola dat — dnes dělá člověk. Agent to zvládne nepřetržitě, poslední slovo má stále člověk.',
-    alt: true,
-  },
-  {
-    id: 'podpora',
-    eyebrow: '03 · zákaznická podpora',
-    primaryIcon: Headphones,
-    secondaryIcon: Users,
-    bentoTitle: 'Chatbot 24 / 7',
-    bentoBody:
-      'Web, Messenger nebo WhatsApp. Odpovídá na většinu dotazů sám, složitější předá živému agentovi.',
-    alt: false,
-  },
-  {
-    id: 'dashboardy',
-    eyebrow: '04 · prediktivní analytika',
-    primaryIcon: BarChart3,
-    secondaryIcon: ShieldCheck,
-    bentoTitle: 'Jeden přehled, vše pohromadě',
-    bentoBody:
-      'Prodeje, marketing, sklady i finance dnes leží v pěti systémech, které spolu nemluví. My je spojíme do jednoho aktuálního přehledu.',
-    alt: true,
-  },
-  {
-    id: 'infrastruktura',
-    eyebrow: '05 · AI infrastruktura',
-    primaryIcon: Server,
-    secondaryIcon: Layers,
-    bentoTitle: 'Platforma pro více AI projektů',
-    bentoBody:
-      'Model abstraction, prompt management, cost control, eval framework — každé další AI není nový projekt od nuly.',
-    alt: false,
-  },
+  { id: 'znalostni-asistent', primaryIcon: MessageSquare, secondaryIcon: Layers, alt: false },
+  { id: 'agenti', primaryIcon: Boxes, secondaryIcon: Cpu, alt: true },
+  { id: 'podpora', primaryIcon: Headphones, secondaryIcon: Users, alt: false },
+  { id: 'dashboardy', primaryIcon: BarChart3, secondaryIcon: ShieldCheck, alt: true },
+  { id: 'infrastruktura', primaryIcon: Server, secondaryIcon: Layers, alt: false },
 ];
 
 function makeBento(
   name: string,
   audience: string,
   meta: SolutionMeta,
+  metaText: SolutionMetaText,
   idx: number,
+  locale: string,
 ): ReadonlyArray<BentoItem> {
   /* Alternate 7/5 → 5/7 per section for rhythm */
   const primarySpan: BentoItem['span'] = idx % 2 === 0 ? 7 : 5;
@@ -106,9 +63,9 @@ function makeBento(
   return [
     {
       icon: meta.primaryIcon,
-      title: meta.bentoTitle,
-      subtitle: meta.bentoBody,
-      href: `/cs/reseni#${meta.id}`,
+      title: metaText.bentoTitle,
+      subtitle: metaText.bentoBody,
+      href: `/${locale}/reseni#${meta.id}`,
       number: String(idx * 2 + 1).padStart(2, '0'),
       span: primarySpan,
       accent: true,
@@ -117,7 +74,7 @@ function makeBento(
       icon: meta.secondaryIcon,
       title: name,
       subtitle: audience,
-      href: `/cs/reseni#${meta.id}`,
+      href: `/${locale}/reseni#${meta.id}`,
       number: String(idx * 2 + 2).padStart(2, '0'),
       span: secondarySpan,
     },
@@ -127,16 +84,21 @@ function makeBento(
 /* ================================================================== */
 export function ReseniBody() {
   const t = useTranslations('reseni');
+  const locale = useLocale();
   const items = t.raw('items') as ReadonlyArray<{
     key: string;
     name: string;
     body: string;
     audience: string;
   }>;
+  const metaText = t.raw('meta') as ReadonlyArray<SolutionMetaText>;
+  const anchors = t.raw('anchors') as ReadonlyArray<{ label: string }>;
+  const anchorHrefs = ['#znalostni-asistent', '#agenti', '#podpora', '#dashboardy', '#infrastruktura'];
   const tCta = useTranslations('common.ctaBand');
+  const tCommon = useTranslations('common');
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: '/cs/reseni',
+    sourcePage: `/${locale}/reseni`,
   });
 
   return (
@@ -145,13 +107,8 @@ export function ReseniBody() {
         status={t('hero.status')}
         headline={t('hero.headline')}
         sub={t('hero.subhead')}
-        anchors={[
-          { label: 'GenAI a RAG', href: '#znalostni-asistent' },
-          { label: 'Autonomní agenti', href: '#agenti' },
-          { label: 'AI podpora', href: '#podpora' },
-          { label: 'Prediktivní analytika', href: '#dashboardy' },
-          { label: 'AI infrastruktura', href: '#infrastruktura' },
-        ]}
+        anchors={anchors.map((a, i) => ({ label: a.label, href: anchorHrefs[i] }))}
+        anchorNavLabel={tCommon('pageSectionsNavLabel')}
       />
 
       {SOLUTION_META.map((meta, idx) => (
@@ -162,12 +119,21 @@ export function ReseniBody() {
         >
           <div className="mx-auto max-w-[1400px]">
             <SectionHeader
-              eyebrow={meta.eyebrow}
+              eyebrow={metaText[idx].eyebrow}
               title={`${items[idx].name}.`}
               lead={items[idx].body}
             />
             <div className="mt-14">
-              <BentoGrid items={makeBento(items[idx].name, items[idx].audience, meta, idx)} />
+              <BentoGrid
+                items={makeBento(
+                  items[idx].name,
+                  items[idx].audience,
+                  meta,
+                  metaText[idx],
+                  idx,
+                  locale,
+                )}
+              />
             </div>
           </div>
         </section>
@@ -178,7 +144,7 @@ export function ReseniBody() {
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 md:grid-cols-[6fr_5fr] md:gap-16">
           <div>
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-              06 · další krok
+              {t('ctaEyebrow')}
             </span>
             <h2 className="display mt-5 max-w-[18ch] text-[clamp(40px,5vw,72px)] text-ink">
               {t('ctaLine')}

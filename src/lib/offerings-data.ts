@@ -1,19 +1,26 @@
+'use client';
+
 /* ============================================================
    offerings-data.ts
    ----------------------------------------------------------------
    Single source of truth for the three "offering" sections shown
    on the homepage and inside the desktop mega-menu.
 
-   Content aligned with content/cs/strings/common.json
-   `home.offerings.*` per the 2026-05-23..25 positioning rewrite
-   (PR #15 + audit session). Keep in sync with JSON.
+   Icons and hrefs are locale-independent (URL structure is locked
+   per architecture.md §4.2, so a slug is shared by /cs and /en).
+   Title/subtitle/headline/description text is NOT locale-independent
+   — it comes from `content/{locale}/strings/common.json`
+   `home.offerings.<key>` via next-intl, so EN visitors see English
+   copy instead of the previously-hardcoded Czech (Vlna 2b-EN parity
+   fix — this file used to export static CS strings consumed
+   unconditionally by nav.tsx, home-body.tsx and odvetvi-body.tsx
+   regardless of locale).
 
-   The mega-menu is a shared client component that imports static
-   data from here (icon binding + labels). Homepage section bodies
-   can either use this OR `t.raw('home.offerings.<section>.items')`
-   — they MUST agree.
+   Use `useOfferingData(key)` from a Client Component to get the
+   merged, locale-correct `OfferingData` shape.
    ============================================================ */
 
+import { useTranslations } from 'next-intl';
 import {
   BarChart3,
   Boxes,
@@ -55,183 +62,100 @@ export type OfferingData = {
   items: ReadonlyArray<OfferingDataItem>;
 };
 
+type OfferingMeta = {
+  sidebarIcon: LucideIcon;
+  sidebarCtaHref: string;
+  items: ReadonlyArray<{ icon: LucideIcon; href: string }>;
+};
+
+export type OfferingKey = 'services' | 'solutions' | 'industries';
+
 /* ---------- A · Three competencies, one agency (6 items) ---------- */
-export const SERVICES_OFFERING: OfferingData = {
+const SERVICES_META: OfferingMeta = {
   sidebarIcon: Layers,
-  sidebarHeadline: 'Tři kompetence, jedna agentura',
-  sidebarDescription:
-    'Weby, AI a marketing pod jednou střechou. Od prvního pixelu až po měřitelné výsledky.',
-  sidebarCtaLabel: 'Všechny služby →',
   sidebarCtaHref: '/sluzby',
   items: [
-    {
-      icon: Code2,
-      title: 'Weby a e-shopy na míru',
-      subtitle: 'Návrh, vývoj a spuštění na míru',
-      href: '/sluzby/weby-na-miru',
-    },
-    {
-      icon: Settings,
-      title: 'Správa webů a e-shopů',
-      subtitle: 'Technická péče, aktualizace a rozvoj',
-      href: '/sluzby/sprava-webu-a-e-shopu',
-    },
-    {
-      icon: MessageSquare,
-      title: 'AI chatboti a automatizace',
-      subtitle: 'Chatboti, agenti a automatizace procesů',
-      href: '/sluzby/ai-chatboti',
-    },
-    {
-      icon: Search,
-      title: 'SEO a AEO',
-      subtitle: 'Organická viditelnost ve vyhledávačích i AI',
-      href: '/sluzby/seo',
-    },
-    {
-      icon: TrendingUp,
-      title: 'PPC a performance marketing',
-      subtitle: 'Placené kampaně s měřitelným výnosem',
-      href: '/sluzby/ppc-kampane',
-    },
-    {
-      icon: Target,
-      title: 'Komplexní transformace byznysu',
-      subtitle: 'Audit a plán celého digitálního stacku',
-      href: '/spoluprace',
-    },
+    { icon: Code2, href: '/sluzby/weby-na-miru' },
+    { icon: Settings, href: '/sluzby/sprava-webu-a-e-shopu' },
+    { icon: MessageSquare, href: '/sluzby/ai-chatboti' },
+    { icon: Search, href: '/sluzby/seo' },
+    { icon: TrendingUp, href: '/sluzby/ppc-kampane' },
+    { icon: Target, href: '/spoluprace' },
   ],
 };
 
 /* ---------- B · Packaged AI solutions (5 items) ---------- */
-export const SOLUTIONS_OFFERING: OfferingData = {
+const SOLUTIONS_META: OfferingMeta = {
   sidebarIcon: Package,
-  sidebarHeadline: 'AI řešení na klíč',
-  sidebarDescription:
-    'Pět připravených scénářů — od znalostního asistenta po vlastní AI infrastrukturu.',
-  sidebarCtaLabel: 'Všechna řešení →',
   sidebarCtaHref: '/reseni',
   items: [
-    {
-      icon: MessageCircle,
-      title: 'Znalostní asistent',
-      subtitle: 'AI natrénované na vaši dokumentaci',
-      href: '/reseni/znalostni-asistent',
-    },
-    {
-      icon: Boxes,
-      title: 'Autonomní agenti',
-      subtitle: 'Sekvence úkolů bez lidského zásahu',
-      href: '/reseni/agenti',
-    },
-    {
-      icon: Headphones,
-      title: 'AI podpora zákazníků',
-      subtitle: 'Chatbot 24/7, eskalace na živého agenta',
-      href: '/reseni/podpora',
-    },
-    {
-      icon: BarChart3,
-      title: 'Datové dashboardy',
-      subtitle: 'Jeden přehled pro prodeje, marketing i sklad',
-      href: '/reseni/dashboardy',
-    },
-    {
-      icon: Server,
-      title: 'AI infrastruktura',
-      subtitle: 'Platforma pro více AI scénářů najednou',
-      href: '/reseni/infrastruktura',
-    },
+    { icon: MessageCircle, href: '/reseni/znalostni-asistent' },
+    { icon: Boxes, href: '/reseni/agenti' },
+    { icon: Headphones, href: '/reseni/podpora' },
+    { icon: BarChart3, href: '/reseni/dashboardy' },
+    { icon: Server, href: '/reseni/infrastruktura' },
   ],
 };
 
 /* ---------- C · Industries we understand (8 items) ----------
-   Homepage typically shows the first 6; /odvetvi page shows all 8.
-   Order matches content/cs/strings/common.json odvetvi.items.
+   Order matches content/{locale}/strings/common.json home.offerings.industries.items.
 */
-export const INDUSTRIES_OFFERING: OfferingData = {
+const INDUSTRIES_META: OfferingMeta = {
   sidebarIcon: Building2,
-  sidebarHeadline: 'Odvětví, kterým rozumíme',
-  sidebarDescription:
-    'Neřešíme jen techniku — rozumíme procesům a tlakům v každém oboru, se kterým pracujeme.',
-  sidebarCtaLabel: 'Všechna odvětví →',
   sidebarCtaHref: '/odvetvi',
   items: [
-    {
-      icon: ShoppingCart,
-      title: 'E-commerce',
-      subtitle: 'Shopify, Shoptet, headless, CZ feedy',
-      href: '/odvetvi/ecommerce',
-    },
-    {
-      icon: Factory,
-      title: 'Výroba',
-      subtitle: 'ERP integrace, automatizace výroby',
-      href: '/odvetvi/vyroba',
-    },
-    {
-      icon: Truck,
-      title: 'Logistika',
-      subtitle: 'CMR, AETR, optimalizace tras',
-      href: '/odvetvi/logistika',
-    },
-    {
-      icon: Landmark,
-      title: 'Finance',
-      subtitle: 'Automatizace back-office, bezpečné nakládání s daty',
-      href: '/odvetvi/finance',
-    },
-    {
-      icon: Zap,
-      title: 'Energetika',
-      subtitle: 'Privátní AI nad interními daty',
-      href: '/odvetvi/energetika',
-    },
-    {
-      icon: Stethoscope,
-      title: 'Zdravotnictví',
-      subtitle: 'AI nad citlivými daty, GDPR-first',
-      href: '/odvetvi/zdravotnictvi',
-    },
-    {
-      icon: Briefcase,
-      title: 'Profesionální služby',
-      subtitle: 'Právo, audit, konzulting, účetnictví',
-      href: '/odvetvi/profesionalni-sluzby',
-    },
-    {
-      icon: Headphones,
-      title: 'Zákaznická podpora',
-      subtitle: 'Helpdesk, ticket klasifikace, agent assist',
-      href: '/odvetvi/zakaznicka-podpora',
-    },
+    { icon: ShoppingCart, href: '/odvetvi/ecommerce' },
+    { icon: Factory, href: '/odvetvi/vyroba' },
+    { icon: Truck, href: '/odvetvi/logistika' },
+    { icon: Landmark, href: '/odvetvi/finance' },
+    { icon: Zap, href: '/odvetvi/energetika' },
+    { icon: Stethoscope, href: '/odvetvi/zdravotnictvi' },
+    { icon: Briefcase, href: '/odvetvi/profesionalni-sluzby' },
+    { icon: Headphones, href: '/odvetvi/zakaznicka-podpora' },
   ],
 };
 
-/* Convenience map for the mega-menu trigger keys. */
-export const OFFERING_MAP = {
-  services: SERVICES_OFFERING,
-  solutions: SOLUTIONS_OFFERING,
-  industries: INDUSTRIES_OFFERING,
-} as const;
+const META_MAP: Record<OfferingKey, OfferingMeta> = {
+  services: SERVICES_META,
+  solutions: SOLUTIONS_META,
+  industries: INDUSTRIES_META,
+};
 
-export type OfferingKey = keyof typeof OFFERING_MAP;
+/** Sidebar icons exposed for direct re-use (locale-independent). */
+export const SERVICES_SIDEBAR_ICON = SERVICES_META.sidebarIcon;
+export const SOLUTIONS_SIDEBAR_ICON = SOLUTIONS_META.sidebarIcon;
+export const INDUSTRIES_SIDEBAR_ICON = INDUSTRIES_META.sidebarIcon;
 
-/* ============================================================
-   Icon arrays — used where `t.raw('home.offerings.<section>.items')`
-   is bound to icons by index. Order matches items[] above.
-   ============================================================ */
-export const SERVICES_ICONS: ReadonlyArray<LucideIcon> = SERVICES_OFFERING.items.map(
-  (it) => it.icon,
-);
-export const SOLUTIONS_ICONS: ReadonlyArray<LucideIcon> = SOLUTIONS_OFFERING.items.map(
-  (it) => it.icon,
-);
-export const INDUSTRIES_ICONS: ReadonlyArray<LucideIcon> = INDUSTRIES_OFFERING.items.map(
-  (it) => it.icon,
-);
+/**
+ * Client-only hook: merges the locale-independent icon/href meta with
+ * translated copy from `home.offerings.<key>` for the active locale.
+ */
+export function useOfferingData(key: OfferingKey): OfferingData {
+  const t = useTranslations(`home.offerings.${key}`);
+  const tAll = useTranslations('home.offerings');
+  const meta = META_MAP[key];
+  const items = t.raw('items') as ReadonlyArray<{ title: string; subtitle: string }>;
 
-/* Sidebar icons exposed for direct re-use on the homepage. */
-export const SERVICES_SIDEBAR_ICON = SERVICES_OFFERING.sidebarIcon;
-export const SOLUTIONS_SIDEBAR_ICON = SOLUTIONS_OFFERING.sidebarIcon;
-export const INDUSTRIES_SIDEBAR_ICON = INDUSTRIES_OFFERING.sidebarIcon;
+  return {
+    sidebarIcon: meta.sidebarIcon,
+    sidebarHeadline: t('headline'),
+    sidebarDescription: t('description'),
+    sidebarCtaLabel: tAll('ctaAll'),
+    sidebarCtaHref: meta.sidebarCtaHref,
+    items: meta.items.map((m, i) => ({
+      icon: m.icon,
+      href: m.href,
+      title: items[i]?.title ?? '',
+      subtitle: items[i]?.subtitle ?? '',
+    })),
+  };
+}
+
+/** Convenience hook returning all three offering groups keyed like the old OFFERING_MAP. */
+export function useOfferingsMap(): Record<OfferingKey, OfferingData> {
+  return {
+    services: useOfferingData('services'),
+    solutions: useOfferingData('solutions'),
+    industries: useOfferingData('industries'),
+  };
+}

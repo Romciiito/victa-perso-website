@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   Activity,
   BarChart3,
@@ -84,10 +84,12 @@ const MARKETING_ICONS: ReadonlyArray<LucideIcon> = [
 export function SluzbyBody() {
   const t = useTranslations('sluzby');
   const tCta = useTranslations('common.ctaBand');
+  const tCommon = useTranslations('common');
+  const locale = useLocale();
   const tRaw = (k: string) => t.raw(k) as unknown;
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: '/cs/sluzby',
+    sourcePage: `/${locale}/sluzby`,
   });
 
   const itDev = tRaw('categories.itDev') as Category;
@@ -105,13 +107,14 @@ export function SluzbyBody() {
           { label: aiData.label, href: '#ai-data' },
           { label: marketing.label, href: '#marketing' },
         ]}
+        anchorNavLabel={tCommon('pageSectionsNavLabel')}
       />
 
       {/* ---- IT & Vývoj ---- */}
       <section id="it-vyvoj" className="relative px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[1400px]">
           <SectionHeader
-            eyebrow="01 · IT a vývoj"
+            eyebrow={t('sectionEyebrows.itDev')}
             title={`${itDev.label}.`}
             lead={itDev.intro}
           />
@@ -128,7 +131,7 @@ export function SluzbyBody() {
       >
         <div className="mx-auto max-w-[1400px]">
           <SectionHeader
-            eyebrow="02 · AI a data"
+            eyebrow={t('sectionEyebrows.aiData')}
             title={`${aiData.label}.`}
             lead={aiData.intro}
           />
@@ -142,7 +145,7 @@ export function SluzbyBody() {
       <section id="marketing" className="relative px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[1400px]">
           <SectionHeader
-            eyebrow="03 · marketing"
+            eyebrow={t('sectionEyebrows.marketing')}
             title={`${marketing.label}.`}
             lead={marketing.intro}
           />
@@ -157,7 +160,7 @@ export function SluzbyBody() {
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 md:grid-cols-[6fr_5fr] md:gap-16">
           <div>
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-              04 · další krok
+              {t('ctaEyebrow')}
             </span>
             <h2 className="display mt-5 max-w-[18ch] text-[clamp(40px,5vw,72px)] text-ink">
               {t('ctaLine')}

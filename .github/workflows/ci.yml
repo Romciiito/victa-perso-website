@@ -210,3 +210,6 @@ jobs:
 
       - name: Run Czech typography lint
         run: pnpm lint:cs
+
+      - name: Run i18n parity check (CS = EN leaf keys)
+        run: pnpm lint:i18n

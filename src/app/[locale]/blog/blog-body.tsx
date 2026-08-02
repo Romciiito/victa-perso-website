@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { motion, type Variants } from 'framer-motion';
 import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
@@ -16,9 +16,11 @@ const REVEAL: Variants = {
 export function BlogBody() {
   const t = useTranslations('blog');
   const tCta = useTranslations('common.ctaBand');
+  const tCommon = useTranslations('common');
+  const locale = useLocale() === 'en' ? ('en' as const) : ('cs' as const);
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: '/cs/blog',
+    sourcePage: `/${locale}/blog`,
   });
 
   return (
@@ -30,12 +32,13 @@ export function BlogBody() {
         sub={t('hero.subhead')}
         ctas={[
           { label: tCta('primaryCta'), onClick: openCal, primary: true },
-          { label: 'Přihlásit se k odběru', href: '#newsletter' },
+          { label: t('hero.subscribeCta'), href: '#newsletter' },
         ]}
         anchors={[
-          { label: 'Připravujeme', href: '#coming-soon' },
-          { label: 'Newsletter', href: '#newsletter' },
+          { label: t('anchors.comingSoon'), href: '#coming-soon' },
+          { label: t('anchors.newsletter'), href: '#newsletter' },
         ]}
+        anchorNavLabel={tCommon('pageSectionsNavLabel')}
       />
 
       {/* ---- 01 · Připravujeme ---- */}
@@ -102,7 +105,7 @@ export function BlogBody() {
             <div
               className="w-full max-w-[520px] rounded-card border border-border bg-bg px-8 py-10"
             >
-              <NewsletterSignup locale="cs" formLocation="blog" />
+              <NewsletterSignup locale={locale} formLocation="blog" />
             </div>
           </motion.div>
         </div>

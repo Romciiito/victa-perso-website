@@ -46,6 +46,11 @@ export async function generateMetadata({
   // (audit P1-03). POZOR: `images` tady být MUSÍ — explicitní `openGraph`
   // objekt přebije file-based auto-injekci z opengraph-image.tsx (gate nález,
   // Vlna 3B: bez tohoto řádku nemá žádná stránka og:image).
+  //
+  // EN routy už NEJSOU noindex (Vlna 2b-EN, vision §10) — EN dosáhla plné
+  // obsahové parity s CS, takže podmínka "thin content → noindex" (§14 bod 7)
+  // odpadá. EN se indexuje bez vlastní SEO investice (žádný keyword research
+  // ani obsahová expanze pro EN — jen parita faktů s CS).
   return {
     metadataBase: new URL(site.url),
     title: t('title'),
@@ -60,9 +65,6 @@ export async function generateMetadata({
       card: 'summary_large_image',
       images: ['/opengraph-image'],
     },
-    // EN stub routy jsou thin content — noindex do dosažení EN parity (vision §10, §14 bod 7).
-    // Routy zůstávají crawlovatelné (robots.txt je neblokuje), jinak by se noindex nepřečetl.
-    ...(locale === 'en' ? { robots: { index: false, follow: false } } : {}),
   };
 }
 
@@ -92,10 +94,13 @@ export default async function LocaleLayout({
     >
       <head>
         <CookiebotScript />
-        {/* Organization + WebSite are site-wide identity — emitted once on the
-            cs locale only (audit P0-23). EN is still a thin stub (noindex), so
-            it doesn't need its own copy; page-level schema (Service, FAQPage,
-            Breadcrumb, LocalBusiness) is added per-route on the cs tree. */}
+        {/* Organization + WebSite are site-wide identity — emitted once, on the
+            cs locale only, BY DESIGN (gate Vlna 2b-EN): one canonical entity
+            beats a per-language duplicate that would fragment the identity for
+            crawlers. EN pages are fully indexable since Vlna 2b-EN and carry
+            their own page-level schema (Service, FAQPage, Breadcrumb,
+            LocalBusiness) — Service.provider embeds a minimal Organization, so
+            EN is never entirely without identity context. */}
         {locale === 'cs' && (
           <JsonLd
             data={[

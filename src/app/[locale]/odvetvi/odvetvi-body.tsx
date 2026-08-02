@@ -1,27 +1,28 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
 import { KineticList, type KineticItem } from '@/components/sections/kinetic-list';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
 import { useCalModal } from '@/components/booking/use-cal-modal';
 import { Link } from '@/i18n/navigation';
-import { INDUSTRIES_OFFERING } from '@/lib/offerings-data';
-
-const KINETIC_ITEMS: ReadonlyArray<KineticItem> = INDUSTRIES_OFFERING.items.map((it) => ({
-  icon: it.icon,
-  title: it.title,
-  subtitle: it.subtitle,
-  href: it.href,
-}));
+import { useOfferingData } from '@/lib/offerings-data';
 
 export function OdvetviBody() {
   const t = useTranslations('odvetvi');
   const tCta = useTranslations('common.ctaBand');
+  const locale = useLocale();
+  const industriesOffering = useOfferingData('industries');
+  const kineticItems: ReadonlyArray<KineticItem> = industriesOffering.items.map((it) => ({
+    icon: it.icon,
+    title: it.title,
+    subtitle: it.subtitle,
+    href: it.href,
+  }));
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: '/cs/odvetvi',
+    sourcePage: `/${locale}/odvetvi`,
   });
 
   return (
@@ -36,11 +37,11 @@ export function OdvetviBody() {
       <section id="industries" className="relative px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[1400px]">
           <SectionHeader
-            eyebrow="01 · odvětví"
+            eyebrow={t('sectionEyebrow')}
             title={t('sectionTitle')}
             lead={t('intro')}
           />
-          <KineticList items={KINETIC_ITEMS} />
+          <KineticList items={kineticItems} />
         </div>
       </section>
 
@@ -49,7 +50,7 @@ export function OdvetviBody() {
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 md:grid-cols-[6fr_5fr] md:gap-16">
           <div>
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-              02 · další krok
+              {t('ctaEyebrow')}
             </span>
             <h2 className="display mt-5 max-w-[18ch] text-[clamp(40px,5vw,72px)] text-ink">
               {t('ctaLine')}

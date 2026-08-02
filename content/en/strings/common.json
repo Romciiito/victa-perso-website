@@ -1,13 +1,29 @@
 {
   "site": {
     "title": "VICTA — apps, AI and systems for business growth",
-    "description": "VICTA builds apps, AI and business systems for mid-sized and larger companies in Czechia and Slovakia — with a clear process from intent to operations."
+    "description": "VICTA builds apps, AI and business systems for mid-size and larger companies in Czechia and Slovakia—with a clear process from intent to operations."
   },
   "common": {
     "learnMore": "Learn more →",
     "backHome": "Back to homepage",
     "version": "v 0.1.0",
-    "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1"
+    "status": "VICTA DIGITAL · Hradec Králové",
+    "ctaBand": {
+      "eyebrow": "next step",
+      "headline": "A free call comes first.",
+      "bodyService": "30 minutes, no strings attached. We'll pin down what you actually need and recommend the next step—for larger projects, that can mean a paid audit of your whole stack.",
+      "bodySolution": "30 minutes, no strings attached. We'll talk through whether {name} fits your problem and recommend the next step—for larger projects, that can mean a paid audit of your whole stack.",
+      "bodyIndustry": "30 minutes, no strings attached. We'll talk through what you're dealing with in your industry and recommend the next step—for larger projects, that can mean a paid audit of your whole stack.",
+      "primaryCta": "Book a consultation",
+      "auditLink": "Or go straight to a paid audit →"
+    },
+    "breadcrumbHome": "Home",
+    "pageSectionsNavLabel": "Page sections",
+    "notFound": {
+      "badge": "404 error",
+      "headline": "Page not found.",
+      "body": "This address doesn't exist here, or it moved. Try the homepage, or just write to us directly."
+    }
   },
   "nav": {
     "tag": "/ digital agency",
@@ -25,10 +41,10 @@
   },
   "footer": {
     "tagline": "Apps, AI and systems that pay off. One team from intent to operations.",
-    "bookCall": "Book a call →",
+    "bookCall": "Book a consultation →",
     "newsletterHeading": "Newsletter",
     "newsletterIntro": "Once every few weeks. No spam, just practical insights.",
-    "status": "STATUS · v 0.1.0 · region eu-central-1",
+    "status": "VICTA DIGITAL s.r.o. · Hradec Králové",
     "servicesHeading": "Services",
     "companyHeading": "Company",
     "legalHeading": "Legal",
@@ -47,147 +63,1359 @@
       "cookies": "Cookie policy"
     },
     "bottom": {
-      "copyright": "© 2026 Victa Digital s.r.o.",
-      "ico": "VAT ID [TBD]",
-      "city": "Prague",
+      "copyright": "© VICTA DIGITAL s.r.o.",
+      "ico": "Company ID 28859511",
+      "city": "Hradec Králové",
       "country": "Czech Republic"
     }
   },
   "home": {
+    "marquee": [
+      "READY TO GROW",
+      "TRANSPARENCY",
+      "PARTNERSHIP",
+      "AI-NATIVE",
+      "CRAFT",
+      "AI-augmented team",
+      "Under one roof",
+      "Hradec Králové"
+    ],
+    "sections": {
+      "services": { "eyebrow": "01 · services", "ctaLabel": "All services" },
+      "solutions": { "eyebrow": "02 · solutions", "ctaLabel": "All solutions" },
+      "industries": { "eyebrow": "03 · industries", "ctaLabel": "All industries" }
+    },
     "hero": {
-      "status": "STATUS · v 0.1.0 · published 2026-05-07 · region eu-central-1",
-      "headline": "Partner, not vendor.",
-      "subhead": "We build a system with you that grows for years — not just a site that's outdated by next year.",
-      "ctaPrimary": "Comprehensive audit from €800",
-      "ctaGhost": "Book a no-strings introduction"
-    },
-    "stub": {
-      "label": "ENGLISH STUB",
-      "headline": "We're a Czech/Slovak digital agency.",
-      "body": "VICTA is a small AI-augmented digital agency working primarily in the Czech and Slovak markets. The full English site will land with our international expansion. Until then, the team handles English-language clients case-by-case.",
-      "contactHeadline": "Get in touch — in English.",
-      "contactBody": "We're happy to discuss projects in English. Send us a note and we'll come back within 1 business day.",
-      "email": "hello@victaagency.com",
-      "fullCs": "View the full site in Czech →"
-    },
-    "finalCta": {
-      "headline": "Let's get to know each other.",
-      "subhead": "30 minutes, no commitment. We'll discuss your business and tell you straight whether VICTA can help.",
-      "cta": "Book consultation →"
+      "status": "VICTA · Digital partner for business growth",
+      "headline": "We build apps, AI and systems that pay off for your business.",
+      "tagsWeb": "Websites",
+      "tagsEshop": "E-commerce",
+      "tagsMarketing": "Marketing",
+      "tagsSprava": "Maintenance",
+      "tagsAi": "AI processes",
+      "sub": "For owners and directors of mid-size and larger companies tackling digitalization, internal systems and automation. No promises without a plan—every phase has a clear deliverable and deadline.",
+      "ctaPrimary": "Book a consultation",
+      "ctaGhost": "How we work together →"
     },
     "offerings": {
       "ctaAll": "View all →",
       "services": {
-        "headline": "Services for your AI journey",
-        "description": "From audit and strategy through data preparation to operations and governance.",
+        "headline": "Three competencies, one agency",
+        "description": "Websites, AI and marketing under one roof. From the first pixel to measurable results.",
         "ctaHref": "/sluzby",
         "items": [
           {
-            "title": "AI Discovery",
-            "subtitle": "Audit and potential diagnostics",
-            "href": "/sluzby#ai-discovery"
+            "title": "Custom websites & e-commerce",
+            "subtitle": "Custom design, development and launch",
+            "href": "/sluzby#itDev"
           },
           {
-            "title": "AI Strategy",
-            "subtitle": "Implementation and deployment plan",
-            "href": "/sluzby#ai-strategie"
+            "title": "Website & e-commerce maintenance",
+            "subtitle": "Technical care, updates and ongoing development",
+            "href": "/sluzby#itDev"
           },
           {
-            "title": "Data Platform",
-            "subtitle": "Data readiness, modeling, processing",
-            "href": "/sluzby#datova-platforma"
+            "title": "AI chatbots and automation",
+            "subtitle": "Chatbots, agents and process automation",
+            "href": "/sluzby#aiData"
           },
           {
-            "title": "AI-driven Development",
-            "subtitle": "Custom development with AI",
-            "href": "/sluzby#ai-vyvoj"
+            "title": "SEO and AEO",
+            "subtitle": "Organic visibility in search engines and AI",
+            "href": "/sluzby#marketing"
           },
           {
-            "title": "AI Governance",
-            "subtitle": "Security and compliance",
-            "href": "/sluzby#ai-governance"
+            "title": "PPC and performance marketing",
+            "subtitle": "Paid campaigns with a measurable return",
+            "href": "/sluzby#marketing"
           },
           {
-            "title": "Operations & MLOps",
-            "subtitle": "Monitoring and optimization",
-            "href": "/sluzby#mlops"
+            "title": "Comprehensive business transformation",
+            "subtitle": "An audit and plan for your entire digital stack",
+            "href": "/spoluprace"
           }
         ]
       },
       "solutions": {
         "headline": "Turnkey AI solutions",
-        "description": "From knowledge assistants to your own AI infrastructure.",
+        "description": "Five ready-made scenarios—from a knowledge assistant to your own AI infrastructure.",
         "ctaHref": "/reseni",
         "items": [
           {
-            "title": "GenAI and RAG assistants",
-            "subtitle": "Enterprise knowledge assistants",
-            "href": "/reseni#genai-rag"
+            "title": "Knowledge assistant",
+            "subtitle": "AI trained on your documentation",
+            "href": "/reseni/knowledge"
           },
           {
-            "title": "Autonomous AI agents",
-            "subtitle": "Back-office automation",
-            "href": "/reseni#agenti"
+            "title": "Autonomous agents",
+            "subtitle": "Task sequences without human intervention",
+            "href": "/reseni/agents"
           },
           {
             "title": "AI customer support",
-            "subtitle": "Chatbots and voicebots 24/7",
-            "href": "/reseni#zakaznicka-podpora"
+            "subtitle": "24/7 chatbot, escalation to a live agent",
+            "href": "/reseni/support"
           },
           {
-            "title": "Predictive analytics",
-            "subtitle": "Dashboards and predictions",
-            "href": "/reseni#prediktivni-analytika"
+            "title": "Data dashboards",
+            "subtitle": "One view for sales, marketing and warehouse",
+            "href": "/reseni/dashboards"
           },
           {
-            "title": "AI Infrastructure",
-            "subtitle": "Own on-premise AI servers",
-            "href": "/reseni#infrastruktura"
+            "title": "AI infrastructure",
+            "subtitle": "A platform for multiple AI scenarios at once",
+            "href": "/reseni/infra"
           }
         ]
       },
       "industries": {
-        "headline": "AI solutions for your industry",
-        "description": "Industry-specific AI implementations with measurable impact.",
+        "headline": "Industries we understand",
+        "description": "We don't just solve the technology—we understand the processes and pressures in every industry we work with.",
         "ctaHref": "/odvetvi",
         "items": [
           {
-            "title": "E-commerce & retail",
-            "subtitle": "Personalization and sales automation",
-            "href": "/odvetvi#ecommerce"
+            "title": "E-commerce",
+            "subtitle": "Shopify, Shoptet, headless, CZ feeds",
+            "href": "/odvetvi/ecommerce"
           },
           {
-            "title": "Finance & Fintech",
-            "subtitle": "Automation and risk analysis",
-            "href": "/odvetvi#finance"
+            "title": "Manufacturing",
+            "subtitle": "ERP integration, production automation",
+            "href": "/odvetvi/vyroba"
           },
           {
-            "title": "Healthcare & medtech",
-            "subtitle": "Diagnostics, clinical research and distribution",
-            "href": "/odvetvi#zdravotnictvi"
+            "title": "Logistics",
+            "subtitle": "CMR, AETR, route optimization",
+            "href": "/odvetvi/logistika"
           },
           {
-            "title": "Manufacturing & logistics",
-            "subtitle": "Predictive maintenance and optimization",
-            "href": "/odvetvi#vyroba"
+            "title": "Finance",
+            "subtitle": "Back-office automation, secure data handling",
+            "href": "/odvetvi/finance"
           },
           {
-            "title": "Energy & utilities",
-            "subtitle": "Consumption prediction and smart grids",
-            "href": "/odvetvi#energetika"
+            "title": "Energy",
+            "subtitle": "Private AI over internal data",
+            "href": "/odvetvi/energetika"
           },
           {
-            "title": "Customer support & CX",
-            "subtitle": "Chatbots and voicebots 24/7",
-            "href": "/odvetvi#cx"
+            "title": "Healthcare",
+            "subtitle": "AI over sensitive data, GDPR-first",
+            "href": "/odvetvi/zdravotnictvi"
           },
           {
             "title": "Professional services",
-            "subtitle": "Law, audit, consulting and education",
-            "href": "/odvetvi#profesionalni-sluzby"
+            "subtitle": "Law, audit, consulting, accounting",
+            "href": "/odvetvi/profesionalni-sluzby"
+          },
+          {
+            "title": "Customer support",
+            "subtitle": "Helpdesk, ticket classification, agent assist",
+            "href": "/odvetvi/zakaznicka-podpora"
           }
         ]
       }
+    },
+    "proof": {
+      "eyebrow": "04 · how we work",
+      "headline": "A process built on deliverables, not promises.",
+      "lead": "Every phase has a clear deliverable, deadline and guarantee. No step you have to take on faith.",
+      "cards": [
+        {
+          "title": "The audit is never wasted money",
+          "body": "We deduct the audit fee from your project budget if you continue with us afterward."
+        },
+        {
+          "title": "A small team, no overhead",
+          "body": "Decisions are made by the people actually working on your project—not billed layers of management."
+        },
+        {
+          "title": "We don't disappear after launch",
+          "body": "Monthly reporting and direct contact until the system runs the way it should."
+        }
+      ],
+      "cta": "Book a consultation"
+    }
+  },
+  "spoluprace": {
+    "hero": {
+      "status": "/en/spoluprace",
+      "headline": "The audit is a product. Not a foot in the door.",
+      "subhead": "A paid audit is standalone strategic work with its own deliverable—not an introductory meeting that leads to a pitch. Have one specific project to solve? A free 30-minute call is enough."
+    },
+    "marquee": [
+      "FREE CONSULTATION",
+      "PROPOSAL WITHIN 2 DAYS",
+      "NO COMMITMENT",
+      "AUDIT WITH A DELIVERABLE"
+    ],
+    "heroExtraCta": "See the audit tiers ↓",
+    "anchors": {
+      "paths": "Two paths",
+      "audit": "Audit",
+      "start": "How to start",
+      "faq": "FAQ"
+    },
+    "sectionEyebrows": {
+      "paths": "01 · paths",
+      "audit": "02 · audit",
+      "start": "03 · how it works",
+      "faq": "04 · faq",
+      "cta": "05 · next step"
+    },
+    "scopingEyebrow": "free consultation",
+    "finalCta": {
+      "heading": "Let's start where it makes sense.",
+      "servicesLink": "See our services"
+    },
+    "paths": {
+      "heading": "Two paths, one rule: we always start by listening.",
+      "subhead": "Pick the one that matches what you need solved.",
+      "audit": {
+        "label": "PATH 1 · PAID AUDIT",
+        "headline": "Comprehensive business transformation",
+        "body": "For when you want to overhaul your entire digital stack—website, marketing, integrations, AI. The audit is paid because it's real strategic work, not a sales call. After the audit, you decide whether we continue.",
+        "fit": "Fits: e-commerce with growing complexity, companies with a broken marketing-tech stack, engagements above 200,000 Kč.",
+        "cta": "Choose a tier →"
+      },
+      "scoping": {
+        "label": "PATH 2 · FREE CONSULTATION",
+        "headline": "A specific, one-off project",
+        "body": "For when you have a concrete brief—a chatbot, one integration, an audit of a single campaign. No audit needed. 30 minutes on a call, we'll see if we're a fit, and send a proposal.",
+        "fit": "Fits: one-off development projects, AI chatbots, integrations, standalone campaigns.",
+        "cta": "Free consultation →"
+      }
+    },
+    "tiers": {
+      "heading": "Audit—three depth levels",
+      "subhead": "Every tier includes the same deliverables: a PDF report, an Excalidraw diagram, Figma artifacts, a personal consultation. Scope and depth are what differ.",
+      "tier1": {
+        "tier": "Tier 1",
+        "badge": "Recommended",
+        "name": "Comprehensive enterprise audit",
+        "ideal": "For companies tackling the entire digital stack—website, e-commerce, marketing, integrations, AI. An in-depth analysis of everything.",
+        "duration": "1–3 weeks",
+        "sessions": "3–4 sessions",
+        "price": "20,000–90,000 Kč",
+        "priceEur": "€800–€3,600",
+        "deliverables": [
+          "In-depth technical audit",
+          "Business process audit",
+          "Marketing and content audit",
+          "AI integration proposal",
+          "PDF report + Figma + Excalidraw",
+          "90-minute in-person findings presentation"
+        ],
+        "cta": "Book Tier 1 →"
+      },
+      "tier2": {
+        "tier": "Tier 2",
+        "name": "Domain audit",
+        "ideal": "For companies that want in-depth coverage of one domain—a complete marketing strategy, e-commerce strategy, AI strategy or technical stack.",
+        "duration": "a few days–2 weeks",
+        "sessions": "2 sessions",
+        "price": "10,000–55,000 Kč",
+        "priceEur": "€400–€2,200",
+        "deliverables": [
+          "One domain: tech, business, marketing or AI",
+          "In-depth analysis of the chosen domain",
+          "Concrete recommendations and a roadmap",
+          "PDF report + Figma + Excalidraw",
+          "60-minute in-person findings presentation"
+        ],
+        "cta": "Book Tier 2 →"
+      },
+      "tier3": {
+        "tier": "Tier 3",
+        "name": "Strategy session",
+        "ideal": "For companies with one specific question or problem. No long report—just a structured deliverable you can use right away.",
+        "duration": "a few days–2 weeks",
+        "sessions": "1 session (90 min)",
+        "price": "4,000–25,000 Kč",
+        "priceEur": "€160–€1,000",
+        "deliverables": [
+          "1–3 hour session",
+          "A specific problem or question",
+          "Structured deliverable (Excalidraw + notes)",
+          "No long report",
+          "No additional in-person presentation"
+        ],
+        "cta": "Book Tier 3 →"
+      },
+      "note": "The exact price depends on project scope—we're happy to pin it down in the kickoff session. Bonus for Tier 1 and Tier 2: we deduct the audit fee from your project budget if you continue into implementation with us. The audit is never a sunk cost. Tier 3 (strategy session) is always a standalone product without this rule."
+    },
+    "invoice": {
+      "heading": "How payment works",
+      "subhead": "No cards, no checkout. A standard B2B invoicing flow.",
+      "steps": [
+        {
+          "num": "01",
+          "title": "You book a slot",
+          "body": "Pick a time that works for you in Cal.com. You choose your audit tier when you book."
+        },
+        {
+          "num": "02",
+          "title": "You get an invoice",
+          "body": "You'll receive an invoice by email within 1 business day. A standard Czech invoice—company ID, VAT number, everything in order."
+        },
+        {
+          "num": "03",
+          "title": "You pay by bank transfer",
+          "body": "Bank transfer within 7 days. Once payment arrives, your slot is confirmed."
+        },
+        {
+          "num": "04",
+          "title": "We start together",
+          "body": "Kickoff session on the day of your slot. No surprises—you know who we are, what's about to happen, and what you'll get."
+        }
+      ]
+    },
+    "scoping": {
+      "heading": "Free 30-minute consultation",
+      "body": "For clients with a specific, one-off project—a chatbot, an AI integration, one-off development, a standalone campaign. No audit needed. We'll talk through what you're solving and send a proposal within 2 days.",
+      "what": "What happens on the call",
+      "items": [
+        "You tell us what you want solved",
+        "We tell you whether—and how—we can do it",
+        "We agree on scope and a ballpark price",
+        "If it's a fit, we send a formal proposal within 2 days"
+      ],
+      "cta": "Book a consultation"
+    },
+    "faq": {
+      "heading": "Frequently asked questions",
+      "lead": "The most common questions before you decide.",
+      "items": [
+        {
+          "q": "What actually happens in the first session?",
+          "a": "We listen. No slide decks, no pitch. We want to understand how your business works, where it's straining, and what you want to change. Only then do we propose how to move forward."
+        },
+        {
+          "q": "Am I obligated to continue after the audit?",
+          "a": "No. The audit is a standalone product. After it, you get a plan you can implement yourself, with us, or with anyone else. That said, we hope our work convinces you to keep going with us."
+        },
+        {
+          "q": "What if I don't want to continue with you after the audit?",
+          "a": "The audit fee stands—that's fair, since you received a plan, diagrams and recommendations usable anywhere. But if you continue into implementation with us, we deduct the audit fee (Tier 1 or Tier 2) from your project budget. Tier 3—the strategy session—is a standalone product without this rule."
+        },
+        {
+          "q": "How long until I get results?",
+          "a": "Tier 1: 1–3 weeks. Tier 2: a few days to 2 weeks. Tier 3: a few days to 2 weeks. It depends on complexity and your availability for sessions."
+        },
+        {
+          "q": "Can I just pick one specific service without an audit?",
+          "a": "Yes. If you have a clear brief—a chatbot, an integration, a standalone campaign—book a free 30-minute consultation. An audit only makes sense for comprehensive transformations."
+        },
+        {
+          "q": "Why are prices ranges instead of a fixed amount?",
+          "a": "Because the scope of an audit depends on company size, the number of domains, and the depth of analysis. We'll pin down the exact price in the kickoff session, based on what you actually need."
+        },
+        {
+          "q": "How does payment work?",
+          "a": "Invoice → bank transfer → confirmed booking. A standard B2B flow. No cards, no online checkout. We describe it in detail above, in the \"How payment works\" section."
+        },
+        {
+          "q": "What if I don't have budget to continue after the audit?",
+          "a": "No problem. You get the full audit—plan, diagrams, recommendations. If you come back to us later, we already have the context from the audit and pick up where we left off."
+        },
+        {
+          "q": "Do you work with small companies and startups?",
+          "a": "Yes, but with realistic expectations. If a project is under 50,000 Kč, a free consultation usually makes more sense than a paid audit. We'll help you decide."
+        }
+      ]
+    }
+  },
+  "sluzby": {
+    "hero": {
+      "status": "/en/sluzby",
+      "headline": "Development, AI and marketing under one roof",
+      "subhead": "Three competencies—code, AI and marketing—one team. 18 services spanning the entire digital stack."
+    },
+    "sectionEyebrows": {
+      "itDev": "01 · IT & development",
+      "aiData": "02 · AI & data",
+      "marketing": "03 · marketing"
+    },
+    "ctaEyebrow": "04 · next step",
+    "detail": {
+      "eyebrowFallback": "service",
+      "whoEyebrow": "who it's for",
+      "whoHeading": "Who this makes sense for.",
+      "faqEyebrow": "FAQ",
+      "faqHeading": "Questions we usually get.",
+      "backLink": "All services"
+    },
+    "categories": {
+      "itDev": {
+        "label": "IT & DEVELOPMENT",
+        "intro": "We build fast, server-efficient, SEO-ready stacks. Next.js, Shopify, headless CMS—whatever you actually need, not whatever's trendy.",
+        "items": [
+          {
+            "name": "Custom websites",
+            "desc": "A template website costs a company leads before the owner even notices—slow load times drive visitors away within seconds, and AI search engines simply can't see sites without structured data. We build marketing websites, corporate presences and landing pages as a business tool, not a business card: Next.js or Astro, deployed on Vercel, without risky plugin bloat. The result—speed and WCAG 2.1 AA accessibility as the standard, not an add-on: fewer abandoned visits, readability for AI assistants, and a presence that finally matches the size of your company.",
+            "fit": "Fits: mid-size companies with 50–300 employees who have outgrown a template site and need a presence that matches their company's size.",
+            "faq": [
+              {
+                "q": "Why Next.js or Astro, not WordPress?",
+                "a": "Speed and security. Statically generated or server-rendered pages carry no risky plugin stack. Speed is our standard, not an exception. We offer WordPress only where a client explicitly needs it—for example, for complex editorial content."
+              },
+              {
+                "q": "How long does a custom website take to build?",
+                "a": "A standard corporate website: 4–8 weeks from an approved design. It depends on the number of pages, how quickly you deliver copy and images, and how many revision rounds we go through. We propose an exact timeline after the kickoff consultation."
+              }
+            ],
+            "slug": "weby-na-miru",
+            "categorySlug": "itDev"
+          },
+          {
+            "name": "Custom e-commerce",
+            "desc": "An off-the-shelf e-commerce platform holds up only until a company outgrows its limits—a custom warehouse, price list or integration the template can't handle. We build on Shopify Plus or Medusa.js, connected to Pohoda, Helios, Zásilkovna and payment gateways—API-first, monitored, documented.",
+            "fit": "Fits: e-commerce businesses with their own warehouse, ERP, or integration requirements that an off-the-shelf platform can't meet without compromise.",
+            "faq": [
+              {
+                "q": "When does Shopify Plus make sense, and when does Medusa.js?",
+                "a": "We choose Shopify Plus where a fast launch is the priority and you're happy relying on an app ecosystem. Medusa.js where you need full control over the code, specific workflows, or connections to internal systems without a SaaS platform's limits. We give a recommendation after analyzing your operation."
+              },
+              {
+                "q": "Can you connect our e-commerce store to Pohoda or Helios?",
+                "a": "Yes—that's our standard, not an upsell. Connections to Pohoda, Helios, Zásilkovna, PPL and Czech Post are ready-made integrations we adapt to your workflow. We don't start from zero."
+              }
+            ],
+            "slug": "e-shopy-na-miru",
+            "categorySlug": "itDev"
+          },
+          {
+            "name": "Landing pages & microsites",
+            "desc": "A fast website for a product launch or campaign microsite—2–4 weeks from brief to launch, with its own URL, design and analytics, independent of IT. We build on Next.js or Astro, always SEO- and AEO-ready, for when the main website's approval process is too slow.",
+            "fit": "Fits: small companies and startups with a clear goal, sole proprietors, and marketing teams at larger companies running a campaign or product microsite.",
+            "faq": [
+              {
+                "q": "Will I really have a finished site in 2–4 weeks?",
+                "a": "Yes—if you deliver the brief, copy and visual assets on time. Delays almost always come from the content side, not development. We'll help with the brief and copywriting if you need it."
+              },
+              {
+                "q": "Is a landing page suitable for bigger campaigns too?",
+                "a": "Yes—that's exactly what microsites are for: a standalone project outside the main website's approval chain, so marketing launches a campaign on the campaign's timeline, not the IT backlog's."
+              },
+              {
+                "q": "How is a landing page different from a custom website?",
+                "a": "Scope and time. A landing page typically has 1–6 pages and one clearly bounded goal. A custom website covers a full corporate presence, including a blog, careers and more complex navigation. Price and timeline scale accordingly."
+              }
+            ],
+            "slug": "prezentacni-weby-a-microsite",
+            "categorySlug": "itDev"
+          },
+          {
+            "name": "Website & e-commerce maintenance",
+            "desc": "A website without maintenance decays quietly—technical debt grows, performance drops, until an incident hits and the customer notices first. Maintenance covers SEO, GEO and AEO updates, technical upkeep, security patches, and performance monitoring with monthly reporting.",
+            "fit": "Fits: companies that just finished a project and don't want the site to stagnate, as well as new clients looking for a long-term digital partner without in-house IT.",
+            "faq": [
+              {
+                "q": "What exactly does monthly maintenance include?",
+                "a": "Technical upkeep and security patches, ongoing SEO and AEO updates, performance and uptime monitoring, content hygiene—stale pages, broken links, metatag updates. Plus direct access to us for a consultation whenever something comes up."
+              },
+              {
+                "q": "Do you have to have built our website to maintain it?",
+                "a": "No. We take over maintenance for sites built elsewhere too—after a short technical review, so we understand the architecture and spot the risks. The result is the same: a website that works and keeps growing."
+              },
+              {
+                "q": "How is maintenance different from a one-off project?",
+                "a": "A one-off project solves a specific problem and ends. Maintenance is an ongoing relationship—we track trends, propose improvements, and respond to changes in the environment without you having to know about every step."
+              }
+            ],
+            "slug": "sprava-webu-a-e-shopu",
+            "categorySlug": "itDev"
+          },
+          {
+            "name": "Systems integration",
+            "desc": "Your accountant retypes orders from your e-commerce store into Pohoda by hand, the warehouse tracks different numbers than the CRM—nobody's sure which version of the data is right. We connect your warehouse, accounting, ERP, CRM, payment gateways and shipping into one API-first flow, monitored and documented.",
+            "fit": "Fits: companies running multiple systems that move data between them by hand—or whose systems don't talk to each other even though they should.",
+            "faq": [
+              {
+                "q": "How do you make sure an integration doesn't fail without warning?",
+                "a": "Every integration we build has monitoring and alerting. A failed sync or an API timeout gets flagged immediately—either we fix it ourselves as part of maintenance, or we contact you with a specific description of the situation."
+              },
+              {
+                "q": "How much does an integration cost?",
+                "a": "It depends on the number of systems and the quality of their APIs—connecting two cloud tools is a matter of days; integrating an older, undocumented ERP is a matter of weeks. We confirm scope and price after a technical review of your systems, not a desk estimate."
+              },
+              {
+                "q": "What if our system has no API?",
+                "a": "We handle that too—through database connections, file export/import, or an RPA layer that replaces manual re-typing where no interface exists. It's not always as elegant as an API, but it works reliably and comes with monitoring like a standard integration."
+              }
+            ],
+            "slug": "integrace-systemu",
+            "categorySlug": "itDev"
+          },
+          {
+            "name": "Web applications & custom development",
+            "desc": "If your team spends more than 20% of its working time working around a tool's limits, SaaS has stopped being enough. We build web applications, dashboards, admin panels and internal tools wherever an off-the-shelf solution doesn't fit—Next.js, Node.js, Python backend, third-party API connections.",
+            "fit": "Fits: companies with a unique internal workflow that no ready-made SaaS solution covers, or that want to replace a complex combination of tools with one purpose-built application.",
+            "faq": [
+              {
+                "q": "How do I know if I need a custom app, or if SaaS is enough?",
+                "a": "The most common signal is exactly this: the more your team works around a tool's limits by hand, the clearer the case for a custom solution. On a consultation call we'll walk through your specific process and give you an honest opinion—even if that means recommending you stick with SaaS."
+              },
+              {
+                "q": "How do you support the app after launch?",
+                "a": "We hand over documentation, source code and a deployment pipeline. If you want ongoing maintenance and development, we set up a retainer. If you want to hand the app to your internal team, we prepare documentation so they're not dependent on us."
+              }
+            ],
+            "slug": "webove-aplikace-a-custom-vyvoj",
+            "categorySlug": "itDev"
+          }
+        ]
+      },
+      "aiData": {
+        "label": "AI & DATA",
+        "intro": "AI where it makes sense. No buzzwords, no sandbagging. Measurable time savings or revenue growth.",
+        "items": [
+          {
+            "name": "AI chatbots",
+            "desc": "Customers wait hours for an answer your team has already typed a hundred times—and outside business hours, the queries just pile up. We build AI chatbots connected to your knowledge base (RAG)—not a generic scripted bot, but an assistant that knows your price list, documentation and order history. Claude, GPT and other models run abstracted behind the Vercel AI Gateway, so we can switch models without rewriting code and without locking you into one vendor. The result: repetitive questions handled instantly, 24/7, while your team focuses on the cases that actually need a human.",
+            "fit": "companies whose customer support is swamped with repetitive questions, e-commerce stores with a high volume of order and delivery questions, and B2B companies with complex documentation where support spends time searching for the answer instead of resolving it.",
+            "faq": [
+              {
+                "q": "How long does deploying a chatbot take?",
+                "a": "A basic version connected to your FAQ and documentation: 2–4 weeks from receiving your materials. Connecting it to your order system or CRM extends the timeline depending on integration complexity—we scope that after a consultation."
+              },
+              {
+                "q": "What if the chatbot gives a wrong or out-of-scope answer?",
+                "a": "The chatbot answers only from the materials we give it—outside of that, it doesn't pretend to know and hands the question to a human. Rate limits and monitoring guard against both misuse and outages."
+              },
+              {
+                "q": "Will we see what people are asking?",
+                "a": "We log only technical metrics (message count, response time), never conversation content—GDPR and our internal security policy rule that out."
+              }
+            ],
+            "slug": "ai-chatboti",
+            "categorySlug": "aiData"
+          },
+          {
+            "name": "Process automation",
+            "desc": "Your team spends hours a week copying data between systems—work nobody enjoys and that sooner or later ends in a mistake. We first understand how the process actually works, and only then design a solution: from a Zapier workflow to a full rebuild with a custom application.",
+            "fit": "Fits: companies with repetitive manual processes, teams that spend time re-typing data between systems, or organizations that need to redesign an entire process flow.",
+            "offerings": [
+              "Simple workflow automation (Zapier, n8n, Make)",
+              "AI-driven automation (LLM agents, classification, generation, embedding search)",
+              "Complex process redesign (BPM, custom integrations, purpose-built web applications)"
+            ],
+            "faq": [
+              {
+                "q": "What's the difference between simple automation and a redesign?",
+                "a": "Simple automation connects two systems or repeats a routine step—fast, cheap, low risk. A redesign rewrites the process from the ground up: new flows, new logic, often a custom application. We choose the depth of the intervention based on what you want to change."
+              },
+              {
+                "q": "When does AI make sense, and when doesn't it?",
+                "a": "AI makes sense where a process involves natural language, classification, or content generation—and where purely deterministic logic isn't enough. If it's just moving data between systems, Zapier or n8n will be faster and cheaper. We always ask about the problem before proposing a tool."
+              },
+              {
+                "q": "What if we don't know exactly what we want to automate?",
+                "a": "That's fine—most clients start out only knowing that something's straining. We begin with a discovery consultation: we walk through your process step by step, identify bottlenecks, and only then propose where and how to intervene. That's exactly how our kickoff consultation works."
+              }
+            ],
+            "slug": "automatizace-procesu",
+            "categorySlug": "aiData"
+          },
+          {
+            "name": "AI consulting, audit & strategy",
+            "desc": "Leadership is pushing for AI, but nobody can tell whether it pays off—and a pilot project risks getting shelved. We build a custom AI roadmap: governance, model selection, a security review and a return-on-investment analysis, before a single crown goes into development.",
+            "fit": "leadership teams weighing an AI investment who need an independent view of where it actually pays off—and where it doesn't.",
+            "faq": [
+              {
+                "q": "How long does an AI audit take?",
+                "a": "A baseline audit with a closing roadmap: 2–3 weeks from the kickoff consultation and receiving your process documentation. A more complex audit across multiple departments takes longer—we confirm scope after the first conversation."
+              },
+              {
+                "q": "Will you tell us if AI just doesn't make sense right now?",
+                "a": "Yes—if the analysis shows a specific AI use case doesn't pay off or is premature, we say so. The audit's goal is a decision backed by numbers from your company, not selling you a project at any cost."
+              },
+              {
+                "q": "Do we need to have already chosen an AI model or vendor?",
+                "a": "No. The audit is independent of any specific model or vendor—that's exactly why we do it before the selection, not after. We recommend models based on your use case, not on what we happen to be selling."
+              }
+            ],
+            "slug": "ai-konzultace-audit-strategie",
+            "categorySlug": "aiData"
+          },
+          {
+            "name": "Data platform & integration",
+            "desc": "Decisions get made off a spreadsheet that looks different in every department—the numbers don't match, and nobody knows which ones are right. We build a data platform that pulls data from your systems into one place: ETL/ELT, a data warehouse, BI dashboards via Metabase or Looker Studio.",
+            "fit": "companies where data sits scattered across multiple systems and departments, and where decisions today get made on numbers that don't agree with each other.",
+            "faq": [
+              {
+                "q": "How long does setting up a data platform take?",
+                "a": "A basic BI dashboard over one or two data sources: 3–5 weeks from receiving access. A more complex data warehouse spanning multiple systems takes longer—we confirm scope and timeline after analyzing your data sources."
+              },
+              {
+                "q": "Do we have to give up Excel entirely?",
+                "a": "Not necessarily—Excel often stays around as a tool for ad-hoc analysis. The goal is for the platform, not a spreadsheet everyone edits their own way, to be the source of truth."
+              },
+              {
+                "q": "What systems can you connect?",
+                "a": "Common ERP, CRM, e-commerce platforms and cloud tools with an API or data export. We discuss the specific list of your systems in the kickoff consultation and confirm what's technically realistic."
+              }
+            ],
+            "slug": "datova-platforma-integrace",
+            "categorySlug": "aiData"
+          },
+          {
+            "name": "MLOps / AI systems operations",
+            "desc": "AI works great in a demo—in production, nobody's watching the cost or quality, and the model quietly degrades until customers complain. We build the operations layer around your AI system: monitoring, evals, prompt management, cost control, A/B testing of models.",
+            "fit": "companies with an AI feature deployed or close to deployment that need to run it reliably, not just launch it once.",
+            "faq": [
+              {
+                "q": "What does \"model degradation\" mean in practice?",
+                "a": "A model's answer quality shifts over time—the vendor quietly updates the model, input data drifts, edge cases pile up. Without evals and monitoring, you notice only from customer complaints, not from data."
+              },
+              {
+                "q": "How much does running an AI system cost monthly?",
+                "a": "It depends on traffic volume and the model you choose—at high request volumes, cost control (caching, routing to a cheaper model where it's good enough) is a big part of the work. We give a concrete estimate after analyzing your use case."
+              },
+              {
+                "q": "Do you have to have designed the AI system yourselves, or do you also run systems built elsewhere?",
+                "a": "Both. If another company or an internal team designed the AI system, we take it over after a technical review—the goal is stable operations, not a rewrite from scratch just because we didn't build it."
+              }
+            ],
+            "slug": "mlops-provoz-ai-systemu",
+            "categorySlug": "aiData"
+          }
+        ]
+      },
+      "marketing": {
+        "label": "MARKETING & CONTENT",
+        "intro": "Growth that's measurable. SEO and AEO. Tracking and reporting without the noise.",
+        "items": [
+          {
+            "name": "SEO",
+            "desc": "Your company is invisible on Google for the exact queries your own customers search—competitors take the first page of results while you pay for PPC or rely on referrals. We handle technical SEO (speed, indexing, structured data), a content strategy aimed at the queries decision-makers actually type, link building, and local SEO where it makes sense. We measure through Search Console and our own dashboards—no reports without numbers, no black boxes.",
+            "fit": "companies dependent on PPC who want to lower acquisition cost, as well as companies losing ground to competitors in organic search despite having a better product.",
+            "faq": [
+              {
+                "q": "Do you guarantee a Google ranking?",
+                "a": "No—and no honest agency can guarantee that; neither we nor anyone else controls the algorithm. What we do guarantee: a measurable process, transparent reporting, and the technical foundation without which rankings can't move at all."
+              },
+              {
+                "q": "How long until SEO shows results?",
+                "a": "The first technical fixes show up within weeks (indexing, speed). A real shift in rankings for competitive queries usually takes 3–6 months—anyone who promises otherwise is leaving something out."
+              },
+              {
+                "q": "How exactly do you measure success?",
+                "a": "Search Console for rankings, clicks and impressions; our own dashboard for traffic by keyword group. The monthly report shows a trend, not isolated numbers without context."
+              }
+            ],
+            "slug": "seo",
+            "categorySlug": "marketing"
+          },
+          {
+            "name": "AEO (Answer Engine Optimization)",
+            "desc": "Customers ask ChatGPT or Perplexity before they ask Google today—if you're not cited there as a source, you effectively don't exist for them. We prepare content so AI search engines can find and cite it: structured data, FAQ schema, evidence panels, citation hygiene.",
+            "fit": "companies that want visibility beyond the classic Google result—in AI assistant answers, where more and more search is shifting.",
+            "faq": [
+              {
+                "q": "How is AEO different from classic SEO?",
+                "a": "SEO targets a position in search results; AEO targets getting cited by an AI assistant as a source directly in the answer. The technical foundation—structured data, speed, quality content—is shared; AEO builds a layer of format and citability on top of it."
+              },
+              {
+                "q": "How do we know AI assistants are citing us?",
+                "a": "We track mentions and citations across ChatGPT, Claude, Gemini and Perplexity and report the trend the way we do for SEO rankings. The field is new and the metrics are still settling—we're transparent about what we can already measure and what we can't yet."
+              }
+            ],
+            "slug": "aeo-answer-engine-optimization",
+            "categorySlug": "marketing"
+          },
+          {
+            "name": "PPC campaigns",
+            "desc": "Campaign budget disappears month after month, and the report shows clicks, not revenue. We build and run campaigns on Google Ads, Meta Ads, LinkedIn Ads and TikTok Ads with full conversion tracking from click to revenue—reporting shows revenue and ROAS, not just impressions.",
+            "fit": "companies already running PPC whose reporting doesn't go beyond the click, as well as companies just starting with paid acquisition who want to measure it correctly from day one.",
+            "faq": [
+              {
+                "q": "How do you measure campaign success?",
+                "a": "Primarily revenue and ROAS tied to actual sales, not just clicks or impressions. We set up conversion tracking as the first step, before we spend a single crown of budget—without it, the numbers don't mean anything."
+              },
+              {
+                "q": "What's the minimum budget for campaigns?",
+                "a": "It depends on the channel and competition in your industry—in the kickoff consultation we discuss your goal and propose a budget that's actually worth testing, not the lowest number that gets you to say yes."
+              }
+            ],
+            "slug": "ppc-kampane",
+            "categorySlug": "marketing"
+          },
+          {
+            "name": "Social media management",
+            "desc": "Corporate profiles run like a billboard with no audience—content gets scheduled because \"it's supposed to post,\" but nobody measures whether it generates demand. We run social media as part of the acquisition mix: strategy, creative, scheduling and community management across channels.",
+            "fit": "companies where social media is running today, but nobody can say whether it's driving leads or just follower counts.",
+            "faq": [
+              {
+                "q": "How do we know social media is working?",
+                "a": "We connect it to the same tracking as the rest of your marketing—we track how many leads or website clicks actually come from each platform, not just likes and followers. You get the report monthly alongside your other channels, not separately."
+              },
+              {
+                "q": "Do we need a presence on every platform?",
+                "a": "No—we recommend channels based on where your target audience actually is, not on whatever's trending. Fewer platforms run well beats attention spread thin across five profiles at once."
+              }
+            ],
+            "slug": "social-media-management",
+            "categorySlug": "marketing"
+          },
+          {
+            "name": "Creative production",
+            "desc": "Stock photos your competitors use too mean one thing—nobody remembers you among them. Our own studio lets us shoot and design everything custom: graphics, Reels and video, banners, animation, in one consistent visual style across channels.",
+            "fit": "companies whose visual content blends in with competitors today, or that need a steady supply of creative for campaigns and social media.",
+            "faq": [
+              {
+                "q": "Do we need to supply our own photos or products for a shoot?",
+                "a": "Ideally, yes, for product-focused work—the best results come from your company's real products and environment, not generic stock material. We'll discuss exactly what we'll need before the first shoot."
+              },
+              {
+                "q": "How fast can you deliver a first batch of creative?",
+                "a": "A basic set for social media: 2–3 weeks from the brief and an approved concept. Larger productions (video, a full campaign set) take longer—we confirm the timeline once scope is clear."
+              }
+            ],
+            "slug": "tvorba-kreativ",
+            "categorySlug": "marketing"
+          },
+          {
+            "name": "E-commerce management",
+            "desc": "Revenue is flat even though the tech stack runs without a hitch—the store has stopped growing on its own. We handle the business and marketing layer after launch: CRO and A/B testing of the funnel, the customer journey from click to win-back, pricing, Heureka and Zboží.cz feeds, retention via RFM segmentation.",
+            "fit": "Fits: e-commerce businesses with CZK 1M+ in annual revenue that have a live tech stack and want more out of it—without hiring another developer, but with someone watching the business.",
+            "faq": [
+              {
+                "q": "Do you work with our e-commerce platform, or do we have to switch to yours?",
+                "a": "We work with the most common CZ platforms—Shoptet, Upgates, Shopify—and we also build our own headless stores. We plug into your existing system and work within it. We don't recommend migrating just to work with us."
+              },
+              {
+                "q": "Do we need the whole package, or can we pick just part of it?",
+                "a": "It's modular—just feeds and product search, just email, just CRO. In the kickoff consultation, we'll walk through what makes the biggest difference for you right now."
+              },
+              {
+                "q": "How do we measure success?",
+                "a": "Primarily revenue, average order value (AOV) and retention rate. For feeds and product search, we track ROAS and cost-to-revenue ratio. You get reporting monthly—no numbers without context."
+              }
+            ],
+            "slug": "e-commerce-management",
+            "categorySlug": "marketing"
+          },
+          {
+            "name": "Marketing strategy + plan",
+            "desc": "Marketing without a strategy means random campaigns on random channels—budget dissolves across PPC, social and email with no shared goal. We build the strategy: positioning, message-market fit, customer journey, content calendar and a data-backed channel mix.",
+            "fit": "companies running multiple marketing channels today without a shared strategy, as well as companies just getting marketing off the ground who want to start with a clear plan instead of random campaigns.",
+            "faq": [
+              {
+                "q": "How long does putting together a marketing strategy take?",
+                "a": "A baseline strategic plan with a recommended channel mix: 3–4 weeks from the initial analysis and a workshop with your team. A more complex strategy spanning multiple products or markets takes longer."
+              },
+              {
+                "q": "Do you just hand us the strategy, or do you also execute it?",
+                "a": "Both are possible. We can hand the strategy to your internal team to execute, or execute it ourselves directly through our other services—SEO, PPC, social, creative. The choice is yours."
+              }
+            ],
+            "slug": "marketing-strategy-plan",
+            "categorySlug": "marketing"
+          }
+        ]
+      }
+    },
+    "ctaLine": "Want your services connected? Start with a free consultation.",
+    "ctaButton": "Or go straight to a paid audit →"
+  },
+  "reseni": {
+    "hero": {
+      "status": "/en/reseni",
+      "headline": "AI agents and assistants for business",
+      "subhead": "Five ready-made packages—from a knowledge assistant to autonomous agents. Instead of assembling from 18 services, pick the scenario that fits your problem."
+    },
+    "ctaEyebrow": "06 · next step",
+    "detail": {
+      "whoEyebrow": "who it's for",
+      "whoHeading": "Who this makes sense for.",
+      "backLink": "All solutions"
+    },
+    "anchors": [
+      { "label": "GenAI & RAG" },
+      { "label": "Autonomous agents" },
+      { "label": "AI support" },
+      { "label": "Predictive analytics" },
+      { "label": "AI infrastructure" }
+    ],
+    "meta": [
+      {
+        "eyebrow": "01 · GenAI & RAG",
+        "bentoTitle": "A knowledge base built for you",
+        "bentoBody": "A RAG pipeline over your documentation—Slack, intranet or company wiki. Answers always accurate to your data."
+      },
+      {
+        "eyebrow": "02 · autonomous agents",
+        "bentoTitle": "Back-office automation",
+        "bentoBody": "Emails, reports, bookings, data checks—today, a person does this. An agent handles it around the clock; a person still has the final word."
+      },
+      {
+        "eyebrow": "03 · customer support",
+        "bentoTitle": "24/7 chatbot",
+        "bentoBody": "Website, Messenger or WhatsApp. Answers most questions on its own, hands off the harder ones to a live agent."
+      },
+      {
+        "eyebrow": "04 · predictive analytics",
+        "bentoTitle": "One view, everything in one place",
+        "bentoBody": "Sales, marketing, warehouse and finance today sit in five systems that don't talk to each other. We connect them into one up-to-date view."
+      },
+      {
+        "eyebrow": "05 · AI infrastructure",
+        "bentoTitle": "A platform for more AI projects",
+        "bentoBody": "Model abstraction, prompt management, cost control, eval framework—so every new AI project isn't a fresh start."
+      }
+    ],
+    "items": [
+      {
+        "key": "knowledge",
+        "label": "01 · KNOWLEDGE ASSISTANT",
+        "name": "Knowledge assistant",
+        "body": "An AI assistant trained on your documentation, knowledge base and processes. RAG, Claude/GPT, integration into Slack or your intranet. For companies with a large internal knowledge base where people spend time searching through documents.",
+        "audience": "Fits: manufacturing companies, professional services, finance, customer support.",
+        "slug": "znalostni-asistent"
+      },
+      {
+        "key": "agents",
+        "label": "02 · AUTONOMOUS AGENTS",
+        "name": "Autonomous agents",
+        "body": "Routine admin—sorting emails, generating reports, booking meetings, checking data—is handled today by someone who should be doing more important work. An agent takes this work over and runs around the clock, without fatigue-driven mistakes and without waiting for Monday morning. A person still has the final word: the agent prepares the material, a person just approves it where it matters.",
+        "audience": "Fits: e-commerce, professional services, back-office teams buried in repetitive admin.",
+        "slug": "agenti"
+      },
+      {
+        "key": "support",
+        "label": "03 · AI CUSTOMER SUPPORT",
+        "name": "AI customer support",
+        "body": "A 24/7 chatbot for your website or Messenger/WhatsApp that answers most routine questions on its own; we confirm the exact share against your own data in a pilot. Escalation to a live agent where it makes sense. A measurable impact on response time and CSAT.",
+        "audience": "Fits: e-commerce, SaaS, customer support.",
+        "slug": "podpora"
+      },
+      {
+        "key": "dashboards",
+        "label": "04 · DATA DASHBOARDS",
+        "name": "Data dashboards",
+        "body": "Decisions today get made on numbers that are already stale, because sales, marketing, warehouse and finance sit in five different systems that don't talk to each other. We build one view where you see it all together—current, not from last month's close—and flag it the moment something drifts from normal, not at month-end.",
+        "audience": "Fits: e-commerce, manufacturing and professional services, wherever your numbers live in multiple systems at once today.",
+        "slug": "dashboardy"
+      },
+      {
+        "key": "infra",
+        "label": "05 · AI INFRASTRUCTURE",
+        "name": "AI infrastructure",
+        "body": "If you're considering more than one AI use case, we'll build you a platform—a model abstraction layer, prompt management, cost control, an eval framework, governance. So every new AI project isn't a fresh start from zero.",
+        "audience": "Fits: companies with 3+ AI use cases, technology teams, innovation departments.",
+        "slug": "infrastruktura"
+      }
+    ],
+    "ctaLine": "Don't see a scenario that fits? Book a free consultation and we'll design something custom.",
+    "ctaButton": "Or go straight to a paid audit →"
+  },
+  "odvetvi": {
+    "hero": {
+      "status": "/en/odvetvi",
+      "headline": "Industries we understand",
+      "subhead": "Eight industries where we're at home. We speak your business's language—from the first meeting."
+    },
+    "intro": "We don't build generic websites and AI templates. Before we propose anything, we look at how your industry actually works—the typical integrations, processes and seasonality. Here are the eight industries we understand.",
+    "sectionTitle": "Where we work.",
+    "sectionEyebrow": "01 · industries",
+    "ctaLine": "Ready to get started in your industry?",
+    "ctaButton": "Or go straight to a paid audit →",
+    "ctaEyebrow": "02 · next step",
+    "detail": {
+      "eyebrow": "industry",
+      "problemEyebrow": "01 · problem",
+      "problemHeading": "What clients bring us.",
+      "approachEyebrow": "02 · approach",
+      "approachHeading": "How we do it.",
+      "processEyebrow": "03 · how we proceed",
+      "processHeadingTemplate": "{count} steps from audit to growth.",
+      "backLink": "All industries"
+    },
+    "items": [
+      {
+        "key": "ecommerce",
+        "icon": "ShoppingCart",
+        "name": "E-commerce",
+        "body": "An e-commerce store that has outgrown an off-the-shelf platform needs more than a template—it needs a team that understands Czech infrastructure: Shoptet, Heureka, Zásilkovna, Pohoda. We build it, connect it, and then help it grow. AI isn't an optional add-on—it's part of how we work.",
+        "slug": "ecommerce",
+        "sections": {
+          "problem": "Off-the-shelf platforms like Shoptet, Upgates or Eshop-rychle are a good starting point, but the moment you want your own logic—a customized checkout, B2B pricing, a connection to Pohoda or Money S3, integration with Heureka and Zásilkovna beyond the standard—you hit a ceiling. Support response time is measured in weeks; customization, in the tens of thousands of crowns.\n\nAt the same time, customer expectations keep rising: speed (LCP under 2.5s), personalization, loyalty programs, post-purchase flow. Your store becomes a full-fledged platform that an off-the-shelf solution can't serve, and building from scratch on Magento is an 18-month project with an uncertain outcome.",
+          "approach": "For mid-size stores (5–50M Kč in annual revenue) we recommend Shopify Plus with a custom headless frontend in Next.js. For heavier operations (50M+, specific ERP, multi-warehouse) we build on Medusa.js as a headless commerce backbone. Either way: speed, SEO/AEO-ready, connections to Pohoda, Money S3, Heureka, Zásilkovna and Packeta.\n\nWe deploy AI where it makes sense: automatic product descriptions from PIM data, a recommendation engine on the product page, an AI chatbot for common questions (sizing, shipping, returns), automatic triage of B2B email orders. No generic widgets—everything learns from your data and integrates into your existing workflow.",
+          "process": [
+            {
+              "title": "Audit and data analysis",
+              "body": "2 weeks: analysis of GA4, Shopify reports or Shoptet exports. We map the conversion funnel, customer journey, cart abandonment, B2B vs. B2C mix, and ERP and warehouse integrations."
+            },
+            {
+              "title": "Stack and architecture",
+              "body": "1 week: the Shopify Plus vs. Medusa.js decision, data model, payment and shipping integrations, AI use cases with an ROI estimate."
+            },
+            {
+              "title": "Build and migration",
+              "body": "8–16 weeks: products, categories, customer accounts, orders, ERP connections. Old store runs in parallel, gradual switchover with a rollback plan."
+            },
+            {
+              "title": "Operations and growth",
+              "body": "CRO, checkout A/B tests, paid traffic optimization, monthly reporting. We roll out AI use cases progressively based on measured impact."
+            }
+          ]
+        }
+      },
+      {
+        "key": "vyroba",
+        "icon": "Factory",
+        "name": "Manufacturing",
+        "body": "We understand manufacturing operations—from SAP and MES to OEE dashboards and predictive maintenance. We don't show up with a generic solution, but with integrations built for your ERP and your KPIs.",
+        "slug": "vyroba",
+        "sections": {
+          "problem": "Manufacturing operations run on data that can't get out. SAP, MES, OEE systems, line sensors and shop-floor spreadsheet reports generate gigabytes of information daily, but management sees it in Excel a week after the fact. Predictive maintenance stays a buzzword because connecting sensors to analysis needs a data engineer you don't have on staff.\n\nExternal ERP consulting is expensive and never really ends—every change takes weeks. When a new order comes in with a different spec, production planners spend the whole morning manually copying data between systems. AI and IoT sound like a solution from a conference, not from the reality of a mid-size manufacturer.",
+          "approach": "We start where the data already is—SAP, MES, sensors, manual shop-floor logs. We build a data layer (Snowflake, BigQuery or PostgreSQL depending on scale) and reporting dashboards on top of it that management sees in real time: OEE by line, outage forecasts, order fulfillment, energy consumption.\n\nPredictive maintenance isn't magic—it's a model that reads failure history and sensor data and finds the patterns. We build simple models that work in production, not PhD papers. For production and demand planning, we deploy AI assistants that can read RFQ emails and pre-fill a costing template—the operator just approves it.",
+          "process": [
+            {
+              "title": "Data audit",
+              "body": "3 weeks: we map data sources (SAP, MES, sensors, Excel), identify manual steps and quick wins. No promises—we compute ROI from real numbers."
+            },
+            {
+              "title": "Data layer and dashboards",
+              "body": "4–8 weeks: we build a central data warehouse, ETL from primary systems, dashboards in Metabase or Looker. Management sees OEE and KPIs in real time."
+            },
+            {
+              "title": "AI/ML use cases",
+              "body": "8–12 weeks: predictive maintenance for key machines, an AI assistant for RFQs, consumption anomalies. Every use case has a clear ROI metric we track."
+            },
+            {
+              "title": "Operations and expansion",
+              "body": "Monthly monitoring of models (drift, accuracy), iteration on the data, expansion to additional lines or plants."
+            }
+          ]
+        }
+      },
+      {
+        "key": "logistika",
+        "icon": "Truck",
+        "name": "Logistics",
+        "body": "Trucking, couriers, freight forwarding and 3PL warehouses all suffer from the same problem: manually re-typing data from CMR notes, invoices and emails. We bring in AI that reads the documents itself, and automation that keeps the logbook for you. Less admin, more miles.",
+        "slug": "logistika",
+        "sections": {
+          "problem": "Trucking, courier services, freight forwarding and 3PL warehouses share the same pain: piles of paper and PDF documents that someone has to manually retype into the TMS, into accounting, into CMR notes. A dispatcher spends an hour a day retyping delivery notes, a driver an hour sending photos from their phone, an accountant an hour chasing discrepancies between an invoice and an order.\n\nRoute optimization exists, but it's expensive and integrating it with your own TMS takes months. Last-mile delivery has its own quirks (time windows, failed deliveries, returns) that standard software can't handle. Customs documentation for non-EU orders lives in Excel, not in a system.",
+          "approach": "AI document triage is the fastest ROI in logistics today. We deploy a model that reads the CMR note, delivery note and invoice, and pre-fills the record in your TMS. The operator just approves it instead of retyping. We compute the payback up front from real hours saved—and verify it after deployment.\n\nFor route optimization we integrate HERE Maps, OpenStreetMap or PTV with a custom engine that accounts for your constraints: client time windows, vehicle types, driver regulations. We handle last-mile through API connectors into Zásilkovna, DPD and PPL. We automate export customs documentation through an integration with customs declaration.",
+          "process": [
+            {
+              "title": "Document flow audit",
+              "body": "2 weeks: where time gets lost, how much paper, which systems (TMS, ERP, WMS). A pilot use case with the highest volume."
+            },
+            {
+              "title": "AI document pipeline",
+              "body": "6–10 weeks: a model for the CMR note and invoice, TMS integration, an approval workflow for the operator. A pilot on 1–2 routes."
+            },
+            {
+              "title": "Route and last-mile",
+              "body": "In parallel: route engine, API connections to courier partners, client tracking. A gradual rollout across the fleet."
+            },
+            {
+              "title": "Operations and scaling",
+              "body": "Monthly metrics (share of documents processed via AI, hours saved, first-attempt delivery success), model iteration and expansion to more processes."
+            }
+          ]
+        }
+      },
+      {
+        "key": "profesionalni-sluzby",
+        "icon": "Briefcase",
+        "name": "Professional services",
+        "body": "Law firms, tax advisories and accounting firms spend hours searching archives and manually retyping data from emails into a CRM. We give that time back—by integrating with your existing CRM, or building a custom one when no SaaS product fits your workflow.",
+        "slug": "profesionalni-sluzby",
+        "sections": {
+          "problem": "Law firms, tax advisories, accounting firms and auditors spend a significant share of billable time on admin—searching an archive, retyping contracts, sending emails, filling in timesheets. Knowledge management means a shared drive full of folders, where a three-year-old case is only findable by whoever worked on it.\n\nCRM systems are deployed, but the team doesn't use them because they were built for sales organizations. Time tracking gets logged from memory at the end of the week, so billing doesn't match reality. AI tools look attractive, but client data is sensitive and generic cloud services are off the table.",
+          "approach": "We build knowledge management tailored to the profession: AI search over internal documents (contracts, case law, tax opinions) that answers with citations and links back to the source. Your data stays with you—self-hosted or an isolated cloud, nothing sent to public LLMs.\n\nFor time tracking, we deploy automatic capture from calendar and email with AI classification by client and task type—the professional just approves it. We build the CRM either by customizing what you have (Caseware, Targetprocess, HubSpot) or a custom solution in Notion/Airtable when SaaS doesn't fit. All of it built around legal privilege and GDPR.",
+          "process": [
+            {
+              "title": "Workflow audit",
+              "body": "2 weeks: where billable hours are being lost, how knowledge is managed today, what systems and integrations already exist. Mapping data sensitivity."
+            },
+            {
+              "title": "Knowledge base and AI search",
+              "body": "6–10 weeks: indexing documents (contracts, filings, opinions), an AI search engine with citations, isolated infrastructure. A pilot for one department."
+            },
+            {
+              "title": "CRM and time tracking",
+              "body": "4–8 weeks: CRM setup, automatic time tracking from calendar and email, billing integration. Team onboarding."
+            },
+            {
+              "title": "Adoption and expansion",
+              "body": "Measuring usage (who's actively using it, how many hours AI saves), training additional teams, gradual rollout across the whole firm."
+            }
+          ]
+        }
+      },
+      {
+        "key": "finance",
+        "icon": "Landmark",
+        "name": "Finance",
+        "body": "Banks, insurers, fintech startups, leasing companies. We know what the Czech National Bank wants to see—and we write both marketing and code so a regulator won't flag it. We design AI use cases to be auditable from day one, not bolted on as a patch.",
+        "slug": "finance",
+        "sections": {
+          "problem": "Banks, insurers, fintech startups and leasing companies face regulatory pressure from multiple directions at once: the Czech National Bank, ESA, AML 5/6, PSD2, DORA. The KYC process employs dozens of people manually reviewing documents and approving clients by hand. Fraud detection generates thousands of false positives a day that the compliance team has to investigate.\n\nAI looks like a solution, but the regulator demands auditability, explainability and control over the data. Generic US cloud services are off the table. Marketing has to comply with legal requirements on investment advertising, which slows campaigns by weeks. Internal systems are old, but replacing them is a multi-year project.",
+          "approach": "We build AI in finance to be auditable from day one: every model has documentation, monitoring, an explainability layer and a fallback to a human decision. KYC automation through OCR and face matching, with manual review only for borderline cases—not full outsourcing of the decision. For AML and fraud detection we use explainable ensemble models (SHAP, LIME), so the compliance team understands why a model flagged a transaction.\n\nWe handle the marketing side just as carefully: copy goes through compliance review as part of the CMS workflow, not at the end. We build websites, investment calculators and portal solutions with the Czech National Bank, GDPR and PSD2 in mind. All on Czech or EU-jurisdiction infrastructure.",
+          "process": [
+            {
+              "title": "Regulatory and data audit",
+              "body": "3 weeks: Czech National Bank, AML and GDPR requirements, mapping existing systems, data sensitivity. We define red lines and audit-trail requirements."
+            },
+            {
+              "title": "KYC and fraud pilot",
+              "body": "10–16 weeks: OCR + face matching for new clients, an ensemble model for fraud detection. A pilot on a subset of clients with a manual double-check."
+            },
+            {
+              "title": "Monitoring and compliance",
+              "body": "Sentry-style monitoring of models (drift, accuracy, fairness), audit logs, integration with reporting tools. An annual model review before audit."
+            },
+            {
+              "title": "Marketing and portals",
+              "body": "In parallel: website, calculators, client portal—all within a compliance workflow. Conversion measurement, A/B tests that respect regulatory constraints."
+            }
+          ]
+        }
+      },
+      {
+        "key": "energetika",
+        "icon": "Zap",
+        "name": "Energy",
+        "body": "Distribution companies and renewable-energy installers face a different weight of problems—but both share complex documentation, a strict regulator, and customers who don't understand their bill. We look at how your processes actually run, and design AI and digital tools that fit into them.",
+        "slug": "energetika",
+        "sections": {
+          "problem": "Distribution companies handle grid planning, demand management and renewable-energy integration; renewable-energy installers and retailers handle client admin, subsidies, billing. What's shared across all of them: complex regulation (the Energy Regulatory Office, ČEPS), thousands of contracts and clients, paper documentation and email-based communication.\n\nSmart meters generate huge volumes of data, but companies mostly use it for billing, not demand forecasting or anomaly detection. ESG reporting is growing—CSRD, taxonomy, scope 3 emissions—and gathering the data takes months of manual export from different systems. Customers don't understand their bills and generate thousands of support tickets.",
+          "approach": "For distribution companies, we build a data platform over smart-meter data with reports and forecasts: demand forecasting by location, anomaly detection (theft, outages), simulating the integration of new renewable sources. We automate ESG reporting with a data pipeline from primary systems into final CSRD reports.\n\nFor renewable-energy installers and retailers, we build client portals with clear billing (a consumption chart, savings forecast, subsidy status), an AI chatbot for common questions, and automated documentation (contracts, commissioning reports, handover protocols). We reduce the load on the support team and speed up the path from order to installation.",
+          "process": [
+            {
+              "title": "Process audit",
+              "body": "2–3 weeks: where time is being lost, how smart-meter data works, what ESG obligations and regulatory deadlines apply. We identify quick wins separately."
+            },
+            {
+              "title": "Data platform",
+              "body": "8–12 weeks: ETL from the smart-meter system, a demand forecasting model, anomaly detection. Dashboards for operations and the regulator."
+            },
+            {
+              "title": "Client portal or ESG reporting",
+              "body": "8–12 weeks in parallel: either a client portal with an AI chatbot, or an ESG reporting pipeline—depending on priority."
+            },
+            {
+              "title": "Operations and iteration",
+              "body": "Monthly monitoring of forecast accuracy, ticket reduction, expanding models to more locations or renewable-energy types."
+            }
+          ]
+        }
+      },
+      {
+        "key": "zdravotnictvi",
+        "icon": "Stethoscope",
+        "name": "Healthcare",
+        "body": "Private aesthetic and longevity clinics have different requirements than a typical practice—premium client experience, sensitive data, and Instagram as the primary marketing channel. We build infrastructure and tools, not medical decisions.",
+        "slug": "zdravotnictvi",
+        "sections": {
+          "problem": "Hospitals, clinics and healthcare facilities live in a regulatory border zone: GDPR special-category data, eHealth standards, obligations toward the Institute of Health Information and Statistics, insurers and patients. Outpatient systems are often 15–20 years old, and integrating new tools takes care.\n\nPatient flow suffers: patients wait hours for an appointment, phone bookings keep reception busy all day, result emails arrive a week late. Private aesthetic and longevity clinics also have to manage a premium client experience, Instagram marketing and loyalty—a generic solution isn't enough, but custom development is beyond budget.",
+          "approach": "In healthcare, the first question is data residency and GDPR. We build on EU/CZ infrastructure, with no sending of patient data to public LLMs. We deploy AI only where it's not a medical decision—booking triage, automatic patient recall, scheduling, client communication, marketing.\n\nFor private clinics, we build premium client portals with online booking, treatment tracking, and before/after photo documentation with consent management. For public facilities, we automate scheduling and results communication. We handle integration with NIS/AIS systems (Medicus, IRES, Stapro) through official APIs or HL7.",
+          "process": [
+            {
+              "title": "Data and compliance audit",
+              "body": "3 weeks: GDPR mapping, NIS integration, eHealth standards, data protection officer sign-off. No code gets written without clear rules."
+            },
+            {
+              "title": "Patient flow and scheduling",
+              "body": "8–12 weeks: an online booking system, automatic recall, smart triage that respects urgency. Integration with the NIS through official interfaces."
+            },
+            {
+              "title": "Client portal or marketing",
+              "body": "In parallel, by priority: a client portal (clinics) or website and marketing automation (aesthetic medicine). Always mindful of advertising regulations."
+            },
+            {
+              "title": "Operations and measurement",
+              "body": "Monthly metrics (wait times, no-show rate, NPS), iteration, gradual expansion to more departments or locations."
+            }
+          ]
+        }
+      },
+      {
+        "key": "zakaznicka-podpora",
+        "icon": "Headphones",
+        "name": "Customer support",
+        "body": "Companies with 1,000+ tickets a month lose time on repetitive questions. We deploy AI that automatically resolves most routine questions—we confirm the exact share against your own data in a pilot—while agents handle the situations where human judgment matters. Zendesk, Intercom, Freshdesk and Front stay—they just work smarter.",
+        "slug": "zakaznicka-podpora",
+        "sections": {
+          "problem": "Contact centers and support teams with 1,000+ tickets a month keep handling the same questions: where's my order, how do I return an item, how do I change my billing details. Agents spend most of their time on routine cases instead of the genuinely complex ones—which is backwards.\n\nA knowledge base exists, but it's scattered across Zendesk, Confluence and a shared drive. Training a new agent takes weeks, and turnover is high. AI chatbots from 2019 have a bad reputation—they deflect customers without resolving anything and generate negative reviews. Meanwhile, the CFO is pushing to cut support costs.",
+          "approach": "A modern LLM chatbot can genuinely resolve most typical questions on its own—if it's well integrated with your systems and backed by a solid knowledge base; we confirm the exact share against your own data in a pilot. We build the solution on top of Zendesk, Intercom, Freshdesk or Front (whichever you have)—no migration, just an extension.\n\nThe chatbot answers common questions with citations back to the knowledge base, can carry out simple operations (address changes, order status), and escalates to an agent the moment a customer wants that or seems unsure. The agent gets full context and can focus on complex cases. In parallel, we build AI ticket classification, automatic tagging and suggested replies—the agent moves faster even where AI doesn't deflect."
+          ,
+          "process": [
+            {
+              "title": "Ticket and knowledge base audit",
+              "body": "2 weeks: analysis of volume, question categories, deflection potential, quality of the existing knowledge base. Defining success metrics (CSAT, deflection rate, AHT)."
+            },
+            {
+              "title": "Knowledge base and AI pilot",
+              "body": "6–8 weeks: refreshing the knowledge base, integrating an LLM with Zendesk/Intercom, escalation logic. A pilot on 30% of traffic in one language."
+            },
+            {
+              "title": "Rollout and agent tooling",
+              "body": "4–6 weeks: expanding to 100% of traffic, AI-suggested replies for agents, automatic ticket classification. Team training."
+            },
+            {
+              "title": "Operations and iteration",
+              "body": "Weekly review of CSAT and deflection metrics, prompt tuning, expansion to more channels (chat, email, voice) or languages."
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "oNas": {
+    "hero": {
+      "status": "/en/o-nas",
+      "headline": "About VICTA",
+      "subhead": "A small AI-augmented team with the ambition to be a partner, not a vendor. Here's how we think."
+    },
+    "anchors": {
+      "story": "Story",
+      "values": "Values",
+      "process": "Process"
+    },
+    "ctaEyebrow": "05 · next step",
+    "statusLinePrefix": "AI-augmented · under one roof",
+    "sections": {
+      "story": {
+        "label": "OUR STORY",
+        "headline": "We build what we wished existed.",
+        "body": "VICTA grew out of frustration. Clients who showed up with broken marketing, an expensive website and zero strategy. Vendors who delivered and disappeared. Agencies whose deliverables passed through five people before they arrived. We decided to do it differently—a small, AI-augmented team, under one roof."
+      },
+      "values": {
+        "label": "OUR VALUES",
+        "headline": "Four principles we hold to.",
+        "items": [
+          {
+            "label": "THE AUDIT IS AN INVESTMENT",
+            "body": "We deduct the audit fee from your project budget if you continue into implementation with us. If not, you keep a report, diagrams and recommendations usable with anyone else. No free introductory sales call—we're working on your problem from hour one."
+          },
+          {
+            "label": "A PARTNER AFTER LAUNCH",
+            "body": "We don't build it and disappear. Clients stay in touch with us monthly, not just at handoff. Monthly reporting and direct consulting access—no ticketing system."
+          },
+          {
+            "label": "AI HANDLES THE DETAILS, PEOPLE HANDLE THE THINKING",
+            "body": "AI writes code, tests it, and watches the details. Thinking, strategy and decisions stay with the people on the team. The result: a small team without the overhead of thirty heads you'd otherwise be billed for at a large agency."
+          },
+          {
+            "label": "NO TEMPLATES",
+            "body": "We build every website from scratch around your stack and your brand. No WordPress themes, no drag-and-drop blocks, no stock assets. Design system, copywriting and code are all custom."
+          }
+        ]
+      },
+      "process": {
+        "label": "OUR PROCESS",
+        "headline": "Listen. Propose. Build. Run.",
+        "body": "Before we propose anything, we want to understand your business. Audit → proposal → implementation → maintenance and growth. Every phase has clear deliverables and checkpoints.",
+        "steps": [
+          {
+            "num": "01",
+            "label": "Listen",
+            "body": "Before we propose anything, we want to understand your business and your goals."
+          },
+          {
+            "num": "02",
+            "label": "Propose",
+            "body": "Audit → strategy → a concrete proposal with clear deliverables and a price."
+          },
+          {
+            "num": "03",
+            "label": "Build",
+            "body": "Implementation with checkpoints. No surprises at the end of the project."
+          },
+          {
+            "num": "04",
+            "label": "Run",
+            "body": "We don't disappear after launch—maintenance, monitoring, iteration and growth."
+          }
+        ]
+      },
+      "team": {
+        "label": "OUR TEAM",
+        "headline": "We'll add names with our first clients—on purpose.",
+        "body": "We're building VICTA around people, not a business card. We'll publish specific names, roles and experience once we can back them with what convinces people most: real projects they worked on. Until then, you get to know us through how we think and how we work—see the principles above."
+      }
+    },
+    "cta": {
+      "headline": "Let's get to know each other.",
+      "body": "Book a free consultation or a paid audit.",
+      "button": "Or go straight to a paid audit →"
+    }
+  },
+  "kontakt": {
+    "hero": {
+      "status": "/en/kontakt",
+      "headline": "Contact",
+      "subhead": "For the fastest reply, book a call. Or write to us directly.",
+      "formCta": "Write to us →"
+    },
+    "anchors": {
+      "primary": "Preferred path",
+      "channels": "Direct channels",
+      "form": "Form",
+      "newsletter": "Newsletter"
+    },
+    "formSection": {
+      "eyebrow": "03 · form",
+      "heading": "Write to us"
+    },
+    "newsletterEyebrow": "04 · newsletter",
+    "primary": {
+      "label": "PREFERRED PATH",
+      "headline": "Book a call",
+      "body": "For new inquiries, the fastest path is to book a free 30-minute consultation. We'll get back to you within 1 business day.",
+      "cta": "Book a consultation"
+    },
+    "channels": {
+      "heading": "Direct channels",
+      "email": {
+        "label": "EMAIL",
+        "value": "hello@victaagency.com",
+        "note": "We reply within 1 business day."
+      },
+      "phone": {
+        "label": "PHONE",
+        "value": "+420 777 933 112",
+        "note": "Monday–Friday, 9am–6pm CET. For new inquiries, we prefer email or a booked call."
+      },
+      "address": {
+        "label": "ADDRESS",
+        "value": "Haškova 1238/8, 500 02 Hradec Králové, Czech Republic",
+        "note": "Registered office of VICTA DIGITAL s.r.o. (Company ID 28859511)."
+      },
+      "social": {
+        "label": "SOCIAL",
+        "value": "LinkedIn—coming soon",
+        "note": "We'll activate our LinkedIn profile with our first wave of clients."
+      }
+    },
+    "privacy": {
+      "label": "PRIVACY",
+      "body": "When you write to us, we process your data under our ",
+      "linkText": "privacy policy",
+      "after": "."
+    }
+  },
+  "blog": {
+    "hero": {
+      "status": "/en/blog",
+      "subscribeCta": "Subscribe",
+      "headline": "Blog",
+      "subhead": "We write about how to connect websites, AI and marketing in practice—no buzzwords, no vendor pitches."
+    },
+    "anchors": {
+      "comingSoon": "Coming soon",
+      "newsletter": "Newsletter"
+    },
+    "comingSoon": {
+      "label": "COMING SOON",
+      "headline": "First articles soon.",
+      "body": "We're launching the blog with our first wave of clients. Expect articles on digitalization, AI in practice, AEO/SEO, e-commerce, and how to actually run a long-term relationship with a digital agency.",
+      "badge": "BLOG · COMING SOON"
+    },
+    "newsletter": {
+      "label": "NEWSLETTER",
+      "headline": "Want to be notified?",
+      "body": "Leave your email in the form below and we'll let you know the moment the blog goes live. No spam, no automated sequences—just one email, once there's something worth reading."
+    }
+  },
+  "legal": {
+    "privacy": {
+      "title": "Privacy Policy",
+      "version": "Version 1.0 (draft) · effective from 2026-05-07",
+      "controllerPre": "The data controller within the meaning of Art. 4(7) GDPR is VICTA DIGITAL s.r.o., Company ID 28859511, registered at Haškova 1238/8, 500 02 Hradec Králové—Pražské Předměstí, Czech Republic. For any questions about personal data protection, please contact us at ",
+      "controllerPost": " or by post at our registered office, Haškova 1238/8, 500 02 Hradec Králové, Czech Republic.",
+      "rightsPre": "You have the right to access, correct, erase, restrict processing of, port, object to, and withdraw consent for your data (Art. 15–22 GDPR). You can submit a request to ",
+      "rightsMid": "—we handle it within 30 days. You can file a complaint with the Czech Office for Personal Data Protection (",
+      "rightsPost": ").",
+      "fullVersionNotePre": "This is a summarized public version. We'll update the full version—with detailed tables of processors, retention periods and supervisory-authority contacts—after legal review; for the full version, contact us at ",
+      "fullVersionNotePost": ".",
+      "noteTitle": "Note",
+      "noteBody": "This document is a draft prepared based on VICTA's technical architecture. It still goes through legal review before final go-live. For questions, contact us at privacy@victaagency.com.",
+      "intro": "In this document, we—VICTA DIGITAL s.r.o.—describe how we handle the personal data of visitors to our website. We take data protection seriously, so we've written this policy to be specific, readable, and compliant with the GDPR and Czech Act No. 110/2019 Coll. on the processing of personal data.",
+      "sections": [
+        {
+          "heading": "1. Website operator and data controller",
+          "body": "The data controller within the meaning of Art. 4(7) GDPR is VICTA DIGITAL s.r.o., Company ID 28859511, registered at Haškova 1238/8, 500 02 Hradec Králové—Pražské Předměstí, Czech Republic. For any questions about personal data protection, please contact us at privacy@victaagency.com or by post at our registered office, Haškova 1238/8, 500 02 Hradec Králové, Czech Republic."
+        },
+        {
+          "heading": "2. Purpose of processing and legal basis",
+          "body": "For every activity in which we process personal data (contact form, newsletter, booking a consultation, analytics, lead management), the full version of this document states the specific purpose and legal basis under Art. 6(1) GDPR. We only ever process data that's necessary for that purpose."
+        },
+        {
+          "heading": "3. Categories of data processed",
+          "body": "Identification data (name, company, email, phone), communication data (message content), technical data (hashed IP, user agent, locale), behavioral data (only with your consent, in Google Analytics), and billing data where we have an active business relationship."
+        },
+        {
+          "heading": "4. Recipients and processors",
+          "body": "To run the website, we use vetted providers under a signed data processing agreement (DPA)—Vercel, Supabase, Resend, Cal.com, Cookiebot, Upstash, Sentry, Cloudflare, Google and Namecheap. For transfers outside the EU, we rely on Standard Contractual Clauses (SCCs) or the EU–US Data Privacy Framework. Operational data is processed in the EU Frankfurt region."
+        },
+        {
+          "heading": "5. Retention period",
+          "body": "We keep data only as long as strictly necessary: contact form and bookings for 24 months, newsletter until unsubscribe, a lead in our internal database for a maximum of 36 months of inactivity, audit logs for at least 36 months, GA4 for 14 months."
+        },
+        {
+          "heading": "6. Your rights",
+          "body": "You have the right to access, correct, erase, restrict processing of, port, object to, and withdraw consent for your data (Art. 15–22 GDPR). You can submit a request to privacy@victaagency.com—we handle it within 30 days. You can file a complaint with the Czech Office for Personal Data Protection (uoou.cz)."
+        },
+        {
+          "heading": "7. Security",
+          "body": "Encryption in transit (TLS 1.2+) and at rest (AES-256), IP hashing, pseudonymization, a server-side proxy for API keys, row-level security in the database, 2FA on admin accounts, rate limiting and bot defense, regular security review."
+        },
+        {
+          "heading": "8. Cookies",
+          "body": "Our website uses cookies for functionality, statistics (with consent) and marketing (with consent). Details are in our separate Cookie Policy document."
+        }
+      ],
+      "fullVersionNote": "This is a summarized public version. We'll update the full version—with detailed tables of processors, retention periods and supervisory-authority contacts—after legal review; for the full version, contact us at privacy@victaagency.com."
+    },
+    "cookies": {
+      "title": "Cookie Policy",
+      "version": "Version 1.0 (draft) · effective from 2026-05-07",
+      "contactPre": "For questions about cookies, contact us at ",
+      "contactPost": ". You'll find more information on personal data processing in general in our Privacy Policy.",
+      "fullVersionNotePre": "This is a summarized public version. We'll update the full version—with tables of specific cookies, their retention periods and type—after Cookiebot goes live; for the full version, contact us at ",
+      "fullVersionNotePost": ".",
+      "noteTitle": "Note",
+      "noteBody": "This document is a draft and will go through legal review before analytics and the CMP banner launch. The website does not yet set any third-party cookies—see the note below.",
+      "intro": "In this policy, we—VICTA DIGITAL s.r.o.—explain what cookies and similar technologies we use on our website, what we use them for, how long we keep them, and how you can manage your consent to their use.",
+      "sections": [
+        {
+          "heading": "1. What cookies are",
+          "body": "Cookies are small text files that a website you visit stores in your browser. On later visits they're sent back to the server, which lets the site remember things like your language setting or login state. Alongside cookies, we also use similar technologies (e.g., localStorage to save your light/dark theme preference)."
+        },
+        {
+          "heading": "2. Legal basis",
+          "body": "We use necessary cookies without consent, since the website wouldn't function without them. We use all other cookies (statistical, marketing, preference) only after your explicit consent given in the consent banner. We collect consent through the Cookiebot CMP."
+        },
+        {
+          "heading": "3. Types of cookies we use",
+          "body": "Necessary: bot defense (Cloudflare), CookieConsent (Cookiebot), cal.com session, vercel-flight-prefetch, victa-theme in localStorage. Statistical (with consent): _ga, _gid from Google Analytics 4. Marketing (with consent): we don't currently use retargeting cookies."
+        },
+        {
+          "heading": "4. Current status (Phase 1)",
+          "body": "In Phase 1, the website doesn't yet have Cookiebot or Google Analytics active—so we're not setting any statistical or marketing cookies. We'll activate them with our first wave of clients (Phase 2/3) and update this document accordingly."
+        },
+        {
+          "heading": "5. How to change or withdraw consent",
+          "body": "Once Cookiebot is active, a \"Change cookie settings\" link in the footer will reopen the banner. You can also delete or block cookies in your browser settings. The website respects the Global Privacy Control (GPC) signal."
+        },
+        {
+          "heading": "6. Third-party cookies and transfers outside the EU",
+          "body": "Some cookies will be set by third parties (Google, Cloudflare, Cookiebot, Cal.com). For transfers outside the EU, we rely on Standard Contractual Clauses (SCCs), and for Google, also the EU–US Data Privacy Framework. Server infrastructure (Vercel, Supabase) runs in the Frankfurt region."
+        },
+        {
+          "heading": "7. Contact",
+          "body": "For questions about cookies, contact us at privacy@victaagency.com. You'll find more information on personal data processing in general in our Privacy Policy."
+        }
+      ],
+      "fullVersionNote": "This is a summarized public version. We'll update the full version—with tables of specific cookies, their retention periods and type—after Cookiebot goes live; for the full version, contact us at privacy@victaagency.com."
     }
   }
 }

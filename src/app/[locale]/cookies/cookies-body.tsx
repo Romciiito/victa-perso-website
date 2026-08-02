@@ -36,16 +36,14 @@ export async function CookiesBody() {
       heading: t('sections.6.heading'),
       body: (
         <>
-          {'V případě dotazů ohledně cookies se obraťte na '}
+          {t('contactPre')}
           <a
             href="mailto:privacy@victaagency.com"
             className="text-ink underline underline-offset-2 hover:text-accent"
           >
             privacy@victaagency.com
           </a>
-          {
-            '. Více informací o zpracování osobních údajů obecně najdete v dokumentu Zásady ochrany osobních údajů.'
-          }
+          {t('contactPost')}
         </>
       ),
     },
@@ -53,14 +51,14 @@ export async function CookiesBody() {
 
   const fullVersionNote = (
     <>
-      {'Toto je shrnutá veřejná verze. Plné znění s tabulkami konkrétních cookies, jejich doby platnosti a typu aktualizujeme po aktivaci Cookiebot — pro plné znění nás kontaktujte na '}
+      {t('fullVersionNotePre')}
       <a
         href="mailto:privacy@victaagency.com"
         className="text-ink underline underline-offset-2 hover:text-accent"
       >
         privacy@victaagency.com
       </a>
-      {'.'}
+      {t('fullVersionNotePost')}
     </>
   );
 

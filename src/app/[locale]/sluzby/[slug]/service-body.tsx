@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { motion, AnimatePresence, type Variants } from 'framer-motion';
 import { ArrowLeft, ChevronDown } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
@@ -40,20 +40,22 @@ export type ServiceDetailItem = {
 };
 
 export function ServiceBody({ item }: { item: ServiceDetailItem }) {
-  // Strip "Hodí se pro: " prefix from fit if present.
-  const fit = item.fit ? item.fit.replace(/^Hodí se pro:\s*/i, '') : null;
+  const t = useTranslations('sluzby.detail');
+  // Strip the "Hodí se pro: " (CS) / "Fits: " (EN) prefix from fit if present.
+  const fit = item.fit ? item.fit.replace(/^(Hodí se pro|Fits):\s*/i, '') : null;
   const hasFaq = Array.isArray(item.faq) && item.faq.length > 0;
   const tCta = useTranslations('common.ctaBand');
+  const locale = useLocale();
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: `/cs/sluzby/${item.slug}`,
+    sourcePage: `/${locale}/sluzby/${item.slug}`,
   });
 
   return (
     <>
       <PageHero
-        status={`/cs/sluzby/${item.slug}`}
-        eyebrow={item.categoryLabel ?? 'služba'}
+        status={`/${locale}/sluzby/${item.slug}`}
+        eyebrow={item.categoryLabel ?? t('eyebrowFallback')}
         headline={`${item.name}.`}
         sub={item.desc}
         ctas={[{ label: tCta('primaryCta'), onClick: openCal, primary: true }]}
@@ -69,7 +71,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
             <div className="grid grid-cols-1 gap-10 md:grid-cols-[5fr_7fr] md:gap-16">
               <div>
                 <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-                  01 · pro koho
+                  01 · {t('whoEyebrow')}
                 </span>
                 <motion.h2
                   initial="hidden"
@@ -79,7 +81,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
                   variants={REVEAL}
                   className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
                 >
-                  Komu to dává smysl.
+                  {t('whoHeading')}
                 </motion.h2>
               </div>
               <motion.p
@@ -104,7 +106,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
             <div className="grid grid-cols-1 gap-10 md:grid-cols-[5fr_7fr] md:gap-16">
               <div>
                 <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-                  {fit ? '02' : '01'} · časté dotazy
+                  {fit ? '02' : '01'} · {t('faqEyebrow')}
                 </span>
                 <motion.h2
                   initial="hidden"
@@ -114,7 +116,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
                   variants={REVEAL}
                   className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
                 >
-                  Co se vás obvykle ptáme.
+                  {t('faqHeading')}
                 </motion.h2>
               </div>
               <ul className="border-t border-border">
@@ -160,7 +162,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
             className="tactile inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.16em] text-tertiary hover:text-ink"
           >
             <ArrowLeft size={14} strokeWidth={1.75} />
-            Všechny služby
+            {t('backLink')}
           </Link>
         </div>
       </section>

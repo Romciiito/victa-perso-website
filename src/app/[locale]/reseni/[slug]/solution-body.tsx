@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { motion, type Variants } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
@@ -35,19 +35,21 @@ export type SolutionItem = {
 };
 
 export function SolutionBody({ item }: { item: SolutionItem }) {
-  // The audience field reads "Hodí se pro: výrobní firmy, ..." — strip the
-  // prefix so the section can render its own heading and keep the list clean.
-  const audience = item.audience.replace(/^Hodí se pro:\s*/i, '');
+  const t = useTranslations('reseni.detail');
+  // The audience field reads "Hodí se pro: ..." (CS) / "Fits: ..." (EN) — strip
+  // the prefix so the section can render its own heading and keep the list clean.
+  const audience = item.audience.replace(/^(Hodí se pro|Fits):\s*/i, '');
   const tCta = useTranslations('common.ctaBand');
+  const locale = useLocale();
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: `/cs/reseni/${item.slug}`,
+    sourcePage: `/${locale}/reseni/${item.slug}`,
   });
 
   return (
     <>
       <PageHero
-        status={`/cs/reseni/${item.slug}`}
+        status={`/${locale}/reseni/${item.slug}`}
         eyebrow={item.label}
         headline={`${item.name}.`}
         sub={item.body}
@@ -63,7 +65,7 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[5fr_7fr] md:gap-16">
             <div>
               <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-                01 · pro koho
+                01 · {t('whoEyebrow')}
               </span>
               <motion.h2
                 initial="hidden"
@@ -73,7 +75,7 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
                 variants={REVEAL}
                 className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
               >
-                Komu to dává smysl.
+                {t('whoHeading')}
               </motion.h2>
             </div>
             <motion.p
@@ -123,7 +125,7 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
             className="tactile inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.16em] text-tertiary hover:text-ink"
           >
             <ArrowLeft size={14} strokeWidth={1.75} />
-            Všechna řešení
+            {t('backLink')}
           </Link>
         </div>
       </section>

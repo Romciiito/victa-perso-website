@@ -34,7 +34,7 @@ type Props = {
   anchorNavLabel?: string;
 };
 
-export function PageHero({ status, eyebrow, headline, sub, ctas, anchors, anchorNavLabel = 'Sekce stránky' }: Props) {
+export function PageHero({ status, eyebrow, headline, sub, ctas, anchors, anchorNavLabel = 'Page sections' }: Props) {
   return (
     <HeroParallax>
       {status && (
