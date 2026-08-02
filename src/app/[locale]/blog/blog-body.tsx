@@ -63,7 +63,7 @@ export function BlogBody() {
               <p
                 className="font-mono text-[11px] uppercase tracking-[0.22em] text-tertiary"
               >
-                BLOG · COMING SOON · v 0.2.0
+                BLOG · {t('comingSoon.label')}
               </p>
               <p
                 className="mt-6 text-[clamp(28px,3.5vw,48px)] font-medium leading-[1.1] tracking-[-0.03em] text-ink"

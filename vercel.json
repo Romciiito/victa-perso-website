@@ -60,6 +60,11 @@
       "source": "/",
       "destination": "/cs",
       "permanent": true
+    },
+    {
+      "source": "/:locale(cs|en)/odvetvi/vyroba-logistika",
+      "destination": "/:locale/odvetvi/vyroba",
+      "permanent": true
     }
   ]
 }

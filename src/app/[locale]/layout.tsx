@@ -24,11 +24,22 @@ const geistMono = Geist_Mono({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://victaagency.com'),
-  title: 'VICTA',
-  description: 'Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání.',
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    metadataBase: new URL('https://victaagency.com'),
+    title: 'VICTA',
+    description:
+      'Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání.',
+    // EN stub routy jsou thin content — noindex do dosažení EN parity (vision §10, §14 bod 7).
+    // Routy zůstávají crawlovatelné (robots.txt je neblokuje), jinak by se noindex nepřečetl.
+    ...(locale === 'en' ? { robots: { index: false, follow: false } } : {}),
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));

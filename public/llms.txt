@@ -67,7 +67,6 @@ Both paths bookable directly via Cal.com on https://victaagency.com/cs/spoluprac
 - **Legal name**: VICTA DIGITAL s.r.o.
 - **IČO**: 28859511
 - **Sídlo (registered seat)**: Haškova 1238/8, 500 02 Hradec Králové - Pražské Předměstí, Czech Republic
-- **Korespondenční adresa (correspondence)**: Babákova 14, 148 00 Praha 11, Czech Republic
 - **Email**: hello@victaagency.com (sales), privacy@victaagency.com (GDPR)
 - **Website**: https://victaagency.com
 - **Languages**: Czech (primary), English (international inquiries)

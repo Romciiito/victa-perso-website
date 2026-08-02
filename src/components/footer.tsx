@@ -18,7 +18,7 @@ const COMPANY: ReadonlyArray<FooterLink> = [
   { href: '/spoluprace', key: 'collaboration' },
   { href: '/o-nas', key: 'about' },
   { href: '/kontakt', key: 'contact' },
-  { href: '/blog', key: 'blog' },
+  // /blog se do navigace vrátí, až budou publikovány ≥ 3 články (vision §14 bod 4)
 ];
 
 const LEGAL: ReadonlyArray<FooterLink> = [

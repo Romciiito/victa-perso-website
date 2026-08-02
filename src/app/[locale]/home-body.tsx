@@ -52,7 +52,7 @@ export function HomeBody() {
           'ŘEMESLO',
           `AI-augmented tým`,
           'Pod jednou střechou',
-          'Praha · Hradec Králové · Trutnov',
+          'Hradec Králové',
         ]}
       />
       <ServicesBento />

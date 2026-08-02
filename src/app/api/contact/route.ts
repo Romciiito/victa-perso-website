@@ -32,8 +32,19 @@ function originOk(req: NextRequest): boolean {
   if (!origin) return false;
   try {
     const u = new URL(origin);
-    const target = new URL(site.url).hostname;
-    return u.hostname === target || u.hostname.endsWith('.vercel.app') || u.hostname === 'localhost';
+    // Allowlist: jen produkční doména + vlastní Vercel deployment URL tohoto projektu.
+    // Plošné `.vercel.app` by přijalo cross-origin POST z libovolného cizího Vercel
+    // projektu (audit P1-01) — deklarovaná CSRF vrstva by byla triviálně obejitelná.
+    const allowed = new Set<string>([new URL(site.url).hostname]);
+    for (const env of [
+      process.env.VERCEL_URL,
+      process.env.VERCEL_BRANCH_URL,
+      process.env.VERCEL_PROJECT_PRODUCTION_URL,
+    ]) {
+      if (env) allowed.add(env);
+    }
+    if (process.env.NODE_ENV !== 'production') allowed.add('localhost');
+    return allowed.has(u.hostname);
   } catch {
     return false;
   }

@@ -7,7 +7,7 @@
     "learnMore": "Zjistit víc →",
     "backHome": "Zpět na hlavní stránku",
     "version": "v 0.1.0",
-    "status": "VICTA DIGITAL · Praha + Hradec Králové"
+    "status": "VICTA DIGITAL · Hradec Králové"
   },
   "nav": {
     "tag": "/ digital agency",
@@ -28,7 +28,7 @@
     "bookCall": "Domluvit konzultaci →",
     "newsletterHeading": "Newsletter",
     "newsletterIntro": "Jednou za pár týdnů. Bez spamu, jen praktické postřehy.",
-    "status": "VICTA DIGITAL s.r.o. · 2026",
+    "status": "VICTA DIGITAL s.r.o. · Hradec Králové",
     "servicesHeading": "Služby",
     "companyHeading": "Společnost",
     "legalHeading": "Právní",
@@ -47,9 +47,9 @@
       "cookies": "Zásady cookies"
     },
     "bottom": {
-      "copyright": "© 2026 VICTA DIGITAL s.r.o.",
+      "copyright": "© VICTA DIGITAL s.r.o.",
       "ico": "IČO 28859511",
-      "city": "Praha",
+      "city": "Hradec Králové",
       "country": "Česká republika"
     }
   },
@@ -76,7 +76,7 @@
       "leadConsultBody": "pro modulární projekty",
       "ctaPrimary": "Rezervovat audit",
       "ctaGhost": "Domluvit konzultaci",
-      "visualTag": "VICTA Process · 2026",
+      "visualTag": "VICTA Process",
       "visualTitle": "Audit → strategie → vývoj → provoz."
     },
     "offerings": {
@@ -404,7 +404,7 @@
     "hero": {
       "status": "/cs/sluzby",
       "headline": "Služby",
-      "subhead": "Tři kompetence — kód, AI a marketing — pod jednou střechou. 16 služeb napříč celým digitálním stackem."
+      "subhead": "Tři kompetence — kód, AI a marketing — pod jednou střechou. 18 služeb napříč celým digitálním stackem."
     },
     "categories": {
       "itDev": {
@@ -549,7 +549,7 @@
               },
               {
                 "q": "Co když nevíme přesně, co chceme automatizovat?",
-                "a": "To je v pořádku — většina klientů na začátku ví jen, že něco skřípe. Začínáme discovery konzultací: projdeme váš proces krok po kroku, identifikujeme úzká hrdla a teprve potom navrhneme, kde a jak zasáhnout. Viz {{LINK:spoluprace}}."
+                "a": "To je v pořádku — většina klientů na začátku ví jen, že něco skřípe. Začínáme discovery konzultací: projdeme váš proces krok po kroku, identifikujeme úzká hrdla a teprve potom navrhneme, kde a jak zasáhnout. Přesně tak funguje naše úvodní konzultace."
               }
             ],
             "slug": "automatizace-procesu",
@@ -620,7 +620,7 @@
               },
               {
                 "q": "Potřebujeme celý balíček, nebo jde vybrat jen část?",
-                "a": "Jde to modulárně — jen feedy a vyhledávače, jen e-mail, jen CRO. Na úvodní konzultaci projdeme, co u vás momentálně dává největší smysl. Viz {{LINK:kontakt}}."
+                "a": "Jde to modulárně — jen feedy a vyhledávače, jen e-mail, jen CRO. Na úvodní konzultaci projdeme, co u vás momentálně dává největší smysl."
               },
               {
                 "q": "Jak měříme úspěch?",
@@ -646,7 +646,7 @@
     "hero": {
       "status": "/cs/reseni",
       "headline": "Řešení",
-      "subhead": "Pět připravených balíčků pro typické scénáře. Místo toho, abyste z 16 služeb skládali sami, vyberte si scénář, který sedí na váš problém."
+      "subhead": "Pět připravených balíčků pro typické scénáře. Místo toho, abyste z 18 služeb skládali sami, vyberte si scénář, který sedí na váš problém."
     },
     "items": [
       {
@@ -697,9 +697,9 @@
     "hero": {
       "status": "/cs/odvetvi",
       "headline": "Odvětví",
-      "subhead": "Šest oborů, kterým rozumíme do hloubky. Mluvíme řečí vašeho byznysu — od první schůzky."
+      "subhead": "Osm oborů, kterým rozumíme do hloubky. Mluvíme řečí vašeho byznysu — od první schůzky."
     },
-    "intro": "Nestavíme generické weby a AI šablony. Než cokoli navrhneme, díváme se na to, jak váš obor reálně funguje — jaké jsou typické integrace, regulační omezení, sezónnost a unit economics. Tady je šest oborů, kde máme zkušenost.",
+    "intro": "Nestavíme generické weby a AI šablony. Než cokoli navrhneme, díváme se na to, jak váš obor reálně funguje — jaké jsou typické integrace, regulační omezení, sezónnost a unit economics. Tady je osm oborů, kde máme zkušenost.",
     "sectionTitle": "Kde působíme.",
     "ctaLine": "Připraveni začít ve vašem odvětví?",
     "ctaButton": "Rezervovat audit →",
@@ -1017,7 +1017,7 @@
       "address": {
         "label": "ADRESA",
         "value": "Haškova 1238/8, 500 02 Hradec Králové",
-        "note": "Sídlo VICTA DIGITAL s.r.o. (IČO 28859511). Korespondenční adresa: Babákova 14, 148 00 Praha 11."
+        "note": "Sídlo VICTA DIGITAL s.r.o. (IČO 28859511)."
       },
       "social": {
         "label": "SOCIÁLNÍ SÍTĚ",
@@ -1059,7 +1059,7 @@
       "sections": [
         {
           "heading": "1. Provozovatel webu a správce osobních údajů",
-          "body": "Správcem osobních údajů ve smyslu čl. 4 odst. 7 GDPR je VICTA DIGITAL s.r.o., IČO 28859511, se sídlem Haškova 1238/8, 500 02 Hradec Králové — Pražské Předměstí. Pro veškeré dotazy týkající se ochrany osobních údajů se prosím obracejte na adresu privacy@victaagency.com nebo poštou na korespondenční adresu Babákova 14, 148 00 Praha 11."
+          "body": "Správcem osobních údajů ve smyslu čl. 4 odst. 7 GDPR je VICTA DIGITAL s.r.o., IČO 28859511, se sídlem Haškova 1238/8, 500 02 Hradec Králové — Pražské Předměstí. Pro veškeré dotazy týkající se ochrany osobních údajů se prosím obracejte na adresu privacy@victaagency.com nebo poštou na adresu sídla Haškova 1238/8, 500 02 Hradec Králové."
         },
         {
           "heading": "2. Účel zpracování a právní základ",
