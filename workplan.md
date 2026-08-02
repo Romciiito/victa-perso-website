@@ -449,7 +449,9 @@ Phase 1 is DONE when ALL of the following are true:
 
 > **Purpose**: Build the highest-value interactive components and pages before the content pages. The audit page (`/cs/spoluprace/`) is the #1 conversion target — it ships first. Booking, contact form, newsletter signup, and chatbot CTA plumbing are all established here so that each content page added in Phase 4 simply drops in a CTA component.
 
-**Status**: `[ ] Not started`
+> **Status update 2026-07-20 (contact-flow v2, see D-009..D-011 + docs/contact-flow-v2.md)**: ALL Phase 2 CODE paths are built and fixed on branch `claude/d008-revival-may11` — /spoluprace page with 3 tier cards + per-tier Cal.com booking CTAs, `useCalModal` embed.js modal (NOT `@calcom/atoms` — see D-010; §2.2 items referencing `CalBookingWidget`/atoms are superseded), `/api/booking-webhook` (HMAC + replay + idempotency), contact form + `/api/contact`, newsletter (single opt-in pending RB-17 — NOT double opt-in yet) + `/api/newsletter`, GA4 events (`booking_initiated`, `booking_fallback_contact`, `contact_form_submit`, `newsletter_signup`). The Done-Definition items below remain unchecked because they require VENDOR PROVISIONING that has not happened: no real Supabase project, Turnstile keys, Resend keys/audience, or Cal.com account exist yet (env vars are placeholders — forms currently run in the D-011 provisioning-aware degraded mode). Provisioning checklist: docs/contact-flow-v2.md §2.4.
+
+**Status**: `[~] Code complete on branch — blocked on vendor provisioning`
 **Depends on**: Phase 1 `DONE`
 **Parallel with**: Within Phase 2, booking system integration and contact form can be developed in parallel by different developers.
 **Estimated effort**: 1–2 weeks

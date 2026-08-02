@@ -58,11 +58,13 @@ jobs:
 
   # ----------------------------------------------------------
   # Job 2: ESLint
-  # Uses Next.js default ESLint config (eslint-config-next).
-  # Zero warnings tolerated (--max-warnings 0).
-  # NOTE: pnpm lint assumes "lint": "next lint" in package.json.
-  # Scaffold in Phase 1 adds this script — job will fail until
-  # package.json script exists (expected, not a blocker).
+  # Flat config (eslint.config.mjs) built on eslint-config-next's flat-config
+  # export — `next lint` no longer exists in Next.js 16 and ESLint 10 dropped
+  # .eslintrc.json support, so `pnpm lint` runs `eslint . --max-warnings 0`
+  # directly (fixed audit Vlna 3A, 2026-08-02 — see eslint.config.mjs for two
+  # upstream ESLint-10 incompatibilities that had to be worked around).
+  # Zero warnings tolerated (--max-warnings 0, set in the npm script itself so
+  # local `pnpm lint` and CI stay in lockstep).
   # ----------------------------------------------------------
   lint:
     name: Lint
@@ -152,9 +154,9 @@ jobs:
 
   # ----------------------------------------------------------
   # Job 4: Dependency audit
-  # Fails only on CRITICAL severity CVEs (not high/moderate).
-  # pnpm audit exits non-zero if vulnerabilities at or above
-  # the specified level are found.
+  # Fails on HIGH or CRITICAL severity CVEs (audit P0-17:
+  # critical-only gate let 15 HIGH CVEs through, incl. Next.js
+  # middleware bypass relevant to the AR-03 locale allowlist).
   # ----------------------------------------------------------
   audit:
     name: Dependency Audit
@@ -175,5 +177,36 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Run audit (fail on critical CVEs only)
-        run: pnpm audit --audit-level=critical
+      - name: Run audit (fail on high or critical CVEs in production deps)
+        # --prod: gate chrání runtime závislosti (cíl nálezu P0-17 — Next.js CVE).
+        # Dev toolchain (Lighthouse/Playwright řetězce: tmp, js-yaml, brace-expansion)
+        # má vlastní high nálezy bez dopadu na produkci — sledované, ale neblokující.
+        run: pnpm audit --prod --audit-level=high
+
+  # ----------------------------------------------------------
+  # Job 5: Czech typography lint
+  # AR-08 "no exceptions" — the linter existed but gated nothing
+  # (audit P0-18). Runs scripts/czech-typography-lint.mjs over
+  # Czech content; any violation fails the job.
+  # ----------------------------------------------------------
+  typography:
+    name: Typography Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Czech typography lint
+        run: pnpm lint:cs

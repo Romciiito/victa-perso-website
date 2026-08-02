@@ -1,7 +1,7 @@
 {
   "site": {
-    "title": "VICTA — digital agency",
-    "description": "Listening first. Before we propose anything, we want to understand your business."
+    "title": "VICTA — apps, AI and systems for business growth",
+    "description": "VICTA builds apps, AI and business systems for mid-sized and larger companies in Czechia and Slovakia — with a clear process from intent to operations."
   },
   "common": {
     "learnMore": "Learn more →",
@@ -24,7 +24,10 @@
     "skipToContent": "Skip to content"
   },
   "footer": {
-    "tagline": "Listening first. Before we propose anything, we want to understand your business.",
+    "tagline": "Apps, AI and systems that pay off. One team from intent to operations.",
+    "bookCall": "Book a call →",
+    "newsletterHeading": "Newsletter",
+    "newsletterIntro": "Once every few weeks. No spam, just practical insights.",
     "status": "STATUS · v 0.1.0 · region eu-central-1",
     "servicesHeading": "Services",
     "companyHeading": "Company",

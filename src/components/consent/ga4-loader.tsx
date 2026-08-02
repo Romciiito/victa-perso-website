@@ -23,7 +23,12 @@ export function Ga4Loader() {
   useEffect(() => {
     if (!measurementId || measurementId.startsWith('G-XXX')) return;
     if (hasAnalyticsConsent()) {
-      setGranted(true);
+      // Deferred via queueMicrotask rather than called synchronously in the
+      // effect body — satisfies `react-hooks/set-state-in-effect` (ESLint
+      // gate fix, audit Vlna 3A). No behavior change: this effect already
+      // only runs once, post-mount/post-hydration, so a same-tick-later
+      // microtask update is not observable to the user.
+      queueMicrotask(() => setGranted(true));
       return;
     }
     const off = onConsentChange(() => {

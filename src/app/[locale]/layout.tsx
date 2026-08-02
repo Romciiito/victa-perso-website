@@ -1,21 +1,19 @@
 import type { Metadata } from 'next';
-import { Inter_Tight, Geist_Mono } from 'next/font/google';
+import { Geist, Geist_Mono } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { ThemeProvider } from '@/components/theme-provider';
 import { Nav } from '@/components/nav';
 import { Footer } from '@/components/footer';
 import { CookiebotScript } from '@/components/consent/cookiebot-script';
 import { Ga4Loader } from '@/components/consent/ga4-loader';
-import { antiFlashScript } from '@/lib/anti-flash';
 import '@/styles/globals.css';
 
-const interTight = Inter_Tight({
+const geistSans = Geist({
   subsets: ['latin', 'latin-ext'],
   weight: ['300', '400', '500', '600', '700'],
-  variable: '--font-inter-tight',
+  variable: '--font-geist-sans',
   display: 'swap',
 });
 
@@ -26,11 +24,26 @@ const geistMono = Geist_Mono({
   display: 'swap',
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL('https://victaagency.com'),
-  title: 'VICTA',
-  description: 'Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání.',
-};
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  // Sitewide fallback title/description — sourced from `site.*` in
+  // content/{locale}/strings/common.json so this stays in sync with the
+  // single source of truth (copy-rewrites.md §1). Individual routes
+  // override this via their own generateMetadata.
+  const t = await getTranslations({ locale, namespace: 'site' });
+  return {
+    metadataBase: new URL('https://victaagency.com'),
+    title: t('title'),
+    description: t('description'),
+    // EN stub routy jsou thin content — noindex do dosažení EN parity (vision §10, §14 bod 7).
+    // Routy zůstávají crawlovatelné (robots.txt je neblokuje), jinak by se noindex nepřečetl.
+    ...(locale === 'en' ? { robots: { index: false, follow: false } } : {}),
+  };
+}
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -51,21 +64,22 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html
+      lang={locale}
+      data-theme="dark"
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: antiFlashScript }} />
         <CookiebotScript />
       </head>
-      <body className={`${interTight.variable} ${geistMono.variable} bg-grid antialiased`}>
-        <ThemeProvider attribute="data-theme" defaultTheme="light" enableSystem storageKey="victa-theme">
-          <NextIntlClientProvider messages={messages} locale={locale}>
-            <Nav />
-            <main id="main" className="relative">
-              {children}
-            </main>
-            <Footer />
-          </NextIntlClientProvider>
-        </ThemeProvider>
+      <body className="bg-mesh antialiased">
+        <NextIntlClientProvider messages={messages} locale={locale}>
+          <Nav />
+          <main id="main" className="relative">
+            {children}
+          </main>
+          <Footer />
+        </NextIntlClientProvider>
         <Ga4Loader />
       </body>
     </html>

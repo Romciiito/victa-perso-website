@@ -24,16 +24,42 @@ export const contactSchema = z.object({
     .trim()
     .min(20, { message: 'Zpráva musí mít alespoň 20 znaků.' })
     .max(2000),
-  budget_tier: z.enum(['under_5k', '5k-25k', '25k-100k', '100k+']).optional(),
-  service_interest: z.enum(['comprehensive', 'web', 'marketing', 'ai', 'other']).optional(),
+  // `.or(z.literal(''))` — an untouched <select> submits its `<option value="">`
+  // placeholder; without this branch Zod rejects the form's own default value
+  // (same pattern as company/phone above). The transform folds '' back to
+  // undefined so the server/DB layer only ever sees a real enum or null.
+  budget_tier: z
+    .enum(['under_5k', '5k-25k', '25k-100k', '100k+'])
+    .optional()
+    .or(z.literal(''))
+    .transform((v) => (v === '' ? undefined : v)),
+  service_interest: z
+    .enum(['comprehensive', 'web', 'marketing', 'ai', 'other'])
+    .optional()
+    .or(z.literal(''))
+    .transform((v) => (v === '' ? undefined : v)),
   gdpr_consent: z.literal(true, {
-    errorMap: () => ({
-      message: 'Pro odeslání souhlasíte se zpracováním osobních údajů.',
-    }),
+    message: 'Pro odeslání souhlasíte se zpracováním osobních údajů.',
   }),
-  honeypot: z.string().max(0).optional().or(z.literal('')),
+  // Honeypot must VALIDATE even when filled — the route silently accepts
+  // non-empty honeypots (bot thinks it succeeded). `.max(0)` here used to
+  // reject at the Zod layer with a field error naming the honeypot, which
+  // both leaked the detection to bots and made the silent-200 branch
+  // unreachable.
+  honeypot: z.string().max(200).optional().or(z.literal('')),
   turnstile_token: z.string().min(1, { message: 'Bot kontrola se nepodařila — zkuste znovu.' }),
   locale: z.enum(['cs', 'en']).default('cs'),
 });
 
-export type ContactFormValues = z.infer<typeof contactSchema>;
+/**
+ * `z.input<>` is the *input* shape — what the form sends to the resolver,
+ * where fields with `.default(...)` are still optional. We use this for
+ * useForm so react-hook-form's `Resolver<T>` type matches what zodResolver
+ * expects (Next 16 + newer @hookform/resolvers tighten this check and
+ * reject the previous `z.infer<>` which is the output shape).
+ *
+ * `z.output<>` is the *validated* shape — defaults filled in, optionals
+ * resolved. Use this on the server side after `safeParse`.
+ */
+export type ContactFormValues = z.input<typeof contactSchema>;
+export type ContactFormData = z.output<typeof contactSchema>;

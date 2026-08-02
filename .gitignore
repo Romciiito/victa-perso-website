@@ -47,3 +47,7 @@ dns-backup/*.txt
 .workforce/dispatch.md
 .workforce/integration.md
 .vercel
+
+# ── Build + session artifacts ─────────────────────────────────────────────────
+tsconfig.tsbuildinfo
+.claude/worktrees/

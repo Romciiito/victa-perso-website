@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { site } from '@/config/site';
-import { allCsPaths, enPaths } from '@/config/routes';
+import { allCsPaths } from '@/config/routes';
 
 /**
  * /sitemap.xml — REQ-F-084, SEO-02.
@@ -13,32 +13,28 @@ import { allCsPaths, enPaths } from '@/config/routes';
  */
 export default function sitemap(): MetadataRoute.Sitemap {
   const lastModified = new Date();
-  const csEntries: MetadataRoute.Sitemap = allCsPaths().map((path) => {
-    const csUrl = `${site.url}/cs${path === '/' ? '' : path}`;
-    const enUrl = `${site.url}/en`;
-    return {
-      url: csUrl,
-      lastModified,
-      changeFrequency: priorityFor(path).changeFrequency,
-      priority: priorityFor(path).priority,
-      alternates: {
-        languages: {
-          cs: csUrl,
-          en: enUrl,
-          'x-default': csUrl,
+  // EN routy jsou do dosažení EN parity noindex a mimo sitemap (vision §10, §14 bod 7)
+  // — hreflang `en` se vrátí až s paritou, mapovaný 1:1 na skutečné EN protějšky.
+  // /blog je mimo sitemap + noindex, dokud nejsou ≥ 3 články (vision §14 bod 4).
+  const csEntries: MetadataRoute.Sitemap = allCsPaths()
+    .filter((path) => path !== '/blog')
+    .map((path) => {
+      const csUrl = `${site.url}/cs${path === '/' ? '' : path}`;
+      return {
+        url: csUrl,
+        lastModified,
+        changeFrequency: priorityFor(path).changeFrequency,
+        priority: priorityFor(path).priority,
+        alternates: {
+          languages: {
+            cs: csUrl,
+            'x-default': csUrl,
+          },
         },
-      },
-    };
-  });
+      };
+    });
 
-  const enEntries: MetadataRoute.Sitemap = enPaths.map((path) => ({
-    url: `${site.url}/en${path === '/' ? '' : path}`,
-    lastModified,
-    changeFrequency: 'monthly' as const,
-    priority: 0.5,
-  }));
-
-  return [...csEntries, ...enEntries];
+  return csEntries;
 }
 
 function priorityFor(path: string): {
@@ -46,7 +42,8 @@ function priorityFor(path: string): {
   priority: number;
 } {
   if (path === '/') return { changeFrequency: 'weekly', priority: 1.0 };
-  if (path === '/spoluprace') return { changeFrequency: 'weekly', priority: 0.95 };
+  // 0.8 dle vision §9 — audit přestal být vstupní branou, priorita odrážela starou konverzní logiku
+  if (path === '/spoluprace') return { changeFrequency: 'weekly', priority: 0.8 };
   if (path === '/sluzby' || path === '/reseni' || path === '/odvetvi') {
     return { changeFrequency: 'monthly', priority: 0.85 };
   }

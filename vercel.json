@@ -33,21 +33,21 @@
           "value": "geolocation=(), microphone=(), camera=(), interest-cohort=()"
         },
         {
-          "key": "Content-Security-Policy-Report-Only",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://consent.cookiebot.com https://consentcdn.cookiebot.com https://www.googletagmanager.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://imgsct.cookiebot.com https://www.google-analytics.com; connect-src 'self' https://consent.cookiebot.com https://www.google-analytics.com https://*.supabase.co https://*.upstash.io; frame-src 'self' https://app.cal.com https://challenges.cloudflare.com; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; report-to csp-endpoint;"
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://consent.cookiebot.com https://consentcdn.cookiebot.com https://www.googletagmanager.com https://challenges.cloudflare.com https://app.cal.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://imgsct.cookiebot.com https://www.google-analytics.com; connect-src 'self' https://consent.cookiebot.com https://www.google-analytics.com https://challenges.cloudflare.com https://app.cal.com https://api.cal.com; frame-src 'self' https://app.cal.com https://challenges.cloudflare.com; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none';"
         }
       ]
     }
   ],
 
   "functions": {
-    "app/api/chat/route.ts": {
-      "maxDuration": 10
-    },
     "app/api/contact/route.ts": {
       "maxDuration": 10
     },
     "app/api/newsletter/route.ts": {
+      "maxDuration": 10
+    },
+    "app/api/newsletter/confirm/route.ts": {
       "maxDuration": 10
     },
     "app/api/booking-webhook/route.ts": {
@@ -59,6 +59,11 @@
     {
       "source": "/",
       "destination": "/cs",
+      "permanent": true
+    },
+    {
+      "source": "/:locale(cs|en)/odvetvi/vyroba-logistika",
+      "destination": "/:locale/odvetvi/vyroba",
       "permanent": true
     }
   ]

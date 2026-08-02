@@ -3,7 +3,9 @@
 declare global {
   interface Window {
     Cookiebot?: {
-      consent: { necessary: boolean; preferences: boolean; statistics: boolean; marketing: boolean };
+      // `consent` je undefined v okně mezi vytvořením window.Cookiebot stubu
+      // a doběhnutím consent inicializace — typ musí odrážet runtime realitu.
+      consent?: { necessary: boolean; preferences: boolean; statistics: boolean; marketing: boolean };
       hasResponse: boolean;
       regulations: { gdprApplies: boolean };
     };
@@ -23,7 +25,9 @@ export type ConsentCategory = 'necessary' | 'preferences' | 'statistics' | 'mark
  */
 export function hasAnalyticsConsent(): boolean {
   if (typeof window === 'undefined') return false;
-  return window.Cookiebot?.consent.statistics === true;
+  // Optional chain i na `.consent` — Cookiebot objekt existuje dřív, než má
+  // consent data (runtime TypeError zachycený v dev, 2026-07-28).
+  return window.Cookiebot?.consent?.statistics === true;
 }
 
 /**

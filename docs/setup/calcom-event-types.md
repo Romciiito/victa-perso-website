@@ -25,12 +25,14 @@ Cal.com is the booking system for VICTA's audit and scoping flows. **Free Cloud 
 
 Create 4 event types in Cal.com. For each: Event Types → New → Solo → fill in the fields below exactly. After creation, the slug becomes part of the booking URL: `cal.com/victa/{slug}`.
 
+> **⚠️ Canonical slugs (D-010)**: the slugs below are generated from `src/config/booking.ts` (`CAL_EVENTS`) — the single source of truth shared by the frontend CTAs and the `/api/booking-webhook` tier mapping. If a slug must ever change, change it in that file first and update Cal.com to match; never invent slugs here.
+
 ### Event 1 — Tier 1 audit (komplexní podnikový audit)
 
 | Field | Value |
 |-------|-------|
 | Title | `Tier 1 — Komplexní podnikový audit` |
-| Slug (URL) | `audit-tier-1` |
+| Slug (URL) | `tier-1-audit` |
 | Description (Czech) | (paste below) |
 | Length | `60` minutes |
 | Booking frequency | Single |
@@ -48,14 +50,17 @@ První konzultační hovor pro Tier 1 audit (komplexní analýza firmy: web, e-s
 
 **Booking questions** (Event → Advanced → Booking Questions). Add the following custom fields, in order:
 
-| # | Label (Czech) | Type | Required | Placeholder |
-|---|---------------|------|----------|-------------|
+| # | Label (Czech) | Type | Required | Placeholder / Options |
+|---|---------------|------|----------|------------------------|
 | 1 | `Jméno a příjmení` | Short text | Yes | `Jana Nováková` |
 | 2 | `E-mail` | Email | Yes | `jana@firma.cz` |
 | 3 | `Firma` | Short text | Yes | `Název vaší firmy s.r.o.` |
 | 4 | `Telefon` | Phone | No | `+420 ...` |
 | 5 | `Webová stránka firmy` | URL | No | `https://...` |
 | 6 | `Krátký popis vašeho byznysu / situace` | Long text | Yes | `Pro lepší přípravu — co řešíte, kde tlačí bota?` |
+| 7 | `Orientační rozpočet` | Select | No | `do 5 000 €` / `5 000 – 25 000 €` / `25 000 – 100 000 €` / `nad 100 000 €` |
+
+> **Field 7 (P1-09)**: paste the four option labels **exactly as written above** (including the en dash `–`, not a hyphen, and the `€` sign) — `/api/booking-webhook`'s `extractBudgetTier()` (`src/app/api/booking-webhook/route.ts`) matches them against the same enum `contact-schema.ts`'s `budget_tier` field uses (`under_5k` / `5k-25k` / `25k-100k` / `100k+`), so a booking-sourced lead and a contact-form-sourced lead end up comparable in the `leads` table — the primary KPI (vision.md §2) is measured across both channels. If the pasted label doesn't match byte-for-byte, the webhook still stores the raw text rather than dropping it, but it won't roll up into the same enum bucket as contact-form submissions — worth a quick visual diff against this table after creating the field. Field 3 (`Firma`) already exists on every tier event and doubles as the "company" custom field the same P1-09 fix reads (`extractCompany()`) — no new field needed for that half of P1-09.
 
 **Reschedule policy**: Allow rescheduling until **24 hours before** event. Settings within event → Limits → Allow reschedule.
 
@@ -69,7 +74,7 @@ Audit se platí na základě faktury — pokud zrušíte před vystavením faktu
 | Field | Value |
 |-------|-------|
 | Title | `Tier 2 — Doménový audit` |
-| Slug | `audit-tier-2` |
+| Slug | `tier-2-audit` |
 | Length | `45` minutes |
 | Buffer before / after | `15` min each |
 | Minimum notice | `1` day |
@@ -81,7 +86,7 @@ Audit se platí na základě faktury — pokud zrušíte před vystavením faktu
 Konzultační hovor pro Tier 2 audit zaměřený na jednu oblast (marketing strategy / e-commerce strategy / AI strategy / atd.). Po hovoru faktura 10 000 – 55 000 Kč. Po platbě audit (2 sezení, pár dní – 2 týdny, výstup stejný jako Tier 1 — PDF report + schémata + osobní prezentace).
 ```
 
-**Booking questions**: Same 6 fields as Tier 1 (Cal.com lets you duplicate the question set when creating from existing event).
+**Booking questions**: Same 7 fields as Tier 1, including field 7 (`Orientační rozpočet`) — Cal.com lets you duplicate the question set when creating from existing event.
 
 **Reschedule + cancellation**: Same policies as Tier 1.
 
@@ -90,7 +95,7 @@ Konzultační hovor pro Tier 2 audit zaměřený na jednu oblast (marketing stra
 | Field | Value |
 |-------|-------|
 | Title | `Tier 3 — Strategická session` |
-| Slug | `audit-tier-3` |
+| Slug | `tier-3-audit` |
 | Length | `30` minutes |
 | Buffer before / after | `10` min each |
 | Minimum notice | `1` day |
@@ -102,7 +107,7 @@ Konzultační hovor pro Tier 2 audit zaměřený na jednu oblast (marketing stra
 Konzultační hovor pro Tier 3 strategickou session — jednorázová analýza konkrétního problému. Po hovoru faktura 4 000 – 25 000 Kč. Po platbě 90minutová session + analýza (pár dní – 2 týdny, výstup: krátký plán s konkrétními kroky).
 ```
 
-**Booking questions**: Same 6 fields as Tier 1/2.
+**Booking questions**: Same 7 fields as Tier 1/2, including field 7 (`Orientační rozpočet`).
 
 **Reschedule + cancellation**: Same policies as Tier 1.
 
@@ -111,7 +116,7 @@ Konzultační hovor pro Tier 3 strategickou session — jednorázová analýza k
 | Field | Value |
 |-------|-------|
 | Title | `Bezplatná konzultace — modulární služby` |
-| Slug | `scoping-call` |
+| Slug | `free-scoping-call` |
 | Length | `30` minutes |
 | Buffer before / after | `10` min each |
 | Minimum notice | `1` day |
@@ -177,7 +182,7 @@ pnpm add @calcom/atoms
 import { Booker } from "@calcom/atoms";
 import { useTheme } from "next-themes";
 
-export function AuditBooker({ slug }: { slug: "audit-tier-1" | "audit-tier-2" | "audit-tier-3" | "scoping-call" }) {
+export function AuditBooker({ slug }: { slug: "tier-1-audit" | "tier-2-audit" | "tier-3-audit" | "free-scoping-call" }) {
   const { resolvedTheme } = useTheme();
 
   return (
@@ -285,13 +290,13 @@ When CSP enforcement promotes from report-only (Phase 5), these stay. Confirm no
 
 ### Pre-Phase-2 (after event types created, before webhook handler exists)
 
-- [ ] Visit `https://cal.com/victa/audit-tier-1` in private window → page loads → Czech UI strings render → all 6 booking questions visible → can step through to time selection
-- [ ] Same for `audit-tier-2`, `audit-tier-3`, `scoping-call`
+- [ ] Visit `https://cal.com/victa/tier-1-audit` in private window → page loads → Czech UI strings render → all 7 booking questions visible (including `Orientační rozpočet`, P1-09) → can step through to time selection
+- [ ] Same for `tier-2-audit`, `tier-3-audit`, `free-scoping-call`
 - [ ] Cal.com → Webhooks → "Send test webhook" → expected: HTTP 404 from `/api/booking-webhook` (route doesn't exist yet); Cal.com queues retries — that's fine
 
 ### Post-Phase-2 (after webhook handler implemented)
 
-- [ ] Make a real test booking (Roman's own email) on `audit-tier-3` (cheap-to-cancel) → confirm:
+- [ ] Make a real test booking (Roman's own email) on `tier-3-audit` (cheap-to-cancel) → confirm:
   - Confirmation email arrives in Czech with the correct flow text
   - Webhook fires → HTTP 200 from `/api/booking-webhook` → Cal.com Webhook log shows green
   - Supabase `booking_events` table has new row with `webhook_signature_verified = true`, `audit_tier = 'tier_3'`, `event_type = 'BOOKING_CREATED'`

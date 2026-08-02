@@ -16,17 +16,13 @@ export const site = {
   locales: ['cs', 'en'] as const,
   contact: {
     email: 'hello@victaagency.com',
-    /** ⛔ ROMAN-BLOCKER (RB-13): telefon ve formátu +420 XXX XXX XXX */
-    phone: '[ROMAN-BLOCKER: telefon]',
-    /** ⛔ ROMAN-BLOCKER (RB-13): ulice + číslo */
-    addressLine1: '[ROMAN-BLOCKER: ulice + číslo]',
-    /** ⛔ ROMAN-BLOCKER (RB-13): město */
-    addressLocality: '[ROMAN-BLOCKER: město]',
-    /** ⛔ ROMAN-BLOCKER (RB-13): PSČ (5 digit) */
-    postalCode: '[ROMAN-BLOCKER: PSČ]',
+    phone: '+420 777 933 112',
+    /** Sídlo (matches content/cs/strings/common.json kontakt.channels.address). */
+    addressLine1: 'Haškova 1238/8',
+    addressLocality: 'Hradec Králové',
+    postalCode: '500 02',
     country: 'CZ' as const,
-    /** ⛔ ROMAN-BLOCKER (RB-13): IČO (8-digit) */
-    ico: '[ROMAN-BLOCKER: IČO]',
+    ico: '28859511',
     /** ⛔ ROMAN-BLOCKER (RB-13): DIČ */
     dic: '[ROMAN-BLOCKER: DIČ]',
     /** ⛔ ROMAN-BLOCKER (RB-13): spisová značka u soudu */
