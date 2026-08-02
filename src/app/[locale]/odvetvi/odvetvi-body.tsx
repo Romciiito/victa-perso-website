@@ -18,6 +18,7 @@ const KINETIC_ITEMS: ReadonlyArray<KineticItem> = INDUSTRIES_OFFERING.items.map(
 
 export function OdvetviBody() {
   const t = useTranslations('odvetvi');
+  const tCta = useTranslations('common.ctaBand');
   const openCal = useCalModal({
     bookingType: 'scoping_call',
     sourcePage: '/cs/odvetvi',
@@ -56,7 +57,7 @@ export function OdvetviBody() {
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary onClick={openCal}>
-              Chci konzultaci
+              {tCta('primaryCta')}
             </MagneticCta>
             <Link
               href="/spoluprace"

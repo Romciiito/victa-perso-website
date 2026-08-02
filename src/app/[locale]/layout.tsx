@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import { NextIntlClientProvider } from 'next-intl';
-import { getMessages, setRequestLocale } from 'next-intl/server';
+import { getMessages, getTranslations, setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import { Nav } from '@/components/nav';
@@ -30,11 +30,15 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
+  // Sitewide fallback title/description — sourced from `site.*` in
+  // content/{locale}/strings/common.json so this stays in sync with the
+  // single source of truth (copy-rewrites.md §1). Individual routes
+  // override this via their own generateMetadata.
+  const t = await getTranslations({ locale, namespace: 'site' });
   return {
     metadataBase: new URL('https://victaagency.com'),
-    title: 'VICTA',
-    description:
-      'Začneme tím, že posloucháme. Než cokoliv navrhneme, chceme rozumět vašemu podnikání.',
+    title: t('title'),
+    description: t('description'),
     // EN stub routy jsou thin content — noindex do dosažení EN parity (vision §10, §14 bod 7).
     // Routy zůstávají crawlovatelné (robots.txt je neblokuje), jinak by se noindex nepřečetl.
     ...(locale === 'en' ? { robots: { index: false, follow: false } } : {}),

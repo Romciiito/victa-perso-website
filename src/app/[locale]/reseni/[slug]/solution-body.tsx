@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import { motion, type Variants } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
@@ -37,6 +38,7 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
   // The audience field reads "Hodí se pro: výrobní firmy, ..." — strip the
   // prefix so the section can render its own heading and keep the list clean.
   const audience = item.audience.replace(/^Hodí se pro:\s*/i, '');
+  const tCta = useTranslations('common.ctaBand');
   const openCal = useCalModal({
     bookingType: 'scoping_call',
     sourcePage: `/cs/reseni/${item.slug}`,
@@ -49,7 +51,7 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
         eyebrow={item.label}
         headline={`${item.name}.`}
         sub={item.body}
-        ctas={[{ label: 'Chci konzultaci', onClick: openCal, primary: true }]}
+        ctas={[{ label: tCta('primaryCta'), onClick: openCal, primary: true }]}
       />
 
       {/* Audience — "Pro koho je vhodné" */}
@@ -93,26 +95,24 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 md:grid-cols-[6fr_5fr] md:gap-16">
           <div>
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-              další krok
+              {tCta('eyebrow')}
             </span>
             <h2 className="display mt-5 max-w-[14ch] text-[clamp(36px,5vw,68px)] text-ink">
-              Nejdřív bezplatný hovor.
+              {tCta('headline')}
             </h2>
             <p className="mt-6 max-w-[52ch] text-[17px] leading-[1.55] text-secondary">
-              30 minut, bez závazku. Probereme, jestli {item.name.toLowerCase()} sedí
-              na váš problém, a doporučíme další krok — u větších projektů
-              i placený audit celého stacku.
+              {tCta('bodySolution', { name: item.name.toLowerCase() })}
             </p>
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary onClick={openCal}>
-              Chci konzultaci
+              {tCta('primaryCta')}
             </MagneticCta>
             <Link
               href="/spoluprace"
               className="tactile text-[14px] text-secondary underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-ink hover:decoration-ink"
             >
-              Nebo rovnou placený audit →
+              {tCta('auditLink')}
             </Link>
           </div>
         </div>

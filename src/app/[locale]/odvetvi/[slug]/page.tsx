@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
+import { site } from '@/config/site';
 import { EnglishStub } from '@/components/en-stub';
 import { IndustryBody, type IndustryItem } from './industry-body';
 import data from '../../../../../content/cs/strings/common.json';
@@ -30,7 +31,7 @@ export async function generateMetadata({ params }: Props) {
   return {
     title: `${item.name} — VICTA`,
     description: item.body,
-    alternates: { canonical: `https://victaagency.com/${locale}/odvetvi/${slug}` },
+    alternates: { canonical: `${site.url}/${locale}/odvetvi/${slug}` },
   };
 }
 

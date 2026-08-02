@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { EnglishStub } from '@/components/en-stub';
+import { site } from '@/config/site';
 import { KontaktBody } from './kontakt-body';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -11,12 +12,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return {
       title: 'Contact — VICTA',
       description: 'Book a free 30-minute call, write to us, or call directly.',
+      alternates: { canonical: `${site.url}/en/kontakt` },
     };
   }
   return {
     title: 'Kontakt — VICTA',
     description:
-      'Rezervujte si bezplatnou 30minutovou konzultaci, napište nám nebo zavolejte. Odpovídáme do 1 pracovního dne.',
+      'Rezervujte si bezplatnou 30minutovou konzultaci, napište nám na hello@victaagency.com nebo zavolejte. Na nové poptávky odpovídáme do 1 pracovního dne.',
+    alternates: { canonical: `${site.url}/cs/kontakt` },
   };
 }
 

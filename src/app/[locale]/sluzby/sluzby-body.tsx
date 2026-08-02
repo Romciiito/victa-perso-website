@@ -83,6 +83,7 @@ const MARKETING_ICONS: ReadonlyArray<LucideIcon> = [
 /* ================================================================== */
 export function SluzbyBody() {
   const t = useTranslations('sluzby');
+  const tCta = useTranslations('common.ctaBand');
   const tRaw = (k: string) => t.raw(k) as unknown;
   const openCal = useCalModal({
     bookingType: 'scoping_call',
@@ -164,7 +165,7 @@ export function SluzbyBody() {
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary onClick={openCal}>
-              Chci konzultaci
+              {tCta('primaryCta')}
             </MagneticCta>
             <Link
               href="/spoluprace"

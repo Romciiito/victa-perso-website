@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation';
 import { setRequestLocale } from 'next-intl/server';
 import { EnglishStub } from '@/components/en-stub';
+import { site } from '@/config/site';
 import { ServiceBody, type ServiceDetailItem } from './service-body';
 import data from '../../../../../content/cs/strings/common.json';
 
@@ -12,6 +13,34 @@ import data from '../../../../../content/cs/strings/common.json';
    ============================================================ */
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
+
+/**
+ * Intent-mapped `<title>` per service (SEO audit P1-20, seo-visibility.md §3).
+ * `${item.name} — VICTA` alone doesn't match what people actually search —
+ * each entry below extends the bare service name with the buyer intent /
+ * cluster keyword it should rank for. Falls back to the mechanical pattern
+ * for any slug not (yet) mapped.
+ */
+const TITLE_INTENT: Readonly<Record<string, string>> = {
+  'weby-na-miru': 'Web na míru pro firmy — vývoj a SEO',
+  'e-shopy-na-miru': 'E-shop na míru — Shopify Plus a Medusa.js',
+  'prezentacni-weby-a-microsite': 'Prezentační web a microsite pro kampaně',
+  'sprava-webu-a-e-shopu': 'Správa a údržba webu nebo e-shopu',
+  'integrace-systemu': 'Integrace ERP a CRM systémů pro firmy',
+  'webove-aplikace-a-custom-vyvoj': 'Webové aplikace a custom vývoj na míru',
+  'ai-chatboti': 'AI chatboti napojení na vaše systémy',
+  'automatizace-procesu': 'Automatizace procesů a AI zpracování dat',
+  'ai-konzultace-audit-strategie': 'AI konzultace, audit a strategie pro firmy',
+  'datova-platforma-integrace': 'Datová platforma a integrace dat',
+  'mlops-provoz-ai-systemu': 'MLOps — provoz AI systémů v produkci',
+  seo: 'SEO pro firmy — technické SEO a obsah',
+  'aeo-answer-engine-optimization': 'AEO — optimalizace pro ChatGPT a AI vyhledávače',
+  'ppc-kampane': 'PPC kampaně s reportingem na revenue',
+  'social-media-management': 'Správa sociálních sítí pro firmy',
+  'tvorba-kreativ': 'Tvorba kreativ — grafika, video, Reels',
+  'e-commerce-management': 'E-commerce management — CRO a retence',
+  'marketing-strategy-plan': 'Marketingová strategie a plán pro firmy',
+};
 
 // Flatten all services from 3 categories into a single array.
 const ITEMS: ReadonlyArray<ServiceDetailItem> = (
@@ -35,10 +64,11 @@ export async function generateMetadata({ params }: Props) {
   const { slug, locale } = await params;
   const item = ITEMS.find((i) => i.slug === slug);
   if (!item) return { title: 'Služby — VICTA' };
+  const intentTitle = TITLE_INTENT[slug] ?? item.name;
   return {
-    title: `${item.name} — VICTA`,
+    title: `${intentTitle} — VICTA`,
     description: item.desc,
-    alternates: { canonical: `https://victaagency.com/${locale}/sluzby/${slug}` },
+    alternates: { canonical: `${site.url}/${locale}/sluzby/${slug}` },
   };
 }
 

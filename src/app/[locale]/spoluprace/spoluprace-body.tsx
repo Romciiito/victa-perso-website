@@ -37,6 +37,7 @@ type FaqItem = { q: string; a: string };
 /* ==================================================================== */
 export function SpolupraceBody() {
   const t = useTranslations('spoluprace');
+  const tCta = useTranslations('common.ctaBand');
   const tRaw = (k: string) => t.raw(k) as unknown;
   const openCal = useCalModal({
     bookingType: 'scoping_call',
@@ -132,7 +133,7 @@ export function SpolupraceBody() {
         headline={t('hero.headline')}
         sub={t('hero.subhead')}
         ctas={[
-          { label: 'Chci konzultaci', onClick: openCal, primary: true },
+          { label: tCta('primaryCta'), onClick: openCal, primary: true },
           { label: 'Prohlédnout audit tiery ↓', href: '#audit' },
         ]}
         anchors={[
@@ -297,7 +298,7 @@ export function SpolupraceBody() {
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary onClick={openCal}>
-              Chci konzultaci
+              {tCta('primaryCta')}
             </MagneticCta>
             <MagneticCta href="/sluzby">Prohlédnout služby</MagneticCta>
           </div>

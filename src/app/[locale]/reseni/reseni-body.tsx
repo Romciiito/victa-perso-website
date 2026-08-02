@@ -55,7 +55,7 @@ const SOLUTION_META: ReadonlyArray<SolutionMeta> = [
     secondaryIcon: Cpu,
     bentoTitle: 'Back-office automatizace',
     bentoBody:
-      'E-maily, reporty, rezervace, kontrola dat — vše s human-in-the-loop tam, kde je to potřeba.',
+      'E-maily, reporty, rezervace, kontrola dat — dnes dělá člověk. Agent to zvládne nepřetržitě, poslední slovo má stále člověk.',
     alt: true,
   },
   {
@@ -65,7 +65,7 @@ const SOLUTION_META: ReadonlyArray<SolutionMeta> = [
     secondaryIcon: Users,
     bentoTitle: 'Chatbot 24 / 7',
     bentoBody:
-      'Web, Messenger nebo WhatsApp. Odpovídá na 70 % dotazů sám, složitější předá živému agentovi.',
+      'Web, Messenger nebo WhatsApp. Odpovídá na většinu dotazů sám, složitější předá živému agentovi.',
     alt: false,
   },
   {
@@ -75,7 +75,7 @@ const SOLUTION_META: ReadonlyArray<SolutionMeta> = [
     secondaryIcon: ShieldCheck,
     bentoTitle: 'Jeden přehled, vše pohromadě',
     bentoBody:
-      'Metabase nebo Looker Studio, ETL z vašich systémů, alerting na anomálie v reálném čase.',
+      'Prodeje, marketing, sklady i finance dnes leží v pěti systémech, které spolu nemluví. My je spojíme do jednoho aktuálního přehledu.',
     alt: true,
   },
   {
@@ -129,6 +129,7 @@ export function ReseniBody() {
     body: string;
     audience: string;
   }>;
+  const tCta = useTranslations('common.ctaBand');
   const openCal = useCalModal({
     bookingType: 'scoping_call',
     sourcePage: '/cs/reseni',
@@ -181,7 +182,7 @@ export function ReseniBody() {
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary onClick={openCal}>
-              Chci konzultaci
+              {tCta('primaryCta')}
             </MagneticCta>
             <Link
               href="/spoluprace"

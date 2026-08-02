@@ -1,5 +1,6 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import {
   motion,
   type Variants,
@@ -69,6 +70,7 @@ function paragraphs(text: string) {
 
 export function IndustryBody({ item }: { item: IndustryItem }) {
   const Icon = ICON_MAP[item.icon] ?? Briefcase;
+  const tCta = useTranslations('common.ctaBand');
   const openCal = useCalModal({
     bookingType: 'scoping_call',
     sourcePage: `/cs/odvetvi/${item.slug}`,
@@ -81,7 +83,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
         eyebrow="odvětví"
         headline={`${item.name}.`}
         sub={item.body}
-        ctas={[{ label: 'Chci konzultaci', onClick: openCal, primary: true }]}
+        ctas={[{ label: tCta('primaryCta'), onClick: openCal, primary: true }]}
       />
 
       {/* 01 · problem */}
@@ -221,26 +223,24 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 md:grid-cols-[6fr_5fr] md:gap-16">
           <div>
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-              další krok
+              {tCta('eyebrow')}
             </span>
             <h2 className="display mt-5 max-w-[14ch] text-[clamp(36px,5vw,68px)] text-ink">
-              Nejdřív bezplatný hovor.
+              {tCta('headline')}
             </h2>
             <p className="mt-6 max-w-[52ch] text-[17px] leading-[1.55] text-secondary">
-              30 minut, bez závazku. Probereme, co ve vašem odvětví řešíte,
-              a doporučíme další krok — u větších projektů
-              i placený audit celého stacku.
+              {tCta('bodyIndustry')}
             </p>
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary onClick={openCal}>
-              Chci konzultaci
+              {tCta('primaryCta')}
             </MagneticCta>
             <Link
               href="/spoluprace"
               className="tactile text-[14px] text-secondary underline decoration-border underline-offset-4 transition-colors duration-150 hover:text-ink hover:decoration-ink"
             >
-              Nebo rovnou placený audit →
+              {tCta('auditLink')}
             </Link>
           </div>
         </div>

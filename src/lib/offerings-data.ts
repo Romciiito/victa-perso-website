@@ -166,7 +166,7 @@ export const INDUSTRIES_OFFERING: OfferingData = {
     {
       icon: Factory,
       title: 'Výroba',
-      subtitle: 'SAP, OEE, prediktivní údržba',
+      subtitle: 'ERP integrace, automatizace výroby',
       href: '/odvetvi/vyroba',
     },
     {
@@ -178,19 +178,19 @@ export const INDUSTRIES_OFFERING: OfferingData = {
     {
       icon: Landmark,
       title: 'Finance',
-      subtitle: 'ČNB, DORA, AML/KYC compliance',
+      subtitle: 'Automatizace back-office, bezpečné nakládání s daty',
       href: '/odvetvi/finance',
     },
     {
       icon: Zap,
       title: 'Energetika',
-      subtitle: 'Air-gapped LLM, ERÚ, fotovoltaika',
+      subtitle: 'Privátní AI nad interními daty',
       href: '/odvetvi/energetika',
     },
     {
       icon: Stethoscope,
       title: 'Zdravotnictví',
-      subtitle: 'FotoFinder, longevity AI, GDPR',
+      subtitle: 'AI nad citlivými daty, GDPR-first',
       href: '/odvetvi/zdravotnictvi',
     },
     {

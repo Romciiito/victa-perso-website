@@ -15,6 +15,7 @@ const REVEAL: Variants = {
 
 export function BlogBody() {
   const t = useTranslations('blog');
+  const tCta = useTranslations('common.ctaBand');
   const openCal = useCalModal({
     bookingType: 'scoping_call',
     sourcePage: '/cs/blog',
@@ -28,7 +29,7 @@ export function BlogBody() {
         headline={t('hero.headline')}
         sub={t('hero.subhead')}
         ctas={[
-          { label: 'Chci konzultaci', onClick: openCal, primary: true },
+          { label: tCta('primaryCta'), onClick: openCal, primary: true },
           { label: 'Přihlásit se k odběru', href: '#newsletter' },
         ]}
         anchors={[
@@ -63,7 +64,7 @@ export function BlogBody() {
               <p
                 className="font-mono text-[11px] uppercase tracking-[0.22em] text-tertiary"
               >
-                BLOG · {t('comingSoon.label')}
+                {t('comingSoon.badge')}
               </p>
               <p
                 className="mt-6 text-[clamp(28px,3.5vw,48px)] font-medium leading-[1.1] tracking-[-0.03em] text-ink"

@@ -16,18 +16,14 @@ const REVEAL: Variants = {
 };
 
 type RawValue = { label: string; body: string };
-
-const PROCESS_STEPS = [
-  { num: '01', label: 'Posloucháme', body: 'Než cokoliv navrhneme, chceme rozumět vašemu byznysu a cílům.' },
-  { num: '02', label: 'Navrhujeme', body: 'Audit → strategie → konkrétní návrh s jasnými výstupy a cenou.' },
-  { num: '03', label: 'Stavíme', body: 'Implementace s check-pointy. Žádná překvapení na konci projektu.' },
-  { num: '04', label: 'Provozujeme', body: 'Po launchi nezmizneme — správa, monitoring, iterace a růst.' },
-];
+type ProcessStep = { num: string; label: string; body: string };
 
 /* ================================================================== */
 export function ONasBody() {
   const t = useTranslations('oNas');
+  const tCta = useTranslations('common.ctaBand');
   const rawValues = t.raw('sections.values.items') as ReadonlyArray<RawValue>;
+  const PROCESS_STEPS = t.raw('sections.process.steps') as ReadonlyArray<ProcessStep>;
   const openCal = useCalModal({
     bookingType: 'scoping_call',
     sourcePage: '/cs/o-nas',
@@ -155,7 +151,7 @@ export function ONasBody() {
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary onClick={openCal}>
-              Chci konzultaci
+              {tCta('primaryCta')}
             </MagneticCta>
             <Link
               href="/spoluprace"
