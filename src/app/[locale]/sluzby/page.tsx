@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
-import { EnglishStub } from '@/components/en-stub';
 import { site } from '@/config/site';
 import { SluzbyBody } from './sluzby-body';
 
@@ -28,6 +27,5 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ServicesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  if (locale === 'en') return <EnglishStub title="Services." pathLabel="/en/sluzby" />;
   return <SluzbyBody />;
 }

@@ -10,6 +10,7 @@
     "lint": "eslint . --max-warnings 0",
     "test": "vitest --passWithNoTests",
     "lint:cs": "node scripts/czech-typography-lint.mjs",
+    "lint:i18n": "node scripts/i18n-parity-check.mjs",
     "e2e": "playwright test",
     "prepare": "node -e \"if (!process.env.CI) require('child_process').execSync('husky', {stdio: 'inherit'})\" || true"
   },

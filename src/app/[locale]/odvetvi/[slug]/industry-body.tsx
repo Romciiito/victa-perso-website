@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import {
   motion,
   type Variants,
@@ -70,17 +70,19 @@ function paragraphs(text: string) {
 
 export function IndustryBody({ item }: { item: IndustryItem }) {
   const Icon = ICON_MAP[item.icon] ?? Briefcase;
+  const t = useTranslations('odvetvi.detail');
   const tCta = useTranslations('common.ctaBand');
+  const locale = useLocale();
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: `/cs/odvetvi/${item.slug}`,
+    sourcePage: `/${locale}/odvetvi/${item.slug}`,
   });
 
   return (
     <>
       <PageHero
-        status={`/cs/odvetvi/${item.slug}`}
-        eyebrow="odvětví"
+        status={`/${locale}/odvetvi/${item.slug}`}
+        eyebrow={t('eyebrow')}
         headline={`${item.name}.`}
         sub={item.body}
         ctas={[{ label: tCta('primaryCta'), onClick: openCal, primary: true }]}
@@ -99,7 +101,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
                   <Icon size={18} strokeWidth={1.5} />
                 </div>
                 <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-                  01 · problém
+                  {t('problemEyebrow')}
                 </span>
               </div>
               <motion.h2
@@ -110,7 +112,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
                 variants={REVEAL}
                 className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
               >
-                S čím přicházejí klienti.
+                {t('problemHeading')}
               </motion.h2>
             </div>
 
@@ -139,7 +141,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[5fr_7fr] md:gap-16">
             <div>
               <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-                02 · jak na to
+                {t('approachEyebrow')}
               </span>
               <motion.h2
                 initial="hidden"
@@ -149,7 +151,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
                 variants={REVEAL}
                 className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
               >
-                Jak to děláme.
+                {t('approachHeading')}
               </motion.h2>
             </div>
 
@@ -175,7 +177,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
           <div className="grid grid-cols-1 gap-10 md:grid-cols-[5fr_7fr] md:gap-16">
             <div>
               <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-                03 · jak postupujeme
+                {t('processEyebrow')}
               </span>
               <motion.h2
                 initial="hidden"
@@ -185,7 +187,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
                 variants={REVEAL}
                 className="display mt-6 max-w-[18ch] text-[clamp(32px,4vw,52px)] text-ink"
               >
-                {item.sections.process.length} kroků od auditu k růstu.
+                {t('processHeadingTemplate', { count: item.sections.process.length })}
               </motion.h2>
             </div>
 
@@ -251,7 +253,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
             className="tactile inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.16em] text-tertiary hover:text-ink"
           >
             <ArrowLeft size={14} strokeWidth={1.75} />
-            Všechna odvětví
+            {t('backLink')}
           </Link>
         </div>
       </section>

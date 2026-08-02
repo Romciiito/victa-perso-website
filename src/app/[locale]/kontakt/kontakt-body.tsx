@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { Mail, Phone, MapPin, Globe } from 'lucide-react';
 import { motion, type Variants } from 'framer-motion';
 import { Link } from '@/i18n/navigation';
@@ -20,13 +20,15 @@ const REVEAL: Variants = {
 
 export function KontaktBody() {
   const t = useTranslations('kontakt');
+  const tCommon = useTranslations('common');
+  const locale = useLocale() === 'en' ? ('en' as const) : ('cs' as const);
 
   // Booking is the preferred path — but this page hosts the contact form
   // itself, so the not-provisioned fallback scrolls to #form instead of
   // looping back to /kontakt (the pre-v2 CTA loop).
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: '/cs/kontakt',
+    sourcePage: `/${locale}/kontakt`,
     fallbackHref: '#form',
   });
 
@@ -75,11 +77,12 @@ export function KontaktBody() {
           { label: t('hero.formCta'), onClick: scrollToForm },
         ]}
         anchors={[
-          { label: 'Preferovaná cesta', href: '#primary' },
-          { label: 'Přímé kanály', href: '#channels' },
-          { label: 'Formulář', href: '#form' },
-          { label: 'Newsletter', href: '#newsletter' },
+          { label: t('anchors.primary'), href: '#primary' },
+          { label: t('anchors.channels'), href: '#channels' },
+          { label: t('anchors.form'), href: '#form' },
+          { label: t('anchors.newsletter'), href: '#newsletter' },
         ]}
+        anchorNavLabel={tCommon('pageSectionsNavLabel')}
       />
 
       {/* ---- 01 · Preferovaná cesta ---- */}
@@ -133,13 +136,13 @@ export function KontaktBody() {
             className="mb-12"
           >
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-              03 · formulář
+              {t('formSection.eyebrow')}
             </span>
             <h2
               className="display mt-4 text-ink"
               style={{ fontSize: 'clamp(36px,4.6vw,68px)' }}
             >
-              Napište nám
+              {t('formSection.heading')}
             </h2>
           </motion.div>
           <motion.div
@@ -149,7 +152,7 @@ export function KontaktBody() {
             transition={{ ...SPRING, delay: 0.1 }}
             variants={REVEAL}
           >
-            <ContactForm locale="cs" />
+            <ContactForm locale={locale} />
           </motion.div>
         </div>
       </section>
@@ -165,10 +168,10 @@ export function KontaktBody() {
             variants={REVEAL}
           >
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-              04 · newsletter
+              {t('newsletterEyebrow')}
             </span>
             <div className="mt-6 max-w-[560px]">
-              <NewsletterSignup locale="cs" formLocation="kontakt" />
+              <NewsletterSignup locale={locale} formLocation="kontakt" />
             </div>
           </motion.div>
         </div>

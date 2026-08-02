@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
 import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
@@ -22,11 +22,13 @@ type ProcessStep = { num: string; label: string; body: string };
 export function ONasBody() {
   const t = useTranslations('oNas');
   const tCta = useTranslations('common.ctaBand');
+  const tCommon = useTranslations('common');
   const rawValues = t.raw('sections.values.items') as ReadonlyArray<RawValue>;
   const PROCESS_STEPS = t.raw('sections.process.steps') as ReadonlyArray<ProcessStep>;
+  const locale = useLocale();
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: '/cs/o-nas',
+    sourcePage: `/${locale}/o-nas`,
   });
 
   const valueItems: ReadonlyArray<ValueItem> = rawValues.map((v) => ({
@@ -42,10 +44,11 @@ export function ONasBody() {
         headline={t('hero.headline')}
         sub={t('hero.subhead')}
         anchors={[
-          { label: 'Příběh', href: '#story' },
-          { label: 'Hodnoty', href: '#values' },
-          { label: 'Proces', href: '#process' },
+          { label: t('anchors.story'), href: '#story' },
+          { label: t('anchors.values'), href: '#values' },
+          { label: t('anchors.process'), href: '#process' },
         ]}
+        anchorNavLabel={tCommon('pageSectionsNavLabel')}
       />
 
       {/* ---- 01 · Příběh ---- */}
@@ -119,7 +122,7 @@ export function ONasBody() {
           >
             <span className="pulse-dot h-2 w-2 rounded-full bg-accent" />
             <span className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-secondary">
-              AI-augmented · pod jednou střechou · {t('sections.team.headline')}
+              {t('statusLinePrefix')} · {t('sections.team.headline')}
             </span>
           </motion.div>
           <motion.p
@@ -140,7 +143,7 @@ export function ONasBody() {
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 md:grid-cols-[6fr_5fr] md:gap-16">
           <div>
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-              05 · další krok
+              {t('ctaEyebrow')}
             </span>
             <h2 className="display mt-5 max-w-[18ch] text-[clamp(40px,5vw,72px)] text-ink">
               {t('cta.headline')}

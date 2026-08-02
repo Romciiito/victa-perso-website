@@ -1,6 +1,6 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { PageHero } from '@/components/sections/page-hero';
 import { SectionMarquee } from '@/components/sections/section-marquee';
 import { SectionHeader } from '@/components/sections/section-header';
@@ -8,14 +8,6 @@ import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
 import { StickyTierStack, type TierData } from '@/components/sections/sticky-tier-stack';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
 import { useCalModal } from '@/components/booking/use-cal-modal';
-
-/* ---- static marquee strings ---------------------------------------- */
-const MARQUEE_ITEMS = [
-  'BEZPLATNÁ KONZULTACE',
-  'DO 2 DNŮ NABÍDKA',
-  'ŽÁDNÝ ZÁVAZEK',
-  'AUDIT S VÝSTUPEM',
-];
 
 /* ---- raw type shapes ----------------------------------------------- */
 type Tier = {
@@ -38,26 +30,29 @@ type FaqItem = { q: string; a: string };
 export function SpolupraceBody() {
   const t = useTranslations('spoluprace');
   const tCta = useTranslations('common.ctaBand');
+  const tCommon = useTranslations('common');
+  const locale = useLocale();
   const tRaw = (k: string) => t.raw(k) as unknown;
+  const marqueeItems = tRaw('marquee') as ReadonlyArray<string>;
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: '/cs/spoluprace',
+    sourcePage: `/${locale}/spoluprace`,
   });
   // Per-tier paid-audit bookings (D-010) — each tier opens its own Cal.com
   // event type; before Cal.com is provisioned they fall back to the contact form.
   const openCalTier1 = useCalModal({
     bookingType: 'audit_t1',
-    sourcePage: '/cs/spoluprace',
+    sourcePage: `/${locale}/spoluprace`,
     fallbackHref: '/kontakt#form',
   });
   const openCalTier2 = useCalModal({
     bookingType: 'audit_t2',
-    sourcePage: '/cs/spoluprace',
+    sourcePage: `/${locale}/spoluprace`,
     fallbackHref: '/kontakt#form',
   });
   const openCalTier3 = useCalModal({
     bookingType: 'audit_t3',
-    sourcePage: '/cs/spoluprace',
+    sourcePage: `/${locale}/spoluprace`,
     fallbackHref: '/kontakt#form',
   });
 
@@ -134,24 +129,25 @@ export function SpolupraceBody() {
         sub={t('hero.subhead')}
         ctas={[
           { label: tCta('primaryCta'), onClick: openCal, primary: true },
-          { label: 'Prohlédnout audit tiery ↓', href: '#audit' },
+          { label: t('heroExtraCta'), href: '#audit' },
         ]}
         anchors={[
-          { label: 'Dvě cesty', href: '#cesty' },
-          { label: 'Audit', href: '#audit' },
-          { label: 'Jak začít', href: '#jak-zacit' },
-          { label: 'FAQ', href: '#faq' },
+          { label: t('anchors.paths'), href: '#cesty' },
+          { label: t('anchors.audit'), href: '#audit' },
+          { label: t('anchors.start'), href: '#jak-zacit' },
+          { label: t('anchors.faq'), href: '#faq' },
         ]}
+        anchorNavLabel={tCommon('pageSectionsNavLabel')}
       />
 
       {/* ---- Marquee ---- */}
-      <SectionMarquee items={MARQUEE_ITEMS} />
+      <SectionMarquee items={marqueeItems} />
 
       {/* ---- 01 · Cesty ---- */}
       <section id="cesty" className="relative px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[1400px]">
           <SectionHeader
-            eyebrow="01 · cesty"
+            eyebrow={t('sectionEyebrows.paths')}
             title={t('paths.heading')}
             lead={t('paths.subhead')}
           />
@@ -186,7 +182,7 @@ export function SpolupraceBody() {
       >
         <div className="mx-auto max-w-[1400px]">
           <SectionHeader
-            eyebrow="02 · audit"
+            eyebrow={t('sectionEyebrows.audit')}
             title={t('tiers.heading')}
             lead={t('tiers.subhead')}
           />
@@ -202,7 +198,7 @@ export function SpolupraceBody() {
         <div className="mx-auto max-w-[1400px]">
           {/* Invoice flow */}
           <SectionHeader
-            eyebrow="03 · jak to funguje"
+            eyebrow={t('sectionEyebrows.start')}
             title={t('invoice.heading')}
             lead={t('invoice.subhead')}
           />
@@ -212,7 +208,7 @@ export function SpolupraceBody() {
           <div className="mt-20 grid grid-cols-1 gap-12 border-t border-border pt-20 md:grid-cols-2">
             <div>
               <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-                bezplatná konzultace
+                {t('scopingEyebrow')}
               </span>
               <h3 className="display mt-4 text-[clamp(32px,4vw,56px)] text-ink">
                 {t('scoping.heading')}
@@ -252,9 +248,9 @@ export function SpolupraceBody() {
       <section id="faq" className="relative bg-surface px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[920px]">
           <SectionHeader
-            eyebrow="04 · faq"
+            eyebrow={t('sectionEyebrows.faq')}
             title={t('faq.heading')}
-            lead="Nejčastější otázky před tím, než se rozhodnete."
+            lead={t('faq.lead')}
           />
           <ul className="mt-14 space-y-3">
             {faqItems.map((item, i) => (
@@ -290,17 +286,17 @@ export function SpolupraceBody() {
         <div className="mx-auto grid max-w-[1400px] grid-cols-1 gap-10 md:grid-cols-[6fr_5fr] md:gap-16">
           <div>
             <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
-              05 · další krok
+              {t('sectionEyebrows.cta')}
             </span>
             <h2 className="display mt-5 max-w-[18ch] text-[clamp(40px,5vw,72px)] text-ink">
-              Začněme tam, kde to dává smysl.
+              {t('finalCta.heading')}
             </h2>
           </div>
           <div className="flex flex-col items-start justify-end gap-3 md:items-end">
             <MagneticCta primary onClick={openCal}>
               {tCta('primaryCta')}
             </MagneticCta>
-            <MagneticCta href="/sluzby">Prohlédnout služby</MagneticCta>
+            <MagneticCta href="/sluzby">{t('finalCta.servicesLink')}</MagneticCta>
           </div>
         </div>
       </section>

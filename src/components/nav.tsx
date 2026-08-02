@@ -8,7 +8,7 @@ import { Link, usePathname } from '@/i18n/navigation';
 import { LocaleSwitcher } from './locale-switcher';
 import { useCalModal } from '@/components/booking/use-cal-modal';
 import {
-  OFFERING_MAP,
+  useOfferingsMap,
   type OfferingData,
   type OfferingKey,
 } from '@/lib/offerings-data';
@@ -45,6 +45,8 @@ const HOVER_CLOSE_GRACE_MS = 120;
 
 export function Nav() {
   const t = useTranslations('nav');
+  const tCta = useTranslations('common.ctaBand');
+  const offeringsMap = useOfferingsMap();
   const pathname = usePathname();
   const locale = useLocale();
   // usePathname z next-intl vrací cestu BEZ locale prefixu — GA4 source_page
@@ -221,7 +223,7 @@ export function Nav() {
               }}
               className="tactile hidden items-center gap-2 rounded-full border border-accent bg-accent px-5 py-2 text-[13px] font-medium text-bg md:inline-flex"
             >
-              Chci konzultaci
+              {tCta('primaryCta')}
               <ArrowUpRight size={14} strokeWidth={1.75} />
             </button>
             <button
@@ -241,6 +243,7 @@ export function Nav() {
           openKey={openDropdown}
           panelId={panelId}
           onClose={closeDropdown}
+          offeringsMap={offeringsMap}
         />
       </div>
 
@@ -254,6 +257,7 @@ export function Nav() {
           setMobileExpanded(null);
         }}
         onBookCta={openCal}
+        offeringsMap={offeringsMap}
       />
     </header>
   );
@@ -267,12 +271,14 @@ function MegaMenuPanel({
   openKey,
   panelId,
   onClose,
+  offeringsMap,
 }: {
   openKey: OfferingKey | null;
   panelId: string;
   onClose: () => void;
+  offeringsMap: Record<OfferingKey, OfferingData>;
 }) {
-  const data: OfferingData | null = openKey ? OFFERING_MAP[openKey] : null;
+  const data: OfferingData | null = openKey ? offeringsMap[openKey] : null;
 
   return (
     <AnimatePresence mode="wait">
@@ -420,6 +426,7 @@ function MobileDrawer({
   onToggle,
   onClose,
   onBookCta,
+  offeringsMap,
 }: {
   id: string;
   open: boolean;
@@ -427,8 +434,10 @@ function MobileDrawer({
   onToggle: (k: OfferingKey) => void;
   onClose: () => void;
   onBookCta: () => void | Promise<void>;
+  offeringsMap: Record<OfferingKey, OfferingData>;
 }) {
   const t = useTranslations('nav');
+  const tCta = useTranslations('common.ctaBand');
 
   return (
     <AnimatePresence>
@@ -458,7 +467,7 @@ function MobileDrawer({
                 );
               }
 
-              const data = OFFERING_MAP[item.key];
+              const data = offeringsMap[item.key];
               const isExpanded = expanded === item.key;
               return (
                 <li key={item.key} className="border-b border-border-soft last:border-b-0">
@@ -539,7 +548,7 @@ function MobileDrawer({
                 }}
                 className="flex w-full items-center justify-center gap-2 rounded-full border border-accent bg-accent px-5 py-3 text-[14px] text-bg"
               >
-                Chci konzultaci
+                {tCta('primaryCta')}
                 <ArrowUpRight size={15} strokeWidth={1.75} />
               </button>
             </li>

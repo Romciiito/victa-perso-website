@@ -1,26 +1,35 @@
 import { notFound } from 'next/navigation';
-import { setRequestLocale } from 'next-intl/server';
+import { setRequestLocale, getTranslations } from 'next-intl/server';
 import { site } from '@/config/site';
 import { metaDescription } from '@/lib/meta';
-import { EnglishStub } from '@/components/en-stub';
 import { JsonLd } from '@/components/seo/json-ld';
 import { buildBreadcrumbSchema } from '@/lib/schema';
 import { IndustryBody, type IndustryItem } from './industry-body';
-import data from '../../../../../content/cs/strings/common.json';
+import csData from '../../../../../content/cs/strings/common.json';
+import enData from '../../../../../content/en/strings/common.json';
 
 /* ============================================================
-   /cs/odvetvi/[slug] · Industry detail route
-   Reads odvetvi.items from CS translations (single source).
+   /odvetvi/[slug] · Industry detail route
+   Locale-aware (Vlna 2b-EN parity): slugs are shared 1:1 between
+   /cs and /en, item text (incl. problem/approach/process) comes
+   from the matching locale's JSON.
    ============================================================ */
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
-const ITEMS = data.odvetvi.items as ReadonlyArray<IndustryItem>;
+const ITEMS_BY_LOCALE: Record<string, ReadonlyArray<IndustryItem>> = {
+  cs: csData.odvetvi.items as ReadonlyArray<IndustryItem>,
+  en: enData.odvetvi.items as ReadonlyArray<IndustryItem>,
+};
+
+function itemsFor(locale: string): ReadonlyArray<IndustryItem> {
+  return ITEMS_BY_LOCALE[locale] ?? ITEMS_BY_LOCALE.cs;
+}
 
 export function generateStaticParams() {
   const params: Array<{ locale: string; slug: string }> = [];
   for (const locale of ['cs', 'en']) {
-    for (const it of ITEMS) {
+    for (const it of ITEMS_BY_LOCALE.cs) {
       params.push({ locale, slug: it.slug });
     }
   }
@@ -29,8 +38,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: Props) {
   const { slug, locale } = await params;
-  const item = ITEMS.find((i) => i.slug === slug);
-  if (!item) return { title: 'Odvětví — VICTA' };
+  const item = itemsFor(locale).find((i) => i.slug === slug);
+  if (!item) return { title: locale === 'en' ? 'Industries — VICTA' : 'Odvětví — VICTA' };
   return {
     title: `${item.name} — VICTA`,
     description: metaDescription(item.body),
@@ -42,25 +51,19 @@ export default async function IndustryDetailPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
 
-  const item = ITEMS.find((i) => i.slug === slug);
+  const item = itemsFor(locale).find((i) => i.slug === slug);
   if (!item) notFound();
 
-  if (locale === 'en') {
-    return (
-      <EnglishStub
-        title={`Industry — ${item.name}`}
-        pathLabel={`/en/odvetvi/${slug}`}
-      />
-    );
-  }
+  const t = await getTranslations({ locale, namespace: 'common' });
+  const tNav = await getTranslations({ locale, namespace: 'nav' });
 
   return (
     <>
       <JsonLd
         data={buildBreadcrumbSchema([
-          { name: 'Domů', url: `${site.url}/cs` },
-          { name: 'Odvětví', url: `${site.url}/cs/odvetvi` },
-          { name: item.name, url: `${site.url}/cs/odvetvi/${slug}` },
+          { name: t('breadcrumbHome'), url: `${site.url}/${locale}` },
+          { name: tNav('industries'), url: `${site.url}/${locale}/odvetvi` },
+          { name: item.name, url: `${site.url}/${locale}/odvetvi/${slug}` },
         ])}
       />
       <IndustryBody item={item} />

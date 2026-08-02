@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
-import { EnglishStub } from '@/components/en-stub';
 import { site } from '@/config/site';
 import { OdvetviBody } from './odvetvi-body';
 
@@ -28,10 +27,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function IndustriesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-
-  if (locale === 'en') {
-    return <EnglishStub title="Industries." pathLabel="/en/odvetvi" />;
-  }
 
   return <OdvetviBody />;
 }

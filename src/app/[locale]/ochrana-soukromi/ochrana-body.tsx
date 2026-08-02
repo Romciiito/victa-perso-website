@@ -12,16 +12,14 @@ export async function OchranaBody() {
       heading: t('sections.0.heading'),
       body: (
         <>
-          {
-            'Správcem osobních údajů ve smyslu čl. 4 odst. 7 GDPR je Victa Digital s.r.o., se sídlem v Praze, IČO [doplnit]. Pro veškeré dotazy týkající se ochrany osobních údajů se prosím obracejte na adresu '
-          }
+          {t('controllerPre')}
           <a
             href="mailto:privacy@victaagency.com"
             className="text-ink underline underline-offset-2 hover:text-accent"
           >
             privacy@victaagency.com
           </a>
-          {'.'}
+          {t('controllerPost')}
         </>
       ),
     },
@@ -45,16 +43,14 @@ export async function OchranaBody() {
       heading: t('sections.5.heading'),
       body: (
         <>
-          {
-            'Máte právo na přístup, opravu, výmaz, omezení zpracování, přenositelnost, vznesení námitky a odvolání souhlasu (čl. 15–22 GDPR). Žádost můžete podat na '
-          }
+          {t('rightsPre')}
           <a
             href="mailto:privacy@victaagency.com"
             className="text-ink underline underline-offset-2 hover:text-accent"
           >
             privacy@victaagency.com
           </a>
-          {' — vyřízení do 30 dnů. Stížnost můžete podat u Úřadu pro ochranu osobních údajů ('}
+          {t('rightsMid')}
           <a
             href="https://uoou.cz"
             target="_blank"
@@ -63,7 +59,7 @@ export async function OchranaBody() {
           >
             uoou.cz
           </a>
-          {').'}
+          {t('rightsPost')}
         </>
       ),
     },
@@ -79,16 +75,14 @@ export async function OchranaBody() {
 
   const fullVersionNote = (
     <>
-      {
-        'Toto je shrnutá veřejná verze. Plné znění s detailními tabulkami zpracovatelů, dob uchování a kontaktů na dozorové úřady aktualizujeme po právním reviewu — pro plné znění nás kontaktujte na '
-      }
+      {t('fullVersionNotePre')}
       <a
         href="mailto:privacy@victaagency.com"
         className="text-ink underline underline-offset-2 hover:text-accent"
       >
         privacy@victaagency.com
       </a>
-      {'.'}
+      {t('fullVersionNotePost')}
     </>
   );
 

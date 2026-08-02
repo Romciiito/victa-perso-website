@@ -7,7 +7,7 @@ import {
   useTransform,
   type Variants,
 } from 'framer-motion';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
 import { useCalModal } from '@/components/booking/use-cal-modal';
 import { SectionHeader } from '@/components/sections/section-header';
@@ -17,11 +17,7 @@ import { HorizontalScroller } from '@/components/sections/horizontal-scroller';
 import { KineticList } from '@/components/sections/kinetic-list';
 import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
 import { Link } from '@/i18n/navigation';
-import {
-  SERVICES_OFFERING,
-  SOLUTIONS_OFFERING,
-  INDUSTRIES_OFFERING,
-} from '@/lib/offerings-data';
+import { useOfferingData } from '@/lib/offerings-data';
 
 /* ============================================================
    Czech homepage · D-008 taste-skill applied
@@ -39,21 +35,13 @@ const REVEAL: Variants = {
 };
 
 export function HomeBody() {
+  const tMarquee = useTranslations('home');
+  const marqueeItems = tMarquee.raw('marquee') as ReadonlyArray<string>;
+
   return (
     <>
       <Hero />
-      <SectionMarquee
-        items={[
-          'CHCI RŮST',
-          'TRANSPARENTNOST',
-          'PARTNERSTVÍ',
-          'AI-NATIVE',
-          'ŘEMESLO',
-          `AI-augmented tým`,
-          'Pod jednou střechou',
-          'Hradec Králové',
-        ]}
-      />
+      <SectionMarquee items={marqueeItems} />
       <ServicesBento />
       <SolutionsSection />
       <IndustriesSection />
@@ -68,6 +56,7 @@ export function HomeBody() {
 
 function Hero() {
   const t = useTranslations('home.hero');
+  const locale = useLocale();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -77,7 +66,7 @@ function Hero() {
   const openCal = useCalModal({
     eventSlug: 'free-scoping-call',
     bookingType: 'scoping_call',
-    sourcePage: '/cs',
+    sourcePage: `/${locale}`,
   });
 
   return (
@@ -168,9 +157,11 @@ function Diamond() {
 /* ------------------------------------------------------------ */
 
 function ServicesBento() {
+  const t = useTranslations('home.sections.services');
+  const servicesOffering = useOfferingData('services');
   const spanMap: ReadonlyArray<BentoItem['span']> = [7, 5, 5, 7, 4, 8];
 
-  const bentoItems: ReadonlyArray<BentoItem> = SERVICES_OFFERING.items.map(
+  const bentoItems: ReadonlyArray<BentoItem> = servicesOffering.items.map(
     (item, i) => ({
       icon: item.icon,
       title: item.title,
@@ -188,11 +179,11 @@ function ServicesBento() {
     <section id="sluzby" className="relative px-6 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeader
-          eyebrow="01 · služby"
-          title={`${SERVICES_OFFERING.sidebarHeadline}.`}
-          lead={SERVICES_OFFERING.sidebarDescription}
-          ctaLabel="Všechny služby"
-          ctaHref={SERVICES_OFFERING.sidebarCtaHref}
+          eyebrow={t('eyebrow')}
+          title={`${servicesOffering.sidebarHeadline}.`}
+          lead={servicesOffering.sidebarDescription}
+          ctaLabel={t('ctaLabel')}
+          ctaHref={servicesOffering.sidebarCtaHref}
         />
         <div className="mt-14">
           <BentoGrid items={bentoItems} />
@@ -207,18 +198,20 @@ function ServicesBento() {
 /* ------------------------------------------------------------ */
 
 function SolutionsSection() {
+  const t = useTranslations('home.sections.solutions');
+  const solutionsOffering = useOfferingData('solutions');
   return (
     <section id="reseni" className="relative py-24 md:py-32">
       <div className="mx-auto max-w-[1400px] px-6 md:px-10">
         <SectionHeader
-          eyebrow="02 · řešení"
-          title={`${SOLUTIONS_OFFERING.sidebarHeadline}.`}
-          lead={SOLUTIONS_OFFERING.sidebarDescription}
-          ctaLabel="Všechna řešení"
-          ctaHref={SOLUTIONS_OFFERING.sidebarCtaHref}
+          eyebrow={t('eyebrow')}
+          title={`${solutionsOffering.sidebarHeadline}.`}
+          lead={solutionsOffering.sidebarDescription}
+          ctaLabel={t('ctaLabel')}
+          ctaHref={solutionsOffering.sidebarCtaHref}
         />
       </div>
-      <HorizontalScroller items={SOLUTIONS_OFFERING.items} />
+      <HorizontalScroller items={solutionsOffering.items} />
     </section>
   );
 }
@@ -228,17 +221,19 @@ function SolutionsSection() {
 /* ------------------------------------------------------------ */
 
 function IndustriesSection() {
+  const t = useTranslations('home.sections.industries');
+  const industriesOffering = useOfferingData('industries');
   return (
     <section id="odvetvi" className="relative px-6 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[1400px]">
         <SectionHeader
-          eyebrow="03 · odvětví"
-          title={`${INDUSTRIES_OFFERING.sidebarHeadline}.`}
-          lead={INDUSTRIES_OFFERING.sidebarDescription}
-          ctaLabel="Všechna odvětví"
-          ctaHref={INDUSTRIES_OFFERING.sidebarCtaHref}
+          eyebrow={t('eyebrow')}
+          title={`${industriesOffering.sidebarHeadline}.`}
+          lead={industriesOffering.sidebarDescription}
+          ctaLabel={t('ctaLabel')}
+          ctaHref={industriesOffering.sidebarCtaHref}
         />
-        <KineticList items={INDUSTRIES_OFFERING.items} />
+        <KineticList items={industriesOffering.items} />
       </div>
     </section>
   );
@@ -253,10 +248,11 @@ function IndustriesSection() {
 
 function ProofSection() {
   const t = useTranslations('home.proof');
+  const locale = useLocale();
   const cards = t.raw('cards') as ReadonlyArray<{ title: string; body: string }>;
   const openCal = useCalModal({
     bookingType: 'scoping_call',
-    sourcePage: '/cs',
+    sourcePage: `/${locale}`,
   });
 
   const cardItems: ReadonlyArray<ValueItem> = cards.map((card) => ({
