@@ -2,6 +2,8 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { EnglishStub } from '@/components/en-stub';
 import { site } from '@/config/site';
+import { JsonLd } from '@/components/seo/json-ld';
+import { buildLocalBusinessSchema } from '@/lib/schema';
 import { KontaktBody } from './kontakt-body';
 
 type Props = { params: Promise<{ locale: string }> };
@@ -31,5 +33,10 @@ export default async function ContactPage({ params }: Props) {
     return <EnglishStub title="Contact." pathLabel="/en/kontakt" />;
   }
 
-  return <KontaktBody />;
+  return (
+    <>
+      <JsonLd data={buildLocalBusinessSchema()} />
+      <KontaktBody />
+    </>
+  );
 }

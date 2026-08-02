@@ -3,6 +3,8 @@ import { setRequestLocale } from 'next-intl/server';
 import { EnglishStub } from '@/components/en-stub';
 import { site } from '@/config/site';
 import { metaDescription } from '@/lib/meta';
+import { JsonLd } from '@/components/seo/json-ld';
+import { buildBreadcrumbSchema } from '@/lib/schema';
 import { SolutionBody, type SolutionItem } from './solution-body';
 import data from '../../../../../content/cs/strings/common.json';
 
@@ -65,5 +67,16 @@ export default async function SolutionDetailPage({ params }: Props) {
     );
   }
 
-  return <SolutionBody item={item} />;
+  return (
+    <>
+      <JsonLd
+        data={buildBreadcrumbSchema([
+          { name: 'Domů', url: `${site.url}/cs` },
+          { name: 'Řešení', url: `${site.url}/cs/reseni` },
+          { name: item.name, url: `${site.url}/cs/reseni/${slug}` },
+        ])}
+      />
+      <SolutionBody item={item} />
+    </>
+  );
 }

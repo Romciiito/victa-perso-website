@@ -1,11 +1,11 @@
-'use client';
-
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/page-hero';
 import { ProseBlock, type ProseSection } from '@/components/sections/prose-block';
 
-export function OchranaBody() {
-  const t = useTranslations('legal.privacy');
+/* Server Component (audit P0-22) — purely static legal content, no
+   interactivity, so it renders with zero client JS. */
+export async function OchranaBody() {
+  const t = await getTranslations('legal.privacy');
 
   const sections: ProseSection[] = [
     {

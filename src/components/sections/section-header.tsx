@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type Variants } from 'framer-motion';
+import { m, type Variants } from 'framer-motion';
 import { MagneticCta } from './magnetic-cta';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
@@ -19,7 +19,7 @@ type Props = {
 
 export function SectionHeader({ eyebrow, title, lead, ctaLabel, ctaHref }: Props) {
   return (
-    <motion.div
+    <m.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-15%' }}
@@ -43,6 +43,6 @@ export function SectionHeader({ eyebrow, title, lead, ctaLabel, ctaHref }: Props
           </div>
         )}
       </div>
-    </motion.div>
+    </m.div>
   );
 }

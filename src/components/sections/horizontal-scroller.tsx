@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from '@/i18n/navigation';
 import type { LucideIcon } from 'lucide-react';
@@ -40,14 +40,37 @@ function ScrollerCard({
   total,
 }: ScrollerItem & { index: number; total: number }) {
   const ref = useRef<HTMLAnchorElement>(null);
+  // INP fix (audit P1-16): cache the bounding rect on mouseenter instead of
+  // calling getBoundingClientRect() on every mousemove, and coalesce the
+  // custom-property writes to one per animation frame.
+  const rectRef = useRef<DOMRect | null>(null);
+  const rafRef = useRef<number | null>(null);
+  const pointerRef = useRef({ x: 0, y: 0 });
+
+  useEffect(
+    () => () => {
+      if (rafRef.current !== null) cancelAnimationFrame(rafRef.current);
+    },
+    [],
+  );
+
+  function onEnter() {
+    rectRef.current = ref.current?.getBoundingClientRect() ?? null;
+  }
 
   function onMove(e: React.MouseEvent<HTMLAnchorElement>) {
-    const r = ref.current?.getBoundingClientRect();
-    if (!r) return;
-    const x = ((e.clientX - r.left) / r.width) * 100;
-    const y = ((e.clientY - r.top) / r.height) * 100;
-    ref.current?.style.setProperty('--mx', `${x}%`);
-    ref.current?.style.setProperty('--my', `${y}%`);
+    pointerRef.current = { x: e.clientX, y: e.clientY };
+    if (rafRef.current !== null) return;
+    rafRef.current = requestAnimationFrame(() => {
+      rafRef.current = null;
+      const r = rectRef.current;
+      if (!r) return;
+      const { x: clientX, y: clientY } = pointerRef.current;
+      const x = ((clientX - r.left) / r.width) * 100;
+      const y = ((clientY - r.top) / r.height) * 100;
+      ref.current?.style.setProperty('--mx', `${x}%`);
+      ref.current?.style.setProperty('--my', `${y}%`);
+    });
   }
 
   return (
@@ -60,6 +83,7 @@ function ScrollerCard({
       <Link
         ref={ref}
         href={href}
+        onMouseEnter={onEnter}
         onMouseMove={onMove}
         className="spotlight tactile relative flex h-[340px] w-[320px] shrink-0 flex-col justify-between overflow-hidden rounded-card border border-border bg-surface p-8 md:h-[380px] md:w-[360px]"
       >

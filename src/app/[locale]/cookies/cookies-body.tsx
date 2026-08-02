@@ -1,11 +1,11 @@
-'use client';
-
-import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { PageHero } from '@/components/sections/page-hero';
 import { ProseBlock, type ProseSection } from '@/components/sections/prose-block';
 
-export function CookiesBody() {
-  const t = useTranslations('legal.cookies');
+/* Server Component (audit P0-22) — purely static legal content, no
+   interactivity, so it renders with zero client JS. */
+export async function CookiesBody() {
+  const t = await getTranslations('legal.cookies');
 
   const sections: ProseSection[] = [
     {

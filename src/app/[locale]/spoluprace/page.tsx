@@ -2,7 +2,12 @@ import type { Metadata } from 'next';
 import { setRequestLocale } from 'next-intl/server';
 import { EnglishStub } from '@/components/en-stub';
 import { site } from '@/config/site';
+import { JsonLd } from '@/components/seo/json-ld';
+import { buildFaqSchema, type FaqEntry } from '@/lib/schema';
 import { SpolupraceBody } from './spoluprace-body';
+import data from '../../../../content/cs/strings/common.json';
+
+const FAQ_ITEMS = data.spoluprace.faq.items as ReadonlyArray<FaqEntry>;
 
 type Props = { params: Promise<{ locale: string }> };
 
@@ -33,5 +38,10 @@ export default async function CollaborationPage({ params }: Props) {
     return <EnglishStub title="How we collaborate." pathLabel="/en/spoluprace" />;
   }
 
-  return <SpolupraceBody />;
+  return (
+    <>
+      <JsonLd data={buildFaqSchema(FAQ_ITEMS)} />
+      <SpolupraceBody />
+    </>
+  );
 }

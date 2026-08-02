@@ -37,9 +37,13 @@ type SolutionMeta = {
   alt: boolean;
 };
 
+/* `id` MUST match the real /reseni/[slug] route slugs (content/cs/strings/common.json
+   `reseni.items[].slug`) — used both as the on-page anchor id and, via makeBento(),
+   as the mega-menu/homepage href fragment. Previously drifted from the actual slugs
+   (audit P2-11); ids below are now 1:1 with routes.ts `solutionSlugs`. */
 const SOLUTION_META: ReadonlyArray<SolutionMeta> = [
   {
-    id: 'genai-rag',
+    id: 'znalostni-asistent',
     eyebrow: '01 · GenAI a RAG',
     primaryIcon: MessageSquare,
     secondaryIcon: Layers,
@@ -59,7 +63,7 @@ const SOLUTION_META: ReadonlyArray<SolutionMeta> = [
     alt: true,
   },
   {
-    id: 'zakaznicka-podpora',
+    id: 'podpora',
     eyebrow: '03 · zákaznická podpora',
     primaryIcon: Headphones,
     secondaryIcon: Users,
@@ -69,7 +73,7 @@ const SOLUTION_META: ReadonlyArray<SolutionMeta> = [
     alt: false,
   },
   {
-    id: 'prediktivni-analytika',
+    id: 'dashboardy',
     eyebrow: '04 · prediktivní analytika',
     primaryIcon: BarChart3,
     secondaryIcon: ShieldCheck,
@@ -142,10 +146,10 @@ export function ReseniBody() {
         headline={t('hero.headline')}
         sub={t('hero.subhead')}
         anchors={[
-          { label: 'GenAI a RAG', href: '#genai-rag' },
+          { label: 'GenAI a RAG', href: '#znalostni-asistent' },
           { label: 'Autonomní agenti', href: '#agenti' },
-          { label: 'AI podpora', href: '#zakaznicka-podpora' },
-          { label: 'Prediktivní analytika', href: '#prediktivni-analytika' },
+          { label: 'AI podpora', href: '#podpora' },
+          { label: 'Prediktivní analytika', href: '#dashboardy' },
           { label: 'AI infrastruktura', href: '#infrastruktura' },
         ]}
       />

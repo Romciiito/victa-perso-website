@@ -1,13 +1,13 @@
-'use client';
-
 import type React from 'react';
-import { motion, type Variants } from 'framer-motion';
 
-const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
-const REVEAL: Variants = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(8px)' },
-  visible: { opacity: 1, y: 0, filter: 'blur(0px)' },
-};
+/* ============================================================
+   prose-block.tsx · Server Component (audit P0-22)
+   ----------------------------------------------------------------
+   Used only by the two legal pages (cookies-body, ochrana-body),
+   which are pure static content — no scroll-reveal animation, no
+   client JS at all. Kept deliberately framer-motion-free so those
+   pages ship zero hydration cost for this section.
+   ============================================================ */
 
 export type ProseSection = {
   heading: string;
@@ -25,14 +25,7 @@ export function ProseBlock({ sections, note }: Props) {
   return (
     <div className="mx-auto max-w-[64ch]">
       {sections.map((sec, i) => (
-        <motion.div
-          key={i}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-5%' }}
-          transition={{ ...SPRING, delay: i * 0.04 }}
-          variants={REVEAL}
-        >
+        <div key={i}>
           <h2 className="display mt-16 text-[clamp(28px,3vw,40px)] text-ink">
             {sec.heading}
           </h2>
@@ -55,20 +48,13 @@ export function ProseBlock({ sections, note }: Props) {
               ))}
             </ul>
           )}
-        </motion.div>
+        </div>
       ))}
 
       {note && (
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: '-5%' }}
-          transition={SPRING}
-          variants={REVEAL}
-          className="mt-14 rounded-card border border-border-soft bg-surface p-8"
-        >
+        <div className="mt-14 rounded-card border border-border-soft bg-surface p-8">
           <p className="text-[15px] leading-[1.6] text-secondary">{note}</p>
-        </motion.div>
+        </div>
       )}
     </div>
   );
