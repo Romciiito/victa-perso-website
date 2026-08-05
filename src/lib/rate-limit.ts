@@ -169,3 +169,143 @@ export async function releaseWebhookProcessing(calBookingId: string, triggerEven
     console.warn(`[rate-limit] webhook release failed (${calBookingId}:${triggerEvent}):`, (err as Error).message);
   }
 }
+
+/* ============================================================================
+ * Chatbot rate limiting — three independent dimensions (AR-17, never merged).
+ *
+ * FAIL-CLOSED, not fail-open. `checkLimit` above deliberately swallows Redis
+ * errors for the contact/newsletter forms (REQ-I-020: don't block a
+ * legitimate lead because the rate-limit store hiccuped). The chatbot is the
+ * opposite case: rate limiting exists ONLY for cost control against a
+ * per-request-billed AI Gateway call (security-model.md §4.1 cost-
+ * amplification threat) — an unreachable Redis must not silently wave every
+ * request through to that call. The functions below let Redis errors
+ * propagate; `/api/chat` catches them at the top level and returns the
+ * documented static-fallback 503 (architecture.md §13.2), never a raw 500
+ * and never a bypassed limit.
+ * ==========================================================================*/
+
+/** Per-IP chat cap (AR-17 dimension 1 of 3): 10 requests / 60s window. */
+const CHAT_IP_LIMIT = 10;
+const CHAT_IP_WINDOW_S = 60;
+
+export interface ChatIpLimitResult {
+  ok: boolean;
+  count: number;
+  limit: number;
+}
+
+/**
+ * Per-IP chat rate limit, implemented as a FIXED window counter (INCR +
+ * EXPIRE) rather than `@upstash/ratelimit`'s Lua-script-based sliding
+ * window used by `checkLimit`'s dimensions above. Deliberate: this keeps
+ * all three chat rate-limit dimensions on the same plain Redis primitives
+ * (INCR/EXPIRE/GET/SET, no EVALSHA), which is what `incrChatSessionMessages`
+ * and `claimChatDailyConversation` below already use — one consistent,
+ * easily-testable implementation strategy for the whole chatbot rate-limit
+ * surface, and one fewer Upstash feature (Lua scripting) to depend on
+ * working correctly under a REST-based Redis client.
+ *
+ * Trade-off accepted: a fixed window can allow roughly 2x the nominal limit
+ * right at a minute boundary (e.g. 10 requests in the last second of one
+ * window + 10 more in the first second of the next). For a 10 req/60s
+ * cost-control gate — backed by two OTHER independent dimensions
+ * (per-session, per-day) — this is an acceptable trade against the
+ * simplicity and testability gained; it is not the sole defense.
+ *
+ * Errors propagate (fail-closed) — same rationale as the module comment
+ * above.
+ */
+export async function checkChatIpLimit(ipHash: string): Promise<ChatIpLimitResult> {
+  const bucket = Math.floor(Date.now() / (CHAT_IP_WINDOW_S * 1000));
+  const key = `rl:chat_ip:${ipHash}:${bucket}`;
+  const count = await redis.incr(key);
+  if (count === 1) {
+    await redis.expire(key, CHAT_IP_WINDOW_S);
+  }
+  return { ok: count <= CHAT_IP_LIMIT, count, limit: CHAT_IP_LIMIT };
+}
+
+/** Per-session message cap (AR-17 dimension 2 of 3): 20 messages/conversation. */
+const CHAT_SESSION_MAX_MESSAGES = 20;
+/** Bounds both the conversation's server-side lifetime and Redis key growth. */
+const CHAT_SESSION_TTL_S = 60 * 60 * 24;
+/** Per-day new-conversation cap (AR-17 dimension 3 of 3): 1/IP/day. */
+const CHAT_DAILY_TTL_S = 60 * 60 * 24;
+
+export interface ChatSessionLimitResult {
+  ok: boolean;
+  count: number;
+  limit: number;
+}
+
+/**
+ * Increments the server-side authoritative message counter for a chat
+ * session and reports whether it is still within the 20-message cap.
+ * `session_id` is client-supplied but the COUNT is not — the client's own
+ * `messages` array length is never trusted for this check (dispatch brief:
+ * "server-side kontrola délky messages — klientovi nevěř"); the Zod schema's
+ * `max(40)` on the array is a separate, independent defense against a single
+ * oversized request, not a substitute for this cross-request counter.
+ */
+export async function incrChatSessionMessages(sessionId: string): Promise<ChatSessionLimitResult> {
+  const key = `rl:chat_session:${sessionId}`;
+  const count = await redis.incr(key);
+  if (count === 1) {
+    await redis.expire(key, CHAT_SESSION_TTL_S);
+  }
+  return { ok: count <= CHAT_SESSION_MAX_MESSAGES, count, limit: CHAT_SESSION_MAX_MESSAGES };
+}
+
+/**
+ * Claims today's one-new-conversation-per-IP slot, but ONLY when `sessionId`
+ * has not been seen before — an already-known session is a continuation of
+ * an already-permitted conversation, not a new one (dispatch brief: "SETNX
+ * denní klíč při první zprávě session; existující session pokračuje"). The
+ * "have we seen this session" signal itself lives in Redis
+ * (`rl:chat_seen:{sessionId}`) rather than being inferred from the request
+ * shape, so it is authoritative across a session's whole lifetime, not just
+ * within one request.
+ *
+ * Two properties worth recording explicitly (code-reviewer finding I-5 —
+ * verified correct against the exact attack the brief describes, but with
+ * consequences worth someone's eyes before activation):
+ *
+ * 1. `rl:chat_seen:{sessionId}` is keyed on session_id ALONE, not on
+ *    `(ipHash, sessionId)`. A request presenting a previously-claimed
+ *    session_id always continues, from ANY IP, skipping the daily check
+ *    entirely. This is not exploitable as a bypass — the key is only ever
+ *    set by this function itself, after a successful claim, and a
+ *    `crypto.randomUUID()` session_id isn't guessable — but it means the
+ *    daily cap's real effect is "1 NEW conversation id claimed per IP per
+ *    day", not "1 conversation total per IP per day" if that id later moves
+ *    across IPs (e.g. a visitor on mobile data, then wifi).
+ * 2. Combined with `incrChatSessionMessages`'s 20-message cap, the practical
+ *    ceiling this enforces is ~20 messages per IP per rolling 24h — which
+ *    means every visitor behind the same NAT (a shared office connection)
+ *    shares that one daily slot. VICTA's stated audience (architecture.md,
+ *    vision.md) is 50-300-employee companies — i.e. office NAT is the
+ *    common case, not the edge case. AR-17 mandates this design, so this is
+ *    spec-compliant, but the product consequence (a second colleague at the
+ *    same office getting `429 daily-limit` on the same day) should reach
+ *    Roman before activation, not be discovered after. Changing the
+ *    dimension's key (e.g. adding a session-count multiplier) needs its own
+ *    decision record, not a quiet edit here.
+ */
+export async function claimChatDailyConversation(
+  ipHash: string,
+  sessionId: string,
+): Promise<{ ok: boolean }> {
+  const seenKey = `rl:chat_seen:${sessionId}`;
+  const alreadySeen = await redis.get<string>(seenKey);
+  if (alreadySeen) return { ok: true };
+
+  const day = new Date().toISOString().slice(0, 10); // UTC calendar date
+  const dailyKey = `rl:chat_daily:${ipHash}:${day}`;
+  const claimed = await redis.set(dailyKey, sessionId, { nx: true, ex: CHAT_DAILY_TTL_S });
+  if (claimed !== 'OK') {
+    return { ok: false };
+  }
+  await redis.set(seenKey, '1', { ex: CHAT_SESSION_TTL_S });
+  return { ok: true };
+}

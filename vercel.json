@@ -52,6 +52,9 @@
     },
     "app/api/booking-webhook/route.ts": {
       "maxDuration": 10
+    },
+    "app/api/chat/route.ts": {
+      "maxDuration": 30
     }
   },
 

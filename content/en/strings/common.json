@@ -1325,6 +1325,24 @@
       "body": "Leave your email in the form below and we'll let you know the moment the blog goes live. No spam, no automated sequences—just one email, once there's something worth reading."
     }
   },
+  "chat": {
+    "launcherLabel": "Ask VICTA's AI assistant",
+    "panelTitle": "VICTA AI assistant",
+    "placeholder": "Ask about services, process, or pricing…",
+    "send": "Send",
+    "sending": "Sending…",
+    "close": "Close",
+    "limitReached": "You've reached the message limit for this conversation. Please contact us for further questions.",
+    "dailyLimitReached": "Today's limit for new conversations has been reached. Please try again tomorrow, or contact us directly.",
+    "disabledFallback": "The chatbot is temporarily unavailable—please contact us directly.",
+    "errorGeneric": "Something went wrong. Please try again.",
+    "messageCountWarning": "You're approaching the message limit for this conversation (18/20).",
+    "gdpr": {
+      "body": "We process conversations under our ",
+      "linkText": "privacy policy",
+      "after": "—message content is never stored, only technical statistics."
+    }
+  },
   "legal": {
     "privacy": {
       "title": "Privacy Policy",

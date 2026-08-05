@@ -9,6 +9,7 @@ import { checkLimit, hashIp } from '@/lib/rate-limit';
 import { supabaseAdmin } from '@/lib/supabase';
 import { upsertLead } from '@/lib/leads';
 import { contactConfirmationEmailHtml } from '@/lib/email-html';
+import { isAllowedOrigin, clientIp } from '@/lib/origin';
 import { site } from '@/config/site';
 
 /**
@@ -30,40 +31,8 @@ import { site } from '@/config/site';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-function originOk(req: NextRequest): boolean {
-  const origin = req.headers.get('origin');
-  if (!origin) return false;
-  try {
-    const u = new URL(origin);
-    // Allowlist: jen produkční doména + vlastní Vercel deployment URL tohoto projektu.
-    // Plošné `.vercel.app` by přijalo cross-origin POST z libovolného cizího Vercel
-    // projektu (audit P1-01) — deklarovaná CSRF vrstva by byla triviálně obejitelná.
-    const allowed = new Set<string>([new URL(site.url).hostname]);
-    for (const env of [
-      process.env.VERCEL_URL,
-      process.env.VERCEL_BRANCH_URL,
-      process.env.VERCEL_PROJECT_PRODUCTION_URL,
-    ]) {
-      if (env) allowed.add(env);
-    }
-    if (process.env.NODE_ENV !== 'production') allowed.add('localhost');
-    return allowed.has(u.hostname);
-  } catch {
-    return false;
-  }
-}
-
-function clientIp(req: NextRequest): string {
-  const xff = req.headers.get('x-forwarded-for');
-  if (xff) {
-    const first = xff.split(',')[0]?.trim();
-    if (first) return first;
-  }
-  return req.headers.get('x-real-ip') ?? '0.0.0.0';
-}
-
 export async function POST(req: NextRequest): Promise<NextResponse> {
-  if (!originOk(req)) {
+  if (!isAllowedOrigin(req)) {
     return NextResponse.json({ error: 'origin' }, { status: 403 });
   }
 
