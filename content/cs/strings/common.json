@@ -1324,6 +1324,24 @@
       "body": "Nechte nám e-mail ve formuláři níže a dáme vám vědět, jakmile blog ožije. Žádný spam, žádné automatické sekvence — jen jeden e-mail, až tu něco stojí za přečtení."
     }
   },
+  "chat": {
+    "launcherLabel": "Zeptat se AI asistenta VICTA",
+    "panelTitle": "AI asistent VICTA",
+    "placeholder": "Zeptejte se na služby, proces nebo ceny…",
+    "send": "Odeslat",
+    "sending": "Odesílám…",
+    "close": "Zavřít",
+    "limitReached": "Dosáhli jste limitu zpráv pro tuto konverzaci. Pro další dotazy nás prosím kontaktujte.",
+    "dailyLimitReached": "Dnešní limit nových konverzací byl vyčerpán. Zkuste to prosím zítra, nebo nás kontaktujte přímo.",
+    "disabledFallback": "Chatbot je momentálně nedostupný — kontaktujte nás prosím přímo.",
+    "errorGeneric": "Něco se nepovedlo. Zkuste to prosím znovu.",
+    "messageCountWarning": "Blížíte se limitu zpráv pro tuto konverzaci (18/20).",
+    "gdpr": {
+      "body": "Konverzace zpracováváme podle ",
+      "linkText": "zásad ochrany osobních údajů",
+      "after": " — obsah zpráv se neukládá, ukládají se jen technické statistiky."
+    }
+  },
   "legal": {
     "privacy": {
       "title": "Zásady ochrany osobních údajů",

@@ -8,6 +8,7 @@ import { Nav } from '@/components/nav';
 import { Footer } from '@/components/footer';
 import { CookiebotScript } from '@/components/consent/cookiebot-script';
 import { Ga4Loader } from '@/components/consent/ga4-loader';
+import { ChatLauncher } from '@/components/chat/chat-launcher';
 import { MotionProvider } from '@/components/motion-provider';
 import { JsonLd } from '@/components/seo/json-ld';
 import { buildOrganizationSchema, buildWebSiteSchema } from '@/lib/schema';
@@ -118,6 +119,11 @@ export default async function LocaleLayout({
               {children}
             </main>
             <Footer />
+            {/* Vlna 5 — shipped dormant: ChatLauncher renders nothing at all
+                (no wrapper element) unless NEXT_PUBLIC_CHATBOT_ENABLED === '1'.
+                See src/components/chat/chat-launcher.tsx and
+                docs/setup/chatbot-activation.md. */}
+            <ChatLauncher />
           </NextIntlClientProvider>
           <Ga4Loader />
         </MotionProvider>
