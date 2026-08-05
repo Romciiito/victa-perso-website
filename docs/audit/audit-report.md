@@ -150,6 +150,9 @@ Webhook idempotence (P0-15) · CSP enforcing + nonce (P0-16) · LCP fix H1 (P0-2
 ### Vlna 4 — Viditelnost (Fáze 5; po Vlně 0 NAP fixu)
 LinkedIn založit · GBP + Firmy.cz dle připraveného obsahu (seo-visibility.md §5–7) · sekce „Zeptejte se AI" (po JSON-LD) · obsahový start: re-copy 3 pilířů, první články dle clusterů, /diagnoza/* postupně (vendor lock-in první — největší mezera).
 
+#### Vlna 4a — viditelnost nezávislá na provisioningu ✅ hotovo 2026-08-05
+Realizace: P1-19 sekce „Zeptejte se na nás AI" nasazena (homepage za ProofSection, /o-nas před closing CTA, /spoluprace před FAQ — spec seo-visibility.md §4 doslova, včetně Gemini copy-to-clipboard fallbacku) · P1-18 `public/llms.txt` kompletně přepsán ze zdrojů `common.json` + `site.ts` (18 služeb / 5 řešení / 8 odvětví, konverzní model konzultace-primární + audit jako produkt, NAP bez roku založení, nová sekce hreflang cs/en) · P1-15 LazyMotion dokončen — zbylých 11 souborů (+ `o-nas-body.tsx` při zapojování AskAi) převedeno z `motion.` na `m.`; bundle `.next/static/chunks` 1 486 320 B → 1 437 194 B (−49 126 B, ≈−3,3 %), konečně reálný pokles (D-016 fast-follow). Zbývá **Vlna 4b** (provisioning-závislé): LinkedIn, GBP, Firmy.cz.
+
 ### Vlna 5 — Chatbot (samostatný workstream)
 Dle workplanu; launch gate = prompt-injection baterie 15+ scénářů, žádné logování obsahu (§14 bod 12). Neprojde → nejde na web.
 

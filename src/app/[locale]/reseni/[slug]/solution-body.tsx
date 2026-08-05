@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { motion, type Variants } from 'framer-motion';
+import { m, type Variants } from 'framer-motion';
 import { ArrowLeft } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { PageHero } from '@/components/sections/page-hero';
@@ -67,7 +67,7 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
               <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
                 01 · {t('whoEyebrow')}
               </span>
-              <motion.h2
+              <m.h2
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-15%' }}
@@ -76,9 +76,9 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
                 className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
               >
                 {t('whoHeading')}
-              </motion.h2>
+              </m.h2>
             </div>
-            <motion.p
+            <m.p
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-15%' }}
@@ -87,7 +87,7 @@ export function SolutionBody({ item }: { item: SolutionItem }) {
               className="max-w-[58ch] text-[18px] leading-[1.6] text-secondary"
             >
               {audience}
-            </motion.p>
+            </m.p>
           </div>
         </div>
       </section>

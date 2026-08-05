@@ -25,6 +25,13 @@
       "body": "Tahle adresa u nás neexistuje nebo byla přesunuta. Zkuste hlavní stránku, nebo nám rovnou napište."
     }
   },
+  "askAi": {
+    "headline": "Zeptejte se na nás umělé inteligence",
+    "sub": "Nechte si od AI shrnout, co VICTA dělá, pro koho pracuje a jak probíhá spolupráce — bez procházení celého webu.",
+    "prompt": "Shrň mi, co dělá agentura VICTA (VICTA DIGITAL s.r.o.) — jaké služby nabízí, pro jaké obory firem pracuje a jak funguje jejich placený audit vs. bezplatná 30minutová konzultace. Zdroj: victaagency.com.",
+    "copyPrompt": "Zkopírovat prompt",
+    "copied": "Zkopírováno"
+  },
   "nav": {
     "tag": "/ digital agency",
     "services": "Služby",
@@ -81,9 +88,18 @@
       "Hradec Králové"
     ],
     "sections": {
-      "services": { "eyebrow": "01 · služby", "ctaLabel": "Všechny služby" },
-      "solutions": { "eyebrow": "02 · řešení", "ctaLabel": "Všechna řešení" },
-      "industries": { "eyebrow": "03 · odvětví", "ctaLabel": "Všechna odvětví" }
+      "services": {
+        "eyebrow": "01 · služby",
+        "ctaLabel": "Všechny služby"
+      },
+      "solutions": {
+        "eyebrow": "02 · řešení",
+        "ctaLabel": "Všechna řešení"
+      },
+      "industries": {
+        "eyebrow": "03 · odvětví",
+        "ctaLabel": "Všechna odvětví"
+      }
     },
     "hero": {
       "status": "VICTA · Digitální partner pro růst firem",
@@ -235,6 +251,9 @@
         }
       ],
       "cta": "Chci konzultaci"
+    },
+    "askAi": {
+      "eyebrow": "05 · zeptejte se AI"
     }
   },
   "spoluprace": {
@@ -260,8 +279,9 @@
       "paths": "01 · cesty",
       "audit": "02 · audit",
       "start": "03 · jak to funguje",
-      "faq": "04 · faq",
-      "cta": "05 · další krok"
+      "askAi": "04 · zeptejte se AI",
+      "faq": "05 · faq",
+      "cta": "06 · další krok"
     },
     "scopingEyebrow": "bezplatná konzultace",
     "finalCta": {
@@ -832,11 +852,21 @@
       "backLink": "Všechna řešení"
     },
     "anchors": [
-      { "label": "GenAI a RAG" },
-      { "label": "Autonomní agenti" },
-      { "label": "AI podpora" },
-      { "label": "Prediktivní analytika" },
-      { "label": "AI infrastruktura" }
+      {
+        "label": "GenAI a RAG"
+      },
+      {
+        "label": "Autonomní agenti"
+      },
+      {
+        "label": "AI podpora"
+      },
+      {
+        "label": "Prediktivní analytika"
+      },
+      {
+        "label": "AI infrastruktura"
+      }
     ],
     "meta": [
       {
@@ -1179,6 +1209,7 @@
       "process": "Proces"
     },
     "ctaEyebrow": "05 · další krok",
+    "askAiEyebrow": "04 · zeptejte se AI",
     "statusLinePrefix": "AI-augmented · pod jednou střechou",
     "sections": {
       "story": {

@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { Link } from '@/i18n/navigation';
 import type { LucideIcon } from 'lucide-react';
 
@@ -74,7 +74,7 @@ function ScrollerCard({
   }
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 24 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-10%' }}
@@ -104,6 +104,6 @@ function ScrollerCard({
           <p className="mt-3 text-[14.5px] leading-[1.55] text-secondary">{subtitle}</p>
         </div>
       </Link>
-    </motion.div>
+    </m.div>
   );
 }

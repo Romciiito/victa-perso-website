@@ -5,9 +5,10 @@ import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
 import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { AskAiSection } from '@/components/sections/ask-ai';
 import { useCalModal } from '@/components/booking/use-cal-modal';
 import { Link } from '@/i18n/navigation';
-import { motion, type Variants } from 'framer-motion';
+import { m, type Variants } from 'framer-motion';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
 const REVEAL: Variants = {
@@ -84,7 +85,7 @@ export function ONasBody() {
           />
           <div className="mt-14 grid grid-cols-1 gap-px border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
             {PROCESS_STEPS.map((step, i) => (
-              <motion.div
+              <m.div
                 key={step.num}
                 initial="hidden"
                 whileInView="visible"
@@ -103,7 +104,7 @@ export function ONasBody() {
                   {step.label}
                 </h3>
                 <p className="text-[15px] leading-[1.6] text-secondary">{step.body}</p>
-              </motion.div>
+              </m.div>
             ))}
           </div>
         </div>
@@ -112,7 +113,7 @@ export function ONasBody() {
       {/* ---- 04 · Stav ---- */}
       <section className="relative bg-surface px-6 py-16 md:px-10 md:py-20">
         <div className="mx-auto max-w-[1400px]">
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10%' }}
@@ -124,8 +125,8 @@ export function ONasBody() {
             <span className="font-mono text-[11.5px] uppercase tracking-[0.14em] text-secondary">
               {t('statusLinePrefix')} · {t('sections.team.headline')}
             </span>
-          </motion.div>
-          <motion.p
+          </m.div>
+          <m.p
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10%' }}
@@ -134,9 +135,12 @@ export function ONasBody() {
             className="mt-6 max-w-[58ch] text-[17px] leading-[1.55] text-secondary"
           >
             {t('sections.team.body')}
-          </motion.p>
+          </m.p>
         </div>
       </section>
+
+      {/* ---- 04 · Zeptejte se na nás AI ---- */}
+      <AskAiSection eyebrow={t('askAiEyebrow')} />
 
       {/* ---- CTA band ---- */}
       <section className="relative border-t border-border px-6 py-24 md:px-10 md:py-32">

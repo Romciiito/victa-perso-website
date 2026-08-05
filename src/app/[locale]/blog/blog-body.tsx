@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { motion, type Variants } from 'framer-motion';
+import { m, type Variants } from 'framer-motion';
 import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
 import { NewsletterSignup } from '@/components/forms/newsletter-signup';
@@ -53,7 +53,7 @@ export function BlogBody() {
             lead={t('comingSoon.body')}
           />
 
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10%' }}
@@ -78,7 +78,7 @@ export function BlogBody() {
                 {t('comingSoon.body')}
               </p>
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -94,7 +94,7 @@ export function BlogBody() {
             lead={t('newsletter.body')}
           />
 
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10%' }}
@@ -107,7 +107,7 @@ export function BlogBody() {
             >
               <NewsletterSignup locale={locale} formLocation="blog" />
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
     </>

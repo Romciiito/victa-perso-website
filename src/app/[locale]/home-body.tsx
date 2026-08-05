@@ -2,7 +2,7 @@
 
 import { useRef } from 'react';
 import {
-  motion,
+  m,
   useScroll,
   useTransform,
   type Variants,
@@ -16,6 +16,7 @@ import { BentoGrid, type BentoItem } from '@/components/sections/bento-grid';
 import { HorizontalScroller } from '@/components/sections/horizontal-scroller';
 import { KineticList } from '@/components/sections/kinetic-list';
 import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
+import { AskAiSection } from '@/components/sections/ask-ai';
 import { Link } from '@/i18n/navigation';
 import { useOfferingData } from '@/lib/offerings-data';
 
@@ -46,6 +47,7 @@ export function HomeBody() {
       <SolutionsSection />
       <IndustriesSection />
       <ProofSection />
+      <AskAi />
     </>
   );
 }
@@ -75,8 +77,8 @@ function Hero() {
       className="relative min-h-[80vh] px-6 pt-20 pb-24 md:px-10 md:pt-28 md:pb-28"
     >
       <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
-        <motion.div style={{ y }} className="flex flex-col">
-          <motion.div
+        <m.div style={{ y }} className="flex flex-col">
+          <m.div
             initial="hidden"
             animate="visible"
             transition={{ ...SPRING, delay: 0.1 }}
@@ -87,7 +89,7 @@ function Hero() {
             <span className="font-mono uppercase tracking-[0.14em]">
               {t('status')}
             </span>
-          </motion.div>
+          </m.div>
 
           {/* H1 renders statically — no opacity/blur/scale animation (audit P0-21,
               LCP fix). Only accompanying elements below keep the entrance reveal. */}
@@ -95,7 +97,7 @@ function Hero() {
             {t('headline')}
           </h1>
 
-          <motion.div
+          <m.div
             initial="hidden"
             animate="visible"
             transition={{ ...SPRING, delay: 0.26 }}
@@ -111,9 +113,9 @@ function Hero() {
             <span>{t('tagsMarketing')}</span>
             <Diamond />
             <span>{t('tagsSprava')}</span>
-          </motion.div>
+          </m.div>
 
-          <motion.p
+          <m.p
             initial="hidden"
             animate="visible"
             transition={{ ...SPRING, delay: 0.34 }}
@@ -121,9 +123,9 @@ function Hero() {
             className="mt-7 max-w-[58ch] text-[18px] leading-[1.55] text-secondary"
           >
             {t('sub')}
-          </motion.p>
+          </m.p>
 
-          <motion.div
+          <m.div
             initial="hidden"
             animate="visible"
             transition={{ ...SPRING, delay: 0.44 }}
@@ -139,8 +141,8 @@ function Hero() {
             >
               {t('ctaGhost')}
             </Link>
-          </motion.div>
-        </motion.div>
+          </m.div>
+        </m.div>
       </div>
     </section>
   );
@@ -277,4 +279,13 @@ function ProofSection() {
       </div>
     </section>
   );
+}
+
+/* ------------------------------------------------------------ */
+/*  "Zeptejte se na nás AI" — seo-visibility.md §4               */
+/* ------------------------------------------------------------ */
+
+function AskAi() {
+  const t = useTranslations('home.askAi');
+  return <AskAiSection eyebrow={t('eyebrow')} />;
 }

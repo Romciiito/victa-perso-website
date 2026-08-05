@@ -25,6 +25,13 @@
       "body": "This address doesn't exist here, or it moved. Try the homepage, or just write to us directly."
     }
   },
+  "askAi": {
+    "headline": "Ask AI about us",
+    "sub": "Let AI summarize what VICTA does, who it works with, and how the collaboration works—without browsing the whole site.",
+    "prompt": "Summarize what VICTA (VICTA DIGITAL s.r.o.) does—what services it offers, which industries it works with, and how their paid audit works vs. the free 30-minute consultation. Source: victaagency.com.",
+    "copyPrompt": "Copy prompt",
+    "copied": "Copied"
+  },
   "nav": {
     "tag": "/ digital agency",
     "services": "Services",
@@ -81,9 +88,18 @@
       "Hradec Králové"
     ],
     "sections": {
-      "services": { "eyebrow": "01 · services", "ctaLabel": "All services" },
-      "solutions": { "eyebrow": "02 · solutions", "ctaLabel": "All solutions" },
-      "industries": { "eyebrow": "03 · industries", "ctaLabel": "All industries" }
+      "services": {
+        "eyebrow": "01 · services",
+        "ctaLabel": "All services"
+      },
+      "solutions": {
+        "eyebrow": "02 · solutions",
+        "ctaLabel": "All solutions"
+      },
+      "industries": {
+        "eyebrow": "03 · industries",
+        "ctaLabel": "All industries"
+      }
     },
     "hero": {
       "status": "VICTA · Digital partner for business growth",
@@ -235,6 +251,9 @@
         }
       ],
       "cta": "Book a consultation"
+    },
+    "askAi": {
+      "eyebrow": "05 · ask AI"
     }
   },
   "spoluprace": {
@@ -260,8 +279,9 @@
       "paths": "01 · paths",
       "audit": "02 · audit",
       "start": "03 · how it works",
-      "faq": "04 · faq",
-      "cta": "05 · next step"
+      "askAi": "04 · ask AI",
+      "faq": "05 · faq",
+      "cta": "06 · next step"
     },
     "scopingEyebrow": "free consultation",
     "finalCta": {
@@ -832,11 +852,21 @@
       "backLink": "All solutions"
     },
     "anchors": [
-      { "label": "GenAI & RAG" },
-      { "label": "Autonomous agents" },
-      { "label": "AI support" },
-      { "label": "Predictive analytics" },
-      { "label": "AI infrastructure" }
+      {
+        "label": "GenAI & RAG"
+      },
+      {
+        "label": "Autonomous agents"
+      },
+      {
+        "label": "AI support"
+      },
+      {
+        "label": "Predictive analytics"
+      },
+      {
+        "label": "AI infrastructure"
+      }
     ],
     "meta": [
       {
@@ -1144,8 +1174,7 @@
         "slug": "zakaznicka-podpora",
         "sections": {
           "problem": "Contact centers and support teams with 1,000+ tickets a month keep handling the same questions: where's my order, how do I return an item, how do I change my billing details. Agents spend most of their time on routine cases instead of the genuinely complex ones—which is backwards.\n\nA knowledge base exists, but it's scattered across Zendesk, Confluence and a shared drive. Training a new agent takes weeks, and turnover is high. AI chatbots from 2019 have a bad reputation—they deflect customers without resolving anything and generate negative reviews. Meanwhile, the CFO is pushing to cut support costs.",
-          "approach": "A modern LLM chatbot can genuinely resolve most typical questions on its own—if it's well integrated with your systems and backed by a solid knowledge base; we confirm the exact share against your own data in a pilot. We build the solution on top of Zendesk, Intercom, Freshdesk or Front (whichever you have)—no migration, just an extension.\n\nThe chatbot answers common questions with citations back to the knowledge base, can carry out simple operations (address changes, order status), and escalates to an agent the moment a customer wants that or seems unsure. The agent gets full context and can focus on complex cases. In parallel, we build AI ticket classification, automatic tagging and suggested replies—the agent moves faster even where AI doesn't deflect."
-          ,
+          "approach": "A modern LLM chatbot can genuinely resolve most typical questions on its own—if it's well integrated with your systems and backed by a solid knowledge base; we confirm the exact share against your own data in a pilot. We build the solution on top of Zendesk, Intercom, Freshdesk or Front (whichever you have)—no migration, just an extension.\n\nThe chatbot answers common questions with citations back to the knowledge base, can carry out simple operations (address changes, order status), and escalates to an agent the moment a customer wants that or seems unsure. The agent gets full context and can focus on complex cases. In parallel, we build AI ticket classification, automatic tagging and suggested replies—the agent moves faster even where AI doesn't deflect.",
           "process": [
             {
               "title": "Ticket and knowledge base audit",
@@ -1180,6 +1209,7 @@
       "process": "Process"
     },
     "ctaEyebrow": "05 · next step",
+    "askAiEyebrow": "04 · ask AI",
     "statusLinePrefix": "AI-augmented · under one roof",
     "sections": {
       "story": {

@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import { Mail, Phone, MapPin, Globe } from 'lucide-react';
-import { motion, type Variants } from 'framer-motion';
+import { m, type Variants } from 'framer-motion';
 import { Link } from '@/i18n/navigation';
 import { PageHero } from '@/components/sections/page-hero';
 import { SectionHeader } from '@/components/sections/section-header';
@@ -95,7 +95,7 @@ export function KontaktBody() {
               lead={t('primary.body')}
             />
           </div>
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10%' }}
@@ -106,7 +106,7 @@ export function KontaktBody() {
             <MagneticCta primary onClick={openCal}>
               {t('primary.cta')}
             </MagneticCta>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
@@ -127,7 +127,7 @@ export function KontaktBody() {
       {/* ---- 03 · Formulář ---- */}
       <section id="form" className="relative border-t border-border px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[920px]">
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10%' }}
@@ -144,8 +144,8 @@ export function KontaktBody() {
             >
               {t('formSection.heading')}
             </h2>
-          </motion.div>
-          <motion.div
+          </m.div>
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10%' }}
@@ -153,14 +153,14 @@ export function KontaktBody() {
             variants={REVEAL}
           >
             <ContactForm locale={locale} />
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
       {/* ---- 04 · Newsletter ---- */}
       <section id="newsletter" className="relative border-t border-border px-6 py-20 md:px-10 md:py-24">
         <div className="mx-auto max-w-[920px]">
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10%' }}
@@ -173,14 +173,14 @@ export function KontaktBody() {
             <div className="mt-6 max-w-[560px]">
               <NewsletterSignup locale={locale} formLocation="kontakt" />
             </div>
-          </motion.div>
+          </m.div>
         </div>
       </section>
 
       {/* ---- 05 · Ochrana osobních údajů ---- */}
       <section id="privacy" className="relative border-t border-border bg-surface px-6 py-16 md:px-10 md:py-20">
         <div className="mx-auto max-w-[920px]">
-          <motion.div
+          <m.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: '-10%' }}
@@ -201,7 +201,7 @@ export function KontaktBody() {
               </Link>
               {t('privacy.after')}
             </p>
-          </motion.div>
+          </m.div>
         </div>
       </section>
     </>
