@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useLocale, useTranslations } from 'next-intl';
-import { motion, AnimatePresence, type Variants } from 'framer-motion';
+import { m, AnimatePresence, type Variants } from 'framer-motion';
 import { ArrowLeft, ChevronDown } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import { PageHero } from '@/components/sections/page-hero';
@@ -73,7 +73,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
                 <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
                   01 · {t('whoEyebrow')}
                 </span>
-                <motion.h2
+                <m.h2
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-15%' }}
@@ -82,9 +82,9 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
                   className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
                 >
                   {t('whoHeading')}
-                </motion.h2>
+                </m.h2>
               </div>
-              <motion.p
+              <m.p
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-15%' }}
@@ -93,7 +93,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
                 className="max-w-[58ch] text-[18px] leading-[1.6] text-secondary"
               >
                 {fit}
-              </motion.p>
+              </m.p>
             </div>
           </div>
         </section>
@@ -108,7 +108,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
                 <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
                   {fit ? '02' : '01'} · {t('faqEyebrow')}
                 </span>
-                <motion.h2
+                <m.h2
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true, margin: '-15%' }}
@@ -117,7 +117,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
                   className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
                 >
                   {t('faqHeading')}
-                </motion.h2>
+                </m.h2>
               </div>
               <ul className="border-t border-border">
                 {item.faq!.map((entry, i) => (
@@ -177,7 +177,7 @@ export function ServiceBody({ item }: { item: ServiceDetailItem }) {
 function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
   const [open, setOpen] = useState(false);
   return (
-    <motion.li
+    <m.li
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-10%' }}
@@ -194,18 +194,18 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
         <span className="display max-w-[52ch] text-[clamp(18px,2vw,22px)] text-ink">
           {q}
         </span>
-        <motion.span
+        <m.span
           animate={{ rotate: open ? 180 : 0, color: open ? 'var(--accent)' : 'var(--tertiary)' }}
           transition={SPRING}
           aria-hidden
           className="mt-1 shrink-0"
         >
           <ChevronDown size={20} strokeWidth={1.75} />
-        </motion.span>
+        </m.span>
       </button>
       <AnimatePresence initial={false}>
         {open && (
-          <motion.div
+          <m.div
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -215,9 +215,9 @@ function FaqRow({ q, a, index }: { q: string; a: string; index: number }) {
             <p className="max-w-[58ch] pb-6 text-[16px] leading-[1.65] text-secondary">
               {a}
             </p>
-          </motion.div>
+          </m.div>
         )}
       </AnimatePresence>
-    </motion.li>
+    </m.li>
   );
 }

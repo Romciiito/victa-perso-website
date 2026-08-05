@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, type Variants } from 'framer-motion';
+import { m, type Variants } from 'framer-motion';
 import { Link } from '@/i18n/navigation';
 import type { LucideIcon } from 'lucide-react';
 
@@ -69,7 +69,7 @@ function BentoCard({
   };
 
   return (
-    <motion.div
+    <m.div
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-10%' }}
@@ -103,6 +103,6 @@ function BentoCard({
           </p>
         </div>
       </Link>
-    </motion.div>
+    </m.div>
   );
 }

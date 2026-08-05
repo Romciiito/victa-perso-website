@@ -2,7 +2,7 @@
 
 import { useLocale, useTranslations } from 'next-intl';
 import {
-  motion,
+  m,
   type Variants,
 } from 'framer-motion';
 import {
@@ -104,7 +104,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
                   {t('problemEyebrow')}
                 </span>
               </div>
-              <motion.h2
+              <m.h2
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-15%' }}
@@ -113,10 +113,10 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
                 className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
               >
                 {t('problemHeading')}
-              </motion.h2>
+              </m.h2>
             </div>
 
-            <motion.div
+            <m.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-15%' }}
@@ -127,7 +127,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
               {paragraphs(item.sections.problem).map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </section>
@@ -143,7 +143,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
               <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
                 {t('approachEyebrow')}
               </span>
-              <motion.h2
+              <m.h2
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-15%' }}
@@ -152,10 +152,10 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
                 className="display mt-6 max-w-[14ch] text-[clamp(32px,4vw,52px)] text-ink"
               >
                 {t('approachHeading')}
-              </motion.h2>
+              </m.h2>
             </div>
 
-            <motion.div
+            <m.div
               initial="hidden"
               whileInView="visible"
               viewport={{ once: true, margin: '-15%' }}
@@ -166,7 +166,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
               {paragraphs(item.sections.approach).map((p, i) => (
                 <p key={i}>{p}</p>
               ))}
-            </motion.div>
+            </m.div>
           </div>
         </div>
       </section>
@@ -179,7 +179,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
               <span className="font-mono text-[12px] uppercase tracking-[0.18em] text-tertiary">
                 {t('processEyebrow')}
               </span>
-              <motion.h2
+              <m.h2
                 initial="hidden"
                 whileInView="visible"
                 viewport={{ once: true, margin: '-15%' }}
@@ -188,12 +188,12 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
                 className="display mt-6 max-w-[18ch] text-[clamp(32px,4vw,52px)] text-ink"
               >
                 {t('processHeadingTemplate', { count: item.sections.process.length })}
-              </motion.h2>
+              </m.h2>
             </div>
 
             <ol className="space-y-12">
               {item.sections.process.map((step, i) => (
-                <motion.li
+                <m.li
                   key={i}
                   initial="hidden"
                   whileInView="visible"
@@ -213,7 +213,7 @@ export function IndustryBody({ item }: { item: IndustryItem }) {
                       {step.body}
                     </p>
                   </div>
-                </motion.li>
+                </m.li>
               ))}
             </ol>
           </div>

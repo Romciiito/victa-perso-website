@@ -7,6 +7,7 @@ import { SectionHeader } from '@/components/sections/section-header';
 import { ValuesGrid, type ValueItem } from '@/components/sections/values-grid';
 import { StickyTierStack, type TierData } from '@/components/sections/sticky-tier-stack';
 import { MagneticCta } from '@/components/sections/magnetic-cta';
+import { AskAiSection } from '@/components/sections/ask-ai';
 import { useCalModal } from '@/components/booking/use-cal-modal';
 
 /* ---- raw type shapes ----------------------------------------------- */
@@ -244,7 +245,10 @@ export function SpolupraceBody() {
         </div>
       </section>
 
-      {/* ---- 04 · FAQ ---- */}
+      {/* ---- 04 · Zeptejte se na nás AI ---- */}
+      <AskAiSection eyebrow={t('sectionEyebrows.askAi')} />
+
+      {/* ---- 05 · FAQ ---- */}
       <section id="faq" className="relative bg-surface px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[920px]">
           <SectionHeader

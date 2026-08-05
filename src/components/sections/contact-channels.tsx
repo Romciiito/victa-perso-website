@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, type Variants } from 'framer-motion';
+import { m, type Variants } from 'framer-motion';
 import type { LucideIcon } from 'lucide-react';
 
 const SPRING = { type: 'spring' as const, stiffness: 110, damping: 22, mass: 0.9 };
@@ -24,7 +24,7 @@ type Props = {
 
 export function ContactChannels({ channels }: Props) {
   return (
-    <motion.ul
+    <m.ul
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, margin: '-10%' }}
@@ -35,7 +35,7 @@ export function ContactChannels({ channels }: Props) {
       {channels.map((ch) => (
         <ChannelRow key={ch.label} {...ch} />
       ))}
-    </motion.ul>
+    </m.ul>
   );
 }
 

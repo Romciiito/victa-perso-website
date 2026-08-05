@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
+import { m } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { Link } from '@/i18n/navigation';
 import type { LucideIcon } from 'lucide-react';
@@ -39,7 +39,7 @@ function KineticRow({
   const [hover, setHover] = useState(false);
 
   return (
-    <motion.div
+    <m.div
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-5%' }}
@@ -58,7 +58,7 @@ function KineticRow({
           </span>
 
           <div className="flex items-center gap-5">
-            <motion.div
+            <m.div
               animate={{
                 rotate: hover ? 90 : 0,
                 color: hover ? 'var(--accent)' : 'var(--secondary)',
@@ -68,23 +68,23 @@ function KineticRow({
               className="hidden md:block"
             >
               <Icon size={22} strokeWidth={1.5} />
-            </motion.div>
+            </m.div>
 
             <div>
-              <motion.h3
+              <m.h3
                 animate={{ x: hover ? 8 : 0 }}
                 transition={SPRING}
                 className="display text-[clamp(28px,3.6vw,52px)] text-ink"
               >
                 {title}
-              </motion.h3>
+              </m.h3>
               <p className="mt-1.5 text-[14px] text-secondary md:text-[15px]">
                 {subtitle}
               </p>
             </div>
           </div>
 
-          <motion.span
+          <m.span
             animate={{
               x: hover ? 6 : 0,
               rotate: hover ? -8 : 0,
@@ -95,9 +95,9 @@ function KineticRow({
             aria-hidden
           >
             <ArrowUpRight size={26} strokeWidth={1.5} />
-          </motion.span>
+          </m.span>
         </div>
       </Link>
-    </motion.div>
+    </m.div>
   );
 }
