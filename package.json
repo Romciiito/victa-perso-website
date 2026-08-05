@@ -38,24 +38,24 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.11.3",
+    "@axe-core/playwright": "^4.12.1",
     "@lhci/cli": "^0.15.1",
-    "@playwright/test": "^1.60.0",
-    "@tailwindcss/postcss": "^4.3.0",
+    "@playwright/test": "^1.62.1",
+    "@tailwindcss/postcss": "^4.3.3",
     "@types/dompurify": "^3.2.0",
-    "@types/node": "^25.9.1",
+    "@types/node": "^26.1.2",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.0.0",
-    "eslint": "^10.4.0",
-    "eslint-config-next": "^16.2.6",
+    "eslint": "^10.8.0",
+    "eslint-config-next": "^16.2.12",
     "husky": "^9.0.0",
-    "lint-staged": "^17.0.5",
+    "lint-staged": "^17.3.0",
     "postcss": "^8.5.25",
-    "tailwindcss": "^4.3.0",
-    "typescript": "^6.0.3",
-    "typescript-eslint": "^8.46.0",
-    "vite": "^7.3.6",
-    "vitest": "^4.1.7"
+    "tailwindcss": "^4.3.3",
+    "typescript": "^7.0.2",
+    "typescript-eslint": "^8.65.0",
+    "vite": "^8.2.0",
+    "vitest": "^4.1.10"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
