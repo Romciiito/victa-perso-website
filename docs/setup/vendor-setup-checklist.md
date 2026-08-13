@@ -261,6 +261,51 @@ These are already set up but verify a few items before Phase 2 starts.
 - [ ] Custom domain `victaagency.com` added in Vercel project → Settings → Domains
 - [ ] DPA accepted: https://vercel.com/legal/dpa (Vercel auto-applies for Pro/Team — for free Hobby, Roman accepts terms at signup; the platform DPA is included in standard ToS)
 
+#### ⚠️ Past: preview proměnné jsou navěšené na KONKRÉTNÍ VĚTEV
+
+Zjištěno dvakrát během jednoho dne (2026-08-13), pokaždé jako **spadlý build
+na nové PR**, ne jako chyba konfigurace:
+
+```
+Error: Supabase env vars missing: NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_KEY
+Failed to collect page data for /api/booking-webhook
+```
+
+Příčina: `SUPABASE_SERVICE_KEY`, `CONTACT_DESTINATION_EMAIL`,
+`NEWSLETTER_CONFIRM_SECRET`, `IP_HASH_SALT` a `CRON_SECRET` jsou v preview
+scoped na jednu větev (`Preview (nazev-vetve)` ve výpisu `vercel env ls
+preview`). **Jakákoli nová větev je nedostane** a build spadne — `supabase.ts`
+totiž vyhazuje výjimku už při vyhodnocení modulu, tedy během sběru dat stránek,
+ne až za běhu. Lokálně to nikdy nespadne, protože `.env.local` hodnoty má.
+
+Řešení při založení nové větve — zkopírovat scope:
+
+```bash
+npx vercel@latest env pull /tmp/.env.preview --environment=preview \
+  --git-branch <STARA-VETEV> --yes
+for V in SUPABASE_SERVICE_KEY CONTACT_DESTINATION_EMAIL \
+         NEWSLETTER_CONFIRM_SECRET IP_HASH_SALT CRON_SECRET; do
+  grep -m1 "^${V}=" /tmp/.env.preview | cut -d= -f2- | tr -d '"' \
+    | npx vercel@latest env add "$V" preview <NOVA-VETEV>
+done
+rm -f /tmp/.env.preview   # nenechávat ležet, jsou to tajemství
+```
+
+Trvalé řešení (rozhodnutí na Romanovi, zatím **neuděláno**) — jedno z:
+
+1. **Odvěvit proměnné** — smazat branch-scoped kopie a přidat je pro celé
+   Preview. Jedna konfigurace navždy, ale všechny preview větve pak sdílejí
+   stejný Supabase projekt i klíče.
+2. **Zlenivět `supabase.ts`** — stejný Proxy vzor, jaký už používá
+   `src/lib/redis.ts` (ten je tak napsaný právě proto, aby build nepadal bez
+   credentials). Build by pak preview klíče nepotřeboval vůbec. **Cena:**
+   chybějící klíč by se projevil až za běhu, ne pádem buildu — přijdeme
+   o kanárka, který dnes chytí špatně nakonfigurovaný deploy.
+
+Pozn.: `vercel env add NAME preview` **bez argumentu s větví** u CLI 50.44
+tiše selže (chybu vypíše jen jako `}`). CLI 58+ se chová správně, proto všude
+`npx vercel@latest`.
+
 ### Supabase checks
 
 - [ ] 2FA enabled on Roman's Supabase account
