@@ -35,7 +35,16 @@ function loadEnvLocal(): void {
   }
 }
 
-loadEnvLocal();
+/**
+ * Brána se čte VÝHRADNĚ z procesního prostředí a NEŽ se načte `.env.local`.
+ * Kdyby se pořadí obrátilo, stačilo by, aby kdokoli přidal `NOTIFY_SMOKE=1`
+ * do `.env.local` (kde už reálné údaje kanálů jsou), a obyčejné
+ * `pnpm vitest run` by odeslalo skutečné zprávy do produkčního kanálu
+ * zakladatele (3. kolo review gate, NOVÝ-6).
+ */
+const ENABLED = process.env.NOTIFY_SMOKE === '1';
+
+if (ENABLED) loadEnvLocal();
 
 vi.mock('server-only', () => ({}));
 vi.mock('../redis', () => ({
@@ -43,8 +52,6 @@ vi.mock('../redis', () => ({
 }));
 
 const { notifyNewLead } = await import('../lead-notify');
-
-const ENABLED = process.env.NOTIFY_SMOKE === '1';
 
 describe.skipIf(!ENABLED)('lead-notify — ŽIVÝ smoke test (posílá skutečnou zprávu)', () => {
   it('doručí testovací notifikaci do každého nakonfigurovaného kanálu', async () => {
