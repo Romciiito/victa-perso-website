@@ -115,23 +115,42 @@ export function CompanyAutocomplete({ id, value, onChange, onVerify, locale, lab
       // effect this also means no loading flicker during the debounce
       // window itself, only once the request actually starts.
       setLoading(true);
-      fetch(`/api/company-lookup?q=${encodeURIComponent(query)}&country=all`, {
-        signal: controller.signal,
-      })
-        .then((res) => res.json() as Promise<CompanyLookupResponse>)
-        .then((data) => {
-          setResults(Array.isArray(data.results) ? data.results : []);
-          setDegraded(Boolean(data.degraded));
-          setLoading(false);
-          setActiveIndex(-1);
-        })
-        .catch((err: unknown) => {
-          if (controller.signal.aborted) return;
-          console.error('[company-autocomplete] fetch failed:', (err as Error).message);
-          setResults([]);
-          setDegraded(true);
-          setLoading(false);
+      // Dva NEZÁVISLÉ požadavky místo jednoho `country=all` (měřeno na
+      // produkci 2026-08-13): ARES odpovídá do ~1 s, slovenské RPO ~8,5 s.
+      // Sloučené volání by nutilo každého — i toho, kdo hledá českou firmu —
+      // čekat na ten pomalejší zdroj. Takto CZ výsledky naskočí hned a SK se
+      // k nim doplní, jakmile dorazí; `activeIndex` se přitom nepřepisuje,
+      // aby doběhlý SK request neshodil klávesovou navigaci v dropdownu.
+      const load = (country: 'cz' | 'sk') =>
+        fetch(`/api/company-lookup?q=${encodeURIComponent(query)}&country=${country}`, {
+          signal: controller.signal,
+        }).then((res) => res.json() as Promise<CompanyLookupResponse>);
+
+      let settled = 0;
+      const finish = () => {
+        settled += 1;
+        if (settled === 2) setLoading(false);
+      };
+      const merge = (data: CompanyLookupResponse) => {
+        if (controller.signal.aborted) return;
+        const incoming = Array.isArray(data.results) ? data.results : [];
+        setResults((prev) => {
+          const seen = new Set(prev.map((r) => `${r.country}:${r.ico}`));
+          return [...prev, ...incoming.filter((r) => !seen.has(`${r.country}:${r.ico}`))];
         });
+        if (data.degraded) setDegraded(true);
+      };
+      const fail = (source: string) => (err: unknown) => {
+        if (controller.signal.aborted) return;
+        console.error(`[company-autocomplete] ${source} fetch failed:`, (err as Error).message);
+        setDegraded(true);
+      };
+
+      setResults([]);
+      setDegraded(false);
+      setActiveIndex(-1);
+      load('cz').then(merge).catch(fail('cz')).finally(finish);
+      load('sk').then(merge).catch(fail('sk')).finally(finish);
     }, DEBOUNCE_MS);
     return () => {
       clearTimeout(timer);
