@@ -60,7 +60,7 @@
       "maxDuration": 10
     },
     "app/api/company-lookup/route.ts": {
-      "maxDuration": 10
+      "maxDuration": 15
     }
   },
 

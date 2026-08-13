@@ -65,7 +65,17 @@ const RPO_SEARCH_URL = 'https://api.statistics.sk/rpo/v1/search';
 const SOURCE_FETCH_LIMIT = 8;
 /** Final cap on the merged, deduplicated response sent to the client. */
 const MAX_MERGED_RESULTS = 8;
-const FETCH_TIMEOUT_MS = 5_000;
+/**
+ * Per-source timeouts. Měřeno na produkci 2026-08-13: ARES odpovídá do ~1 s,
+ * slovenské RPO ~8,5 s. Společný 5s timeout proto SK zdroj VŽDY uřízl a
+ * odpověď se vracela s `degraded: true` bez jediné slovenské firmy.
+ *
+ * Klient tyhle dvě rychlosti nemíchá do jednoho čekání — volá `country=cz`
+ * a `country=sk` zvlášť, takže české výsledky naskočí okamžitě a slovenské
+ * se doplní, jakmile dorazí (viz company-autocomplete.tsx).
+ */
+const ARES_TIMEOUT_MS = 5_000;
+const RPO_TIMEOUT_MS = 12_000;
 
 /** Parses a `Response` body as JSON without trusting `res.ok` — ARES returns meaningful JSON on its documented 400 (see module doc). Throws only when the body genuinely isn't JSON (network edge / HTML error page from an intermediary). */
 async function parseJsonLenient(res: Response): Promise<unknown> {
@@ -231,8 +241,8 @@ export async function lookupCompany(
   const wantSk = country === 'sk' || country === 'all';
 
   const tasks: Promise<CompanyMatch[]>[] = [];
-  if (wantCz) tasks.push(searchAres(q, AbortSignal.timeout(FETCH_TIMEOUT_MS)));
-  if (wantSk) tasks.push(searchRpo(q, AbortSignal.timeout(FETCH_TIMEOUT_MS)));
+  if (wantCz) tasks.push(searchAres(q, AbortSignal.timeout(ARES_TIMEOUT_MS)));
+  if (wantSk) tasks.push(searchRpo(q, AbortSignal.timeout(RPO_TIMEOUT_MS)));
 
   const settled = await Promise.allSettled(tasks);
   let degraded = false;
