@@ -168,10 +168,22 @@ přidává breadcrumb s URL. Bez obrany by se při každém selhání notifikace
 `tracesSampleRate: 0.1` i u desetiny úspěšných, poslal webhook token třetí straně
 a zůstal tam trvale.
 
-Obrana je dvouvrstvá (`sentry.server.config.ts` + `src/lib/redact-secrets.ts`):
-volání na oba hosty se do Sentry nezaznamenávají vůbec, a co by přesto prošlo,
-projde redakcí podle tvaru URL **i podle skutečné hodnoty z prostředí** — ta
-chytne tajemství v jakémkoli obalu, ne jen v tom očekávaném.
+Obrana je dvouvrstvá a rozdělená do tří souborů:
+
+| Soubor | Role |
+|---|---|
+| `sentry.server.config.ts` | jen zapojení — `ignoreOutgoingRequests` a tři hooky |
+| `src/lib/sentry-redaction.ts` | těla hooků jako čisté funkce, aby šla testovat |
+| `src/lib/redact-secrets.ts` | samotná redakce, sdílená i s logováním v `lead-notify.ts` |
+
+Volání na oba hosty se do Sentry nezaznamenávají vůbec (span ani drobek
+nevzniknou), a co by přesto prošlo, projde redakcí podle tvaru URL **i podle
+skutečné hodnoty z prostředí** — ta chytne tajemství v jakémkoli obalu, ne jen
+v tom očekávaném.
+
+Hooky mají vlastní testy (`src/lib/__tests__/sentry-redaction.test.ts`). Vznikly
+proto, že původní verze žila přímo v konfiguračním souboru, kde ji nešlo
+otestovat — celá obrana proti tomu úniku byla suitou neověřitelná.
 
 ---
 

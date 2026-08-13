@@ -137,6 +137,10 @@ const EMBED_COLOR_BOOKING = 0x16a34a;
  */
 function cutUnits(s: string, maxUnits: number): string {
   if (s.length <= maxUnits) return s;
+  // `Math.max(0, ·)` je po doplnění `max <= 0` bran u obou volajících MRTVÝ —
+  // vědomě se nechává. Bez něj by záporný `maxUnits` znamenal `slice(0, -1)`,
+  // tedy TICHÉ vrácení skoro celého řetězce místo prázdného; to je horší třída
+  // chyby než pád. Cena je jedno volání navíc (4. kolo gate).
   let cut = s.slice(0, Math.max(0, maxUnits));
   const last = cut.charCodeAt(cut.length - 1);
   if (last >= 0xd800 && last <= 0xdbff) cut = cut.slice(0, -1);
@@ -144,7 +148,14 @@ function cutUnits(s: string, maxUnits: number): string {
 }
 
 export function truncate(s: string, max: number): string {
-  return s.length <= max ? s : `${cutUnits(s, max - 1)}…`;
+  if (s.length <= max) return s;
+  // Bez tohohle vrátí `max <= 0` řetězec `…` délky 1, tedy o víc, než kolik
+  // strop dovoluje — funkce by porušila jedinou invariantu, kvůli které
+  // existuje. Dnes to žádné volání nespustí (všechna předávají konstanty
+  // ≥ 200), takže jde o obranu do hloubky: strop se jednou může začít počítat
+  // (zbytek rozpočtu zprávy) a záporná hodnota je pak na jeden překlep.
+  if (max <= 0) return '';
+  return `${cutUnits(s, max - 1)}…`;
 }
 
 /**
@@ -159,6 +170,9 @@ export function truncate(s: string, max: number): string {
  */
 export function truncateEscapedHtml(s: string, max: number): string {
   if (s.length <= max) return s;
+  // Týž strop jako u `truncate`: samotná výpustka je 1 znak, takže pro
+  // `max <= 0` neexistuje neprázdný výstup, který by se do stropu vešel.
+  if (max <= 0) return '';
   let cut = cutUnits(s, max - 1);
   const amp = cut.lastIndexOf('&');
   // `&` bez následné `;` v ocasu = rozseknutá entita.
@@ -178,6 +192,10 @@ export function truncateEscapedHtml(s: string, max: number): string {
   // Dosažitelné jen booking cestou (pole z Cal.com payloadu nemají Zod strop),
   // což je přesně cesta, kvůli které tenhle guard vznikl.
   const openTags = (cut.match(/<b>/g) ?? []).length - (cut.match(/<\/b>/g) ?? []).length;
+  // `Math.max(0, ·)` je taky mrtvý (uživatelský obsah je escapovaný, takže
+  // `</b>` navíc nemůže vzniknout, a řez ubírá jen z konce) — a taky se
+  // vědomě nechává: `repeat(-1)` vyhazuje RangeError, což by celou notifikaci
+  // zabilo, jen kdyby se ta úvaha jednou přestala držet.
   return `${cut}…${'</b>'.repeat(Math.max(0, openTags))}`;
 }
 
@@ -211,6 +229,118 @@ export function escapeDiscordMarkdown(s: string): string {
  */
 export function escapeTelegramHtml(s: string): string {
   return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+/** Holá URL v textu od útočníka. Konec tokenu = bílý znak nebo uvozovka/špičatá
+ *  závorka, tedy vše, co ani jeden klient do odkazu nezahrne. */
+const URL_TOKEN_RE = /https?:\/\/[^\s<>"']+/gi;
+
+/**
+ * Zneškodní odkazy, jejichž ČITELNÁ podoba neodpovídá skutečnému cíli.
+ *
+ * Scénář: útočník pošle v poli „Zpráva" nebo „Firma" text
+ * `https://victaagency.com@evil.tld/faktura`. Je to platná URL, ve které je
+ * `victaagency.com` jen USERINFO — skutečný host je `evil.tld` (změřeno:
+ * `new URL(...).hostname === 'evil.tld'`). Escape markdownu ji nezachytí: není
+ * to `[text](url)` a token neobsahuje jediný escapovaný metaznak, takže do
+ * payloadu projde byte po bytu (změřeno mutací — s vypnutou obranou je celé
+ * `victaagency.com@evil.tld` v odchozím tělu). Holou URL si pak oba klienti
+ * proklikají sami; to je jejich známé chování, ne něco, co by šlo z payloadu
+ * ověřit — invarianta níž ale platí bez ohledu na ně: notifikace prostě nesmí
+ * nést text, jehož čtený host lže o cíli. Zakladateli by jinak do vlastního
+ * kanálu s hlavičkou „Nová poptávka" a brandingem „VICTA leads" přišel odkaz,
+ * který na první pohled vede na jeho doménu — týž phishingový kontext jako
+ * u maskovaných odkazů (nález D3), jinými dveřmi.
+ *
+ * Kritérium je JEDNA invarianta, ne seznam triků: text, který člověk přečte
+ * jako host (co stojí mezi `://` a prvním `/`, `?` nebo `#`), se musí rovnat
+ * hostu, na který se klient skutečně připojí. Jedna podmínka tím pokrývá
+ * userinfo, unicode homoglyfy (cyrilické „а" ve `victаagency.com` → `hostname`
+ * se normalizuje na punycode `xn--victagency-2qi.com`, změřeno — a punycode je
+ * přesně to, co homoglyf odhalí) i desítkový zápis IP (`http://3232235777/` →
+ * `192.168.1.1`). Nezachytí `https://victaagency.com.evil.tld/` — tam se ale
+ * čtený host se skutečným SHODUJE, takže zobrazený text nelže; víc než tohle
+ * neukáže ani adresní řádek prohlížeče.
+ *
+ * Proč nahradit, a ne jen označit: nechat vedle varování i původní URL by
+ * klikatelný phishing zachovalo (rozbít autolink jde jen neviditelnými znaky
+ * nebo změnou schématu, což je horší než ztráta informace). O nic se nepřichází
+ * — notifikace je jen rychlostní vrstva, plný text leadu je v Supabase i
+ * v primárním e-mailu.
+ *
+ * Legitimní odkaz projde BEZE ZMĚNY — notifikace se musí dát přečíst na jeden
+ * pohled a odkaz na web zájemce má zůstat klikatelný. Dřívější verze tohohle
+ * komentáře tvrdila, že falešný poplach nastat NEMŮŽE; to byla nepravda, kterou
+ * odhalilo až 5. kolo gate (viz `TRAILING_JUNK_RE`). Přesná formulace:
+ *
+ * ZŮSTÁVÁ jeden vědomý falešný poplach — doména s diakritikou
+ * (`https://háčky.cz`). `hostname` ji normalizuje na punycode, takže se čtená
+ * podoba liší a odkaz se nahradí varováním. Neopravuje se schválně: jediný
+ * způsob, jak to odlišit, je normalizovat i čtenou podobu — a tím by přestaly
+ * jít poznat homoglyfy (`victаagency.com` s cyrilickým „а" se normalizuje na
+ * punycode úplně stejně). Mezi „IDN doména v poptávce dostane varování" a
+ * „homoglyfový phishing projde" volíme první; české firmy IDN domény skoro
+ * nepoužívají, kdežto homoglyf je aktivní útok.
+ */
+/**
+ * Interpunkce, která v běžném textu URL UKONČUJE, ale do ní nepatří.
+ *
+ * Bez tohohle obrana ničila LEGITIMNÍ odkazy (změřeno, 5. kolo gate — 14 z 180
+ * kombinací): `URL_TOKEN_RE` nevylučuje ne-ASCII znaky, takže česká uvozovka
+ * kolem odkazu se nacucne do tokenu, WHATWG parser ji zaIDNAtí do hostu a
+ * čtená podoba se přestane rovnat skutečné:
+ *
+ *   vstup   Náš web je „https://firma.cz“ — mrkněte
+ *   výstup  Náš web je „⚠️ maskovaný odkaz — skutečný cíl firma.xn--cz-x2t — …
+ *
+ * Zakladateli by přišlo obvinění, že poctivý zájemce maskoval odkaz, a o samotný
+ * odkaz by přišel. V českém formuláři jsou uvozovky kolem URL běžné, takže to
+ * nebyl okrajový případ.
+ *
+ * Je to záměrně DENYLIST, ne allowlist povolených znaků: minout nový druh
+ * uvozovky znamená falešný poplach (nepříjemné), zatímco useknout znak, který
+ * do URL patřil, by mohlo změnit posuzovaný host (nebezpečné). Odříznutí navíc
+ * nemůže vyrobit falešně NEGATIVNÍ výsledek — `evil.tld“` i `evil.tld` se
+ * vyhodnotí stejně.
+ */
+const TRAILING_JUNK_RE = /[\s.,;:!?)\]}>"'„“”‚‘’»«…—–]+$/u;
+
+export function defangDeceptiveUrls(s: string): string {
+  return s.replace(URL_TOKEN_RE, (rawToken) => {
+    // Ocas se odřízne jen pro POSOUZENÍ; do textu se vrací beze změny, ať už
+    // odkaz projde, nebo se nahradí varováním.
+    const junk = TRAILING_JUNK_RE.exec(rawToken)?.[0] ?? '';
+    const raw = junk ? rawToken.slice(0, -junk.length) : rawToken;
+
+    let u: URL;
+    try {
+      u = new URL(raw);
+    } catch {
+      // Neparsovatelná URL není cíl, na který by šlo kliknout — nechat ji být
+      // je poctivější než hádat, co si z ní klient poskládá.
+      return rawToken;
+    }
+    // Bez fallbacku na `''` záměrně: `raw` sedl na `URL_TOKEN_RE`, takže `://`
+    // v něm JE, a `split` vrací vždy aspoň jeden prvek (změřeno i pro `''`,
+    // `'/'`, `'#'`) — `[0]` tedy nemůže být `undefined` a `?? ''` by byla
+    // pojistka, kterou žádný vstup nespustí a žádný test nedokáže ověřit.
+    // Táž úvaha jako u `toLowerCase()` níž. Kdyby se zaplo
+    // `noUncheckedIndexedAccess`, tsc si o fallback řekne sám — hlasitě.
+    const authority = raw.slice(raw.indexOf('://') + 3).split(/[/?#]/)[0];
+    // Port se odřezává, protože `hostname` ho nikdy nenese a výchozí port navíc
+    // WHATWG parser zahazuje (změřeno: `https://example.cz:443/` → `example.cz`).
+    // Bez tohohle by legitimní URL s portem spadla do „maskovaný odkaz".
+    const shown = authority.replace(/:\d*$/, '').toLowerCase();
+    // Na `u.hostname` se `toLowerCase()` ZÁMĚRNĚ nevolá. `URL_TOKEN_RE` pouští
+    // jen http(s), a u těchhle „special" schémat parser host vždycky sám
+    // znormalizuje na malá písmena (resp. punycode) — změřeno na 94 940
+    // náhodně vygenerovaných parsovatelných URL, ani jedna `hostname` s velkým
+    // písmenem nevrátila. Byla by to tedy pojistka, kterou žádný vstup nespustí
+    // a žádný test nedokáže ověřit. Kdyby se výraz rozšířil na další schémata,
+    // tahle úvaha padá — pak se `toLowerCase()` musí vrátit.
+    if (shown === u.hostname) return rawToken;
+    return `⚠️ maskovaný odkaz — skutečný cíl ${u.hostname}${junk}`;
+  });
 }
 
 function label(map: Record<string, string>, value: string | null | undefined): string | null {
@@ -313,8 +443,18 @@ function leadLines(n: LeadNotification): Line[] {
   // `sourceUrl` je hlavička `referer` od klienta — JEDINÉ pole, které nemá
   // délkový strop ze Zod schématu. Bez ořezu by útočník sám rozhodoval o
   // velikosti notifikace (Discord embed má strop 6000 znaků na celý embed).
-  if (n.sourceUrl) lines.push({ name: 'Stránka', value: truncate(n.sourceUrl, SOURCE_URL_MAX) });
-  return lines;
+  // Obrana proti maskovaným odkazům běží u `Stránka` PŘED ořezem: náhrada je
+  // delší než krátký token, takže po ní by strop 200 znaků už neplatil.
+  if (n.sourceUrl) {
+    lines.push({ name: 'Stránka', value: truncate(defangDeceptiveUrls(n.sourceUrl), SOURCE_URL_MAX) });
+  }
+  // Každá hodnota pochází z formuláře, z hlavičky `referer` nebo z Cal.com
+  // payloadu — tedy od potenciálního útočníka (i `Rozpočet` a `Služba`: `label`
+  // neznámý kód propouští syrový). Obranu proto dostane úplně každá, ne jen ta,
+  // u které nás to zrovna napadne — týž důvod, proč se markdown escapuje i
+  // v hodnotách polí, ne jen v popisu (nález NOVÝ-2). U `Stránka` je funkce
+  // aplikovaná podruhé; je idempotentní (náhrada už žádnou URL neobsahuje).
+  return lines.map((l) => ({ ...l, value: defangDeceptiveUrls(l.value) }));
 }
 
 function title(n: LeadNotification): string {
@@ -327,7 +467,9 @@ export function buildTelegramText(n: LeadNotification): string {
     parts.push(`<b>${escapeTelegramHtml(l.name)}:</b> ${escapeTelegramHtml(l.value)}`);
   }
   if (n.message) {
-    parts.push('', escapeTelegramHtml(truncate(n.message, MESSAGE_PREVIEW_CHARS)));
+    // Obrana proti maskovaným odkazům PŘED ořezem, aby strop náhledu platil na
+    // výsledný text (náhrada je delší než původní token).
+    parts.push('', escapeTelegramHtml(truncate(defangDeceptiveUrls(n.message), MESSAGE_PREVIEW_CHARS)));
   }
   // Závěrečná pojistka na celkovou délku. MUSÍ být entity-safe: escapování
   // délku násobí, takže tenhle strop je dosažitelný i legitimní zprávou plnou
@@ -359,7 +501,11 @@ export function buildDiscordPayload(n: LeadNotification): Record<string, unknown
         })),
         ...(n.message
           ? {
-              description: escapeDiscordMarkdown(truncate(n.message, MESSAGE_PREVIEW_CHARS)),
+              // Pořadí je stejné jako u Telegramu: obrana proti maskovaným
+              // odkazům → ořez → escape.
+              description: escapeDiscordMarkdown(
+                truncate(defangDeceptiveUrls(n.message), MESSAGE_PREVIEW_CHARS),
+              ),
             }
           : {}),
         timestamp: new Date().toISOString(),
@@ -401,10 +547,15 @@ async function post(url: string, body: unknown, channel: string): Promise<SendRe
 }
 
 async function sendDiscord(payload: Record<string, unknown>): Promise<SendResult> {
-  // `?.trim()` stejně jako u telegramských proměnných: hodnota " " (mezera po
-  // nešikovném paste) je truthy, prošla by jako nakonfigurovaný kanál a každý
-  // lead by skončil TypeErrorem plus Sentry hláškou „všechny kanály selhaly"
-  // (nález N3 review gate).
+  // Nevypadá to jako duplikát `anyConfigured` v `notifyNewLead`, ale není:
+  // ta podmínka je OR přes oba kanály, takže sem se dojde i s prázdným (nebo
+  // jen mezerou vyplněným) DISCORD_LEAD_WEBHOOK_URL, když je nastavený Telegram
+  // — a to je běžný stav, protože kanály se provisionují každý zvlášť.
+  // Bez `?.trim()` je hodnota " " truthy, poletí `fetch(" ")`, ta odmítne
+  // TypeErrorem „Failed to parse URL" (změřeno — `post` ho odchytí, ven jde
+  // 'failed') a nenaprovisionovaný kanál se pak tváří jako rozbitý: zbytečné
+  // volání u každého leadu a při souběžném výpadku Telegramu falešná Sentry
+  // hláška „všechny kanály selhaly" (nález N3 review gate).
   const url = process.env.DISCORD_LEAD_WEBHOOK_URL?.trim();
   if (!url) return 'skipped';
   return post(url, payload, 'discord');

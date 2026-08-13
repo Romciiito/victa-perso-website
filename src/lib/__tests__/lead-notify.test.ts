@@ -48,6 +48,8 @@ const {
   notifyNewLead,
   buildTelegramText,
   buildDiscordPayload,
+  defangDeceptiveUrls,
+  escapeDiscordMarkdown,
   escapeTelegramHtml,
   truncate,
   truncateEscapedHtml,
@@ -391,6 +393,30 @@ describe('regresní pojistky (nálezy z adversariálního review)', () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it('mezera místo Discord webhooku neaktivuje kanál ani vedle živého Telegramu', async () => {
+    // Test výše sem nedosáhne: bez Telegramu utne odeslání už `anyConfigured`.
+    // Teprve tahle kombinace (jeden kanál nastavený, druhý „vyplněný" mezerou)
+    // dojde do `sendDiscord` — a tam bez `?.trim()` poletí `fetch("   ")`,
+    // takže nenaprovisionovaný kanál se tváří jako rozbitý.
+    process.env.DISCORD_LEAD_WEBHOOK_URL = '   ';
+    process.env.TELEGRAM_BOT_TOKEN = '123:ABC';
+    process.env.TELEGRAM_CHAT_ID = '-1001234';
+    await expect(notifyNewLead(LEAD)).resolves.toBe(1);
+    expect(urls()).toEqual(['https://api.telegram.org/bot123:ABC/sendMessage']);
+  });
+
+  it('ořez drží strop i pro nulový a záporný limit', () => {
+    // Samotná výpustka je 1 znak, takže pro `max <= 0` neexistuje neprázdný
+    // výstup, který by se do stropu vešel — dosud vracely obě funkce `…`,
+    // tedy o znak víc, než samy slibují.
+    expect(truncate('ahoj', 0)).toBe('');
+    expect(truncate('ahoj', -5)).toBe('');
+    expect(truncateEscapedHtml('<b>ahoj</b>', 0)).toBe('');
+    expect(truncateEscapedHtml('&amp;x', -1)).toBe('');
+    // Nejmenší strop, do kterého se výpustka vejde, ji pořád vrátí.
+    expect(truncate('ahoj', 1)).toBe('…');
+  });
+
   it('nedoručená notifikace nespotřebuje kvótu', async () => {
     process.env.DISCORD_LEAD_WEBHOOK_URL = DISCORD_URL;
     fetchMock.mockResolvedValue(new Response('', { status: 500 }));
@@ -509,6 +535,284 @@ describe('regresní pojistky (nálezy z adversariálního review)', () => {
       (f) => f.name === 'Stránka',
     );
     expect(field!.value.length).toBeLessThanOrEqual(200);
+  });
+});
+
+describe('maskované odkazy — phishing přes userinfo a homoglyfy', () => {
+  /** `victaagency.com` je jen USERINFO, skutečný host je `evil.tld`. */
+  const PHISH = 'https://victaagency.com@evil.tld/faktura';
+
+  it('Discord: odkaz s userinfo v popisu se nahradí skutečným cílem', () => {
+    const payload = buildDiscordPayload({ ...LEAD, message: `Faktura ke schválení: ${PHISH}` });
+    const desc = String((payload.embeds as { description: string }[])[0].description);
+    // Escape markdownu tenhle tvar nezachytí (žádný metaznak), takže by URL
+    // došla do kanálu byte po bytu a klient by ji sám proklikl.
+    expect(desc, 'klikatelný phishing odešel do kanálu').not.toContain('victaagency.com@evil.tld');
+    expect(desc).toContain('skutečný cíl evil.tld');
+  });
+
+  it('Discord: totéž v HODNOTÁCH POLÍ, nejen v popisu', () => {
+    const payload = buildDiscordPayload({ ...LEAD, company: PHISH, name: `Jan ${PHISH}` });
+    const joined = (payload.embeds as { fields: { value: string }[] }[])[0].fields
+      .map((f) => f.value)
+      .join('\n');
+    expect(joined).not.toContain('victaagency.com@evil.tld');
+    expect(joined).toContain('skutečný cíl evil.tld');
+  });
+
+  it('Telegram: nahradí se i v poli Stránka — `referer` posílá klient', () => {
+    const text = buildTelegramText({ ...LEAD, sourceUrl: PHISH, message: PHISH });
+    expect(text).not.toContain('victaagency.com@evil.tld');
+    expect(text.match(/skutečný cíl evil\.tld/g) ?? [], 'obě pole musí být ošetřená').toHaveLength(
+      2,
+    );
+  });
+
+  it('unicode homoglyf v hostu se odhalí punycodem', () => {
+    // Cyrilické „а" (U+0430) místo latinského „a" — text vypadá jako naše
+    // doména, `URL` ho normalizuje na punycode (změřeno).
+    const text = buildTelegramText({ ...LEAD, message: 'Podklady: https://victаagency.com/f' });
+    expect(text).toContain('skutečný cíl xn--victagency-2qi.com');
+  });
+
+  it('desítkový zápis IP se přepíše na skutečnou adresu', () => {
+    const text = buildTelegramText({ ...LEAD, message: 'http://3232235777/faktura' });
+    expect(text).toContain('skutečný cíl 192.168.1.1');
+  });
+
+  it('legitimní odkaz zůstane nedotčený — notifikace se musí dál číst na jeden pohled', () => {
+    const text = buildTelegramText({
+      ...LEAD,
+      sourceUrl: 'https://victaagency.com/cs/kontakt?utm_source=google',
+      // Port i verzálky jsou běžné zápisy, které `URL` normalizuje — obrana je
+      // nesmí prohlásit za maskovaný odkaz, jinak zmizí odkaz na web zájemce.
+      message: 'Náš web: https://example.cz:443/portfolio a https://EXAMPLE.cz/x',
+    });
+    expect(text).toContain('https://victaagency.com/cs/kontakt?utm_source=google');
+    expect(text).toContain('https://example.cz:443/portfolio');
+    expect(text).toContain('https://EXAMPLE.cz/x');
+    expect(text).not.toContain('maskovaný odkaz');
+  });
+
+  /**
+   * Vstupy, na kterých `new URL` VYHODÍ (změřeno, Node 20.20.1). Všechny sednou
+   * na `URL_TOKEN_RE`, takže se k `new URL` vůbec dostanou — a všechny projdou
+   * `sanitizeFormString` beze změny (ta strhává jen `<…>` a řídicí znaky, `[`
+   * ani `%` mezi nimi nejsou), takže doteče z pole „Zpráva" až sem. `sourceUrl`
+   * je na tom hůř: syrová hlavička `referer` se nesanitizuje vůbec.
+   */
+  const UNPARSEABLE = [
+    'https://[bad',
+    'https://%zz.com/',
+    'http://192.168.0.1:99999/',
+    'https://[::1',
+    'https://victaagency.com%40evil.tld/x',
+  ];
+
+  it.each(UNPARSEABLE)('neparsovatelný token %s projde beze změny, ne výjimkou', (raw) => {
+    // Neparsovatelná URL není cíl, na který by šlo kliknout — nechat ji být je
+    // záměr. Podstatné je, že se to NEDĚLÁ výjimkou: ta by cestou ven zmizela
+    // v catch-allu `notifyNewLead` (viz oba testy níž).
+    expect(defangDeceptiveUrls(`Faktura ${raw} díky`)).toBe(`Faktura ${raw} díky`);
+  });
+
+  it('neparsovatelná URL ve zprávě notifikaci neshodí — musí dorazit do OBOU kanálů', async () => {
+    process.env.DISCORD_LEAD_WEBHOOK_URL = DISCORD_URL;
+    process.env.TELEGRAM_BOT_TOKEN = '123:ABC';
+    process.env.TELEGRAM_CHAT_ID = '-1001234';
+
+    // Bez pojistky vyhodí `defangDeceptiveUrls` už při sestavování payloadu,
+    // catch-all v `notifyNewLead` výjimku spolkne a PLATNÝ lead zmizí beze stopy
+    // z obou kanálů — v logu zůstane jen „neočekávaná chyba (potlačeno)".
+    const delivered = await notifyNewLead({ ...LEAD, message: 'Faktura https://[bad' });
+
+    expect(delivered, 'notifikace tiše zmizela z obou kanálů').toBe(2);
+    expect(String(bodies()[1].text)).toContain('https://[bad');
+  });
+
+  it('neparsovatelná URL v `referer` notifikaci neshodí — hlavička nemá žádnou sanitizaci', async () => {
+    process.env.TELEGRAM_BOT_TOKEN = '123:ABC';
+    process.env.TELEGRAM_CHAT_ID = '-1001234';
+
+    // Druhá vstupní cesta: `sourceUrl` jde přes `leadLines`, ne přes větev
+    // `n.message` — tu první test neprojde.
+    const delivered = await notifyNewLead({ ...LEAD, sourceUrl: 'https://%zz.com/x' });
+
+    expect(delivered, 'notifikace tiše zmizela').toBe(1);
+    expect(String(bodies()[0].text)).toContain('https://%zz.com/x');
+  });
+
+  it('náhrada nepřeroste strop pole Stránka', () => {
+    // Náhrada je delší než krátký token, takže ořez musí běžet až po ní.
+    const payload = buildDiscordPayload({
+      ...LEAD,
+      sourceUrl: `${'https://a@b.cz '.repeat(13)}`.slice(0, 200),
+    });
+    const field = (payload.embeds as { fields: { name: string; value: string }[] }[])[0].fields.find(
+      (f) => f.name === 'Stránka',
+    );
+    expect(field!.value.length).toBeLessThanOrEqual(200);
+  });
+});
+
+/**
+ * Pět pojistek, které v produkčním kódu FUNGUJÍ, ale nedržel je žádný test —
+ * mutace je odstranila a všech 317 testů dál prošlo. Odhalila je až mutační
+ * dávka ve 4. kole gate (90 mutací, 65 zabitých). Kód se kvůli nim neměnil,
+ * mění se jen to, že jsou nově pojištěné.
+ */
+describe('pojistky bez testu (4. kolo gate)', () => {
+  it('mezera v telegramských proměnných neposílá zmrzačenou URL ani chat_id', async () => {
+    // `vercel env add` umí vložit hodnotu s mezerou — a `new URL` mezeru
+    // NEZAHODÍ (na rozdíl od `\n`), takže požadavek skutečně odejde na síť,
+    // Telegram vrátí 404 a notifikace tiše zmizí u KAŽDÉHO leadu. Discordí
+    // dvojče `?.trim()` test mělo, tohle ne — přitom je horší.
+    process.env.TELEGRAM_BOT_TOKEN = ' 123456789:AAH-xyz ';
+    process.env.TELEGRAM_CHAT_ID = ' -1001234 ';
+
+    await notifyNewLead(LEAD);
+
+    expect(urls()[0]).toBe('https://api.telegram.org/bot123456789:AAH-xyz/sendMessage');
+    expect(bodies()[0]!.chat_id).toBe('-1001234');
+  });
+
+  it('nevyhodí, ani když sestavení payloadu selže', async () => {
+    // Nejvíc dokumentovaná invarianta modulu (3× v komentářích, a obě volací
+    // místa na ni spoléhají — `after(() => notifyNewLead(...))` bez `.catch()`).
+    // Bez ní by z toho byl unhandled rejection u požadavku, kterému už dávno
+    // odešla odpověď 200.
+    process.env.DISCORD_LEAD_WEBHOOK_URL = DISCORD_URL;
+    const boom = {
+      kind: 'contact',
+      get email(): string {
+        throw new Error('boom');
+      },
+    };
+    await expect(notifyNewLead(boom as never)).resolves.toBe(0);
+  });
+
+  it('z logu selhaného kanálu zmizí webhook token', async () => {
+    // Jediná zábrana mezi chybou z `fetch` a tajemstvím ve Vercel logu.
+    // Reálná hláška: `Failed to parse URL from <celá URL i s tokenem>`.
+    process.env.DISCORD_LEAD_WEBHOOK_URL = 'discord.com/api/webhooks/1234567890/SUPER-SECRET';
+    const warn = vi.spyOn(console, 'warn').mockImplementation(() => {});
+    fetchMock.mockRejectedValue(
+      new TypeError('Failed to parse URL from discord.com/api/webhooks/1234567890/SUPER-SECRET'),
+    );
+
+    await notifyNewLead(LEAD);
+
+    expect(JSON.stringify(warn.mock.calls)).not.toContain('SUPER-SECRET');
+  });
+
+  it('redakce funguje i pro odsazenou hodnotu z prostředí', () => {
+    // Vrstva „chytne tajemství v JAKÉMKOLI obalu" stojí na porovnání se
+    // skutečnou hodnotou z env. Bez `.trim()` u odsazené hodnoty tiše přestane
+    // fungovat — a tvarové vzory netvarovou URL nechytnou.
+    process.env.DISCORD_LEAD_WEBHOOK_URL = '  https://relay.example/hook/AbCdEf123456  ';
+    expect(redactSecrets('selhalo: https://relay.example/hook/AbCdEf123456')).toBe(
+      'selhalo: [redacted]',
+    );
+  });
+
+  it('branka obrany chytne verzálky ve schématu i znak hned za URL', () => {
+    // `URL_TOKEN_RE` je vstup do celé obrany proti maskovaným odkazům. Pět
+    // stávajících testů ověřovalo jen chování callbacku, ne to, co ho spouští:
+    // bez `i` projde `HTTPS://`, se širší třídou pohltí token i `<b>` a
+    // `new URL` pak vyhodí → maskovaný odkaz projde nezměněný.
+    expect(defangDeceptiveUrls('HTTPS://victaagency.com@evil.tld/faktura')).toContain(
+      'skutečný cíl evil.tld',
+    );
+    expect(defangDeceptiveUrls('text https://a@b.cz<b>konec')).toContain('skutečný cíl b.cz');
+    expect(defangDeceptiveUrls('"https://a@b.cz"')).toContain('skutečný cíl b.cz');
+  });
+});
+
+describe('pojistky bez testu (5. kolo gate)', () => {
+  it('legitimní odkaz v českých uvozovkách se NESMÍ označit za maskovaný', () => {
+    // Blokující nález 5. kola: uvozovka se nacucla do tokenu, WHATWG ji
+    // zaIDNAtil do hostu → `firma.xn--cz-x2t` ≠ `firma.cz` → poctivý zájemce
+    // dostal obvinění z phishingu a zakladatel přišel o odkaz.
+    const out = defangDeceptiveUrls('Náš web je „https://firma.cz“ — mrkněte');
+    expect(out).toContain('https://firma.cz');
+    expect(out).not.toContain('maskovaný odkaz');
+    expect(defangDeceptiveUrls('Web: https://firma.cz.')).toContain('https://firma.cz');
+    expect(defangDeceptiveUrls('(https://firma.cz)')).not.toContain('maskovaný odkaz');
+  });
+
+  it('odříznutí ocasu nesmí vyrobit falešně negativní výsledek', () => {
+    // Útok s tímtéž ocasem musí být pořád odhalen — a ocas se vrátí do textu.
+    const out = defangDeceptiveUrls('„https://victaagency.com@evil.tld/faktura“');
+    expect(out).toContain('skutečný cíl evil.tld');
+    expect(out).toContain('“');
+  });
+
+  it('surrogate guard chytá i horní konec rozsahu high surrogate', () => {
+    // Mez 0xdbff: rozšíření na 0xdfff mutaci přežilo, protože emoji testy
+    // trefovaly jen spodní část rozsahu.
+    const out = truncate('😀'.repeat(400), 601);
+    expect(out.length).toBeLessThanOrEqual(601);
+    expect(Buffer.from(out, 'utf8').toString('utf8')).toBe(out);
+  });
+
+  it('authority končí i na ? a #, nejen na lomítku', () => {
+    expect(defangDeceptiveUrls('https://victaagency.com?utm_source=google')).not.toContain(
+      'maskovaný odkaz',
+    );
+    expect(defangDeceptiveUrls('https://firma.cz#kontakt')).not.toContain('maskovaný odkaz');
+  });
+
+  it('náhrada odkazu ve zprávě nesmí přerůst náhledový strop', () => {
+    // Defang musí běžet PŘED ořezem: prohození pořadí mutaci přežilo a
+    // 600znaková zpráva narostla na 1560 znaků.
+    const many = Array.from({ length: 40 }, () => 'https://a.com@evil.tld/x').join(' ');
+    const payload = buildDiscordPayload({ ...LEAD, message: many });
+    const desc = String((payload.embeds as { description: string }[])[0].description);
+    expect(desc.length).toBeLessThanOrEqual(600);
+    const tg = buildTelegramText({ ...LEAD, message: many });
+    expect(tg.length).toBeLessThanOrEqual(4000);
+  });
+
+  it('poloviční telegramská konfigurace nespotřebuje ani Redis round-trip', async () => {
+    // `anyConfigured` musí u Telegramu vyžadovat OBOJE. Se záměnou na OR by
+    // se na každém odeslání formuláře pálil INCR do Redisu zbytečně.
+    process.env.TELEGRAM_BOT_TOKEN = '123:ABC';
+    await notifyNewLead(LEAD);
+    expect(fetchMock).not.toHaveBeenCalled();
+    expect(fakeRedis.store.size, 'branka pustila volání do Redisu').toBe(0);
+  });
+
+  it('redakce zvládne DVA výskyty tajemství v jedné hlášce', () => {
+    // `split`/`join`; se záměnou za `replace(secret, …)` uteče druhý výskyt.
+    process.env.DISCORD_LEAD_WEBHOOK_URL = 'https://relay.example/hook/TAJNE123456';
+    const out = redactSecrets(
+      'pokus 1: https://relay.example/hook/TAJNE123456, pokus 2: https://relay.example/hook/TAJNE123456',
+    );
+    expect(out).not.toContain('TAJNE123456');
+  });
+
+  it('escape neutralizuje i samotné zpětné lomítko', () => {
+    // Přímo na funkci, ne přes payload: přes payload byl výsledek `\\[` vs
+    // `\\\[` a obojí sedělo na `startsWith('\\')` — prázdná assertion.
+    expect(escapeDiscordMarkdown('\\')).toBe('\\\\');
+    expect(escapeDiscordMarkdown('\\[x](y)')).toBe('\\\\\\[x\\]\\(y\\)');
+  });
+
+  it('Telegram nemá stahovat náhledy útočníkových URL', async () => {
+    process.env.TELEGRAM_BOT_TOKEN = '123:ABC';
+    process.env.TELEGRAM_CHAT_ID = '-100';
+    await notifyNewLead(LEAD);
+    expect(bodies()[0]!.disable_web_page_preview).toBe(true);
+  });
+
+  it('minimal režim drží i samotné pole Stránka', async () => {
+    process.env.DISCORD_LEAD_WEBHOOK_URL = DISCORD_URL;
+    process.env.LEAD_NOTIFY_PII = 'minimal';
+    await notifyNewLead({ ...LEAD, sourceUrl: 'https://victaagency.com/x?utmsource=tajnehodnota' });
+    // POZOR na escapovaný tvar: `utm_source` by se do payloadu dostalo jako
+    // `utm\_source` a `toContain('utm_source')` by neseděla ani s vypnutou
+    // ochranou — prázdná assertion. Proto hodnota bez metaznaků.
+    expect(JSON.stringify(bodies()[0])).not.toContain('tajnehodnota');
   });
 });
 
