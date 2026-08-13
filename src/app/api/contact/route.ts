@@ -1,5 +1,5 @@
 import 'server-only';
-import { NextResponse, type NextRequest } from 'next/server';
+import { NextResponse, after, type NextRequest } from 'next/server';
 import * as Sentry from '@sentry/nextjs';
 import { Resend } from 'resend';
 import { contactSchema } from '@/lib/contact-schema';
@@ -10,31 +10,54 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { upsertLead } from '@/lib/leads';
 import { contactConfirmationEmailHtml } from '@/lib/email-html';
 import { isAllowedOrigin, clientIp } from '@/lib/origin';
+import { bodyTooLarge } from '@/lib/body-size-guard';
+import { notifyNewLead } from '@/lib/lead-notify';
 import { site } from '@/config/site';
+import { checkBotId } from 'botid/server';
 
 /**
  * Contact form handler (REQ-F-041..REQ-F-048, architecture.md §3.5).
  *
- * Defense layers (in order):
+ * Defense layers (in order — Vlna 7 code-review finding I1: cheapest checks
+ * first, the two outbound-network checks — BotID, Turnstile — run only
+ * after every free-to-reject path has had its chance):
  *   1. Origin header validation (security-model.md §2.2 + §4.3, CSRF defense).
- *   2. Zod schema validation (REQ-F-046 — same schema on client + server).
- *   3. Honeypot field (silent 200 if non-empty — bots fall in, humans don't).
- *   4. Cloudflare Turnstile token verify (security-model.md §4.3, REQ-I-021).
+ *   2. Content-Length body-size guard (Vlna 7, `body-size-guard.ts`) — 413
+ *      before Zod ever sees an oversized payload.
+ *   3. Zod schema validation (REQ-F-046 — same schema on client + server).
+ *   4. Honeypot field (silent 200 if non-empty — bots fall in, humans don't).
  *   5. Per-IP rate limit 5/600s (security-model.md §4.3, fail-open per REQ-I-020).
- *   6. HTML strip + control-char strip on every string (security-model.md §4.3).
- *   7. Resend email delivery to CONTACT_DESTINATION_EMAIL (internal notification).
- *   8. Resend confirmation email to the visitor (P1-06) — best-effort, does NOT
+ *   6. Vercel BotID Basic check (Vlna 7, docs/security/abuse-surface.md) —
+ *      invisible client-side challenge, additive to Turnstile below, not a
+ *      replacement. DORMANT by default (`NEXT_PUBLIC_BOTID_ENABLED` unset)
+ *      until a real-browser smoke test against a live preview confirms it —
+ *      code-review finding C1: this is the one Vlna 7 change that sits
+ *      directly on the conversion path, so it gets the same "ship inert,
+ *      flip a flag after verification" treatment D-019 gives the chatbot,
+ *      not silent enforcement. Once enabled, still fails OPEN on a thrown
+ *      error (same posture as Turnstile's not-provisioned skip below) — only
+ *      a clean `isBot: true` classification ever blocks.
+ *   7. Cloudflare Turnstile token verify (security-model.md §4.3, REQ-I-021).
+ *   8. HTML strip + control-char strip on every string (security-model.md §4.3).
+ *   9. Resend email delivery to CONTACT_DESTINATION_EMAIL (internal notification).
+ *   10. Resend confirmation email to the visitor (P1-06) — best-effort, does NOT
  *      affect the partial-failure policy or status codes below; failure is logged only.
- *   9. Insert contact_submissions + upsert leads in Supabase (AR-21).
+ *   11. Insert contact_submissions + upsert leads in Supabase (AR-21).
  */
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
+/** Realistic max payload is ~5KB (name/email/phone/message ≤2000 chars + a few short fields); 20KB leaves generous headroom without allowing megabyte-scale abuse (Vlna 7). */
+const MAX_BODY_BYTES = 20_000;
+
 export async function POST(req: NextRequest): Promise<NextResponse> {
   if (!isAllowedOrigin(req)) {
     return NextResponse.json({ error: 'origin' }, { status: 403 });
   }
+
+  const tooLarge = bodyTooLarge(req, MAX_BODY_BYTES);
+  if (tooLarge) return tooLarge;
 
   const json = (await req.json().catch(() => null)) as unknown;
   const parsed = contactSchema.safeParse(json);
@@ -54,19 +77,39 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const ip = clientIp(req);
   const ipHash = hashIp(ip);
 
-  // Turnstile (fail-closed)
-  const ts = await verifyTurnstileToken(data.turnstile_token, ip);
-  if (!ts.success) {
-    return NextResponse.json({ error: 'turnstile', codes: ts.errorCodes }, { status: 400 });
-  }
-
-  // Rate limit (fail-open if Redis is down — REQ-I-020)
+  // Rate limit (fail-open if Redis is down — REQ-I-020). Checked BEFORE the
+  // two outbound-network checks below (BotID, Turnstile) — a garbage
+  // request from an already-limited IP shouldn't pay for either external
+  // HTTPS round trip (Vlna 7 code-review finding I1).
   const rl = await checkLimit('contact', ipHash);
   if (!rl.ok) {
     return NextResponse.json(
       { error: 'rate-limit', retryAt: rl.reset },
       { status: 429, headers: { 'Retry-After': '600' } },
     );
+  }
+
+  // BotID Basic (free on all plans) — additive to Turnstile, not a
+  // replacement. DORMANT unless NEXT_PUBLIC_BOTID_ENABLED === '1' (code
+  // review finding C1 — see this file's doc comment, step 6). Fail-open on a
+  // thrown error/exception (e.g. BotID misconfigured or its platform check
+  // unavailable) so this NEVER blocks a legitimate submission on its own;
+  // only a clean `isBot: true` classification does.
+  if (process.env.NEXT_PUBLIC_BOTID_ENABLED === '1') {
+    try {
+      const botVerification = await checkBotId();
+      if (botVerification.isBot) {
+        return NextResponse.json({ error: 'bot' }, { status: 403 });
+      }
+    } catch (err) {
+      console.warn('[contact] BotID check failed — proceeding (fail-open):', (err as Error).message);
+    }
+  }
+
+  // Turnstile (fail-closed)
+  const ts = await verifyTurnstileToken(data.turnstile_token, ip);
+  if (!ts.success) {
+    return NextResponse.json({ error: 'turnstile', codes: ts.errorCodes }, { status: 400 });
   }
 
   // Sanitize text fields (defense-in-depth — Zod already enforces shape, this strips HTML)
@@ -180,6 +223,28 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
       extra: { resend_email_id: resendId, db_error: dbErr.message },
     });
   }
+
+  // Rychlá notifikace do Discordu/Telegramu (docs/setup/lead-notifications.md).
+  // Běží v `after()`, tedy AŽ PO odeslání odpovědi — pomalý kanál nesmí zdržet
+  // návštěvníka. Záměrně až tady, za oběma sinky: notifikace se posílá i při
+  // částečném selhání (mail prošel, DB ne), protože lead sám o sobě platí.
+  // `notifyNewLead` nikdy nevyhodí výjimku (viz jeho doc komentář).
+  after(() =>
+    notifyNewLead({
+      kind: 'contact',
+      email: data.email,
+      name,
+      phone,
+      company,
+      companyIco,
+      companyCountry,
+      budgetTier: data.budget_tier ?? null,
+      serviceInterest: data.service_interest ?? null,
+      locale: data.locale,
+      message,
+      sourceUrl: req.headers.get('referer'),
+    }),
+  );
 
   return NextResponse.json(
     { ok: true, message: 'Zpráva odeslána' },

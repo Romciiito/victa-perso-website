@@ -28,7 +28,8 @@ export const newsletterSchema = z.object({
   // Must validate even when filled — the route silent-accepts bot fills
   // (same rationale as contact-schema.ts).
   honeypot: z.string().max(200).optional().or(z.literal('')),
-  turnstile_token: z.string().min(1, { message: 'Bot kontrola se nepodařila — zkuste znovu.' }),
+  // .max(4096) — Vlna 7 code-review finding M2, same rationale as contact-schema.ts.
+  turnstile_token: z.string().min(1, { message: 'Bot kontrola se nepodařila — zkuste znovu.' }).max(4096),
   utm_source: z.string().max(80).optional(),
   utm_medium: z.string().max(80).optional(),
   utm_campaign: z.string().max(80).optional(),
