@@ -24,9 +24,18 @@
  * Tvarové vzory. `(?:v\d+\/)?` pokrývá i verzovaný endpoint
  * `discord.com/api/v10/webhooks/…`, který je platný a běžně používaný —
  * bez něj vzor propadl (nález N2 review gate).
+ *
+ * Host je u Discordu ZÁMĚRNĚ nepovinný (`(?:discord…\.com)?`). Sentry ukládá
+ * URL i po částech: span nese `url.path` a `http.target`, což je holá cesta
+ * `/api/webhooks/{id}/{token}` bez hostu, a `description` serverového spanu
+ * je `GET /api/webhooks/{id}/{token}`. Změřeno: s povinným hostem vracel
+ * `redactSecrets('/api/webhooks/1234567890/SUPER-SECRET-TOKEN')` vstup
+ * DOSLOVA — tedy přesně ta redakce, kvůli které `url.path` v seznamu
+ * atributů je, nedělala nic. Telegramský vzor tímhle netrpí, protože se
+ * chytá na `bot{token}` v cestě, ne na hostu.
  */
 const SHAPE_PATTERNS: readonly [RegExp, string][] = [
-  [/(discord(?:app)?\.com\/api\/(?:v\d+\/)?webhooks\/)\d+\/[\w-]+/gi, '$1[redacted]'],
+  [/((?:discord(?:app)?\.com)?\/api\/(?:v\d+\/)?webhooks\/)\d+\/[\w-]+/gi, '$1[redacted]'],
   [/\bbot\d{6,}:[\w-]+/gi, 'bot[redacted]'],
 ];
 
