@@ -533,8 +533,24 @@ Phase 2 is DONE when ALL of the following are true:
 
 > Source: spec.md §4.4, REQ-F-041..REQ-F-048, architecture.md §3.5.
 
+> **Status update 2026-08-13 (Vlna 6, see D-021)**: phone field spec below is
+> SUPERSEDED — phone is now **required** (not optional) with a country-prefix
+> select that auto-detects the country from a pasted/typed international
+> number (`PhoneInput`, `libphonenumber-js`), and company gained an
+> ARES(CZ)/RPO(SK) registry-verification autocomplete (`CompanyAutocomplete`,
+> `/api/company-lookup`) as an anti-fake-lead signal — free-text entry stays
+> available for companies not in either registry. Code path is COMPLETE
+> (tests + typecheck + lint + build all green — see D-021 for the full
+> verification record) but, like the rest of this section, blocked on the
+> same vendor provisioning gap (no live Supabase project) — additionally,
+> `supabase/migrations/004_company_verification.sql` (the `company_ico`/
+> `company_country` columns) is written but not yet applied. Checkboxes below
+> stay unchecked until Roman confirms live end-to-end behavior, consistent
+> with this section's existing 2026-07-20 status note.
+
 - [ ] Create page at `app/cs/kontakt/page.tsx` with SSG rendering [frontend-developer]
-- [ ] Implement contact form using React Hook Form + Zod schema validation: fields — full name (required), email (required, RFC 5322), company (optional), phone (optional, Czech format hint), message (required, max 2000 chars), GDPR consent checkbox (required, links to `/cs/ochrana-soukromi/`) (REQ-F-041) [frontend-developer]
+- [ ] Implement contact form using React Hook Form + Zod schema validation: fields — full name (required), email (required, RFC 5322), company (optional, ARES/RPO-verified autocomplete with free-text fallback — Vlna 6), phone (**required**, country-prefix auto-detect — Vlna 6, supersedes the original "optional, Czech format hint"), message (required, max 2000 chars), GDPR consent checkbox (required, links to `/cs/ochrana-soukromi/`) (REQ-F-041) [frontend-developer]
+- [ ] Vlna 6: `GET /api/company-lookup?q=&country=` proxies ARES (CZ) + RPO (SK) in parallel (`Promise.allSettled`, 5s timeout each, fail-open rate limit 30/60s/IP), merges + dedupes by `(country, ico)`, caps at 8, `Cache-Control: public, s-maxage=300, stale-while-revalidate=600` (public registry data, not `no-store` like this app's other API routes — see route's own comment) [frontend-developer]
 - [ ] Add honeypot hidden field to form (value must be empty — filled by bots) [frontend-developer]
 - [ ] Integrate Cloudflare Turnstile widget in contact form (REQ-I-021) [frontend-developer]
 - [ ] Implement client-side validation with React Hook Form: show inline errors per field before submission (REQ-F-041) [frontend-developer]

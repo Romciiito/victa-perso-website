@@ -1332,6 +1332,26 @@
       "after": "."
     }
   },
+  "forms": {
+    "phone": {
+      "countryLabel": "Předvolba země",
+      "countryAriaLabel": "Vyberte předvolbu země",
+      "numberAriaLabel": "Telefonní číslo",
+      "placeholder": "777 933 112",
+      "required": "Telefon je povinný údaj.",
+      "invalid": "Zadejte platné telefonní číslo s předvolbou."
+    },
+    "company": {
+      "searchAriaLabel": "Vyhledat společnost v rejstříku",
+      "loading": "Vyhledávám…",
+      "noResults": "Ve veřejných rejstřících jsme nic nenašli.",
+      "useUnverified": "Použít „{query}“ bez ověření",
+      "verifiedBadge": "Ověřeno",
+      "verifiedWith": "IČO {ico} · {country}",
+      "degradedNotice": "Vyhledávání v rejstřících je dočasně nedostupné — firmu můžete zadat ručně.",
+      "resultsListLabel": "Nalezené společnosti"
+    }
+  },
   "blog": {
     "hero": {
       "status": "/cs/blog",

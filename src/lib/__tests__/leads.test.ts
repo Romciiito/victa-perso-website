@@ -101,6 +101,24 @@ describe('upsertLead — atomic upsert (post-migration-002)', () => {
   });
 });
 
+describe('upsertLead — company_ico/company_country (Vlna 6 anti-fake-lead verification)', () => {
+  it('includes company_ico/company_country in the upsert payload when provided', async () => {
+    singleResponses.push({ data: { id: 'lead-verified' }, error: null });
+    await upsertLead({ ...baseInput, company_ico: '28859511', company_country: 'CZ' });
+    const upsertCall = calls.find((c) => c.method === 'upsert');
+    expect(upsertCall?.args[0]).toMatchObject({ company_ico: '28859511', company_country: 'CZ' });
+  });
+
+  it('omits company_ico/company_country from the upsert payload when not provided (never sends null — the non-null filter, per this file\'s own doc comment, would otherwise NULL-out an existing lead\'s verified company on an unrelated repeat submission)', async () => {
+    singleResponses.push({ data: { id: 'lead-unverified' }, error: null });
+    await upsertLead(baseInput); // no company_ico/company_country at all
+    const upsertCall = calls.find((c) => c.method === 'upsert');
+    const payload = upsertCall?.args[0] as Record<string, unknown>;
+    expect('company_ico' in payload).toBe(false);
+    expect('company_country' in payload).toBe(false);
+  });
+});
+
 describe('upsertLead — pre-migration-002 fallback (42P10)', () => {
   it('falls back to select-then-insert and still returns an id when the upsert target constraint is missing', async () => {
     // First call: the atomic upsert attempt, rejected because the unique

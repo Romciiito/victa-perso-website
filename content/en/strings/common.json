@@ -1332,6 +1332,26 @@
       "after": "."
     }
   },
+  "forms": {
+    "phone": {
+      "countryLabel": "Country code",
+      "countryAriaLabel": "Select country code",
+      "numberAriaLabel": "Phone number",
+      "placeholder": "777 933 112",
+      "required": "Phone is required.",
+      "invalid": "Enter a valid phone number with a country code."
+    },
+    "company": {
+      "searchAriaLabel": "Search company registry",
+      "loading": "Searching…",
+      "noResults": "No matches found in public company registries.",
+      "useUnverified": "Use “{query}” without verification",
+      "verifiedBadge": "Verified",
+      "verifiedWith": "Company ID {ico} · {country}",
+      "degradedNotice": "Registry search is temporarily unavailable — you can enter the company name manually.",
+      "resultsListLabel": "Matching companies"
+    }
+  },
   "blog": {
     "hero": {
       "status": "/en/blog",

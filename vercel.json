@@ -55,8 +55,21 @@
     },
     "app/api/chat/route.ts": {
       "maxDuration": 30
+    },
+    "app/api/cron/keepalive/route.ts": {
+      "maxDuration": 10
+    },
+    "app/api/company-lookup/route.ts": {
+      "maxDuration": 10
     }
   },
+
+  "crons": [
+    {
+      "path": "/api/cron/keepalive",
+      "schedule": "0 6 * * *"
+    }
+  ],
 
   "redirects": [
     {

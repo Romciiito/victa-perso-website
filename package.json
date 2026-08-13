@@ -27,6 +27,7 @@
     "dompurify": "^3.4.5",
     "framer-motion": "^12.40.0",
     "isomorphic-dompurify": "^3.14.0",
+    "libphonenumber-js": "^1.13.10",
     "lucide-react": "^1.16.0",
     "next": "^16.2.12",
     "next-intl": "^4.12.0",
@@ -69,7 +70,8 @@
       "undici": ">=7.28.0",
       "postcss": ">=8.5.18",
       "brace-expansion@>=5.0.0 <5.0.8": ">=5.0.8",
-      "sharp": ">=0.35.0"
+      "sharp": ">=0.35.0",
+      "nanoid": ">=3.3.17"
     }
   },
   "lint-staged": {

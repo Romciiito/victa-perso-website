@@ -9,6 +9,10 @@ export interface UpsertLeadInput {
   name?: string | null;
   company?: string | null;
   phone?: string | null;
+  /** ARES (CZ) / RPO (SK) registry match IČO — Vlna 6 anti-fake-lead verification. Only set when the visitor picked a verified company-autocomplete result. */
+  company_ico?: string | null;
+  /** 'CZ' | 'SK' — which registry `company_ico` came from. */
+  company_country?: string | null;
   source: LeadInsert['source'];
   source_url?: string | null;
   locale: 'cs' | 'en';
@@ -77,6 +81,8 @@ export async function upsertLead(input: UpsertLeadInput): Promise<{ id: string }
     name: input.name ?? null,
     company: input.company ?? null,
     phone: input.phone ?? null,
+    company_ico: input.company_ico ?? null,
+    company_country: input.company_country ?? null,
     source: input.source,
     source_url: input.source_url ?? null,
     utm_source: input.utm?.source ?? null,

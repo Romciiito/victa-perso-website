@@ -30,6 +30,10 @@ export type Database = {
           name: string | null;
           company: string | null;
           phone: string | null;
+          /** ARES (CZ) / RPO (SK) registry match IČO — Vlna 6 anti-fake-lead verification (migration 004). NULL when unverified. */
+          company_ico: string | null;
+          /** 'CZ' | 'SK' — which registry `company_ico` came from (migration 004). NULL when unverified. */
+          company_country: string | null;
           source: LeadSource;
           source_url: string | null;
           utm_source: string | null;
@@ -50,6 +54,8 @@ export type Database = {
           name?: string | null;
           company?: string | null;
           phone?: string | null;
+          company_ico?: string | null;
+          company_country?: string | null;
           source: LeadSource;
           source_url?: string | null;
           utm_source?: string | null;
@@ -70,6 +76,8 @@ export type Database = {
           name?: string | null;
           company?: string | null;
           phone?: string | null;
+          company_ico?: string | null;
+          company_country?: string | null;
           source?: LeadSource;
           source_url?: string | null;
           utm_source?: string | null;
@@ -93,6 +101,8 @@ export type Database = {
           name: string | null;
           company: string | null;
           phone: string | null;
+          company_ico: string | null;
+          company_country: string | null;
           service_interest: string | null;
           budget_tier: string | null;
           message: string;
@@ -110,6 +120,8 @@ export type Database = {
           name?: string | null;
           company?: string | null;
           phone?: string | null;
+          company_ico?: string | null;
+          company_country?: string | null;
           service_interest?: string | null;
           budget_tier?: string | null;
           message: string;

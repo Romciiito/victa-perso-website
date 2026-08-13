@@ -45,6 +45,20 @@ const rateLimiters = {
     prefix: 'rl:bw',
     analytics: false,
   }),
+  /**
+   * Company-registry autocomplete (Vlna 6, `/api/company-lookup`): 30 per IP
+   * per 60s — generous because this fires on every debounced keystroke while
+   * a visitor types their company name (not a one-shot form submit like the
+   * limiters above). Fail-open via `checkLimit` below like the other form
+   * limiters: it's a search-as-you-type affordance, not a spend-controlled
+   * resource — a Redis outage must not block the contact form itself.
+   */
+  company_lookup: new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(30, '60 s'),
+    prefix: 'rl:complookup',
+    analytics: false,
+  }),
 } as const;
 
 export type LimiterKey = keyof typeof rateLimiters;
