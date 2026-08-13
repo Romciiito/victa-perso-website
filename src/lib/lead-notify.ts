@@ -1,5 +1,8 @@
 import 'server-only';
 import { redis } from './redis';
+import { redactSecrets } from './redact-secrets';
+
+export { redactSecrets };
 
 /**
  * Lead notifikace do Discordu a Telegramu — okamžitý ping, když dorazí nová
@@ -116,8 +119,32 @@ const EMBED_COLOR_BOOKING = 0x16a34a;
  * Pomocné funkce
  * ------------------------------------------------------------------------- */
 
+/**
+ * Ořez na `maxUnits` UTF-16 jednotek, který nikdy nenechá osamocený surrogate.
+ *
+ * Musí platit OBĚ invarianty současně:
+ *  - délka výstupu ≤ `maxUnits` — všechny stropy tady (Telegram 4096, Discord
+ *    1024 na pole) počítají UTF-16 jednotky, ne kódové body;
+ *  - žádný osamocený surrogate — `slice` umí rozpůlit emoji, výsledek pak není
+ *    platné UTF-16 a nejde zakódovat do UTF-8 (třída vady P2-01).
+ *
+ * První pokus o opravu použil `truncateAtCodePoint` ze `sanitize.ts`, čímž
+ * splnil druhou invariantu a rozbil první: ta funkce ořezává na `max` KÓDOVÝCH
+ * BODŮ, takže řetězec samých emoji vrátila až dvojnásobně dlouhý
+ * (změřeno: `truncate('😀'×2000, 600)` → délka 1199). Druhé kolo review gate,
+ * nález N-1. Řešení je useknout po jednotkách a zahodit případný osamocený
+ * high surrogate na konci — o jednu jednotku kratší výstup nikomu nevadí.
+ */
+function cutUnits(s: string, maxUnits: number): string {
+  if (s.length <= maxUnits) return s;
+  let cut = s.slice(0, Math.max(0, maxUnits));
+  const last = cut.charCodeAt(cut.length - 1);
+  if (last >= 0xd800 && last <= 0xdbff) cut = cut.slice(0, -1);
+  return cut;
+}
+
 export function truncate(s: string, max: number): string {
-  return s.length <= max ? s : `${s.slice(0, Math.max(0, max - 1))}…`;
+  return s.length <= max ? s : `${cutUnits(s, max - 1)}…`;
 }
 
 /**
@@ -132,24 +159,46 @@ export function truncate(s: string, max: number): string {
  */
 export function truncateEscapedHtml(s: string, max: number): string {
   if (s.length <= max) return s;
-  let cut = s.slice(0, Math.max(0, max - 1));
+  let cut = cutUnits(s, max - 1);
   const amp = cut.lastIndexOf('&');
   // `&` bez následné `;` v ocasu = rozseknutá entita.
   if (amp !== -1 && !cut.slice(amp).includes(';')) cut = cut.slice(0, amp);
-  return `${cut}…`;
+  // Totéž pro tag: řez uvnitř `<b>` dá `…<b` a Telegram odpoví 400. Dnes to
+  // z kontaktního formuláře nejde (hlavičkový blok s tagy má při Zod stropech
+  // max ~2,6 tis. znaků, řez padne vždy do těla zprávy), ale u booking cesty
+  // jdou pole z Cal.com payloadu bez stropu — a stačilo by zvednout jeden
+  // limit, aby to platit přestalo (nález N1 review gate).
+  const lt = cut.lastIndexOf('<');
+  if (lt !== -1 && !cut.slice(lt).includes('>')) cut = cut.slice(0, lt);
+  // Řez UVNITŘ tagu je jen půlka problému. Druhá je NEUZAVŘENÝ tag: když řez
+  // padne za `<b>Telefon:` ale před `</b>`, je tag syntakticky celý a guard
+  // výše nesepne — Telegram přesto odpoví „can't parse entities: Unclosed
+  // start tag" a notifikace tiše zmizí. Doměřeno ve 3. kole review gate:
+  // 23 z 201 délek jména v pásmu 3900–4100 znaků dá nevyvážený tag.
+  // Dosažitelné jen booking cestou (pole z Cal.com payloadu nemají Zod strop),
+  // což je přesně cesta, kvůli které tenhle guard vznikl.
+  const openTags = (cut.match(/<b>/g) ?? []).length - (cut.match(/<\/b>/g) ?? []).length;
+  return `${cut}…${'</b>'.repeat(Math.max(0, openTags))}`;
 }
 
 /**
- * Odstraní z textu cokoli, co vypadá jako Discord webhook nebo Telegram bot
- * token. Chyby z `fetch` (undici) umí do zprávy vložit celou cílovou URL —
- * a ta u Discordu tajemství PŘÍMO OBSAHUJE, takže by se bez tohohle
- * dostalo do produkčních logů. Vzory jsou obecné schválně: chytnou i případ,
- * kdy je v hlášce jen část URL.
+ * Escape markdownu pro Discord. `allowed_mentions` řeší jen pingy, ale embed
+ * pořád renderuje markdown — VČETNĚ maskovaných odkazů `[text](url)`.
+ *
+ * Scénář, kvůli kterému to tu je (nález D3 review gate): útočník odešle
+ * formulář se zprávou `Faktura ke schválení: [victaagency.com/faktura](https://evil.tld)`.
+ * Zakladateli přijde do vlastního kanálu notifikace s hlavičkou „Nová
+ * poptávka", brandingem „VICTA leads" a klikatelným odkazem, který vypadá
+ * jako jeho doména. Důvěryhodný kanál je pro phishing ideální kontext.
  */
-export function redactSecrets(msg: string): string {
-  return msg
-    .replace(/(discord(?:app)?\.com\/api\/webhooks\/)\d+\/[\w-]+/gi, '$1[redacted]')
-    .replace(/\bbot\d{6,}:[\w-]+/gi, 'bot[redacted]');
+export function escapeDiscordMarkdown(s: string): string {
+  // `#` escapujeme: na začátku řádku dělá nadpis a ve dvojici `-#` šedý
+  // „systémový" subtext — tím sice nejde podvrhnout CÍL odkazu, ale jde
+  // podvrhnout VZHLED zprávy uvnitř embedu, který má titulek „Nová poptávka"
+  // a branding „VICTA leads" (3. kolo review gate).
+  // `-` naopak ZÁMĚRNĚ neescapujeme: sám o sobě udělá nanejvýš odrážku, nic
+  // nepodvrhne, a escapování by zmršilo každé datum v notifikaci (`2026\-09\-01`).
+  return s.replace(/([\\`*_~|>[\]()#])/g, '\\$1');
 }
 
 /**
@@ -179,15 +228,28 @@ function label(map: Record<string, string>, value: string | null | undefined): s
  * zakladatele.
  */
 function redactForChannel(n: LeadNotification): LeadNotification {
-  if (process.env.LEAD_NOTIFY_PII !== 'minimal') return n;
-  return { ...n, email: '—', phone: null, message: null };
+  // Normalizace je tu záměrně: striktní porovnání selhávalo směrem k VÍCE
+  // osobním údajům a tiše. Hodnota `minimal ` s koncovou mezerou nebo
+  // `Minimal` (obojí vznikne běžným copy-paste do Vercel dialogu) by režim
+  // nezapnula a do kanálů by dál tekly kontakty, zatímco zakladatel věří, že
+  // expozici snížil. Neznámá hodnota se hlásí — mlčky jet FULL je horší než
+  // hlučně (nález D2 review gate).
+  const mode = process.env.LEAD_NOTIFY_PII?.trim().toLowerCase();
+  if (mode !== 'minimal') {
+    if (mode) console.warn(`[lead-notify] neznámá hodnota LEAD_NOTIFY_PII, jedu v režimu FULL`);
+    return n;
+  }
+  // `sourceUrl` odchází taky: `referer` nese query a UTM, tedy potenciálně
+  // osobní údaje. `scheduledFor` je čas termínu — sám o sobě identifikátor
+  // schůzky, v minimálním režimu nemá co dělat.
+  return { ...n, email: '—', phone: null, message: null, sourceUrl: null, scheduledFor: null };
 }
 
 /* ---------------------------------------------------------------------------
  * Flood cap
  * ------------------------------------------------------------------------- */
 
-type FloodState = 'ok' | 'cap-reached' | 'suppressed';
+type FloodState = 'ok' | 'cap-reached' | 'suppressed' | 'unavailable';
 
 /**
  * Fail-OPEN: když je Redis nedostupný, notifikace projde. Stejná úvaha jako u
@@ -195,9 +257,8 @@ type FloodState = 'ok' | 'cap-reached' | 'suppressed';
  * skutečný lead. Riziko, které tím zůstává (spamová vlna PŘESNĚ během výpadku
  * Redisu), není nová třída rizika: mailová schránka dostane stejnou vlnu.
  */
-async function floodState(): Promise<FloodState> {
+async function floodState(key: string): Promise<FloodState> {
   try {
-    const key = floodKey();
     const n = await redis.incr(key);
     // TTL je jen úklid starých oken (klíč se rotuje sám, viz `floodKey`) —
     // proto smí selhat bez následku a nečeká se na něj v kritické cestě.
@@ -208,8 +269,13 @@ async function floodState(): Promise<FloodState> {
     // než šum, protože vypadá jako klid.
     return n === FLOOD_MAX + 1 ? 'cap-reached' : 'suppressed';
   } catch (err) {
+    // Fail-open, ale odlišené od úspěchu: notifikace projde, jen se pak nesmí
+    // dekrementovat čítač, který se nikdy neinkrementoval. Jinak by při
+    // výpadku Redisu vznikl klíč na −1, na který se `EXPIRE` už nezavolá
+    // (běží jen při n === 1) — táž porucha jako N-2, jinými dveřmi
+    // (3. kolo review gate, NOVÝ-5).
     console.warn('[lead-notify] flood cap fail-open:', (err as Error).message);
-    return 'ok';
+    return 'unavailable';
   }
 }
 
@@ -285,11 +351,16 @@ export function buildDiscordPayload(n: LeadNotification): Record<string, unknown
             : (EMBED_COLORS[n.budgetTier ?? ''] ?? EMBED_COLOR_DEFAULT),
         fields: leadLines(n).map((l) => ({
           name: truncate(l.name, 256),
-          value: truncate(l.value, DISCORD_FIELD_MAX),
+          // Escape AŽ po ořezu: escapování délku zvětšuje, ale Discord počítá
+          // limit na výsledný řetězec, takže ořez musí být poslední slovo —
+          // proto se strop krátí na polovinu, aby escapovaná verze prošla.
+          value: escapeDiscordMarkdown(truncate(l.value, DISCORD_FIELD_MAX / 2)),
           inline: l.inline ?? false,
         })),
         ...(n.message
-          ? { description: truncate(n.message, MESSAGE_PREVIEW_CHARS) }
+          ? {
+              description: escapeDiscordMarkdown(truncate(n.message, MESSAGE_PREVIEW_CHARS)),
+            }
           : {}),
         timestamp: new Date().toISOString(),
       },
@@ -330,7 +401,11 @@ async function post(url: string, body: unknown, channel: string): Promise<SendRe
 }
 
 async function sendDiscord(payload: Record<string, unknown>): Promise<SendResult> {
-  const url = process.env.DISCORD_LEAD_WEBHOOK_URL;
+  // `?.trim()` stejně jako u telegramských proměnných: hodnota " " (mezera po
+  // nešikovném paste) je truthy, prošla by jako nakonfigurovaný kanál a každý
+  // lead by skončil TypeErrorem plus Sentry hláškou „všechny kanály selhaly"
+  // (nález N3 review gate).
+  const url = process.env.DISCORD_LEAD_WEBHOOK_URL?.trim();
   if (!url) return 'skipped';
   return post(url, payload, 'discord');
 }
@@ -360,13 +435,20 @@ async function sendTelegram(text: string): Promise<SendResult> {
 export async function notifyNewLead(input: LeadNotification): Promise<number> {
   try {
     const anyConfigured =
-      Boolean(process.env.DISCORD_LEAD_WEBHOOK_URL) ||
+      Boolean(process.env.DISCORD_LEAD_WEBHOOK_URL?.trim()) ||
       Boolean(process.env.TELEGRAM_BOT_TOKEN?.trim() && process.env.TELEGRAM_CHAT_ID?.trim());
     // Bez jediného kanálu se ani nesahá na Redis — nenaprovisionovaný projekt
     // nesmí kvůli vypnuté funkci utrácet round-trip na každé odeslání formuláře.
     if (!anyConfigured) return 0;
 
-    const flood = await floodState();
+    // Klíč se počítá JEDNOU a drží se přes celé odeslání. Kdyby se počítal
+    // znovu až po `Promise.all`, mohlo by odeslání trvající přes hranici
+    // hodiny (timeout je 3 s) dekrementovat čítač NÁSLEDUJÍCÍHO okna — ten by
+    // pak vznikl na −1, `EXPIRE` už by se na něj nikdy nezavolal (běží jen
+    // při n === 1) a klíč by v Upstash zůstal navždy. Přesně ta porucha,
+    // kterou má časový klíč vyloučit (nález N-2, 2. kolo review gate).
+    const key = floodKey();
+    const flood = await floodState(key);
     if (flood === 'suppressed') return 0;
 
     let discordPayload: Record<string, unknown>;
@@ -388,6 +470,19 @@ export async function notifyNewLead(input: LeadNotification): Promise<number> {
     const results = await Promise.all([sendDiscord(discordPayload), sendTelegram(telegramText)]);
     const ok = results.filter((r) => r === 'ok').length;
     const failed = results.filter((r) => r === 'failed').length;
+
+    // Kvótu spotřebovává jen DORUČENÁ notifikace. Bez tohohle by hodinový
+    // výpadek Discordu vyčerpal strop šedesáti nedoručenými pokusy a kanál by
+    // po obnově do konce okna mlčel, přestože nedorazilo nic (nález N4 review
+    // gate). Dekrement místo „nejdřív zjisti, pak zvyš" — INCR je atomický,
+    // takže souběžné požadavky se nepřepočítají.
+    if (ok === 0 && flood !== 'unavailable') {
+      try {
+        await redis.decr(key);
+      } catch {
+        // Nevadí: strop se pak jen dřív naplní, notifikace se neztrácí.
+      }
+    }
 
     // Do Sentry jde jen úplné selhání: aspoň jeden kanál byl nastavený a ANI
     // JEDEN nedoručil. Selhání jednoho ze dvou je šum (lead notifikaci dostal

@@ -90,11 +90,19 @@ zásahu do kódu:
 LEAD_NOTIFY_PII=minimal
 ```
 
-Z notifikace vypadne e-mail, telefon i text zprávy. Zůstane jméno, firma,
-ověření v registru, rozpočet, služba a jazyk — tedy dost na posouzení hodnoty
-leadu; kontakt se dohledá v mailu nebo v Supabase. Kanály se tím nestávají
-příjemci kontaktních údajů, ale jméno + firma jsou pořád osobní údaj — posouzení
-rozsahu informační povinnosti zůstává na Romanovi.
+Z notifikace vypadne e-mail, telefon, text zprávy, pole „Stránka" (hlavička
+`referer` včetně UTM a query) a pole „Termín". Zůstane **jméno, firma, ověření
+v registru, rozpočet, služba a jazyk** — a nic víc; tedy dost na posouzení
+hodnoty leadu, kontakt se dohledá v mailu nebo v Supabase.
+
+Hodnota se normalizuje (`trim` + malá písmena), takže `minimal `, `Minimal`
+i `MINIMAL` fungují stejně. Neznámá neprázdná hodnota se zaloguje varováním a
+jede se v režimu FULL — tenhle přepínač smí selhat jedině hlučně, protože jeho
+tiché selhání znamená víc odeslaných osobních údajů, ne míň.
+
+Pozor: kanály se tím **nepřestávají** být příjemci osobních údajů úplně — jméno
+a firma osobní údaj pořád jsou. Snižuje to rozsah, neruší to povinnost.
+Posouzení zůstává na Romanovi.
 
 ---
 
@@ -125,13 +133,45 @@ s „nikdo se neozval".
 
 Obsah formuláře je vstup od potenciálního útočníka, takže:
 
-- **Discord**: `allowed_mentions: { parse: [] }` — `@everyone` ve jméně se
-  vykreslí jako text, nikoho nepingne.
+- **Discord — zmínky**: `allowed_mentions: { parse: [] }` — `@everyone` ve jméně
+  se vykreslí jako text, nikoho nepingne.
+- **Discord — markdown**: embed renderuje markdown **včetně maskovaných odkazů**
+  `[text](url)`. Bez escapu by útočník poslal do pole „Zpráva" text
+  `Faktura ke schválení: [victaagency.com/faktura](https://evil.tld)` a vám by
+  do vlastního kanálu přišel klikatelný odkaz, který vypadá jako vaše doména,
+  pod hlavičkou „Nová poptávka" a brandingem „VICTA leads". Důvěryhodný kanál
+  je pro phishing ideální kontext, proto se metaznaky escapují.
 - **Telegram**: HTML escape (`&` → `<` → `>`) před vložením do `parse_mode: HTML`.
   Bez něj by `<b>` ve jméně buď rozbilo formátování, nebo shodilo `sendMessage`
   na HTTP 400 a notifikace by tiše zmizela.
+- **Ořez** je entity-safe, tag-safe i safe vůči kódovým bodům — řez nikdy
+  nerozsekne `&amp;`, `<b>` ani emoji na osamocený surrogate.
 
-Obojí je pokryté testy.
+Všechno je pokryté testy a **šestnáct těchto pojistek je mutačně ověřených** —
+každá byla dočasně odstraněna a doloženo, že testy spadnou (ořez entit, ořez
+tagů, ořez po jednotkách, rezerva na escape, Discord field cap, markdown escape,
+timeout signál, Telegram ořez i náhled, normalizace `LEAD_NOTIFY_PII`, minimal
+režim, dekrement kvóty, escape v hodnotách polí, dorovnání neuzavřeného tagu, escape `#`, dekrement při výpadku Redisu). Mutační ověření není totéž jako důkaz úplnosti: říká,
+že tyhle testy nejsou prázdné, ne že nezbyla nepokrytá cesta.
+
+Není to formalita. První verze těchto testů byla **prázdná** — procházely i s
+odstraněnou opravou, protože assertion `/&[a-z]*$/` nemohla nikdy sednout (za
+entitou vždy visí `…`). Odhalilo to až mutační testování v review gate.
+
+### Tajemství a Sentry
+
+Discord webhook URL nese tajemství **přímo v cestě** (`/api/webhooks/{id}/{token}`),
+Telegram token taky. Sentry `getSanitizedUrlString` odstraní query a userinfo,
+ale **cestu vrátí doslova** (změřeno na `@sentry/core@10.53.1`) — a
+`nativeNodeFetchIntegration` je výchozí integrace, která ke každému `fetch`
+přidává breadcrumb s URL. Bez obrany by se při každém selhání notifikace, a při
+`tracesSampleRate: 0.1` i u desetiny úspěšných, poslal webhook token třetí straně
+a zůstal tam trvale.
+
+Obrana je dvouvrstvá (`sentry.server.config.ts` + `src/lib/redact-secrets.ts`):
+volání na oba hosty se do Sentry nezaznamenávají vůbec, a co by přesto prošlo,
+projde redakcí podle tvaru URL **i podle skutečné hodnoty z prostředí** — ta
+chytne tajemství v jakémkoli obalu, ne jen v tom očekávaném.
 
 ---
 
