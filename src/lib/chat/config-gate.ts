@@ -25,9 +25,20 @@ export interface ChatConfigStatus {
   missing: string[];
 }
 
-const REQUIRED_VARS = ['AI_MODEL', 'UPSTASH_REDIS_REST_URL', 'UPSTASH_REDIS_REST_TOKEN'] as const;
-
+/**
+ * Redis přijímáme pod oběma jmény (viz `redisCredentials`): Vercel Marketplace
+ * injektuje `KV_REST_API_*`, ruční Upstash setup `UPSTASH_REDIS_REST_*`. Gate
+ * musí kontrolovat totéž, co reálně čte klient — jinak by chatbot hlásil
+ * „disabled" na provisionovaném projektu (provisioning 2026-08-13).
+ */
 export function getChatConfigStatus(): ChatConfigStatus {
-  const missing = REQUIRED_VARS.filter((name) => !process.env[name]);
+  const missing: string[] = [];
+  if (!process.env.AI_MODEL) missing.push('AI_MODEL');
+  if (!process.env.UPSTASH_REDIS_REST_URL && !process.env.KV_REST_API_URL) {
+    missing.push('UPSTASH_REDIS_REST_URL|KV_REST_API_URL');
+  }
+  if (!process.env.UPSTASH_REDIS_REST_TOKEN && !process.env.KV_REST_API_TOKEN) {
+    missing.push('UPSTASH_REDIS_REST_TOKEN|KV_REST_API_TOKEN');
+  }
   return { enabled: missing.length === 0, missing };
 }
