@@ -49,15 +49,34 @@ describe('getChatConfigStatus', () => {
     expect(status.missing).toContain('AI_MODEL');
   });
 
-  it('is disabled and lists both Upstash vars when missing', () => {
+  it('is disabled and lists both Upstash vars when missing under either name', () => {
     stubAllPresent();
     vi.stubEnv('UPSTASH_REDIS_REST_URL', '');
     vi.stubEnv('UPSTASH_REDIS_REST_TOKEN', '');
+    vi.stubEnv('KV_REST_API_URL', '');
+    vi.stubEnv('KV_REST_API_TOKEN', '');
     const status = getChatConfigStatus();
     expect(status.enabled).toBe(false);
     expect(status.missing).toEqual(
-      expect.arrayContaining(['UPSTASH_REDIS_REST_URL', 'UPSTASH_REDIS_REST_TOKEN']),
+      expect.arrayContaining([
+        'UPSTASH_REDIS_REST_URL|KV_REST_API_URL',
+        'UPSTASH_REDIS_REST_TOKEN|KV_REST_API_TOKEN',
+      ]),
     );
+  });
+
+  // Vercel Marketplace injektuje KV_REST_API_* místo UPSTASH_REDIS_REST_* —
+  // gate musí uznat i tuhle dvojici, jinak by chatbot na provisionovaném
+  // projektu hlásil `disabled` (provisioning 2026-08-13).
+  it('is enabled when Redis comes from the Vercel KV_* pair', () => {
+    stubAllPresent();
+    vi.stubEnv('UPSTASH_REDIS_REST_URL', '');
+    vi.stubEnv('UPSTASH_REDIS_REST_TOKEN', '');
+    vi.stubEnv('KV_REST_API_URL', 'https://example.upstash.io');
+    vi.stubEnv('KV_REST_API_TOKEN', 'token');
+    const status = getChatConfigStatus();
+    expect(status.enabled).toBe(true);
+    expect(status.missing).toEqual([]);
   });
 
   it('is disabled when everything is missing', () => {

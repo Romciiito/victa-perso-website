@@ -79,7 +79,10 @@ export const contactSchema = z
     // both leaked the detection to bots and made the silent-200 branch
     // unreachable.
     honeypot: z.string().max(200).optional().or(z.literal('')),
-    turnstile_token: z.string().min(1, { message: 'Bot kontrola se nepodařila — zkuste znovu.' }),
+    // .max(4096) — Vlna 7 code-review finding M2: this was the one unbounded
+    // string in the whole schema (real Cloudflare Turnstile tokens run a few
+    // hundred bytes to ~2KB; 4096 is generous headroom, not a tight fit).
+    turnstile_token: z.string().min(1, { message: 'Bot kontrola se nepodařila — zkuste znovu.' }).max(4096),
     locale: z.enum(['cs', 'en']).default('cs'),
   })
   .superRefine((data, ctx) => {

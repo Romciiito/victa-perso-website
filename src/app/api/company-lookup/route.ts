@@ -37,6 +37,17 @@ import { isAllowedOrigin, clientIp } from '@/lib/origin';
  */
 
 export const runtime = 'nodejs';
+// Explicit even though `req.nextUrl.searchParams` already makes this route
+// implicitly per-request (Vlna 7 consistency pass — every other route in
+// this codebase declares `dynamic` explicitly; this one didn't, which read
+// as an oversight rather than the deliberate omission it actually was).
+// `dynamic = 'force-dynamic'` controls Next's OWN build-time/Data-Cache
+// behavior for this handler — it does NOT override the `Cache-Control`
+// header the response sets below. The CDN-cacheable response (D-021) and
+// "this Function always executes per-request" are independent, non-
+// conflicting facts; declaring both explicitly avoids relying on that
+// distinction being obvious from a code read six months from now.
+export const dynamic = 'force-dynamic';
 
 // `Vary: Origin` (gate Vlny 6): bez něj je cache klíčem jen URL, takže by
 // origin check platil pouze na cache miss a cizí web by dostal odpověď na

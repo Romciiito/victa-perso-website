@@ -14,16 +14,29 @@ import { Redis } from '@upstash/redis';
 
 let _redis: Redis | null = null;
 
+/**
+ * Upstash přes Vercel Marketplace injektuje `KV_REST_API_URL` / `KV_REST_API_TOKEN`,
+ * ruční setup z Upstash konzole `UPSTASH_REDIS_REST_URL` / `_TOKEN`. Čteme obojí,
+ * aby provisioning nevyžadoval duplikaci secretů do druhé dvojice proměnných —
+ * duplikát by se navíc rozešel, kdyby integrace klíče rotovala (provisioning
+ * 2026-08-13).
+ */
+export function redisCredentials(): { url?: string; token?: string } {
+  return {
+    url: process.env.UPSTASH_REDIS_REST_URL ?? process.env.KV_REST_API_URL,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN ?? process.env.KV_REST_API_TOKEN,
+  };
+}
+
 function getRedis(): Redis {
   if (_redis) return _redis;
 
-  const url = process.env.UPSTASH_REDIS_REST_URL;
-  const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+  const { url, token } = redisCredentials();
 
   if (!url || !token) {
     throw new Error(
-      'Upstash env vars missing: UPSTASH_REDIS_REST_URL or UPSTASH_REDIS_REST_TOKEN. ' +
-        'See docs/setup/vendor-setup-checklist.md §5.',
+      'Upstash env vars missing: UPSTASH_REDIS_REST_URL/_TOKEN nebo KV_REST_API_URL/_TOKEN ' +
+        '(Vercel Marketplace). See docs/setup/vendor-setup-checklist.md §5.',
     );
   }
 

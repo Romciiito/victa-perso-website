@@ -9,7 +9,9 @@ import { checkLimit, hashIp } from '@/lib/rate-limit';
 import { signNewsletterConfirmToken } from '@/lib/newsletter-confirm-token';
 import { newsletterConfirmRequestEmailHtml } from '@/lib/email-html';
 import { isAllowedOrigin, clientIp } from '@/lib/origin';
+import { bodyTooLarge } from '@/lib/body-size-guard';
 import { site } from '@/config/site';
+import { checkBotId } from 'botid/server';
 
 /**
  * Newsletter signup handler — STATELESS double opt-in request (P1-07, D-014).
@@ -24,13 +26,22 @@ import { site } from '@/config/site';
  * open question in newsletter-schema.ts about whether single opt-in was
  * legally sufficient under CZ/SK marketing law).
  *
- * Defense layers (unchanged from the previous single-opt-in version):
+ * Defense layers (unchanged from the previous single-opt-in version, plus
+ * Vlna 7 additions marked below — reordered per code-review finding I1 so
+ * the two outbound-network checks, BotID and Turnstile, run only after
+ * every free-to-reject path has had its chance):
  *   1. Origin header validation.
- *   2. Zod schema validation (shared with client).
- *   3. Honeypot (silent 200 — no email sent to what's presumably a bot).
- *   4. isValidEmail server-side strict check (no newlines/null bytes — security-model.md §4.4).
- *   5. Cloudflare Turnstile.
+ *   2. Content-Length body-size guard (Vlna 7) — 413 before Zod parses.
+ *   3. Zod schema validation (shared with client).
+ *   4. Honeypot (silent 200 — no email sent to what's presumably a bot).
+ *   5. isValidEmail server-side strict check (no newlines/null bytes — security-model.md §4.4).
  *   6. Per-IP rate limit 3/3600s.
+ *   7. Vercel BotID Basic check (Vlna 7) — additive to Turnstile, DORMANT by
+ *      default (`NEXT_PUBLIC_BOTID_ENABLED` unset) until a real-browser
+ *      smoke test confirms it; fail-open on a thrown error either way. See
+ *      `/api/contact/route.ts`'s doc comment (code-review finding C1) for
+ *      the full rationale — identical posture here.
+ *   8. Cloudflare Turnstile.
  *
  * The confirmation token is a signed, stateless bundle of everything the
  * confirm step needs (email, locale, best-effort UTM/source), HMAC'd with
@@ -45,10 +56,16 @@ const NO_STORE = { 'Cache-Control': 'no-store' } as const;
 const SUCCESS_MSG_CS = 'Zkontrolujte e-mail a potvrďte přihlášení — poslali jsme vám potvrzovací odkaz.';
 const SUCCESS_MSG_EN = 'Check your inbox and confirm your subscription — we sent you a confirmation link.';
 
+/** Realistic max payload is well under 1KB (email + short UTM fields); 10KB leaves generous headroom (Vlna 7). */
+const MAX_BODY_BYTES = 10_000;
+
 export async function POST(req: NextRequest): Promise<NextResponse> {
   if (!isAllowedOrigin(req)) {
     return NextResponse.json({ error: 'origin' }, { status: 403, headers: NO_STORE });
   }
+
+  const tooLarge = bodyTooLarge(req, MAX_BODY_BYTES);
+  if (tooLarge) return tooLarge;
 
   const json = (await req.json().catch(() => null)) as unknown;
   const parsed = newsletterSchema.safeParse(json);
@@ -74,17 +91,32 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const ip = clientIp(req);
   const ipHash = hashIp(ip);
 
-  const ts = await verifyTurnstileToken(data.turnstile_token, ip);
-  if (!ts.success) {
-    return NextResponse.json({ error: 'turnstile', codes: ts.errorCodes }, { status: 400, headers: NO_STORE });
-  }
-
   const rl = await checkLimit('newsletter', ipHash);
   if (!rl.ok) {
     return NextResponse.json(
       { error: 'rate-limit', retryAt: rl.reset },
       { status: 429, headers: { ...NO_STORE, 'Retry-After': '3600' } },
     );
+  }
+
+  // BotID Basic — additive to Turnstile, DORMANT unless
+  // NEXT_PUBLIC_BOTID_ENABLED === '1' (code-review finding C1). Fail-open
+  // on a thrown error either way (see /api/contact/route.ts's doc comment
+  // for the full rationale).
+  if (process.env.NEXT_PUBLIC_BOTID_ENABLED === '1') {
+    try {
+      const botVerification = await checkBotId();
+      if (botVerification.isBot) {
+        return NextResponse.json({ error: 'bot' }, { status: 403, headers: NO_STORE });
+      }
+    } catch (err) {
+      console.warn('[newsletter] BotID check failed — proceeding (fail-open):', (err as Error).message);
+    }
+  }
+
+  const ts = await verifyTurnstileToken(data.turnstile_token, ip);
+  if (!ts.success) {
+    return NextResponse.json({ error: 'turnstile', codes: ts.errorCodes }, { status: 400, headers: NO_STORE });
   }
 
   const confirmSecret = process.env.NEWSLETTER_CONFIRM_SECRET;

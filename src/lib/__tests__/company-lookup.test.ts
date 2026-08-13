@@ -4,6 +4,47 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 // src/lib/__tests__/rate-limit.test.ts for the same stub.
 vi.mock('server-only', () => ({}));
 
+/**
+ * `company-lookup.ts` now goes through the global circuit breaker
+ * (`circuit-breaker.ts`, Vlna 7) before calling ARES/RPO, which transitively
+ * imports `./redis`. Mocked here with the same minimal fake-Redis harness
+ * `rate-limit.test.ts`/`circuit-breaker.test.ts` use, so the breaker-open
+ * tests below can deterministically pre-seed state — an EMPTY store is
+ * behaviorally identical to the old no-mock setup (no failures on record =
+ * breaker closed either way), so every pre-existing test below is unaffected.
+ */
+interface FakeEntry {
+  value: string;
+}
+function createFakeRedis() {
+  const store = new Map<string, FakeEntry>();
+  return {
+    store,
+    async get<T>(key: string): Promise<T | null> {
+      const entry = store.get(key);
+      return entry ? (entry.value as unknown as T) : null;
+    },
+    async set(key: string, value: string): Promise<string> {
+      store.set(key, { value });
+      return 'OK';
+    },
+    async del(key: string): Promise<number> {
+      return store.delete(key) ? 1 : 0;
+    },
+    async incr(key: string): Promise<number> {
+      const current = store.get(key);
+      const next = (current ? Number(current.value) : 0) + 1;
+      store.set(key, { value: String(next) });
+      return next;
+    },
+    async expire(): Promise<number> {
+      return 1;
+    },
+  };
+}
+const fakeRedis = createFakeRedis();
+vi.mock('../redis', () => ({ redis: fakeRedis }));
+
 const { lookupCompany, mergeCompanyResults } = await import('../company-lookup');
 const { companyLookupQuerySchema } = await import('../company-lookup-schema');
 
@@ -114,6 +155,7 @@ describe('lookupCompany', () => {
   beforeEach(() => {
     fetchMock = vi.fn();
     vi.stubGlobal('fetch', fetchMock);
+    fakeRedis.store.clear();
   });
 
   afterEach(() => {
@@ -233,6 +275,126 @@ describe('lookupCompany', () => {
     // Fresh Response per call — see the diacritics-equivalence test above for why.
     fetchMock.mockImplementation(() => Promise.resolve(jsonResponse({ unexpected: 'shape' })));
     await expect(lookupCompany('victa', 'all')).resolves.toEqual({ results: [], degraded: true });
+  });
+
+  describe('circuit breaker (Vlna 7)', () => {
+    it('skips the ARES fetch entirely (no network call) when the ARES breaker is open', async () => {
+      fakeRedis.store.set('cb:ares:open', { value: '1' });
+      fetchMock.mockResolvedValue(jsonResponse({ results: [RPO_ACTIVE_RESULT] }));
+      const { results, degraded } = await lookupCompany('victa', 'all');
+      // Only the RPO call should have gone out — the ARES call was skipped
+      // before any fetch was constructed.
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      const [url] = fetchMock.mock.calls[0] as [string];
+      expect(url.toString()).toContain('statistics.sk');
+      expect(degraded).toBe(true);
+      expect(results).toEqual([
+        { name: 'Avicta s.r.o.', ico: '31340628', address: 'Tuhovská 37, 83107 Bratislava', country: 'SK' },
+      ]);
+    });
+
+    it('skips the RPO fetch entirely when the RPO breaker is open, ARES still runs', async () => {
+      fakeRedis.store.set('cb:rpo:open', { value: '1' });
+      fetchMock.mockResolvedValueOnce(jsonResponse(ARES_VICTA_RESPONSE));
+      const { results, degraded } = await lookupCompany('victa', 'all');
+      expect(fetchMock).toHaveBeenCalledTimes(1);
+      const [url] = fetchMock.mock.calls[0] as [string];
+      expect(url.toString()).toContain('ares.gov.cz');
+      expect(degraded).toBe(true);
+      expect(results).toHaveLength(4);
+    });
+
+    it('country="cz" with an open ARES breaker returns an empty, degraded result with zero fetch calls', async () => {
+      fakeRedis.store.set('cb:ares:open', { value: '1' });
+      const { results, degraded } = await lookupCompany('victa', 'cz');
+      expect(fetchMock).not.toHaveBeenCalled();
+      expect(results).toEqual([]);
+      expect(degraded).toBe(true);
+    });
+
+    it('records a failure against the breaker when a source rejects, and a subsequent success resets it', async () => {
+      fetchMock.mockRejectedValueOnce(new Error('ARES timeout'));
+      await lookupCompany('victa', 'cz');
+      expect(fakeRedis.store.get('cb:ares:fail')?.value).toBe('1');
+
+      fetchMock.mockResolvedValueOnce(jsonResponse(ARES_VICTA_RESPONSE));
+      await lookupCompany('victa', 'cz');
+      expect(fakeRedis.store.has('cb:ares:fail')).toBe(false);
+    });
+
+    it('trips the ARES breaker open after 5 consecutive failures, then the 6th call skips the fetch', async () => {
+      fetchMock.mockRejectedValue(new Error('ARES down'));
+      for (let i = 0; i < 5; i++) {
+        await lookupCompany('victa', 'cz');
+      }
+      expect(fakeRedis.store.get('cb:ares:open')?.value).toBe('1');
+
+      fetchMock.mockClear();
+      const { degraded } = await lookupCompany('victa', 'cz');
+      expect(fetchMock).not.toHaveBeenCalled();
+      expect(degraded).toBe(true);
+    });
+
+    it('a 4xx from RPO (caller-fault) does NOT count toward the breaker, even 5x in a row (code-review I3)', async () => {
+      fetchMock.mockResolvedValue(new Response('bad request', { status: 400 }));
+      for (let i = 0; i < 5; i++) {
+        const { degraded } = await lookupCompany('victa', 'sk');
+        expect(degraded).toBe(true); // still reported as a failed/degraded call to THIS request...
+      }
+      // ...but the GLOBAL breaker must not have tripped — a 400 is "our
+      // query was bad," not "RPO is unhealthy," and must never degrade the
+      // feature for every other visitor.
+      expect(fakeRedis.store.has('cb:rpo:fail')).toBe(false);
+      expect(fakeRedis.store.has('cb:rpo:open')).toBe(false);
+      await lookupCompany('victa', 'sk');
+      expect(fetchMock).toHaveBeenCalledTimes(6); // never skipped — breaker never opened
+    });
+
+    it('a 5xx from RPO DOES count toward the breaker (genuine upstream-health signal)', async () => {
+      fetchMock.mockResolvedValue(new Response('internal error', { status: 503 }));
+      for (let i = 0; i < 5; i++) {
+        await lookupCompany('victa', 'sk');
+      }
+      expect(fakeRedis.store.get('cb:rpo:open')?.value).toBe('1');
+      fetchMock.mockClear();
+      await lookupCompany('victa', 'sk');
+      expect(fetchMock).not.toHaveBeenCalled(); // breaker open — call skipped entirely
+    });
+
+    it('a 429 from RPO (upstream rate-limiting us) DOES count toward the breaker', async () => {
+      fetchMock.mockResolvedValue(new Response('too many requests', { status: 429 }));
+      for (let i = 0; i < 5; i++) {
+        await lookupCompany('victa', 'sk');
+      }
+      expect(fakeRedis.store.get('cb:rpo:open')?.value).toBe('1');
+    });
+
+    it('uses the reduced timeout once a source is degraded, and the full timeout once it recovers (M4)', async () => {
+      const timeoutSpy = vi.spyOn(AbortSignal, 'timeout');
+      try {
+        // First call: healthy source, full 5s ARES timeout.
+        fetchMock.mockResolvedValueOnce(jsonResponse(ARES_VICTA_RESPONSE));
+        await lookupCompany('victa', 'cz');
+        expect(timeoutSpy).toHaveBeenLastCalledWith(5_000);
+
+        // One failure — below the trip threshold, but `degraded` should now be true.
+        fetchMock.mockRejectedValueOnce(new Error('ARES blip'));
+        await lookupCompany('victa', 'cz');
+
+        // Next call while degraded: reduced (halved) timeout.
+        fetchMock.mockResolvedValueOnce(jsonResponse(ARES_VICTA_RESPONSE));
+        await lookupCompany('victa', 'cz');
+        expect(timeoutSpy).toHaveBeenLastCalledWith(2_500);
+
+        // That last call succeeded — recordSuccess clears the degraded
+        // marker, so the source is back to the full timeout.
+        fetchMock.mockResolvedValueOnce(jsonResponse(ARES_VICTA_RESPONSE));
+        await lookupCompany('victa', 'cz');
+        expect(timeoutSpy).toHaveBeenLastCalledWith(5_000);
+      } finally {
+        timeoutSpy.mockRestore();
+      }
+    });
   });
 });
 

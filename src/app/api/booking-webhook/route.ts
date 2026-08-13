@@ -1,5 +1,5 @@
 import 'server-only';
-import { NextResponse, type NextRequest } from 'next/server';
+import { NextResponse, after, type NextRequest } from 'next/server';
 import { createHmac, timingSafeEqual } from 'node:crypto';
 import { supabaseAdmin } from '@/lib/supabase';
 import { upsertLead } from '@/lib/leads';
@@ -11,7 +11,9 @@ import {
   commitWebhookProcessed,
   releaseWebhookProcessing,
 } from '@/lib/rate-limit';
+import { bodyTooLarge } from '@/lib/body-size-guard';
 import { tierFromEventSlug } from '@/config/booking';
+import { notifyNewLead } from '@/lib/lead-notify';
 
 /**
  * Cal.com webhook receiver — `BOOKING_CREATED`, `BOOKING_RESCHEDULED`, `BOOKING_CANCELLED`,
@@ -19,6 +21,9 @@ import { tierFromEventSlug } from '@/config/booking';
  *
  * Security (AR-11, security-model.md §4.10):
  *  - HMAC-SHA256 signature verification via `CALCOM_WEBHOOK_SECRET` (server-only env var).
+ *  - Content-Length body-size guard (Vlna 7, `body-size-guard.ts`) — checked
+ *    right after the signature-header presence check, BEFORE `req.text()`
+ *    buffers the raw body.
  *  - Per-IP rate limit (60 req/60s, defense-in-depth — audit P2-03: this limiter was defined
  *    but never wired up) — checked AFTER signature verification so only requests that already
  *    proved they hold the webhook secret consume the budget.
@@ -187,6 +192,8 @@ function mapEventType(
 }
 
 const NO_STORE = { 'Cache-Control': 'no-store' } as const;
+/** Real Cal.com payloads (attendees + custom-field responses) run a few KB; 256KB leaves generous headroom for a trusted-but-verified server-to-server webhook without allowing unbounded reads (Vlna 7). */
+const MAX_BODY_BYTES = 262_144;
 
 export async function POST(req: NextRequest): Promise<NextResponse> {
   const secret = process.env.CALCOM_WEBHOOK_SECRET;
@@ -199,6 +206,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   if (!signature) {
     return NextResponse.json({ error: 'missing-signature' }, { status: 401, headers: NO_STORE });
   }
+
+  // Body-size guard BEFORE req.text() reads the whole payload into memory
+  // (Vlna 7) — the point is to never buffer a megabytes-scale body at all.
+  const tooLarge = bodyTooLarge(req, MAX_BODY_BYTES);
+  if (tooLarge) return tooLarge;
 
   const rawBody = await req.text();
   if (!verifySignature(rawBody, signature, secret)) {
@@ -309,6 +321,26 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     tier,
     scheduled: parsed.payload.startTime,
   });
+
+  // Notifikace jen na NOVOU rezervaci — přesun a zrušení mají vlastní e-mail
+  // z Cal.comu a hlásit je pod nadpisem „Nová rezervace" by bylo zavádějící.
+  // Až po commitu: co se nezapsalo, se nehlásí (docs/setup/lead-notifications.md).
+  // Zúžení `attendee?.email` se do closure v `after()` nepřenese — proto se
+  // e-mail vytáhne do vlastní konstanty ještě před ní.
+  const attendeeEmail = attendee?.email;
+  if (parsed.triggerEvent === 'BOOKING_CREATED' && attendeeEmail) {
+    after(() =>
+      notifyNewLead({
+        kind: 'booking',
+        email: attendeeEmail,
+        name: attendee?.name ?? null,
+        company: extractCompany(parsed.payload),
+        budgetTier: extractBudgetTier(parsed.payload),
+        serviceInterest: tier,
+        scheduledFor: parsed.payload.startTime ?? null,
+      }),
+    );
+  }
 
   return NextResponse.json({ ok: true }, { status: 200, headers: NO_STORE });
 }

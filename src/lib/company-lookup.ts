@@ -1,4 +1,5 @@
 import 'server-only';
+import { checkBreaker, withBreaker, type BreakerStatus } from './circuit-breaker';
 
 /**
  * ARES (CZ) + RPO (SK) company-registry lookup — Vlna 6 anti-fake-lead
@@ -31,6 +32,15 @@ import 'server-only';
  *    Also diacritics-insensitive in practice — verified live: `fullName=slovenska`
  *    and `fullName=slovensk%C3%A1` (percent-encoded "á") returned
  *    byte-identical response bodies (content-length 590888, `diff` empty).
+ *
+ *  - Circuit breaker (Vlna 7, `circuit-breaker.ts`, global — not per-IP):
+ *    when a source has failed `FAILURE_THRESHOLD` times in the last 60s, new
+ *    calls to that source are skipped entirely (no fetch, no timeout wait)
+ *    for a 2-minute cooldown — see `circuit-breaker.ts`'s module doc for the
+ *    full rationale. While a source has ANY recent failures (below the trip
+ *    threshold), its per-call timeout is halved (`*_TIMEOUT_MS_REDUCED`) so a
+ *    still-struggling upstream fails fast instead of holding the Vercel
+ *    Function open for the full budget again.
  *
  *    IMPORTANT, discovered live: RPO's `limit` query parameter (and every
  *    plausible alternative we tried — `size`, `pageSize`, `maxResults`,
@@ -76,6 +86,9 @@ const MAX_MERGED_RESULTS = 8;
  */
 const ARES_TIMEOUT_MS = 5_000;
 const RPO_TIMEOUT_MS = 12_000;
+/** Halved timeout used while a source has any recent (unreset) circuit-breaker failures — see circuit-breaker.ts. */
+const ARES_TIMEOUT_MS_REDUCED = ARES_TIMEOUT_MS / 2;
+const RPO_TIMEOUT_MS_REDUCED = RPO_TIMEOUT_MS / 2;
 
 /** Parses a `Response` body as JSON without trusting `res.ok` — ARES returns meaningful JSON on its documented 400 (see module doc). Throws only when the body genuinely isn't JSON (network edge / HTML error page from an intermediary). */
 async function parseJsonLenient(res: Response): Promise<unknown> {
@@ -192,7 +205,11 @@ async function searchRpo(q: string, signal: AbortSignal): Promise<CompanyMatch[]
   url.searchParams.set('limit', String(SOURCE_FETCH_LIMIT)); // sent for forward-compat; live API ignores it (see module doc)
   const res = await fetch(url, { signal });
   if (!res.ok) {
-    throw new Error(`RPO http ${res.status}`);
+    // Tagged with the HTTP status so `isUpstreamHealthFailure` (below) can
+    // tell "RPO itself is unhealthy" (5xx, 429) apart from "our own query
+    // was rejected" (any other 4xx) — the circuit breaker must only trip on
+    // the former (code-review finding I3, Vlna 7).
+    throw new UpstreamStatusError(`RPO http ${res.status}`, res.status);
   }
   const body = await parseJsonLenient(res);
   if (!body || typeof body !== 'object' || !Array.isArray((body as RpoSearchResponse).results)) {
@@ -202,6 +219,48 @@ async function searchRpo(q: string, signal: AbortSignal): Promise<CompanyMatch[]
     .results!.slice(0, SOURCE_FETCH_LIMIT) // API ignores `limit` — enforce locally (see module doc)
     .map(normalizeRpoResult)
     .filter((m): m is CompanyMatch => m !== null);
+}
+
+/* ------------------------------------------------------------------------ */
+/* Circuit-breaker failure discrimination (Vlna 7, code-review finding I3)  */
+/* ------------------------------------------------------------------------ */
+
+/** Thrown by `searchRpo` for a non-OK HTTP response, tagged with the status so callers can distinguish "upstream is unhealthy" from "our own request was rejected." */
+export class UpstreamStatusError extends Error {
+  constructor(
+    message: string,
+    public readonly status: number,
+  ) {
+    super(message);
+    this.name = 'UpstreamStatusError';
+  }
+}
+
+/**
+ * Decides whether a rejection from `searchAres`/`searchRpo` should count
+ * toward the GLOBAL circuit breaker's failure counter. This breaker affects
+ * every visitor, not just the one whose request failed — so it must only
+ * trip on signals that mean the UPSTREAM is unhealthy (network error,
+ * timeout, 5xx, 429 — the upstream rate-limiting US), never on a rejection
+ * that's really about the caller's own input. `searchAres` already models
+ * this correctly on its own (its documented "too many results" business
+ * error returns `[]` rather than throwing — see that function's comment);
+ * this predicate exists to give `searchRpo`'s blanket `if (!res.ok) throw`
+ * the same discrimination, since RPO's live API doesn't have an equivalent
+ * documented business-logic-error shape to special-case the way ARES does.
+ */
+function isUpstreamHealthFailure(err: unknown): boolean {
+  if (err instanceof UpstreamStatusError) {
+    // A 4xx OTHER than 429 means our own request/query was rejected — not a
+    // sign RPO itself is unhealthy. 429 (the upstream rate-limiting our
+    // egress IP) and any 5xx ARE genuine health signals.
+    return err.status >= 500 || err.status === 429;
+  }
+  // Network errors, timeouts (AbortError from AbortSignal.timeout), and
+  // malformed/unexpected-response-shape errors (thrown by parseJsonLenient /
+  // the "unexpected ... response shape" branches above) are all genuine
+  // signals that something is wrong with the call itself, not the query.
+  return true;
 }
 
 /* ------------------------------------------------------------------------ */
@@ -224,14 +283,17 @@ export function mergeCompanyResults(matches: CompanyMatch[]): CompanyMatch[] {
 
 export interface CompanyLookupResult {
   results: CompanyMatch[];
-  /** true when at least one attempted source failed/timed out — the other source's results (if any) are still returned (Promise.allSettled: "výpadek jednoho nesmí shodit druhý"). */
+  /** true when at least one attempted source failed/timed out/was breaker-skipped — the other source's results (if any) are still returned (Promise.allSettled: "výpadek jednoho nesmí shodit druhý"). */
   degraded: boolean;
 }
 
 /**
  * Looks up `q` against ARES and/or RPO in parallel depending on `country`.
- * Never throws — a failed/timed-out source is reflected in `degraded`, not
- * a rejected promise, so the route handler can always answer 200.
+ * Never throws — a failed/timed-out/breaker-open source is reflected in
+ * `degraded`, not a rejected promise, so the route handler can always answer
+ * 200. See the module doc's "Circuit breaker" bullet — a source whose
+ * breaker is open is skipped WITHOUT a fetch call at all (checked before the
+ * task is even pushed onto `tasks`), not merely timed out.
  */
 export async function lookupCompany(
   q: string,
@@ -240,12 +302,39 @@ export async function lookupCompany(
   const wantCz = country === 'cz' || country === 'all';
   const wantSk = country === 'sk' || country === 'all';
 
+  // Both breaker checks run in parallel (code-review finding M6, Vlna 7) —
+  // previously `await checkBreaker('ares')` fully completed before the RPO
+  // branch was even reached, serializing two independent Redis round trips
+  // ahead of two upstream fetches that are supposed to start together.
+  const [aresStatus, rpoStatus] = await Promise.all([
+    wantCz ? checkBreaker('ares') : Promise.resolve<BreakerStatus>({ open: false, recentFailures: 0, degraded: false }),
+    wantSk ? checkBreaker('rpo') : Promise.resolve<BreakerStatus>({ open: false, recentFailures: 0, degraded: false }),
+  ]);
+
   const tasks: Promise<CompanyMatch[]>[] = [];
-  if (wantCz) tasks.push(searchAres(q, AbortSignal.timeout(ARES_TIMEOUT_MS)));
-  if (wantSk) tasks.push(searchRpo(q, AbortSignal.timeout(RPO_TIMEOUT_MS)));
+  let breakerSkipped = false;
+
+  if (wantCz) {
+    if (aresStatus.open) {
+      breakerSkipped = true;
+      console.warn('[company-lookup] ARES circuit breaker open — skipping call');
+    } else {
+      const timeoutMs = aresStatus.degraded ? ARES_TIMEOUT_MS_REDUCED : ARES_TIMEOUT_MS;
+      tasks.push(withBreaker('ares', () => searchAres(q, AbortSignal.timeout(timeoutMs)), isUpstreamHealthFailure));
+    }
+  }
+  if (wantSk) {
+    if (rpoStatus.open) {
+      breakerSkipped = true;
+      console.warn('[company-lookup] RPO circuit breaker open — skipping call');
+    } else {
+      const timeoutMs = rpoStatus.degraded ? RPO_TIMEOUT_MS_REDUCED : RPO_TIMEOUT_MS;
+      tasks.push(withBreaker('rpo', () => searchRpo(q, AbortSignal.timeout(timeoutMs)), isUpstreamHealthFailure));
+    }
+  }
 
   const settled = await Promise.allSettled(tasks);
-  let degraded = false;
+  let degraded = breakerSkipped;
   const all: CompanyMatch[] = [];
   for (const s of settled) {
     if (s.status === 'fulfilled') {

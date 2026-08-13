@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { streamText, createTextStreamResponse, toTextStream, type ModelMessage } from 'ai';
 import { getChatConfigStatus } from '@/lib/chat/config-gate';
 import { isAllowedOrigin, clientIp } from '@/lib/origin';
+import { bodyTooLarge } from '@/lib/body-size-guard';
 import { chatSchema } from '@/lib/chat/chat-schema';
 import { hashIp, checkChatIpLimit, claimChatDailyConversation, incrChatSessionMessages } from '@/lib/rate-limit';
 import { sanitizeChatMessage, wrapUserContent } from '@/lib/chatbot-sanitize';
@@ -56,6 +57,22 @@ export const dynamic = 'force-dynamic';
 
 const NO_STORE = { 'Cache-Control': 'no-store' } as const;
 const MAX_OUTPUT_TOKENS = 400;
+/**
+ * `chatSchema` allows up to 40 messages × 2000 chars = 80,000 CHARACTERS of
+ * content — but Zod's `.max()` counts UTF-16 code units, not bytes, and a
+ * schema-valid Czech/multi-byte payload can run well past that in UTF-8
+ * bytes (code-review finding M1, Vlna 7: the original 120KB here silently
+ * assumed ~1.5 bytes/char and would 413 a schema-valid worst-case payload).
+ * 350KB is sized against the true worst case — 80,000 chars × 4 bytes (the
+ * max any single UTF-16 code unit can encode to in UTF-8) plus JSON/field
+ * overhead — while still bounding genuinely unbounded abuse.
+ */
+const MAX_BODY_BYTES = 350_000;
+/** Retry-After values matching each rate-limit dimension's window (rate-limit.ts) — Vlna 7 unification (previously these 429s carried no Retry-After at all). */
+const RETRY_AFTER_IP_S = '60';
+const RETRY_AFTER_DAILY_S = '86400';
+/** Session cap has no natural "retry after N seconds" (it's a per-conversation lifetime cap, not a window) — the session's own TTL is the closest honest answer. */
+const RETRY_AFTER_SESSION_S = '86400';
 
 const FALLBACK_MESSAGE: Record<'cs' | 'en', string> = {
   cs: 'Chatbot je momentálně nedostupný — kontaktujte nás prosím přímo.',
@@ -125,6 +142,10 @@ export async function POST(req: NextRequest): Promise<Response> {
     return NextResponse.json({ error: 'origin' }, { status: 403, headers: NO_STORE });
   }
 
+  // 2b. Content-Length body-size guard (Vlna 7) — 413 before Zod parses.
+  const tooLarge = bodyTooLarge(req, MAX_BODY_BYTES);
+  if (tooLarge) return tooLarge;
+
   // 3. Zod validation.
   const json = (await req.json().catch(() => null)) as unknown;
   const parsed = chatSchema.safeParse(json);
@@ -146,20 +167,29 @@ export async function POST(req: NextRequest): Promise<Response> {
     // 4a. Per-IP rate limit (AR-17 dimension 1/3) — fail CLOSED.
     const ipLimit = await checkChatIpLimit(ipHash);
     if (!ipLimit.ok) {
-      return NextResponse.json({ error: 'rate-limit' }, { status: 429, headers: NO_STORE });
+      return NextResponse.json(
+        { error: 'rate-limit' },
+        { status: 429, headers: { ...NO_STORE, 'Retry-After': RETRY_AFTER_IP_S } },
+      );
     }
 
     // 4b. Per-day new-conversation cap (AR-17 dimension 2/3) — fail CLOSED.
     const daily = await claimChatDailyConversation(ipHash, data.session_id);
     if (!daily.ok) {
-      return NextResponse.json({ error: 'daily-limit' }, { status: 429, headers: NO_STORE });
+      return NextResponse.json(
+        { error: 'daily-limit' },
+        { status: 429, headers: { ...NO_STORE, 'Retry-After': RETRY_AFTER_DAILY_S } },
+      );
     }
 
     // 4c. Per-session message cap (AR-17 dimension 3/3) — fail CLOSED, server
     // is the source of truth for the count (never the client-sent array length).
     const sessionLimit = await incrChatSessionMessages(data.session_id);
     if (!sessionLimit.ok) {
-      return NextResponse.json({ error: 'session-limit' }, { status: 429, headers: NO_STORE });
+      return NextResponse.json(
+        { error: 'session-limit' },
+        { status: 429, headers: { ...NO_STORE, 'Retry-After': RETRY_AFTER_SESSION_S } },
+      );
     }
 
     // 5-6. Sanitize + build the model call. `model` and `maxOutputTokens` are
