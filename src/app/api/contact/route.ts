@@ -74,6 +74,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   const company = data.company ? sanitizeFormString(data.company, 120) : null;
   const phone = data.phone ? sanitizeFormString(data.phone, 40) : null;
   const message = sanitizeFormString(data.message, 2000);
+  // Vlna 6 anti-fake-lead signal — only ever set by CompanyAutocomplete's
+  // verified-pick path (never user-typed directly), but sanitized anyway
+  // per this route's "every string field is sanitized" policy.
+  const companyIco = data.company_ico ? sanitizeFormString(data.company_ico, 20) : null;
+  const companyCountry = data.company_country ?? null;
 
   // Cross-source CRM root row
   const lead = await upsertLead({
@@ -81,6 +86,8 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     name,
     company,
     phone,
+    company_ico: companyIco,
+    company_country: companyCountry,
     source: 'contact_form',
     source_url: req.headers.get('referer'),
     locale: data.locale,
@@ -101,7 +108,7 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
         text: [
           `Jméno: ${name}`,
           `E-mail: ${data.email}`,
-          `Společnost: ${company ?? '-'}`,
+          `Společnost: ${company ?? '-'}${companyIco ? ` (IČO ${companyIco}, ověřeno ${companyCountry ?? '?'})` : ' (neověřeno)'}`,
           `Telefon: ${phone ?? '-'}`,
           `Rozpočet: ${data.budget_tier ?? '-'}`,
           `Služba: ${data.service_interest ?? '-'}`,
@@ -143,6 +150,13 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     name,
     company,
     phone,
+    // Klíče se vynechávají, když jsou prázdné — stejný vzor jako `upsertLead`
+    // (gate Vlny 6): PostgREST validuje KAŽDÝ klíč proti schema cache, takže
+    // dokud není aplikovaná migrace 004, poslání `company_ico: null` shodí
+    // insert s PGRST204 a partial-failure policy by lead tiše zahodila do
+    // e-mailu bez DB řádku. Takto projdou neověřená odeslání i před migrací.
+    ...(companyIco ? { company_ico: companyIco } : {}),
+    ...(companyCountry ? { company_country: companyCountry } : {}),
     service_interest: data.service_interest ?? null,
     budget_tier: data.budget_tier ?? null,
     message,

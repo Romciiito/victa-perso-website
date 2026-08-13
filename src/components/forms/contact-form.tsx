@@ -1,12 +1,26 @@
 'use client';
 
 import { useCallback, useState, useTransition } from 'react';
+import dynamic from 'next/dynamic';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as Sentry from '@sentry/nextjs';
 import { contactSchema, type ContactFormValues } from '@/lib/contact-schema';
 import { TurnstileWidget } from './turnstile-widget';
+import { CompanyAutocomplete, type VerifiedCompany } from './company-autocomplete';
 import { trackEvent } from '@/lib/ga4';
+
+// Code-split: `libphonenumber-js` metadata (~85KB) must never land in a
+// shared/vendor chunk that ships on every route (REQ-NF-006, D-016/P0-21
+// homepage LCP budget) — `ssr: false` + a plain-input loading fallback keeps
+// this a lazily-loaded chunk scoped to whichever page actually mounts the
+// contact form (today: only `/kontakt`).
+const PhoneInput = dynamic(() => import('./phone-input').then((m) => m.PhoneInput), {
+  ssr: false,
+  loading: () => (
+    <div className="h-[46px] animate-pulse rounded-md border" style={{ borderColor: 'var(--border)' }} />
+  ),
+});
 
 type Status = 'idle' | 'submitting' | 'success' | 'error' | 'rate-limited';
 
@@ -41,6 +55,8 @@ export function ContactForm({ locale }: Props) {
       name: '',
       email: '',
       company: '',
+      company_ico: '',
+      company_country: '',
       phone: '',
       message: '',
       gdpr_consent: false as unknown as true, // RHF default; Zod enforces literal(true)
@@ -49,6 +65,44 @@ export function ContactForm({ locale }: Props) {
       locale,
     },
   });
+
+  // `PhoneInput` and `CompanyAutocomplete` are fully controlled-via-setValue
+  // fields (same pattern the pre-existing `turnstile_token` handling above
+  // uses) rather than `register()`-bound inputs — both need to transform
+  // what the visitor typed before it becomes the field's real value
+  // (national text → E.164; a picked registry match → the verified IČO/
+  // country pair), which `register()`'s direct DOM-to-field wiring can't do.
+  //
+  // Local `useState` here, NOT react-hook-form's `watch()` — the React
+  // Compiler flags `watch()` as an "incompatible library" API (its return
+  // value can't be safely memoized), which trips `pnpm lint`'s
+  // `--max-warnings 0` gate. Plain local state mirrors the field value for
+  // these two controlled components; `reset()`'s success branch below
+  // clears it manually since `reset()` only touches RHF's own state.
+  const [phoneValue, setPhoneValue] = useState('');
+  const [companyValue, setCompanyValue] = useState('');
+
+  const handlePhoneChange = useCallback(
+    (e164: string) => {
+      setPhoneValue(e164);
+      setValue('phone', e164, { shouldValidate: true });
+    },
+    [setValue],
+  );
+  const handleCompanyChange = useCallback(
+    (name: string) => {
+      setCompanyValue(name);
+      setValue('company', name, { shouldValidate: true });
+    },
+    [setValue],
+  );
+  const handleCompanyVerify = useCallback(
+    (match: VerifiedCompany | null) => {
+      setValue('company_ico', match?.ico ?? '');
+      setValue('company_country', match?.country ?? '');
+    },
+    [setValue],
+  );
 
   // The Turnstile token must live inside react-hook-form state — handleSubmit
   // runs the Zod resolver against RHF's own values BEFORE the callback body,
@@ -94,6 +148,8 @@ export function ContactForm({ locale }: Props) {
         setStatus('success');
         trackEvent('contact_form_submit', { form_location: 'contact_page' });
         reset();
+        setPhoneValue('');
+        setCompanyValue('');
       } catch (err) {
         // P2-04: never surface the raw `err.message` in the UI — it's an
         // English/technical browser fetch error (e.g. "Failed to fetch"),
@@ -246,33 +302,27 @@ export function ContactForm({ locale }: Props) {
           ) : null}
         </div>
         <div>
-          <label className="mb-2 block text-sm font-medium" htmlFor="company">
-            {labels.company}
-          </label>
-          <input
+          <CompanyAutocomplete
             id="company"
-            type="text"
-            autoComplete="organization"
-            {...register('company')}
-            className="w-full rounded-md border px-3 py-2.5 text-base"
-            style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)', color: 'var(--ink)' }}
+            locale={locale}
+            label={labels.company}
+            value={companyValue}
+            onChange={handleCompanyChange}
+            onVerify={handleCompanyVerify}
+            error={errors.company?.message}
           />
         </div>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2">
         <div>
-          <label className="mb-2 block text-sm font-medium" htmlFor="phone">
-            {labels.phone}
-          </label>
-          <input
-            id="phone"
-            type="tel"
-            autoComplete="tel"
-            inputMode="tel"
-            {...register('phone')}
-            className="w-full rounded-md border px-3 py-2.5 text-base"
-            style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)', color: 'var(--ink)' }}
+          <PhoneInput
+            locale={locale}
+            label={labels.phone}
+            required
+            value={phoneValue}
+            onChange={handlePhoneChange}
+            error={errors.phone?.message}
           />
         </div>
         <div>
