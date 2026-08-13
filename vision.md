@@ -180,6 +180,7 @@ Kanály po provisioningu:
 10. CTA taxonomie: jedna formulace na úroveň — do migrace labelů do i18n (§11 průřezový úkol) ověřeno grepem, po migraci kontrolou nad `common.json`.
 11. Každá odstraněná URL (redukce odvětví) má 301 redirect; `src/config/routes.ts` a `content/cs/strings/common.json` ověřeny proti sobě; sitemap bez jediné 404 (prevence regrese D-011).
 12. Chatbot: prošel adversariální prompt-injection baterií (15+ scénářů dle CLAUDE.md), neloguje obsah zpráv, nezveřejňuje ceny/rozsahy nad rámec schváleného obsahu webu. Pokud neprojde, na web nejde (§8.4).
+13. **Lead notifikace (Discord + Telegram):** pokud jsou v produkci zapnuté (`DISCORD_LEAD_WEBHOOK_URL` / `TELEGRAM_BOT_TOKEN`), musí být Discord Inc. (USA) a Telegram uvedeni jako **příjemci osobních údajů** v zásadách ochrany osobních údajů (čl. 13 odst. 1 písm. e) GDPR, včetně titulu pro předání do třetí země) a v **záznamu o činnostech zpracování** (čl. 30). Notifikace záměrně nese plné kontakty včetně e-mailu a telefonu (rozhodnutí zadavatele 2026-08-13) — bez doplnění obou dokumentů jde o porušení informační povinnosti. Nižší varianta expozice bez zásahu do kódu: `LEAD_NOTIFY_PII=minimal`. Detail: `docs/setup/lead-notifications.md` §4.
 
 ## 15. Co tato vize vylučuje
 
